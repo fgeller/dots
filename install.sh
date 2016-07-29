@@ -10,7 +10,7 @@ function ensure_link {
 	echo proper link for $fn: $(readlink $HOME/$fn)
     fi
 }
-for f in bash_gpg bash_profile bashrc gitconfig globalgitignore inputrc notmuch-config offlineimap.py offlineimaprc sbtconfig tmux.conf
+for f in bash_gpg bash_profile bashrc emacs.d gitconfig globalgitignore inputrc notmuch-config offlineimap.py offlineimaprc sbtconfig tmux.conf
 do
     ensure_link $f
 done
