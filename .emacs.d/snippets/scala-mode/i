@@ -1,0 +1,5 @@
+# Author: Jonas Bonèr <jonas@jonasboner.com>
+# name: import ..
+# key: i
+# --
+import $0

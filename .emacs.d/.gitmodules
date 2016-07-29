@@ -1,0 +1,9 @@
+[submodule "src/emacs-flymake"]
+	path = src/emacs-flymake
+	url = https://github.com/illusori/emacs-flymake.git
+[submodule "snippets/java-mode"]
+	path = snippets/java-mode
+	url = https://github.com/fgeller/yasnippet-java-mode.git
+[submodule "src/scala-mode2"]
+	path = src/scala-mode2
+	url = git://github.com/hvesalai/scala-mode2.git
