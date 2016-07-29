@@ -42,7 +42,7 @@ fi
 alias ...='cd ../..'
 alias ..='cd ..'
 alias a='grep -i'
-alias dl='c ~/Downloads'
+alias dl='cd ~/Downloads'
 alias e="$EDITOR"
 alias ed='cd ~/.emacs.d'
 alias em="$EDITOR -e \"(progn (magit-status) (delete-other-windows))\""
@@ -108,7 +108,7 @@ function ydl {
 
 function md {
     mkdir -p "$1"
-    c "$1"
+    cd "$1"
     pwd
 }
 
