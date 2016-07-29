@@ -1,0 +1,46 @@
+[general]
+accounts = gmail,movio
+pythonfile = ~/.offlineimap.py
+maxsyncaccounts = 1
+
+[Account gmail]
+localrepository = gmaillocal
+remoterepository = gmailremote
+status_backend = sqlite
+postsynchook = /bin/bash ~/dots/tag-mail.sh
+
+[Repository gmaillocal]
+type = Maildir
+localfolders = ~/Mail/gmail
+
+[Repository gmailremote]
+type = Gmail
+remotehost = imap.gmail.com
+remoteuser = fgeller
+remotepasseval = authinfo('fgeller@gmail.com')
+ssl = yes
+maxconnections = 3
+realdelete = no
+folderfilter = lambda foldername: foldername in ['[Gmail]/All Mail', '[Gmail]/Spam', 'INBOX']
+sslcacertfile = /usr/local/etc/openssl/cert.pem
+
+[Account movio]
+localrepository = moviolocal
+remoterepository = movioremote
+status_backend = sqlite
+postsynchook = /bin/bash ~/dots/tag-mail.sh
+
+[Repository moviolocal]
+type = Maildir
+localfolders = ~/Mail/movio
+
+[Repository movioremote]
+type = Gmail
+remotehost = imap.gmail.com
+remoteuser = felix@movio.co
+remotepasseval = authinfo('felix@movio.co')
+ssl = yes
+maxconnections = 3
+realdelete = no
+folderfilter = lambda foldername: foldername in ['[Gmail]/All Mail', '[Gmail]/Spam', 'INBOX']
+sslcacertfile = /usr/local/etc/openssl/cert.pem

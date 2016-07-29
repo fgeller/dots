@@ -1,0 +1,59 @@
+[user]
+    name = Felix Geller
+    email = fgeller@gmail.com
+[color]
+    ui = true
+[color "diff"]
+    whitespace = red reverse
+[diff]
+    algorithm = patience
+[core]
+    whitespace=space-before-tab,tab-in-indent,trailing-space,cr-at-eol,tabwidth=2
+    tabwidth = 2
+    excludesfile = ~/.globalgitignore
+    fileMode = false
+    trustctime = false
+    pager = cat
+[branch]
+    autosetuprebase = always
+[push]
+    default = nothing
+[pull]
+    rebase = true
+[rerere]
+    enabled = false
+[merge]
+    ff = false
+
+[alias]
+    a = add -p
+    ad = add
+    c = commit
+    ca = commit --amend
+    caq = commit --amend --no-edit
+    co = checkout
+    d = diff --word-diff=color
+    dc = diff --word-diff=color --cached
+    dw = "!bash -c \"git diff --word-diff=color | sed 's/\t/» /g'\""
+    fb = "!bash -c 'git branch -a -v | grep $1' -"
+    ff = merge --ff-only
+    g = grep
+    l =  log -15 --format=' %<(7,trunc)%an %<(65,trunc)%s'
+    ll =  log -15 --format=' %<(7,trunc)%an %ad %h %<(80,trunc)%s %<(40,trunc)%d' --date=short
+    lg = log --format=' %<(15,trunc)%an %ad %C(blue)%h%Creset %<(60,trunc)%s %<(30,trunc) %C(blue)%d%Creset' --date=short
+    p = push
+    pu = push -u
+    puf = push -u -f
+    r = rebase
+    rh = reset --hard
+    ri = rebase -i
+    rs = reset --soft
+    s = status -s -b
+    sh = show --color-words
+    u = remote update
+
+[commit]
+	template = ~/.gitmsg.txt
+[gui]
+	fontui = -family Roboto -size 14 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family \"Roboto Mono\" -size 13 -weight normal -slant roman -underline 0 -overstrike 0

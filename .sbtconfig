@@ -1,0 +1,1 @@
+SBT_OPTS="-XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xmx6G"
