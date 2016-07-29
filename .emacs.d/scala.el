@@ -1,4 +1,4 @@
-(use-package scala-mode2 :ensure scala-mode2
+(use-package scala-mode :ensure scala-mode
   :mode
   (("\\.scala\\'" . scala-mode)
    ("\\.sbt\\'" . scala-mode))
