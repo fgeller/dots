@@ -8,8 +8,8 @@ export LANGUAGE=en_US.UTF-8
 export HISTSIZE=""
 export HISTCONTROL=ignoredups:erasedups
 export HISTTIMEFORMAT="%y-%m-%d %H:%M:%S "
-export HISTDIRECTORY="${HOME}/.history/$(date -u +%Y/%m/%d)"
-[[ ! -d "$HISTDIRECTORY" ]] && mkdir -p $HISTDIRECTORY
+export HISTDIRECTORY="$HOME/.history/$(date -u +%Y/%m/%d)"
+[[ ! -e "$HISTDIRECTORY" ]] && mkdir -p $HISTDIRECTORY
 export HISTFILE="${HISTDIRECTORY}/$(date -u +%H.%M.%S)_${HOSTNAME}_$$"
 export PROMPT_COMMAND="history -w;"
 export PS1='$ '
