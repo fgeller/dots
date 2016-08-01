@@ -3,7 +3,8 @@
   :commands go-mode
   :config
   (add-hook 'go-mode-hook 'golang-customizations)
-  (use-package company-go :ensure company-go))
+  (use-package company-go :ensure company-go)
+  (use-package go-eldoc :ensure go-eldoc))
 
 (defun golang-customizations ()
   (subword-mode 1)
@@ -20,6 +21,8 @@
             eol))
   (setq scala-errors--error-column-re nil)
   (define-key go-mode-map (kbd "M-.") 'godef-jump)
+  (eldoc-mode 1)
+  (go-eldoc-setup)
   (add-hook 'before-save-hook #'gofmt-before-save))
 
 (defun go-ignore-all-tests ()
