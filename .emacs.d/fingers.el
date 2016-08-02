@@ -123,6 +123,7 @@
     (define-key my-fingers-map (kbd "ne") 'scala-errors-goto-next-error)
     (define-key my-fingers-map (kbd "no") 'scala-errors-goto-prev-error)
     (define-key my-fingers-map (kbd "N") 'js2-next-error)
+    (define-key my-fingers-map (kbd "o") 'flycheck-next-error)
     (define-key my-fingers-map (kbd "br") 'revert-buffer)
     (define-key my-fingers-map (kbd "bn") 'rename-buffer)
     (define-key my-fingers-map (kbd "bw") 'delete-trailing-whitespace)

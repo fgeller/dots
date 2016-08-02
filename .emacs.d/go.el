@@ -23,6 +23,7 @@
   (define-key go-mode-map (kbd "M-.") 'godef-jump)
   (eldoc-mode 1)
   (go-eldoc-setup)
+  (flycheck-mode 1)
   (add-hook 'before-save-hook #'gofmt-before-save))
 
 (defun go-ignore-all-tests ()

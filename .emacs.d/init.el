@@ -140,6 +140,7 @@
 (load (expand-file-name "~/.emacs.d/compilation.el"))
 (load (expand-file-name "~/.emacs.d/javascript.el"))
 (load (expand-file-name "~/.emacs.d/scratch.el"))
+(load (expand-file-name "~/.emacs.d/flycheck.el"))
 
 (setq
  gc-cons-threshold init-gc-cons-threshold
