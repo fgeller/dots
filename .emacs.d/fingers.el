@@ -81,6 +81,9 @@
   (define-key fingers-mode-map (kbd "H") 'counsel-yank-pop)
 
   (define-key fingers-mode-map (kbd "z") 'toggle-window-zoom)
+  (define-key fingers-mode-map (kbd "Z") 'window-configuration-to-register)
+  (define-key fingers-mode-map (kbd "M") 'kmacro-to-register)
+  (define-key fingers-mode-map (kbd "m") 'jump-to-register)
 
   (define-key fingers-mode-map (kbd "|") 'mc/edit-lines)
 
@@ -89,6 +92,9 @@
   (define-key fingers-mode-x-map (kbd "f") 'counsel-find-file)
   (define-key fingers-mode-x-map (kbd "x") 'counsel-M-x)
   (define-key fingers-mode-x-map (kbd "vs") 'show-eshell-git-status)
+  (define-key fingers-mode-x-map (kbd "u") 'kmacro-start-macro)
+  (define-key fingers-mode-x-map (kbd "U") 'kmacro-end-macro)
+  (define-key fingers-mode-x-map (kbd "n") 'kmacro-end-and-call-macro)
 
   (define-key fingers-mode-launch-map (kbd "e") 'last-eshell)
   (define-key fingers-mode-launch-map (kbd "m") 'magit-status)
