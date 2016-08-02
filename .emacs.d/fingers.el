@@ -71,7 +71,7 @@
   ;;     a    s    h    t    g
   ;;  encl  spli  ynk  kll  meta
   ;;     z    x    m    c    v
-  ;;   res    x-       c-   opn
+  ;;   zoom  x-  jreg  c-   opn
   (define-key fingers-mode-map (kbd "r") 'fingers-insert-char)
   (define-key fingers-mode-map (kbd "R") 'fingers-replace-with-char)
   (define-key fingers-mode-map (kbd "w") 'anzu-query-replace)
@@ -80,7 +80,7 @@
 
   (define-key fingers-mode-map (kbd "H") 'counsel-yank-pop)
 
-  (define-key fingers-mode-map (kbd "z") 'ivy-resume)
+  (define-key fingers-mode-map (kbd "z") 'toggle-window-zoom)
 
   (define-key fingers-mode-map (kbd "|") 'mc/edit-lines)
 
@@ -99,6 +99,7 @@
   (define-key fingers-mode-toggle-map (kbd "f") 'font-lock-mode)
   (define-key fingers-mode-toggle-map (kbd "w") 'leerzeichen-mode)
   (define-key fingers-mode-toggle-map (kbd "n") 'nlinum-mode)
+  (define-key fingers-mode-toggle-map (kbd "z") 'toggle-window-zoom)
 
   (define-key fingers-mode-map (kbd "S-<up>") 'enlarge-window)
   (define-key fingers-mode-map (kbd "S-<down>") 'shrink-window)
@@ -124,6 +125,17 @@
     (define-key my-fingers-map (kbd "s") 'sort-lines)
     (define-key fingers-mode-map (kbd "q") my-fingers-map))
   )
+
+(defun toggle-window-zoom ()
+  (interactive)
+  (let ((reg "^"))
+    (cond ((and (= (length (window-list)) 1) (get-register reg))
+	   (jump-to-register reg)
+	   ;; maybe make sure we maintain focus in the same window?
+	   )
+	  ((> (length (window-list)) 1)
+	   (window-configuration-to-register reg)
+	   (delete-other-windows)))))
 
 (defun ignore-all-tests ()
   (interactive)
