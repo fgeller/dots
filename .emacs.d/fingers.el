@@ -97,7 +97,7 @@
   (define-key fingers-mode-x-map (kbd "n") 'kmacro-end-and-call-macro)
 
   (define-key fingers-mode-launch-map (kbd "e") 'last-eshell)
-  (define-key fingers-mode-launch-map (kbd "m") 'magit-status)
+  (define-key fingers-mode-launch-map (kbd "m") 'single-window-magit-status)
   (define-key fingers-mode-launch-map (kbd "n") 'notmuch)
   (define-key fingers-mode-launch-map (kbd "oo") 'offlineimap)
 
@@ -131,6 +131,11 @@
     (define-key my-fingers-map (kbd "s") 'sort-lines)
     (define-key fingers-mode-map (kbd "q") my-fingers-map))
   )
+
+(defun single-window-magit-status ()
+  (interactive)
+  (magit-status)
+  (delete-other-windows))
 
 (defun toggle-window-zoom ()
   (interactive)
