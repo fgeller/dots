@@ -42,6 +42,7 @@ fi
 alias ...='cd ../..'
 alias ..='cd ..'
 alias a='grep -i'
+alias cqlsh='cqlsh --no-color'
 alias dl='cd ~/Downloads'
 alias e="$EDITOR"
 alias ed='cd ~/.emacs.d'
