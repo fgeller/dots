@@ -47,3 +47,26 @@
      nil
      (point-min)
      (point-max))))
+
+(defun go-play ()
+  (interactive)
+  (let* ((temporary-file-directory (expand-file-name "tmp/" (getenv "GOPATH")))
+	 (tf (make-temp-file "go-play" nil ".go")))
+    (find-file tf)
+    (insert "package main
+
+import (
+	\"fmt\"
+)
+
+func main() {
+	fmt.Printf(\"\")
+}")
+    (goto-char 61)
+    (save-buffer)
+    (go-mode)
+    (define-key
+      (current-local-map)
+      (kbd "C-c C-c")
+      (lambda () (interactive) (compile (format "go run %s" (buffer-file-name)))))
+    ))
