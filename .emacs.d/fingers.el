@@ -67,7 +67,7 @@
   (define-key fingers-mode-map (kbd ".") 'ivy-jump)
 
   ;;     q    d    r    w    b
-  ;;  cstm   del in/rp qrp  cpy
+  ;;  cstm   del in/rp qrp  cpy/slrp
   ;;     a    s    h    t    g
   ;;  encl  spli  ynk  kll  meta
   ;;     z    x    m    c    v
@@ -77,6 +77,7 @@
   (define-key fingers-mode-map (kbd "w") 'anzu-query-replace)
   (define-key fingers-mode-map (kbd "W") 'anzu-query-replace-at-cursor)
   (define-key fingers-mode-map (kbd "b") 'fingers-copy)
+  (define-key fingers-mode-map (kbd "B") 'fingers-slurp-forward)
 
   (define-key fingers-mode-map (kbd "H") 'counsel-yank-pop)
 
@@ -163,37 +164,112 @@
         ((eq major-mode 'scala-mode)
          (call-interactively 'scala-enable-all-tests))))
 
-(defun find-matching-closer (pair)
-  (let* ((start-pos (point))
-         (open-count 1))
-    (while (and (not (eobp))
-                (< 0 open-count))
-      (forward-char 1)
-      (cond ((looking-at (car pair)) (setq open-count (1+ open-count)))
-            ((looking-at (cdr pair)) (setq open-count (1- open-count)))))
-    (unless (eobp) (point))))
+(defun find-matching-closer (pos)
+  (let ((pair (identify-pair-at pos)))
+    (message "identify pair: %s" pair)
+    (when pair
+      (if (string-equal (car pair) (cdr pair))
+	  (find-matching-equal-closer pos pair)
+	(find-matching-unequal-closer pos pair)))))
+
+(defun find-matching-equal-closer (pos pair)
+  (let ((delimiter (car pair))
+	closer-pos)
+    (save-excursion
+      (goto-char (1+ pos))
+      (while (and (not closer-pos) (not (eobp)))
+	(cond ((looking-at (regexp-quote (concat "\\" delimiter)))
+	       (forward-char 2))
+	      ((looking-at (regexp-quote delimiter))
+	       (setq closer-pos (point)))
+	      (t
+	       (forward-char 1)))))
+    closer-pos))
+
+(defun find-matching-unequal-closer (pos pair)
+  (save-excursion
+    (let* ((opener (car pair))
+	   (closer (cdr pair))
+	   (open-count 1))
+      (goto-char (1+ pos))
+      (while (and (not (eobp)) (< 0 open-count))
+	(cond ((looking-at (regexp-quote opener)) (setq open-count (1+ open-count)))
+	      ((looking-at (regexp-quote closer)) (setq open-count (1- open-count))))
+	(forward-char 1))
+      (unless (eobp) (1- (point))))))
+
+;; TODO: add ` " '
+(defun identify-pair-at (pos)
+  (save-excursion
+    (goto-char pos)
+    (cond
+	   ((looking-at "(")
+	    '("(" . ")"))
+	   ((looking-at "{")
+	   '("{" . "}"))
+	  ((looking-at "\\[")
+	   '("[" . "]"))
+	  ((looking-at "<")
+	   '("<" . ">"))
+	  ((looking-at "`")
+	   '("`" . "`"))
+	  ((looking-at "'")
+	   '("'" . "'"))
+	  ((looking-at "\"")
+	   '("\"" . "\"")))))
+
+(defun find-first-preceding-pair-opener ()
+  (save-excursion
+    (re-search-backward "(\\|{\\|\\[\\|<\\|\"\\|'")))
+
+(defun surrounding-pair-info ()
+  (let* ((start-pos (find-first-preceding-pair-opener))
+	 (end-pos (find-matching-closer start-pos))
+	 (pair (identify-pair-at start-pos)))
+    `((:start-pos . ,start-pos) (:end-pos . ,end-pos) (:pair . ,pair))))
+
+(defun fingers-slurp-forward ()
+  (interactive)
+  (let* ((info (surrounding-pair-info))
+	 (end-pos (cdr (assoc :end-pos info))))
+    (if (not end-pos) (message "couldn't find matching closer, info=%s." info)
+      (message "found pair info %s" info)
+      (save-excursion
+	(goto-char (cdr (assoc :end-pos info)))
+	(delete-char 1)
+	(forward-symbol 1)
+	(insert (cddr (assoc :pair info)))))))
+
+;; ()abc
+;; ()abc def ghi
+;; (+ )abc
+;; []abc
+;; []abc def ghi
+;; <html>abc
+;; <html> abc def ghi
+;; <html a="b"> abc def ghi
+;; ""abc
+;; "" abc
+;; "abc " abc
+;; "abc \" " abc
+;; 'abc ""\' ' abc
 
 (defun explode-arguments-into-multiple-lines ()
   (interactive)
-  (let* ((start-pos (1+ (re-search-backward "(\\|{\\|\\[")))
-         (pair (save-excursion
-                 (goto-char start-pos)
-                 (cond ((looking-at "{") '("(" .")"))
-                       ((looking-at "\\[") '("[" . "]"))
-                       (t '("(" . ")")))))
-         (end-pos (save-excursion
-                    (goto-char start-pos)
-                    (find-matching-closer pair))))
-    (goto-char end-pos)
-    (open-line 1)
-    (while (> (point) start-pos)
-      (forward-char -1)
-      (when (looking-at ",") (forward-char 1) (open-line 1) (forward-char -1)))
-    (open-line 1)
-    (set-mark (point))
-    (goto-char (1+ (find-matching-closer pair)))
-    (indent-for-tab-command)
-    (goto-char start-pos)))
+  (let ((info (surrounding-pair-info)))
+    (when info
+      (goto-char (cdr (assoc :end-pos info)))
+      (open-line 1)
+      (while (> (1- (point)) (cdr (assoc :start-pos info)))
+	(forward-char -1)
+	(when (looking-at ",") (forward-char 1) (open-line 1) (forward-char -1)))
+      (open-line 1)
+      (set-mark (point))
+      (goto-char (1+ (find-matching-closer (cdr (assoc :start-pos info)))))
+      (indent-for-tab-command)
+      (goto-char (cdr (assoc :start-pos info))))))
+
+;; func(a,b,c)
 
 (use-package fingers
   :commands global-fingers-mode
