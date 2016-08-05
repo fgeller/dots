@@ -196,7 +196,7 @@
     org-agenda-files)))
 
 (defun ivy-recentf-candidates ()
-  (ivy-add-action-to-candidates recentf-list '(find-file)))
+  (ivy-add-action-to-candidates recentf-list 'find-file))
 
 (defun ivy-jump-candidates ()
   "Returns a list of candidates for jumping to with associated actions as text properties"
