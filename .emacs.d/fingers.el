@@ -76,8 +76,8 @@
   (define-key fingers-mode-map (kbd "R") 'fingers-replace-with-char)
   (define-key fingers-mode-map (kbd "w") 'anzu-query-replace)
   (define-key fingers-mode-map (kbd "W") 'anzu-query-replace-at-cursor)
-  (define-key fingers-mode-map (kbd "b") 'fingers-copy)
-  (define-key fingers-mode-map (kbd "B") 'fingers-slurp-forward)
+  (define-key fingers-mode-map (kbd "b") 'fingers-slurp-forward)
+  (define-key fingers-mode-map (kbd "B") 'fingers-barf-forward)
 
   (define-key fingers-mode-map (kbd "H") 'counsel-yank-pop)
 
@@ -232,8 +232,7 @@
   (interactive)
   (let* ((info (surrounding-pair-info))
 	 (end-pos (cdr (assoc :end-pos info))))
-    (if (not end-pos) (message "couldn't find matching closer, info=%s." info)
-      (message "found pair info %s" info)
+    (if (not (and info end-pos)) (message "couldn't find matching closer, info=%s." info)
       (save-excursion
 	(goto-char (cdr (assoc :end-pos info)))
 	(delete-char 1)
@@ -253,6 +252,31 @@
 ;; "abc " abc
 ;; "abc \" " abc
 ;; 'abc ""\' ' abc
+
+(defun fingers-barf-forward ()
+  (interactive)
+  (let* ((info (surrounding-pair-info))
+	 (end-pos (cdr (assoc :end-pos info))))
+    (if (not (and info end-pos)) (message "couldn't find matching closer, info=%s." info)
+      (save-excursion
+	(goto-char (cdr (assoc :end-pos info)))
+	(delete-char 1)
+	(forward-symbol -1)
+	(insert (cddr (assoc :pair info)))
+	))))
+
+;; (abc)
+;; (abc def ghi)
+;; (+ abc)
+;; [abc]
+;; [abc def ghi]
+;; <html abc def ghi>
+;; <html a="b" abc def ghi>
+;; "abc"
+;; " abc"
+;; "abc  abc"
+;; "abc \"  abc"
+;; 'abc ""\'  abc'
 
 (defun explode-arguments-into-multiple-lines ()
   (interactive)
