@@ -116,6 +116,7 @@
    `(trailing-whitespace ((t (:foreground nil :background ,red))))
    `(underline ((t (:foreground nil :background nil :underline nil))))
    `(variable-pitch ((t (:foreground nil :background nil :underline nil :family "Roboto"))))
+   `(widget-field ((t (:foreground nil :background ,green :underline nil))))
 
    `(ace-jump-face-background ((t (:foreground ,white :background nil))))
    `(ace-jump-face-foreground ((t (:foreground ,red :background nil))))
