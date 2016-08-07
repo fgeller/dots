@@ -1,4 +1,5 @@
-(use-package multiple-cursors :ensure multiple-cursors :commands mc/edit-lines)
+(use-package multiple-cursors :ensure multiple-cursors
+  :commands mc/edit-lines)
 
 (use-package avy
   :ensure avy
