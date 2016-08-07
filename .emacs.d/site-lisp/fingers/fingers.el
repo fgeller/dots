@@ -572,10 +572,13 @@
 ;;
 ;; mark
 ;;
+(defun fingers-mark-or-copy ()
+  (interactive)
+  (if mark-active (progn (fingers-copy) (deactivate-mark))
+    (fingers-mark)))
 
 (defun fingers-mark ()
   (interactive)
-  (when mark-active (deactivate-mark))
   (setq fingers-mark-active-from-jump-p nil)
   (let ((next-key (read-char "Mark: ")))
     (cond
@@ -905,7 +908,7 @@
     (/ . fingers-undo)
     (? . fingers-redo)
 
-    (SPC . fingers-mark)
+    (SPC . fingers-mark-or-copy)
     (+ . fingers-increment-integer-at-point)
     (- . fingers-decrement-integer-at-point)
     )
