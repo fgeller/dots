@@ -1,7 +1,28 @@
 [general]
-accounts = gmail,movio
+accounts = m2l,gmail,movio
 pythonfile = ~/.offlineimap.py
 maxsyncaccounts = 1
+
+[Account m2l]
+localrepository = m2llocal
+remoterepository = m2lremote
+status_backend = sqlite
+postsynchook = /bin/bash ~/dots/tag-mail.sh
+
+[Repository m2llocal]
+type = Maildir
+localfolders = ~/Mail/m2l
+
+[Repository m2lremote]
+type = IMAP
+remotehost = box.m2l.io
+remoteuser = fg@m2l.io
+remotepasseval = authinfo('fg@m2l.io')
+ssl = yes
+maxconnections = 3
+realdelete = no
+sslcacertfile = /usr/local/etc/openssl/cert.pem
+
 
 [Account gmail]
 localrepository = gmaillocal

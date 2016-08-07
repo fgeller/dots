@@ -1,7 +1,7 @@
 (setq
  mail-envelope-from 'header
  mail-from-style 'angles
- mail-host-address "Ernie"
+ mail-host-address "fury"
  mail-specify-envelope-from t
  message-kill-buffer-on-exit t
  message-send-mail-partially-limit nil
@@ -9,7 +9,7 @@
  message-signature "Felix Geller"
  send-mail-function 'sendmail-send-it
  user-full-name "Felix Geller"
- user-mail-address "fgeller@gmail.com"
+ user-mail-address "fg@m2l.io"
 )
 
 (use-package notmuch
@@ -19,9 +19,10 @@
   (setq notmuch-fcc-dirs nil
         notmuch-crypto-process-mime t
         notmuch-show-indent-messages-width 2
-        notmuch-archive-tags '("-inbox" "-spam" "-movio-in")
+        notmuch-archive-tags '("-inbox" "-spam" "-movio-in" "-m2l-in")
         notmuch-saved-searches '((:name "in" :query "tag:inbox" :key "i")
                                  (:name "movio-in" :query "tag:movio-in" :key "m")
+                                 (:name "m2l-in" :query "tag:m2l-in" :key "2")
                                  (:name "flagged" :query "tag:flagged" :key "f")
                                  (:name "sent" :query "tag:sent" :key "t")
                                  (:name "spam" :query "tag:spam" :key "s")
@@ -68,7 +69,6 @@
   (search-forward "[ text/html" (point-max) t)
   (forward-line 1)
   (mm-display-external (notmuch-show-current-part-handle) "open %s"))
-
 
 (defun notmuch-show-prefer-html-over-text ()
   (interactive)

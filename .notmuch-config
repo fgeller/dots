@@ -30,8 +30,8 @@ path=/Users/fgeller/Mail
 #
 [user]
 name=Felix Geller
-primary_email=fgeller@gmail.com
-other_email=fgeller@acmepacket.com;felix.geller@iptego.com;felix.geller@hpi.uni-potsdam.de;felix.geller@student.uni-potsdam.de;fgeller@wpi.edu;fgeller@alumn.wpi.edu;fgeller@alum.wpi.edu;felix@movio.co;
+primary_email=fg@m2l.io
+other_email=fgeller@gmail.com,fgeller@acmepacket.com;felix.geller@iptego.com;felix.geller@hpi.uni-potsdam.de;felix.geller@student.uni-potsdam.de;fgeller@wpi.edu;fgeller@alumn.wpi.edu;fgeller@alum.wpi.edu;felix@movio.co;
 
 # Configuration for "notmuch new"
 #
