@@ -36,7 +36,7 @@
 (require 'uniquify)
 
 (setq package-user-dir (expand-file-name (concat custom-site-lisp-directory "/elpa")))
-(setq package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
+(setq package-archives '(("melpa" . "http://melpa.org/packages/")
 			 ("melpa-stable" . "https://stable.melpa.org/packages/")))
 (package-initialize)
 
