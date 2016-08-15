@@ -3,6 +3,7 @@
   :commands go-mode
   :config
   (add-hook 'go-mode-hook 'golang-customizations)
+  (use-package go-rename :ensure go-rename)
   (use-package company-go :ensure company-go)
   (use-package go-guru :ensure go-guru)
   (use-package go-eldoc :ensure go-eldoc))
@@ -25,6 +26,7 @@
   (eldoc-mode 1)
   (go-eldoc-setup)
   (flycheck-mode 1)
+  (define-key go-mode-map (kbd "C-c C-r") 'go-rename)
   (add-hook 'before-save-hook #'gofmt-before-save))
 
 (defun go-ignore-all-tests ()
