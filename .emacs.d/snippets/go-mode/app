@@ -2,5 +2,5 @@
 # name: append
 # key: app
 # --
-$2 = append($2, $1)
+$1 = append($1, $2)
 $0
