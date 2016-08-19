@@ -24,7 +24,7 @@
     enabled = false
 [merge]
     ff = false
-
+    conflictstyle = diff3
 [alias]
     a = add -p
     ad = add
