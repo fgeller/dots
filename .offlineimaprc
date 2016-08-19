@@ -1,5 +1,5 @@
 [general]
-accounts = m2l,gmail,movio
+accounts = m2l,gmail
 pythonfile = ~/.offlineimap.py
 maxsyncaccounts = 1
 
