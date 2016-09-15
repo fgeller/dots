@@ -119,7 +119,7 @@ function thumb {
 }
 
 function gotest {
-    ls *.go | entr bash -c 'go test -v |& tee quickfix'
+    ls *.go | entr bash -c 'go test |& tee quickfix'
 }
 
 function reload {
