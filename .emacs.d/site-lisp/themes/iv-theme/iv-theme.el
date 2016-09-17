@@ -70,7 +70,8 @@
   `(("black" . "black")
     ("white" . "white")
     ("red" .   ,(if (window-system) "#F44336" "red"))
-    ("green" . ,(if (window-system) "#66BB6A" "green")))
+    ("green" . ,(if (window-system) "#66BB6A" "green"))
+    ("blue" . ,(if (window-system) "#66BB6A" "blue")))
   "List of colors.")
 
 (defmacro iv-with-color-variables (&rest body)
@@ -192,6 +193,10 @@
    `(font-lock-type-face ((t :foreground nil :background nil)))
    `(font-lock-variable-name-face ((t :foreground nil :background nil)))
    `(font-lock-warning-face ((t :foreground ,white :background ,red)))
+
+   `(git-gutter:added ((t :foreground ,green :background ,green)))
+   `(git-gutter:deleted ((t :foreground ,red :background ,red)))
+   `(git-gutter:modified ((t :foreground ,blue :background ,blue)))
 
    `(helm-M-x-key ((t (:foreground ,black :background nil :underline nil :italic nil))))
    `(helm-action ((t (:foreground ,black :background nil :underline nil))))
