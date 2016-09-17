@@ -134,6 +134,7 @@
     (define-key my-fingers-map (kbd "s") 'sort-lines)
     (define-key fingers-mode-map (kbd "q") my-fingers-map))
   )
+(define-key global-map (kbd "M->") 'pop-tag-mark)
 
 (defun single-window-magit-status ()
   (interactive)
