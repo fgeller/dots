@@ -151,16 +151,18 @@
    (let ((ivy-ag-extra-argument (concat "--ignore test")))
      (ivy-ag-with-thing-at-point))))
 
-(defun git-ls-files ()
+(defun git-ls-files (&optional filter)
   (let ((grt (locate-dominating-file default-directory ".git")))
     (when grt
-      (let* ((default-directory grt))
-        (split-string (shell-command-to-string "git ls-files --full-name --") "\n" t)))))
+      (let* ((default-directory grt)
+	     (q (or filter ""))
+	     (cmd (format "git ls-files --full-name -- | grep -v vendor | grep \"%s\"" q)))
+        (split-string (shell-command-to-string cmd) "\n" t)))))
 
-(defun ivy-git-files-candidates ()
+(defun ivy-git-files-candidates (&optional filter)
   (let ((bfns (mapcar 'buffer-file-name (buffer-list))))
     (ivy-add-action-to-candidates
-     (cl-remove-if (lambda (gf) (member gf bfns)) (git-ls-files))
+     (cl-remove-if (lambda (gf) (member gf bfns)) (git-ls-files filter))
      (lambda (n) (with-ivy-window
                    (let ((grt (locate-dominating-file default-directory ".git"))
                          (inhibit-message t))
@@ -202,10 +204,21 @@
   "Returns a list of candidates for jumping to with associated actions as text properties"
   (let* ((start-time (current-time))
          (bufs (ivy-buffer-name-candidates))
+	 (bufs-elapsed (time-subtract (current-time) start-time))
          (gfs (ivy-git-files-candidates))
+	 (gfs-elapsed (time-subtract (current-time) start-time))
          (rfs (ivy-recentf-candidates))
-         (cs (seq-uniq (seq-concatenate 'list bufs gfs rfs)))
+	 (rfs-elapsed (time-subtract (current-time) start-time))
+	 ;; (cs (seq-uniq (seq-concatenate 'list bufs gfs rfs)))
+	 (cs (seq-uniq (seq-concatenate 'list bufs gfs)))
          (elapsed (time-subtract (current-time) start-time)))
+    (message "it took [%s]micros to compute jump candidates. bufs [%s] gfs |%s| [%s] rfs [%s]"
+	     (format-time-string "%6N" elapsed)
+	     (format-time-string "%6N" bufs-elapsed)
+	     (length gfs)
+	     (format-time-string "%6N" gfs-elapsed)
+	     (format-time-string "%6N" rfs-elapsed)
+	     )
     cs))
 
 (defun ivy-jump ()
@@ -218,16 +231,18 @@
              :action 'ivy-actioner)))
 
 (defun project-directories ()
-  (seq-concatenate
-   'list
-   (mapcar
-    (lambda (gd) (file-relative-name (file-name-directory gd) (expand-file-name "~")))
-    (split-string (shell-command-to-string "find ~/src -maxdepth 4 -name .git -type d") "\n" t))
-   `(".emacs.d")))
+  (let* ((repos (seq-concatenate
+		 'list
+		 (mapcar (lambda (git) (file-name-directory git))
+			 (split-string (shell-command-to-string "find ~/src -maxdepth 4 -name .git -type d") "\n" t))
+		 (list "~/dots")))
+	 (sub-dirs (cl-mapcan (lambda (repo) (split-string (shell-command-to-string (format "find %s -maxdepth 1 -type d" repo)) "\n" t))
+			      repos)))
+    (delete-dups (seq-concatenate 'list repos sub-dirs))))
 
 (defun ivy-jump-to-project-action (p)
   (with-ivy-window
-    (magit-status (expand-file-name p "~"))))
+    (magit-status (file-name-directory (expand-file-name p "~")))))
 
 (defun ivy-jump-to-project-candidates ()
   (ivy-add-action-to-candidates (project-directories) 'ivy-jump-to-project-action))
@@ -241,10 +256,11 @@
 
 (defun ivy-git-ls-files-project-action (p)
   (with-ivy-window
-    (let ((default-directory (expand-file-name p "~")))
+    (let ((default-directory (expand-file-name p "~"))
+	  (pn (file-name-base p)))
       (ivy-read
-       "file "
-       (ivy-git-files-candidates)
+       (format "file %s " pn)
+       (ivy-git-files-candidates pn)
        :action 'ivy-actioner))))
 
 (defun ivy-git-ls-files-project-candidates ()
