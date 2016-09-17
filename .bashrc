@@ -195,7 +195,7 @@ function rd {
 }
 
 function ha {
-    grep -ri "$@" $HOME/.history | sort
+    grep -ri "$@" $HOME/.history | cut -d":" -f2- | sort | uniq
 }
 
 function sum {
