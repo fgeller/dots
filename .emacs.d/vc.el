@@ -9,3 +9,14 @@
   :defer t
   :ensure magit
   :init (setq git-commit-summary-max-length 72))
+
+(use-package git-gutter
+  :defer t
+  :ensure magit
+  :init (global-git-gutter-mode)
+  :config
+  (setq
+   git-gutter:window-width 1
+   git-gutter:modified-sign " "
+   git-gutter:added-sign " "
+   git-gutter:deleted-sign " "))
