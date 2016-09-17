@@ -527,7 +527,13 @@
     (left-char 1)))
 
 (defun fingers-looking-at-word-p ()
-  (looking-at "\\<"))
+  (if subword-mode
+      (or (looking-at "\\b")
+	  (save-excursion
+	    (forward-char -1)
+	    (let* ((case-fold-search nil))
+	      (looking-at "[a-z][A-Z]"))))
+      (looking-at "\\b")))
 
 (defun fingers-beginning-of-word ()
   (while (not (fingers-looking-at-word-p))
