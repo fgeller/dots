@@ -10,6 +10,7 @@
 
 (defun golang-customizations ()
   (subword-mode 1)
+  (setq company-go-show-annotation 1)
   (set (make-local-variable 'company-backends) '(company-go))
   (yas-minor-mode 1)
   (setq gofmt-command "goimports")
