@@ -56,8 +56,8 @@
   ;; Bop/bol  <    v    ^    >   Eop/eol
   ;;     k    l    ?    .    /
   ;;   apr    avy      jmp  undo
-  (define-key fingers-mode-map (kbd "f") 'ag-project)
-  (define-key fingers-mode-map (kbd "F") 'ag-project-with-thing-at-point)
+  (define-key fingers-mode-map (kbd "f") 'ag)
+  (define-key fingers-mode-map (kbd "F") 'ag-with-thing-at-point)
   (define-key fingers-mode-map (kbd "u") 'ivy-ag)
   (define-key fingers-mode-map (kbd "U") 'ivy-ag-with-thing-at-point)
   (define-key fingers-mode-map (kbd "p") (fingers-nav-command swiper-tweaked))
