@@ -9,26 +9,73 @@
   (use-package go-eldoc :ensure go-eldoc))
 
 (defun golang-customizations ()
-  (subword-mode 1)
   (setq company-go-show-annotation 1)
-  (set (make-local-variable 'company-backends) '(company-go))
-  (yas-minor-mode 1)
   (setq gofmt-command "goimports")
+  (set (make-local-variable 'company-backends) '(company-go))
+
+  (subword-mode 1)
+  (yas-minor-mode 1)
   (font-lock-mode 1)
-  (setq scala-errors--error-re
-        (rx bol
-            (* space)
-            (group (+ (not (any ":\n")))) ":"
-            (group (+ (not (any ":\n")))) ":" (* space)
-            (group (+ nonl))
-            eol))
-  (setq scala-errors--error-column-re nil)
-  (define-key go-mode-map (kbd "M-.") 'godef-jump)
   (eldoc-mode 1)
-  (go-eldoc-setup)
   (flycheck-mode 1)
+
+  (define-key go-mode-map (kbd "M-.") 'godef-jump)
   (define-key go-mode-map (kbd "C-c C-r") 'go-rename)
-  (add-hook 'before-save-hook #'gofmt-before-save))
+  (define-key go-mode-map (kbd "C-c C-c") 'go-compile-tests)
+  (define-key go-mode-map (kbd "C-c C-t") 'go-goto-first-error)
+  (define-key go-mode-map (kbd "C-c C-n") 'go-goto-next-error)
+  (define-key go-mode-map (kbd "C-c C-p") 'go-goto-previous-error)
+
+  (go-eldoc-setup)
+
+  (add-hook 'before-save-hook #'gofmt-before-save)
+  (add-hook 'after-save-hook #'go-after-save-run-tests))
+
+(defun go-tests-buffer-name ()
+  (format "*go-test[%s]*"
+	  (file-name-nondirectory (directory-file-name default-directory))))
+
+(defun go-after-save-run-tests ()
+  (interactive)
+  (let* ((buf (go-tests-buffer-name)))
+    (when (get-buffer buf)
+      (with-current-buffer buf
+	(recompile)))))
+
+(defun go-compile-tests ()
+  (interactive)
+  (let* ((dir (file-name-nondirectory (directory-file-name default-directory)))
+	 (comp-buf (format "*go-test[%s]*" dir))
+	 (compile-command "go test -i && go test"))
+    (if (get-buffer comp-buf) (with-current-buffer comp-buf (recompile))
+      (compile compile-command)
+      (with-current-buffer "*compilation*"
+	(rename-buffer comp-buf)))))
+
+(defmacro go-with-test-buffer (&rest body)
+  `(let ((buf (go-tests-buffer-name)))
+     (when (get-buffer buf)
+       (with-current-buffer buf
+	 ,@body))))
+
+(defun go-goto-first-error ()
+  (interactive)
+  (go-with-test-buffer
+   (goto-char (point-min))
+   (compilation-next-error 1)
+   (compile-goto-error)))
+
+(defun go-goto-next-error ()
+  (interactive)
+  (go-with-test-buffer
+   (compilation-next-error 1)
+   (compile-goto-error)))
+
+(defun go-goto-previous-error ()
+  (interactive)
+  (go-with-test-buffer
+   (compilation-previous-error 1)
+   (compile-goto-error)))
 
 (defun go-ignore-all-tests ()
   (interactive)
