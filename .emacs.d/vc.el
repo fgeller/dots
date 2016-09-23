@@ -12,7 +12,7 @@
 
 (use-package git-gutter
   :defer t
-  :ensure magit
+  :ensure git-gutter
   :init (global-git-gutter-mode)
   :config
   (setq
