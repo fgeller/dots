@@ -107,6 +107,11 @@ function ydl {
     cd ~/Downloads && youtube-dl "$@"
 }
 
+unalias z
+function z {
+    _z 2>&1 $@ && pwd
+}
+
 function md {
     mkdir -p "$1"
     cd "$1"
