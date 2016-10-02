@@ -5,10 +5,6 @@
   :config
   (add-hook 'scala-mode-hook 'scala-customizations))
 
-(use-package ensime :ensure ensime
-  :pin melpa-stable
-  :commands (ensime-connect))
-
 (defun scala-customizations ()
   (setq tab-width 2)
   (font-lock-mode -1)
