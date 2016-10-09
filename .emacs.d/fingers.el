@@ -13,6 +13,14 @@
   :config
   (global-anzu-mode +1))
 
+(defun uuid ()
+  (interactive)
+  (let* ((raw (with-temp-buffer
+		(shell-command "uuidgen" (current-buffer))
+		(buffer-substring (point-min) (point-max))))
+	 (uuid (progn (string-match "[ \t\n]*$" raw) (replace-match "" nil nil raw))))
+    (insert uuid)))
+
 (defun fingers-mode-visual-toggle-enabled-modeline ()
   (let* ((right (format-mode-line "%*  %l,%c"))
          (left (format-mode-line "%b "))
@@ -61,6 +69,7 @@
     (define-key m (kbd "ti") 'ignore-all-tests)
     (define-key m (kbd "tn") 'scala-next-test-forward)
     (define-key m (kbd "tp") 'scala-next-test-whitespace)
+    (define-key m (kbd "u") 'uuid)
     m))
 
 (defun fingers-mode-custom-bindings ()
