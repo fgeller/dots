@@ -69,6 +69,7 @@
 (defconst iv-colors-alist
   `(("black" . "black")
     ("white" . "white")
+    ("yellow" .   ,(if (window-system) "#FFC107" "yellow"))
     ("red" .   ,(if (window-system) "#F44336" "red"))
     ("green" . ,(if (window-system) "#66BB6A" "green"))
     ("blue" . ,(if (window-system) "#66BB6A" "blue")))
@@ -99,7 +100,7 @@
    `(cursor ((t (:foreground nil :background ,green))))
    `(fringe ((t (:foreground ,black :background ,white))))
    `(header-line ((t (:inherit mode-line))))
-   `(hi-yellow ((t (:foreground ,red :background ,nil))))
+   `(hi-yellow ((t (:foreground nil :background ,yellow))))
    `(isearch ((t (:foreground ,red :background nil))))
    `(isearch-fail ((t (:foreground ,black :background ,red))))
    `(italic ((t (:foreground nil :background nil :underline nil))))
@@ -175,8 +176,8 @@
    `(eshell-ls-directory ((t (:foreground nil :background nil :weight normal))))
    `(eshell-ls-executable ((t (:foreground nil :background nil :weight normal))))
 
-   `(flycheck-error ((t (:foreground ,black :background ,red :weight normal))))
-   `(flycheck-warning ((t (:foreground ,black :background ,red :weight normal))))
+   `(flycheck-error ((t (:foreground ,red :background nil :weight normal))))
+   `(flycheck-warning ((t (:foreground ,red :background nil :weight normal))))
 
    `(font-lock-builtin-face ((t :foreground nil :background nil)))
    `(font-lock-comment-delimiter-face ((t :foreground nil :background nil)))
@@ -439,7 +440,7 @@
 
    `(rng-error ((t (:foreground nil :background ,red))))
 
-   `(show-paren-match ((t (:foreground nil :background ,green))))
+   `(show-paren-match ((t (:foreground nil :background ,yellow))))
    `(show-paren-mismatch ((t (:foreground nil :background ,red))))
 
    `(scala-font-lock:var-face ((t (:foreground nil :background nil))))
