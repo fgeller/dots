@@ -50,6 +50,7 @@
     rs = reset --soft
     s = status -s -b
     sh = show --color-words
+    tags = log --tags --simplify-by-decoration --pretty='format:%ai %d'
     u = remote update
 
 [commit]
