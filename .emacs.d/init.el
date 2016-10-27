@@ -77,12 +77,6 @@
 
 (setq-default whitespace-style '(face tabs spaces trailing lines space-before-tab newline indentation::space empty space-after-tab space-mark tab-mark newline-mark))
 
-(defun maybe-cleanup-whitespace ()
-  (interactive)
-  (when (and (boundp 'should-cleanup-whitespace)
-             should-cleanup-whitespace)
-    (whitespace-cleanup)))
-
 (setq-default require-final-newline t)
 
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
@@ -96,32 +90,6 @@
 (when linux-p
   (setq browse-url-browser-function 'browse-url-generic
         browse-url-generic-program "chromium-browser"))
-
-(defun fold-left (fn acc seq)
-  (let ((next (car seq))
-        (rest (cdr seq)))
-    (while next
-      (setq acc (funcall fn acc next)
-            next (car rest)
-            rest (cdr rest))))
-  acc)
-
-(defun find-file-recursively (file-name dir)
-  (let* ((default-directory dir)
-         (contents (directory-files dir))
-         (files (remove-if 'file-directory-p contents))
-         (directories (remove-if-not (lambda (f) (and (file-directory-p f)
-                                                      (not (string-equal "." f))
-                                                      (not (string-equal ".." f))))
-                               contents)))
-    (if (member file-name files)
-        (expand-file-name file-name dir)
-      (fold-left (lambda (found nested-dir)
-                   (if found
-                       found
-                     (find-file-recursively file-name (expand-file-name nested-dir dir))))
-                 nil
-                 directories))))
 
 (load (expand-file-name "~/.emacs.d/ivy.el"))
 (load (expand-file-name "~/.emacs.d/fingers.el"))
