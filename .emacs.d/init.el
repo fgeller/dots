@@ -98,7 +98,6 @@
 (load (expand-file-name "~/.emacs.d/auto-complete.el"))
 (load (expand-file-name "~/.emacs.d/emacs-lisp.el"))
 (load (expand-file-name "~/.emacs.d/scala.el"))
-(load (expand-file-name "~/.emacs.d/java.el"))
 (load (expand-file-name "~/.emacs.d/go.el"))
 (load (expand-file-name "~/.emacs.d/web-mode.el"))
 (load (expand-file-name "~/.emacs.d/email.el"))
