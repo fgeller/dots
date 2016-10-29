@@ -11,12 +11,6 @@
   (subword-mode 1)
   (yas-minor-mode 1))
 
-(use-package scala-errors
-  :commands (scala-errors-goto-first-error)
-  :config
-  (use-package f :ensure f)
-  (setq scala-errors-default-display-errors-function (lambda (b))))
-
 (defun scala-ignore-all-tests ()
   (interactive)
   (save-excursion
