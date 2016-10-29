@@ -63,7 +63,6 @@
     (define-key m (kbd "m") 'ivy-jump-to-project)
     (define-key m (kbd "n") 'compilation-goto-first-error)
     (define-key m (kbd "o") 'flycheck-next-error)
-    (define-key m (kbd "p") 'ivy-ag-with-thing-at-point-in-main)
     (define-key m (kbd "s") 'sort-lines)
     (define-key m (kbd "te") 'enable-all-tests)
     (define-key m (kbd "ti") 'ignore-all-tests)
@@ -93,8 +92,8 @@
   ;;   apr    avy      jmp  undo
   (define-key fingers-mode-map (kbd "f") 'ag)
   (define-key fingers-mode-map (kbd "F") 'ag-with-thing-at-point)
-  (define-key fingers-mode-map (kbd "u") 'ivy-ag)
-  (define-key fingers-mode-map (kbd "U") 'ivy-ag-with-thing-at-point)
+  (define-key fingers-mode-map (kbd "u") 'ivy-ag-with-thing-at-point)
+  (define-key fingers-mode-map (kbd "U") 'ivy-ag-with-thing-at-point-grt)
   (define-key fingers-mode-map (kbd "p") (fingers-nav-command swiper-tweaked))
   (define-key fingers-mode-map (kbd "P") (fingers-nav-command swiper-with-thing-at-point))
   (define-key fingers-mode-map (kbd "k") 'ivy-apropos)

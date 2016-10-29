@@ -103,13 +103,31 @@
       (recenter-top-bottom)
       (pulse-momentary-highlight-one-line (point) 'swiper-line-face))))
 
-(defun ivy-ag-with-thing-at-point ()
+(defun ivy-ag-with-thing-at-point-grt ()
+  (interactive)
+  (ivy-ag-with-thing-at-point
+   (or (locate-dominating-file default-directory ".git")
+       default-directory)))
+
+(defun ivy-directory-filter (regex candidates)
+  (interactive)
+  (seq-filter (lambda (c) (file-directory-p (expand-file-name c ivy--directory)))
+	      (ivy--re-filter regex candidates)))
+
+;; (ivy-read "Root: " 'read-file-name-internal
+;; 	  :initial-input default-directory
+;; 	  :matcher #'ivy-directory-filter)
+
+(defun ivy-ag-with-thing-at-point (&optional dir)
   "ag with thing at point, preselecting match where point is and defaulting to current git root."
   (interactive)
   (with-ivy-calling
-   (let ((init-dir (or (locate-dominating-file default-directory ".git")
-                       default-directory))
-         (tap (strip-text-properties (or (thing-at-point 'symbol) ""))))
+   (let ((init-dir (or dir
+		       (ivy-read "Root: " 'read-file-name-internal
+				 :initial-input default-directory
+				 :matcher #'ivy-directory-filter)))
+	 (tap (strip-text-properties (or (thing-at-point 'symbol) ""))))
+     (message "setting grep dir %s" init-dir)
      (setq counsel--git-grep-dir init-dir)
      (ivy-read "ag: " 'ivy-ag-function
                :initial-input tap
