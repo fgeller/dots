@@ -18,9 +18,6 @@
 (let ((default-directory custom-site-lisp-directory))
   (normal-top-level-add-subdirs-to-load-path))
 
-(setq find-function-C-source-directory
-      (expand-file-name (concat custom-site-lisp-directory "emacs-sources")))
-
 (let ((themes-directory (expand-file-name (concat custom-site-lisp-directory "/themes"))))
   (mkdir themes-directory t)
   (mapcar (lambda (file)
