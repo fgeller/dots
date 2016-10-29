@@ -70,6 +70,12 @@
     (define-key m (kbd "tn") 'scala-next-test-forward)
     (define-key m (kbd "tp") 'scala-next-test-whitespace)
     (define-key m (kbd "u") 'uuid)
+    (define-key m (kbd "vr") 'git-gutter:revert-hunk)
+    (define-key m (kbd "ve") 'git-gutter:next-hunk)
+    (define-key m (kbd "vo") 'git-gutter:previous-hunk)
+    (define-key m (kbd "vm") 'git-gutter:mark-hunk)
+    (define-key m (kbd "vp") 'git-gutter:popup-hunk)
+    (define-key m (kbd "vs") 'git-gutter:stage-hunk)
     m))
 
 (defun fingers-mode-custom-bindings ()
