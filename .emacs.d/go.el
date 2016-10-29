@@ -22,6 +22,7 @@
   (define-key go-mode-map (kbd "M-.") 'godef-jump)
   (define-key go-mode-map (kbd "C-c C-r") 'go-rename)
   (define-key go-mode-map (kbd "C-c C-c") 'go-compile-tests)
+  (define-key go-mode-map (kbd "C-c C-m") 'go-compile-this-test)
   (define-key go-mode-map (kbd "C-c C-t") 'go-goto-first-error)
   (define-key go-mode-map (kbd "C-c C-n") 'go-goto-next-error)
   (define-key go-mode-map (kbd "C-c C-p") 'go-goto-previous-error)
@@ -42,12 +43,28 @@
       (with-current-buffer buf
 	(recompile)))))
 
+(defun go-compile-this-test ()
+  (interactive)
+  (let* ((dir (file-name-nondirectory (directory-file-name default-directory)))
+	 (comp-buf (format "*go-test[%s]*" dir))
+	 (test-name (save-excursion
+		      (re-search-backward "func \\(Test.+\\)(" (point-min) )
+		      (match-string 1)))
+	 (compile-command (format "go test -i && go test -run %s" test-name)))
+    (message "cmd %s" compile-command)
+    (if (get-buffer comp-buf)
+	(with-current-buffer comp-buf
+	  (compile compile-command))
+      (compile compile-command)
+      (with-current-buffer "*compilation*"
+	(rename-buffer comp-buf)))))
+
 (defun go-compile-tests ()
   (interactive)
   (let* ((dir (file-name-nondirectory (directory-file-name default-directory)))
 	 (comp-buf (format "*go-test[%s]*" dir))
 	 (compile-command "go test -i && go test"))
-    (if (get-buffer comp-buf) (with-current-buffer comp-buf (recompile))
+    (if (get-buffer comp-buf) (with-current-buffer comp-buf (compile compile-command))
       (compile compile-command)
       (with-current-buffer "*compilation*"
 	(rename-buffer comp-buf)))))
