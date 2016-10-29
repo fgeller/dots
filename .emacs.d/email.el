@@ -19,7 +19,7 @@
   (setq notmuch-fcc-dirs nil
         notmuch-crypto-process-mime t
         notmuch-show-indent-messages-width 2
-        notmuch-archive-tags '("-inbox" "-spam" "-movio-in" "-m2l-in" "+archive")
+        notmuch-archive-tags '("-inbox" "-spam" "-movio-in" "-m2l-in" "+archive" "-flagged")
         notmuch-saved-searches '((:name "in" :query "tag:inbox" :key "i")
                                  (:name "movio-in" :query "tag:movio-in" :key "m")
                                  (:name "m2l-in" :query "tag:m2l-in" :key "2")
