@@ -1,12 +1,9 @@
-(use-package go-mode
-  :ensure go-mode
-  :commands go-mode
-  :config
-  (add-hook 'go-mode-hook 'golang-customizations)
-  (use-package go-rename :ensure go-rename)
-  (use-package company-go :ensure company-go)
-  (use-package go-guru :ensure go-guru)
-  (use-package go-eldoc :ensure go-eldoc))
+(require-package 'go-mode)
+(add-hook 'go-mode-hook 'golang-customizations)
+(require-package 'go-rename)
+(require-package 'company-go)
+(require-package 'go-guru)
+(require-package 'go-eldoc)
 
 (defun golang-customizations ()
   (setq company-go-show-annotation 1)

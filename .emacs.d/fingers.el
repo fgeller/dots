@@ -1,17 +1,11 @@
-(use-package multiple-cursors :ensure multiple-cursors
-  :commands mc/edit-lines)
+(require-package 'multiple-cursors)
 
-(use-package avy
-  :ensure avy
-  :commands (avy-goto-word-or-subword-1)
-  :config (setq avy-all-windows nil
-                avy-keys '(?a ?s ?h ?t ?n ?e ?o ?i)))
+(require-package 'avy)
+(setq avy-all-windows nil
+      avy-keys '(?a ?s ?h ?t ?n ?e ?o ?i))
 
-(use-package anzu :ensure anzu
-  :commands
-  (anzu-query-replace anzu-query-replace-at-cursor)
-  :config
-  (global-anzu-mode +1))
+(require-package 'anzu)
+(global-anzu-mode +1)
 
 (defun uuid ()
   (interactive)
@@ -78,6 +72,7 @@
     m))
 
 (defun fingers-mode-custom-bindings ()
+  (message "applying custom fingers bindings...")
   (interactive)
   (eval-after-load 'dired '(define-key dired-mode-map (kbd "C-o") nil))
   (eval-after-load 'wdired '(define-key wdired-mode-map (kbd "C-o") nil))
@@ -327,14 +322,15 @@
 
 ;; func(a,b,c)
 
-(use-package fingers
-  :commands global-fingers-mode
-  :init
-  (add-hook 'fingers-after-reset-hook 'fingers-mode-custom-bindings)
-  (global-fingers-mode 1))
+(message "about to set custom hook")
+(add-hook 'fingers-after-reset-hook 'fingers-mode-custom-bindings)
+(message "about to require fingers")
+(require-package 'fingers)
+(message "about to start global fingers mode")
+(global-fingers-mode 1)
 
-(eval-after-load 'dired '(define-key dired-mode-map (kbd "C-c C-p") 'wdired-change-to-wdired-mode))
-(eval-after-load 'diff-mode
-  '(progn
-     (dolist (key '("n" "N" "p" "P" "k" "K" "W" "o" "A" "r" "R"))
-       (define-key diff-mode-shared-map (kbd key) nil))))
+(after 'dired
+  (define-key dired-mode-map (kbd "C-c C-p") 'wdired-change-to-wdired-mode))
+(after 'diff-mode
+  (dolist (key '("n" "N" "p" "P" "k" "K" "W" "o" "A" "r" "R"))
+    (define-key diff-mode-shared-map (kbd key) nil)))

@@ -28,6 +28,8 @@
 
 (setq-default custom-file (expand-file-name "~/.emacs.d/custom.el"))
 
+(defalias 'after 'with-eval-after-load)
+
 (require 'cl)
 (require 'package)
 (require 'uniquify)
@@ -37,14 +39,18 @@
 			 ("melpa-stable" . "https://stable.melpa.org/packages/")))
 (package-initialize)
 
-(require 'use-package)
+(defun require-package (package)
+  (unless (or (package-installed-p package)
+              (require package nil 'noerror))
+    (unless (assoc package package-archive-contents)
+      (package-refresh-contents))
+    (package-install package)
+    (require package)))
 
-(use-package exec-path-from-shell
-  :ensure exec-path-from-shell
-  :init
-  (when (memq window-system '(mac ns))
-    (let ((exec-path-from-shell-variables '("PATH" "MANPATH" "GPG_AGENT_INFO" "SSH_AUTH_SOCK" "LANG")))
-    (exec-path-from-shell-initialize))))
+(require-package 'exec-path-from-shell)
+(when (memq window-system '(mac ns))
+  (let ((exec-path-from-shell-variables '("PATH" "MANPATH" "GPG_AGENT_INFO" "SSH_AUTH_SOCK" "LANG")))
+    (exec-path-from-shell-initialize)))
 
 (setq auto-save-default nil)
 

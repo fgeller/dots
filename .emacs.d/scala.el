@@ -1,9 +1,5 @@
-(use-package scala-mode :ensure scala-mode
-  :mode
-  (("\\.scala\\'" . scala-mode)
-   ("\\.sbt\\'" . scala-mode))
-  :config
-  (add-hook 'scala-mode-hook 'scala-customizations))
+(require-package 'scala-mode)
+(add-hook 'scala-mode-hook 'scala-customizations)
 
 (defun scala-customizations ()
   (setq tab-width 2)

@@ -1,16 +1,12 @@
-(use-package pulse)
-(use-package recentf)
-(use-package seq)
+(require-package 'pulse)
+(require-package 'recentf)
+(require-package 'seq)
 
-(use-package ivy :ensure swiper
-  :defer t
-  :init
-  (setq ivy-use-virtual-buffers t)
-  :config
-  (ivy-mode 1))
+(require-package 'ivy)
+(setq ivy-use-virtual-buffers t)
+(ivy-mode 1)
 
-(use-package counsel :ensure counsel
-  :commands (counsel-more-chars))
+(require-package 'counsel)
 
 (defun strip-text-properties (txt)
   "Removes text properties from TXT"
@@ -216,6 +212,7 @@
     org-agenda-files)))
 
 (defun ivy-recentf-candidates ()
+  (require 'recentf)
   (ivy-add-action-to-candidates recentf-list 'find-file))
 
 (defun ivy-jump-candidates ()

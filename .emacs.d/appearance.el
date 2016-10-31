@@ -2,12 +2,9 @@
 (global-font-lock-mode -1)
 (remove-hook 'occur-mode-hook 'turn-on-font-lock)
 
-(use-package highlight-thing
-  :defer 2
-  :init
-  (setq highlight-thing-what-thing 'symbol)
-  :config
-  (global-highlight-thing-mode 1))
+(require-package 'highlight-thing)
+(setq highlight-thing-what-thing 'symbol)
+(global-highlight-thing-mode 1)
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)  ;; shows full-screen button for mac port
@@ -78,5 +75,4 @@
 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
-(use-package leerzeichen :ensure leerzeichen
-  :commands (leerzeichen-mode))
+(require-package 'leerzeichen)

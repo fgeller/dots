@@ -12,27 +12,23 @@
  user-mail-address "fg@m2l.io"
 )
 
-(use-package notmuch
-  :ensure notmuch
-  :commands (notmuch)
-  :init
-  (setq notmuch-fcc-dirs nil
-        notmuch-crypto-process-mime t
-        notmuch-show-indent-messages-width 2
-        notmuch-archive-tags '("-inbox" "-spam" "-movio-in" "-m2l-in" "+archive" "-flagged")
-        notmuch-saved-searches '((:name "in" :query "tag:inbox" :key "i")
-                                 (:name "movio-in" :query "tag:movio-in" :key "m")
-                                 (:name "m2l-in" :query "tag:m2l-in" :key "2")
-                                 (:name "flagged" :query "tag:flagged" :key "f")
-                                 (:name "sent" :query "tag:sent" :key "t")
-                                 (:name "spam" :query "tag:spam" :key "s")
-                                 (:name "drafts" :query "tag:draft" :key "d"))
-        notmuch-hello-sections '(notmuch-hello-insert-saved-searches
-                                 notmuch-hello-insert-search
-                                 notmuch-hello-insert-recent-searches
-                                 notmuch-hello-insert-alltags))
-  (eval-after-load 'shr
-    '(progn
+(require-package 'notmuch)
+(setq notmuch-fcc-dirs nil
+      notmuch-crypto-process-mime t
+      notmuch-show-indent-messages-width 2
+      notmuch-archive-tags '("-inbox" "-spam" "-movio-in" "-m2l-in" "+archive" "-flagged")
+      notmuch-saved-searches '((:name "in" :query "tag:inbox" :key "i")
+			       (:name "movio-in" :query "tag:movio-in" :key "m")
+			       (:name "m2l-in" :query "tag:m2l-in" :key "2")
+			       (:name "flagged" :query "tag:flagged" :key "f")
+			       (:name "sent" :query "tag:sent" :key "t")
+			       (:name "spam" :query "tag:spam" :key "s")
+			       (:name "drafts" :query "tag:draft" :key "d"))
+      notmuch-hello-sections '(notmuch-hello-insert-saved-searches
+			       notmuch-hello-insert-search
+			       notmuch-hello-insert-recent-searches
+			       notmuch-hello-insert-alltags))
+(after 'shr
        (define-key shr-map (kbd "a") nil)
        (define-key shr-map (kbd "i") nil)
        (define-key shr-map (kbd "I") nil)
@@ -42,25 +38,25 @@
        (define-key shr-map (kbd "w") nil)
        (define-key shr-map (kbd "z") nil)
        (define-key shr-map (kbd "TAB") nil)
-       (define-key shr-map (kbd "M-TAB") nil)))
+       (define-key shr-map (kbd "M-TAB") nil))
 
-  :config
-  (add-hook 'notmuch-show-hook (lambda () (setq show-trailing-whitespace nil)))
-  (mapcar (lambda (key)
-            (define-key notmuch-search-mode-map (kbd key) (lookup-key fingers-mode-map (kbd key)))
-            (define-key notmuch-show-mode-map (kbd key) (lookup-key fingers-mode-map (kbd key))))
-          '("f" "u" "p"
-            "y" "n" "e" "o" "i" "'"
-            "Y" "N" "E" "O" "I" "\""
-            "k" "l" "." "/"))
+(add-hook 'notmuch-show-hook (lambda () (setq show-trailing-whitespace nil)))
+(after 'notmuch
+       (mapcar (lambda (key)
+		 (define-key notmuch-search-mode-map (kbd key) (lookup-key fingers-mode-map (kbd key)))
+		 (define-key notmuch-show-mode-map (kbd key) (lookup-key fingers-mode-map (kbd key))))
+	       '("f" "u" "p"
+		 "y" "n" "e" "o" "i" "'"
+		 "Y" "N" "E" "O" "I" "\""
+		 "k" "l" "." "/"))
 
-  (define-key notmuch-search-mode-map (kbd "a") 'notmuch-search-archive-thread)
-  (define-key notmuch-search-mode-map (kbd "t") 'notmuch-search-tag)
-  (define-key notmuch-show-mode-map (kbd "F") 'notmuch-show-forward-message)
-  (define-key notmuch-show-mode-map (kbd "b") 'notmuch-show-view-part)
-  (define-key notmuch-show-mode-map (kbd "B") 'notmuch-open-html-part-externally)
+       (define-key notmuch-search-mode-map (kbd "a") 'notmuch-search-archive-thread)
+       (define-key notmuch-search-mode-map (kbd "t") 'notmuch-search-tag)
+       (define-key notmuch-show-mode-map (kbd "F") 'notmuch-show-forward-message)
+       (define-key notmuch-show-mode-map (kbd "b") 'notmuch-show-view-part)
+       (define-key notmuch-show-mode-map (kbd "B") 'notmuch-open-html-part-externally)
 
-  (add-hook 'notmuch-show-hook 'notmuch-show-prefer-html-over-text))
+       (add-hook 'notmuch-show-hook 'notmuch-show-prefer-html-over-text))
 
 (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
 
@@ -87,24 +83,21 @@
         (goto-char (- text-button 1))
         (notmuch-show-toggle-part-invisibility)))))
 
-(eval-after-load 'message
-  '(progn
-     (use-package bbdb :ensure bbdb
-       :defer t
-       :config
-       (progn
-	 (bbdb-initialize 'message)
-	 (bbdb-mua-auto-update-init 'message)
-	 (setq bbdb-mua-auto-update-p 'query
-	       bbdb-mua-pop-up nil
-	       bbdb-mua-mode-alist '((vm vm-mode vm-virtual-mode vm-summary-mode vm-presentation-mode)
-				     (gnus gnus-summary-mode gnus-article-mode gnus-tree-mode)
-				     (rmail rmail-mode rmail-summary-mode)
-				     (mh mhe-mode mhe-summary-mode mh-folder-mode)
-				     (message notmuch-message-mode message-mode)
-				     (mail mail-mode)
-				     (mu4e mu4e-view-mode))
-	       )))))
+(after 'message
+       (require-package 'bbdb)
+       (after 'bbdb
+	      (bbdb-initialize 'message)
+	      (bbdb-mua-auto-update-init 'message)
+	      (setq bbdb-mua-auto-update-p 'query
+		    bbdb-mua-pop-up nil
+		    bbdb-mua-mode-alist '((vm vm-mode vm-virtual-mode vm-summary-mode vm-presentation-mode)
+					  (gnus gnus-summary-mode gnus-article-mode gnus-tree-mode)
+					  (rmail rmail-mode rmail-summary-mode)
+					  (mh mhe-mode mhe-summary-mode mh-folder-mode)
+					  (message notmuch-message-mode message-mode)
+					  (mail mail-mode)
+					  (mu4e mu4e-view-mode))
+		    )))
 
 (defun offlineimap ()
   "Helper to (re)start offlineimap via compile"

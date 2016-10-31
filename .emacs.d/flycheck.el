@@ -1,2 +1,1 @@
-(use-package flycheck :ensure flycheck
-  :commands flycheck-mode)
+(require-package 'flycheck)

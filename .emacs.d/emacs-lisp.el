@@ -1,6 +1,4 @@
-(use-package elisp-slime-nav
-  :ensure elisp-slime-nav
-  :commands elisp-slime-nav-mode)
+(require-package 'elisp-slime-nav)
 
 (defun emacs-lisp-customizations ()
   (eldoc-mode 1)

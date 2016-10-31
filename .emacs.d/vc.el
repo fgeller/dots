@@ -5,18 +5,13 @@
   (let ((name (file-relative-name file)))
     (vc-git-command buf 'async nil "blame" "--date=short" "-C" "-C" rev "--" name)))
 
-(use-package magit
-  :defer t
-  :ensure magit
-  :init (setq git-commit-summary-max-length 72))
+(require-package 'magit)
+(setq git-commit-summary-max-length 72)
 
-(use-package git-gutter
-  :defer t
-  :ensure git-gutter
-  :init (global-git-gutter-mode)
-  :config
-  (setq
+(require-package 'git-gutter)
+(setq
    git-gutter:window-width 1
    git-gutter:modified-sign " "
    git-gutter:added-sign " "
-   git-gutter:deleted-sign " "))
+   git-gutter:deleted-sign " ")
+(global-git-gutter-mode)

@@ -1010,8 +1010,10 @@
   (fingers-define-keys 'identity
 		       fingers-mode-c-map
 		       fingers-c-bindings)
+  (message "about to reset fingers bindings hook")
   (run-hooks 'fingers-after-reset-hook))
 
+(message "about to reset fingers bindings")
 (fingers-reset-bindings)
 
 ;;
