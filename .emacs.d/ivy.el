@@ -94,8 +94,7 @@
 (defun ivy-ag-action (c)
   (counsel-git-grep-action c)
   (with-ivy-window
-    (let ((recenter-positions '(middle))
-          (pulse-delay (* 3 pulse-delay)))
+    (let ((recenter-positions '(middle)))
       (recenter-top-bottom)
       (pulse-momentary-highlight-one-line (point) 'swiper-line-face))))
 
@@ -109,10 +108,6 @@
   (interactive)
   (seq-filter (lambda (c) (file-directory-p (expand-file-name c ivy--directory)))
 	      (ivy--re-filter regex candidates)))
-
-;; (ivy-read "Root: " 'read-file-name-internal
-;; 	  :initial-input default-directory
-;; 	  :matcher #'ivy-directory-filter)
 
 (defun ivy-ag-with-thing-at-point (&optional dir)
   "ag with thing at point, preselecting match where point is and defaulting to current git root."
@@ -301,8 +296,7 @@
       (with-ivy-window
         (switch-to-buffer buf nil 'force-same-window)
         (goto-char pos)
-        (let ((recenter-positions '(middle))
-              (pulse-delay (* 3 pulse-delay)))
+        (let ((recenter-positions '(middle)))
           (recenter-top-bottom)
           (pulse-momentary-highlight-one-line (point) 'swiper-line-face))))))
 
@@ -350,15 +344,13 @@
 (defun swiper-with-thing-at-point ()
   (interactive)
   (swiper (thing-at-point 'symbol))
-  (let ((recenter-positions '(middle))
-        (pulse-delay (* 3 pulse-delay)))
+  (let ((recenter-positions '(middle)))
     (recenter-top-bottom)
     (pulse-momentary-highlight-one-line (point) 'swiper-line-face)))
 
 (defun swiper-tweaked ()
   (interactive)
   (swiper)
-  (let ((recenter-positions '(middle))
-        (pulse-delay (* 3 pulse-delay)))
+  (let ((recenter-positions '(middle)))
     (recenter-top-bottom)
     (pulse-momentary-highlight-one-line (point) 'swiper-line-face)))
