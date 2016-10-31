@@ -15,8 +15,7 @@
 
 (setq custom-site-lisp-directory (expand-file-name "~/.emacs.d/site-lisp"))
 (add-to-list 'load-path custom-site-lisp-directory)
-(let ((default-directory custom-site-lisp-directory))
-  (normal-top-level-add-subdirs-to-load-path))
+(let ((default-directory custom-site-lisp-directory)) (normal-top-level-add-subdirs-to-load-path))
 
 (let ((themes-directory (expand-file-name (concat custom-site-lisp-directory "/themes"))))
   (mkdir themes-directory t)
@@ -34,21 +33,19 @@
 (require 'package)
 (require 'uniquify)
 
-(setq package-user-dir (expand-file-name (concat custom-site-lisp-directory "/elpa")))
+(setq package-user-dir (expand-file-name (expand-file-name "elpa" custom-site-lisp-directory)))
 (setq package-archives '(("melpa" . "http://melpa.org/packages/")
 			 ("melpa-stable" . "https://stable.melpa.org/packages/")))
 (package-initialize)
 
 (defun require-package (package)
   (unless (or (package-installed-p package)
-              (require package nil 'noerror))
-    (unless (assoc package package-archive-contents)
-      (package-refresh-contents))
-    (package-install package)
-    (require package)))
+	      (require package nil 'noerror))
+    (unless (assoc package package-archive-contents) (package-refresh-contents))
+    (package-install package)))
 
-(require-package 'exec-path-from-shell)
 (when (memq window-system '(mac ns))
+(require-package 'exec-path-from-shell)
   (let ((exec-path-from-shell-variables '("PATH" "MANPATH" "GPG_AGENT_INFO" "SSH_AUTH_SOCK" "LANG")))
     (exec-path-from-shell-initialize)))
 
@@ -78,8 +75,6 @@
 (electric-indent-mode 1)
 (electric-pair-mode 1)
 
-(setq-default whitespace-style '(face tabs spaces trailing lines space-before-tab newline indentation::space empty space-after-tab space-mark tab-mark newline-mark))
-
 (setq-default require-final-newline t)
 
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
@@ -87,12 +82,7 @@
 (setq uniquify-ignore-buffers-re "^\\*")
 
 (setq dired-dwim-target t)
-
 (setq dired-listing-switches "-laGh")
-
-(when linux-p
-  (setq browse-url-browser-function 'browse-url-generic
-        browse-url-generic-program "chromium-browser"))
 
 (load (expand-file-name "~/.emacs.d/ivy.el"))
 (load (expand-file-name "~/.emacs.d/fingers.el"))
