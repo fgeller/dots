@@ -47,7 +47,7 @@
 	 (test-name (save-excursion
 		      (re-search-backward "func \\(Test.+\\)(" (point-min) )
 		      (match-string 1)))
-	 (compile-command (format "go test -i && go test -run %s" test-name)))
+	 (compile-command (format "go test -i && go test -v -run %s" test-name)))
     (message "cmd %s" compile-command)
     (if (get-buffer comp-buf)
 	(with-current-buffer comp-buf
@@ -60,7 +60,7 @@
   (interactive)
   (let* ((dir (file-name-nondirectory (directory-file-name default-directory)))
 	 (comp-buf (format "*go-test[%s]*" dir))
-	 (compile-command "go test -i && go test"))
+	 (compile-command "go test -i && go test -v"))
     (if (get-buffer comp-buf) (with-current-buffer comp-buf (compile compile-command))
       (compile compile-command)
       (with-current-buffer "*compilation*"
