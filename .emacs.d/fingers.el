@@ -104,7 +104,7 @@
   ;;   zoom  x-  jreg  c-   opn
   (define-key fingers-mode-map (kbd "r") 'fingers-insert-char)
   (define-key fingers-mode-map (kbd "R") 'fingers-replace-with-char)
-  (define-key fingers-mode-map (kbd "w") 'anzu-query-replace)
+  (define-key fingers-mode-map (kbd "w") 'anzu-query-replace-regexp)
   (define-key fingers-mode-map (kbd "W") 'anzu-query-replace-at-cursor)
   (define-key fingers-mode-map (kbd "b") 'fingers-slurp-forward)
   (define-key fingers-mode-map (kbd "B") 'fingers-barf-forward)
