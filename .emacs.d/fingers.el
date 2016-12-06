@@ -92,7 +92,7 @@
   (define-key fingers-mode-map (kbd "p") (fingers-nav-command swiper-tweaked))
   (define-key fingers-mode-map (kbd "P") (fingers-nav-command swiper-with-thing-at-point))
   (define-key fingers-mode-map (kbd "k") 'ivy-apropos)
-  (define-key fingers-mode-map (kbd "l") 'avy-goto-char)
+  (define-key fingers-mode-map (kbd "l") 'avy-goto-char-timer)
   (define-key fingers-mode-map (kbd "L") 'avy-goto-char-in-line)
   (define-key fingers-mode-map (kbd ".") 'ivy-jump)
 
