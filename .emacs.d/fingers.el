@@ -2,7 +2,8 @@
 
 (require-package 'avy)
 (setq avy-all-windows nil
-      avy-keys '(?a ?s ?h ?t ?n ?e ?o ?i))
+      avy-keys '(?a ?s ?h ?g ?y ?t ?n ?e ?o ?i ?' ?u ?p ?d ?r ?c ?k))
+(setq avy-timeout-seconds 0.2)
 
 (require-package 'anzu)
 (global-anzu-mode +1)
