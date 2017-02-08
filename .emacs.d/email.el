@@ -13,7 +13,8 @@
 )
 
 (require-package 'notmuch)
-(setq notmuch-fcc-dirs nil
+(require 'notmuch)
+(setq notmuch-fcc-dirs "sent +sent"
       notmuch-crypto-process-mime t
       notmuch-show-indent-messages-width 2
       notmuch-archive-tags '("-inbox" "-spam" "-movio-in" "-m2l-in" "+archive" "-flagged")
@@ -28,6 +29,9 @@
 			       notmuch-hello-insert-search
 			       notmuch-hello-insert-recent-searches
 			       notmuch-hello-insert-alltags))
+
+(define-key global-map (kbd "C-x m") 'notmuch-mua-mail)
+
 (after 'shr
        (define-key shr-map (kbd "a") nil)
        (define-key shr-map (kbd "i") nil)

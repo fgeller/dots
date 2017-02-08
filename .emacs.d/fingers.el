@@ -126,6 +126,7 @@
   (define-key fingers-mode-x-map (kbd "vs") 'show-eshell-git-status)
   (define-key fingers-mode-x-map (kbd "u") 'kmacro-start-macro)
   (define-key fingers-mode-x-map (kbd "U") 'kmacro-end-macro)
+  (define-key fingers-mode-x-map (kbd "m") 'notmuch-mua-mail)
   (define-key fingers-mode-x-map (kbd "n") 'kmacro-end-and-call-macro)
 
   (define-key fingers-mode-launch-map (kbd "e") 'last-eshell)
