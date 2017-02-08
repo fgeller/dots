@@ -142,4 +142,4 @@
 
 (setq org-src-fontify-natively nil)
 
-(setq org-babel-load-languages '((emacs-lisp . t) (scala . t) (clojure . t)))
+(setq org-babel-load-languages '((emacs-lisp . t)))
