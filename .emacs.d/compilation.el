@@ -10,3 +10,6 @@
   (setq show-trailing-whitespace nil))
 
 (add-hook 'compilation-mode-hook 'compilation-customizations)
+
+(setq compilation-scroll-output 'first-error)
+
