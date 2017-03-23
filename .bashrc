@@ -212,3 +212,7 @@ function sum {
 function mca {
     kt consume -topic mc.red.campaigns.event -brokers $1 -offsets all=newest-10: | jq '.value |= fromjson | .value.created |= (. / 1000 / 1000 / 1000 | todate) | .value'
 }
+
+function check-php-files {
+    git ls-files -m | while read f ; do php -l $f ; done
+}
