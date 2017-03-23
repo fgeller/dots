@@ -76,3 +76,4 @@
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 (require-package 'leerzeichen)
+(require 'leerzeichen)
