@@ -8,6 +8,26 @@
 (require-package 'anzu)
 (global-anzu-mode +1)
 
+;; https://github.com/purcell/emacs.d/blob/master/lisp/init-windows.el
+
+(defun split-window-vertically-instead ()
+  (interactive)
+  (let* ((next-buffer (window-buffer (next-window))))
+    (delete-other-windows)
+    (split-window-vertically)
+    (other-window 1)
+    (switch-to-buffer next-buffer)
+    (other-window 1)))
+
+(defun split-window-horizontally-instead ()
+  (interactive)
+  (let* ((next-buffer (window-buffer (next-window))))
+    (delete-other-windows)
+    (split-window-horizontally)
+    (other-window 1)
+    (switch-to-buffer next-buffer)
+    (other-window 1)))
+
 (defun uuid ()
   (interactive)
   (let* ((raw (with-temp-buffer
@@ -128,6 +148,8 @@
   (define-key fingers-mode-x-map (kbd "U") 'kmacro-end-macro)
   (define-key fingers-mode-x-map (kbd "m") 'notmuch-mua-mail)
   (define-key fingers-mode-x-map (kbd "n") 'kmacro-end-and-call-macro)
+  (define-key fingers-mode-x-map (kbd "\\") 'split-window-horizontally-instead)
+  (define-key fingers-mode-x-map (kbd "-") 'split-window-vertically-instead)
 
   (define-key fingers-mode-launch-map (kbd "e") 'last-eshell)
   (define-key fingers-mode-launch-map (kbd "m") 'single-window-magit-status)
