@@ -12,4 +12,5 @@
 (add-hook 'compilation-mode-hook 'compilation-customizations)
 
 (setq compilation-scroll-output 'first-error)
+(setq compilation-always-kill t)
 
