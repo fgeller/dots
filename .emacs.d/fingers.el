@@ -162,6 +162,11 @@
   (define-key fingers-mode-toggle-map (kbd "n") 'nlinum-mode)
   (define-key fingers-mode-toggle-map (kbd "z") 'toggle-window-zoom)
 
+  (define-key fingers-mode-map (kbd "M-<up>") 'windmove-up)
+  (define-key fingers-mode-map (kbd "M-<down>") 'windmove-down)
+  (define-key fingers-mode-map (kbd "M-<right>") 'windmove-right)
+  (define-key fingers-mode-map (kbd "M-<left>") 'windmove-left)
+  
   (define-key fingers-mode-map (kbd "S-<up>") 'enlarge-window)
   (define-key fingers-mode-map (kbd "S-<down>") 'shrink-window)
   (define-key fingers-mode-map (kbd "S-<left>") 'shrink-window-horizontally)
