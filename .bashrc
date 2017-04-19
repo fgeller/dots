@@ -34,7 +34,7 @@ fi
 
 [[ -f /usr/local/etc/bash_completion ]] && . /usr/local/etc/bash_completion
 [[ -f ${GPG_AGENT} ]] && . ~/.bash_gpg
-[[ -f ~/dots/z.sh ]] && . ~/dots/z.sh
+[[ -f ~/src/github.com/fgeller/dots/z.sh ]] && . ~/src/github.com/fgeller/dots/z.sh
 
 #
 # Aliases
