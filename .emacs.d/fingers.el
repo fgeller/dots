@@ -8,6 +8,8 @@
 (require-package 'anzu)
 (global-anzu-mode +1)
 
+(require 'subword)
+
 ;; https://github.com/purcell/emacs.d/blob/master/lisp/init-windows.el
 
 (defun split-window-vertically-instead ()
