@@ -34,7 +34,7 @@ else
 fi
 
 [[ -f /usr/local/etc/bash_completion ]] && . /usr/local/etc/bash_completion
-[[ -f ${GPG_AGENT} ]] && . ~/.bash_gpg
+[[ -f ${GPG_AGENT} ]] && eval "$(gpg-agent -q --daemon --log-file=~/.gnupg/gpg.log)"
 [[ -f ~/src/github.com/fgeller/dots/z.sh ]] && . ~/src/github.com/fgeller/dots/z.sh
 
 #
