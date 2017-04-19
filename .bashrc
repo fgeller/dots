@@ -15,6 +15,7 @@ export PROMPT_COMMAND="history -w;"
 export PS1='$ '
 export GOPATH=$HOME
 export PATH=~/bin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:$PATH
+export CDPATH=".:/Users/fgeller:/Users/fgeller/src/github.com:/Users/fgeller/src/github.com/fgeller:/Users/fgeller/src/github.com/movio"
 export EDITOR="emacsclient --alternate-editor="" -nw"
 
 if [[ 'Darwin' == `uname` ]]
