@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-target=$HOME/dots
+target=$HOME/src/github.com/fgeller/dots
 function ensure_link {
     local fn=".$1"
     if [[ ! -L "$HOME/$fn" || $(readlink "$HOME/$fn") != "$target/$fn" ]]
