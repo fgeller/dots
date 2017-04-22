@@ -1,5 +1,4 @@
 (install 'go-mode)
-(add-hook 'go-mode-hook 'golang-customizations)
 (install 'go-rename)
 (install 'company-go)
 (install 'go-guru)
@@ -15,6 +14,7 @@
   (font-lock-mode 1)
   (eldoc-mode 1)
   (flycheck-mode 1)
+  (go-eldoc-setup)
 
   (define-key go-mode-map (kbd "M-.") 'godef-jump)
   (define-key go-mode-map (kbd "C-c C-r") 'go-rename)
@@ -24,32 +24,10 @@
   (define-key go-mode-map (kbd "C-c C-n") 'go-goto-next-error)
   (define-key go-mode-map (kbd "C-c C-p") 'go-goto-previous-error)
 
-  (go-eldoc-setup)
-
   (add-hook 'before-save-hook #'gofmt-before-save)
   (add-hook 'after-save-hook #'go-after-save-run-tests))
 
-(after 'go-mode
-  (require 'flycheck)
-  (flycheck-define-checker go-unused
-    ""
-    :command ("unused" ".")
-    :error-patterns
-    ((warning line-start (file-name) ":" line ":" column ": " (message) line-end))
-    :modes go-mode
-    :predicate flycheck-buffer-saved-p)
-  (flycheck-define-checker go-gosimple
-    ""
-    :command ("gosimple" ".")
-    :error-patterns
-    ((warning line-start (file-name) ":" line ":" column ": " (message) line-end))
-    :modes go-mode
-    :predicate flycheck-buffer-saved-p)
-
-  (add-to-list 'flycheck-checkers 'go-gosimple)
-  (add-to-list 'flycheck-checkers 'go-unused)
-  (flycheck-add-next-checker 'go-test 'go-gosimple 'append)
-  (flycheck-add-next-checker 'go-test 'go-unused 'append))
+(add-hook 'go-mode-hook 'golang-customizations)
 
 (defun go-tests-buffer-name ()
   (format "*go-test[%s]*"
