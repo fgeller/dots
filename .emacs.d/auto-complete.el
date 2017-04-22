@@ -1,4 +1,4 @@
-(require-package 'company)
+(install 'company)
 (global-company-mode 1)
 (setq company-backends '(company-bbdb company-capf company-files company-elisp company-dabbrev))
 (setq company-idle-delay .12)

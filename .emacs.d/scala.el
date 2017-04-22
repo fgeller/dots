@@ -1,4 +1,4 @@
-(require-package 'scala-mode)
+(install 'scala-mode)
 (add-hook 'scala-mode-hook 'scala-customizations)
 
 (defun scala-customizations ()

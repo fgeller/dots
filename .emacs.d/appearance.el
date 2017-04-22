@@ -2,7 +2,7 @@
 (global-font-lock-mode -1)
 (remove-hook 'occur-mode-hook 'turn-on-font-lock)
 
-(require-package 'highlight-thing)
+(install 'highlight-thing 'and-require)
 (setq highlight-thing-what-thing 'symbol)
 (global-highlight-thing-mode 1)
 
@@ -75,5 +75,4 @@
 
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
-(require-package 'leerzeichen)
-(require 'leerzeichen)
+(install 'leerzeichen)

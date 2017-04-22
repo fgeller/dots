@@ -1,4 +1,4 @@
-(require-package 'yasnippet)
+(install 'yasnippet)
 (setq yas-snippet-dirs (expand-file-name "~/.emacs.d/snippets"))
 
 (after 'yasnippet

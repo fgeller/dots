@@ -1,12 +1,12 @@
-(require-package 'pulse)
-(require-package 'recentf)
-(require-package 'seq)
+(install 'pulse)
+(install 'recentf)
+(install 'seq)
 
-(require-package 'ivy)
+(install 'ivy)
 (setq ivy-use-virtual-buffers t)
 (ivy-mode 1)
 
-(require-package 'counsel)
+(install 'counsel)
 
 (defun strip-text-properties (txt)
   "Removes text properties from TXT"

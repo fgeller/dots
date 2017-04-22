@@ -12,25 +12,14 @@
  user-mail-address "fg@m2l.io"
 )
 
-(require-package 'notmuch)
-(require 'notmuch)
-(setq notmuch-fcc-dirs "sent +sent"
-      notmuch-crypto-process-mime t
-      notmuch-show-indent-messages-width 2
-      notmuch-archive-tags '("-inbox" "-spam" "-movio-in" "-m2l-in" "+archive" "-flagged")
-      notmuch-saved-searches '((:name "in" :query "tag:inbox" :key "i")
-			       (:name "movio-in" :query "tag:movio-in" :key "m")
-			       (:name "m2l-in" :query "tag:m2l-in" :key "2")
-			       (:name "flagged" :query "tag:flagged" :key "f")
-			       (:name "sent" :query "tag:sent" :key "t")
-			       (:name "spam" :query "tag:spam" :key "s")
-			       (:name "drafts" :query "tag:draft" :key "d"))
-      notmuch-hello-sections '(notmuch-hello-insert-saved-searches
-			       notmuch-hello-insert-search
-			       notmuch-hello-insert-recent-searches
-			       notmuch-hello-insert-alltags))
+(install 'notmuch)
 
-(define-key global-map (kbd "C-x m") 'notmuch-mua-mail)
+(defun create-mail ()
+  (interactive)
+  (require 'notmuch)
+  (notmuch-mua-mail))
+
+(add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
 
 (after 'shr
        (define-key shr-map (kbd "a") nil)
@@ -44,9 +33,24 @@
        (define-key shr-map (kbd "TAB") nil)
        (define-key shr-map (kbd "M-TAB") nil))
 
-(add-hook 'notmuch-show-hook (lambda () (setq show-trailing-whitespace nil)))
 (after 'notmuch
-       (mapcar (lambda (key)
+  (setq notmuch-fcc-dirs "sent +sent"
+        notmuch-crypto-process-mime t
+        notmuch-show-indent-messages-width 2
+        notmuch-archive-tags '("-inbox" "-spam" "-movio-in" "-m2l-in" "+archive" "-flagged")
+        notmuch-saved-searches '((:name "in" :query "tag:inbox" :key "i")
+                                 (:name "movio-in" :query "tag:movio-in" :key "m")
+                                 (:name "m2l-in" :query "tag:m2l-in" :key "2")
+                                 (:name "flagged" :query "tag:flagged" :key "f")
+                                 (:name "sent" :query "tag:sent" :key "t")
+                                 (:name "spam" :query "tag:spam" :key "s")
+                                 (:name "drafts" :query "tag:draft" :key "d"))
+        notmuch-hello-sections '(notmuch-hello-insert-saved-searches
+                                 notmuch-hello-insert-search
+                                 notmuch-hello-insert-recent-searches
+                                 notmuch-hello-insert-alltags))
+  (add-hook 'notmuch-show-hook (lambda () (setq show-trailing-whitespace nil)))
+  (mapcar (lambda (key)
 		 (define-key notmuch-search-mode-map (kbd key) (lookup-key fingers-mode-map (kbd key)))
 		 (define-key notmuch-show-mode-map (kbd key) (lookup-key fingers-mode-map (kbd key))))
 	       '("f" "u" "p"
@@ -61,8 +65,6 @@
        (define-key notmuch-show-mode-map (kbd "B") 'notmuch-open-html-part-externally)
 
        (add-hook 'notmuch-show-hook 'notmuch-show-prefer-html-over-text))
-
-(add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
 
 (defun notmuch-open-html-part-externally ()
   (interactive)
@@ -88,7 +90,7 @@
         (notmuch-show-toggle-part-invisibility)))))
 
 (after 'message
-       (require-package 'bbdb)
+       (install 'bbdb)
        (after 'bbdb
 	      (bbdb-initialize 'message)
 	      (bbdb-mua-auto-update-init 'message)

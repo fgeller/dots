@@ -1,14 +1,12 @@
-(require-package 'multiple-cursors)
+(install 'flycheck)
 
-(require-package 'avy)
+(install 'avy)
 (setq avy-all-windows nil
       avy-keys '(?a ?s ?h ?g ?y ?t ?n ?e ?o ?i ?' ?u ?p ?d ?r ?c ?k))
 (setq avy-timeout-seconds 0.2)
 
-(require-package 'anzu)
+(install 'anzu)
 (global-anzu-mode +1)
-
-(require 'subword)
 
 ;; https://github.com/purcell/emacs.d/blob/master/lisp/init-windows.el
 
@@ -97,9 +95,9 @@
 (defun fingers-mode-custom-bindings ()
   (message "applying custom fingers bindings...")
   (interactive)
-  (eval-after-load 'dired '(define-key dired-mode-map (kbd "C-o") nil))
-  (eval-after-load 'wdired '(define-key wdired-mode-map (kbd "C-o") nil))
-  (eval-after-load 'compile '(define-key compilation-mode-map (kbd "C-o") nil))
+  (after 'dired (define-key dired-mode-map (kbd "C-o") nil))
+  (after 'wdired (define-key wdired-mode-map (kbd "C-o") nil))
+  (after 'compile (define-key compilation-mode-map (kbd "C-o") nil))
   (define-key global-map (kbd "C-o") 'global-fingers-mode)
 
   ;;     j    f    u    p    ;     [    ]
@@ -148,7 +146,7 @@
   (define-key fingers-mode-x-map (kbd "vs") 'show-eshell-git-status)
   (define-key fingers-mode-x-map (kbd "u") 'kmacro-start-macro)
   (define-key fingers-mode-x-map (kbd "U") 'kmacro-end-macro)
-  (define-key fingers-mode-x-map (kbd "m") 'notmuch-mua-mail)
+  (define-key fingers-mode-x-map (kbd "m") 'create-mail)
   (define-key fingers-mode-x-map (kbd "n") 'kmacro-end-and-call-macro)
   (define-key fingers-mode-x-map (kbd "\\") 'split-window-horizontally-instead)
   (define-key fingers-mode-x-map (kbd "-") 'split-window-vertically-instead)
@@ -353,11 +351,8 @@
 
 ;; func(a,b,c)
 
-(message "about to set custom hook")
 (add-hook 'fingers-after-reset-hook 'fingers-mode-custom-bindings)
-(message "about to require fingers")
-(require-package 'fingers)
-(message "about to start global fingers mode")
+(install 'fingers 'and-require)
 (global-fingers-mode 1)
 
 (after 'dired

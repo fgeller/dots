@@ -29,20 +29,22 @@
 (require 'cl)
 (require 'package)
 (require 'uniquify)
+(require 'subword)
 
 (setq package-user-dir (file-name (file-name "elpa" custom-site-lisp)))
 (setq package-archives '(("melpa" . "http://melpa.org/packages/")
 			 ("melpa-stable" . "https://stable.melpa.org/packages/")))
 (package-initialize)
 
-(defun require-package (package)
+(defun install (package &optional req)
   (unless (or (package-installed-p package)
-	      (require package nil 'noerror))
-    (unless (assoc package package-archive-contents) (package-refresh-contents))
-    (package-install package)))
+              (assoc package package-archive-contents))
+    (package-refresh-contents)
+    (package-install package))
+  (when req (require package)))
 
 (when (memq window-system '(mac ns))
-(require-package 'exec-path-from-shell)
+  (install 'exec-path-from-shell)
   (let ((exec-path-from-shell-variables '("PATH" "MANPATH" "GPG_AGENT_INFO" "SSH_AUTH_SOCK" "LANG")))
     (exec-path-from-shell-initialize)))
 

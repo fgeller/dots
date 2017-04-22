@@ -36,11 +36,10 @@
  org-default-notes-file (concat org-directory "/Notes.org")
  org-agenda-files (list (concat org-directory "/Tasks.org")))
 
-(eval-after-load 'org
-  '(progn
-     (org-clock-persistence-insinuate)
-     (dolist (org-mod '(org-crypt org-info org-eshell))
-       (require org-mod))))
+(after 'org
+  (org-clock-persistence-insinuate)
+  (dolist (org-mod '(org-crypt org-info org-eshell))
+    (require org-mod)))
 
 (defun org-schedule-and-refile ()
   (interactive)

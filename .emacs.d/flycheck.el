@@ -1,1 +1,1 @@
-(require-package 'flycheck)
+(install 'flycheck)
