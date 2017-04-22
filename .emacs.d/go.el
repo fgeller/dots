@@ -18,8 +18,8 @@
 
   (define-key go-mode-map (kbd "M-.") 'godef-jump)
   (define-key go-mode-map (kbd "C-c C-r") 'go-rename)
-  (define-key go-mode-map (kbd "C-c C-c") 'go-compile-tests)
-  (define-key go-mode-map (kbd "C-c C-m") 'go-compile-this-test)
+  (define-key go-mode-map (kbd "C-c C-c") 'go-run-all-tests)
+  (define-key go-mode-map (kbd "C-c C-m") 'go-run-this-test)
   (define-key go-mode-map (kbd "C-c C-t") 'go-goto-first-error)
   (define-key go-mode-map (kbd "C-c C-n") 'go-goto-next-error)
   (define-key go-mode-map (kbd "C-c C-p") 'go-goto-previous-error)
@@ -30,118 +30,81 @@
 (add-hook 'go-mode-hook 'golang-customizations)
 
 (defun go-tests-buffer-name ()
-  (format "*go-test[%s]*"
-	  (file-name-nondirectory (directory-file-name default-directory))))
+  (format "*go-test[%s in %s]*"
+          (file-name-nondirectory (directory-file-name default-directory))
+          (file-name-directory (directory-file-name default-directory))))
 
 (defun go-after-save-run-tests ()
   (interactive)
-  (let* ((buf (go-tests-buffer-name)))
-    (when (get-buffer buf)
-      (with-current-buffer buf
-	(recompile)))))
+  (let ((buf (get-buffer (go-tests-buffer-name))))
+    (when buf (with-current-buffer buf (recompile)))))
 
-(defun go-compile-this-test ()
+(defun go-run-this-test ()
   (interactive)
-  (let* ((dir (file-name-nondirectory (directory-file-name default-directory)))
-	 (comp-buf (format "*go-test[%s]*" dir))
-	 (test-name (save-excursion
-		      (re-search-backward "func \\(Test.+\\)(" (point-min) )
-		      (match-string 1)))
-	 (compile-command (format "go test -i && go test -v -run %s" test-name)))
-    (message "cmd %s" compile-command)
-    (if (get-buffer comp-buf)
-	(with-current-buffer comp-buf
-	  (compile compile-command))
-      (compile compile-command)
-      (with-current-buffer "*compilation*"
-	(rename-buffer comp-buf)))))
+  (go-run-tests (format "go test -i && go test -v -run %s"
+                        (save-excursion
+                          (re-search-backward "func \\(Test.+\\)(" (point-min))
+                          (match-string 1)))))
 
-(defun go-compile-tests ()
+(defun go-run-all-tests ()
   (interactive)
-  (let* ((dir (file-name-nondirectory (directory-file-name default-directory)))
-	 (comp-buf (format "*go-test[%s]*" dir))
-	 (compile-command "go test -i && go test -v"))
-    (if (get-buffer comp-buf) (with-current-buffer comp-buf (compile compile-command))
-      (compile compile-command)
-      (with-current-buffer "*compilation*"
-	(rename-buffer comp-buf)))))
+  (go-run-tests "go test -i && go test -v"))
 
-(defmacro go-with-test-buffer (&rest body)
+(defun go-run-tests (cmd)
+  (let* ((dir (file-name-nondirectory (directory-file-name default-directory)))
+         (buf (go-tests-buffer-name)))
+    (if (get-buffer buf) (with-current-buffer buf (compile cmd))
+      (compile cmd)
+      (with-current-buffer "*compilation*" (rename-buffer buf)))))
+
+(defmacro go-goto-error (&rest body)
   `(let ((buf (go-tests-buffer-name)))
      (when (get-buffer buf)
        (with-current-buffer buf
-	 ,@body))))
+         ,@body
+         (compile-goto-error)))))
 
 (defun go-goto-first-error ()
   (interactive)
-  (go-with-test-buffer
-   (goto-char (point-min))
-   (compilation-next-error 1)
-   (compile-goto-error)))
+  (go-goto-error (goto-char (point-min)) (compilation-next-error 1)))
 
 (defun go-goto-next-error ()
   (interactive)
-  (go-with-test-buffer
-   (compilation-next-error 1)
-   (compile-goto-error)))
+  (go-goto-error (compilation-next-error 1)))
 
 (defun go-goto-previous-error ()
   (interactive)
-  (go-with-test-buffer
-   (compilation-previous-error 1)
-   (compile-goto-error)))
+  (go-goto-error (compilation-previous-error 1)))
 
 (defun go-ignore-all-tests ()
   (interactive)
   (save-excursion
     (goto-char (point-min))
-    (replace-regexp
-     "func Test\\([^(]+\\)("
-     "func IgnoreTest\\1("
-     nil
-     (point-min)
-     (point-max))))
+    (replace-regexp "func Test\\([^(]+\\)(" "func IgnoreTest\\1(" nil (point-min) (point-max))))
 
 (defun go-enable-all-tests ()
   (interactive)
   (save-excursion
     (goto-char (point-min))
-    (replace-regexp
-     "func IgnoreTest\\([^(]+\\)("
-     "func Test\\1("
-     nil
-     (point-min)
-     (point-max))))
+    (replace-regexp "func IgnoreTest\\([^(]+\\)(" "func Test\\1(" nil (point-min) (point-max))))
 
 (defun go-play ()
   (interactive)
   (let* ((temporary-file-directory (expand-file-name "tmp/" (getenv "GOPATH")))
-	 (tf
-	  (progn
-	    (make-directory temporary-file-directory t)
-	    (make-temp-file "go-play" nil ".go"))))
-    (find-file tf)
+         (temp-file (progn
+                      (make-directory temporary-file-directory t)
+                      (make-temp-file "go-play" nil ".go"))))
+    (find-file temp-file)
     (insert "package main
 
-import (
-	\"fmt\"
-)
+import \"fmt\"
 
 func main() {
 	fmt.Printf(\"\")
 }")
-    (goto-char 61)
+    (goto-char 55)
     (go-mode)
-    (define-key
-      (current-local-map)
-      (kbd "C-c C-k")
-      (lambda () (interactive)
-	(save-buffer)
-	(delete-file (buffer-file-name))
-	(kill-buffer)))
-    (define-key
-      (current-local-map)
-      (kbd "C-c C-c")
-      (lambda () (interactive)
-	(save-buffer)
-	(compile (format "go run %s" (buffer-file-name)))))))
+    (define-key (current-local-map) (kbd "C-c C-k")
+      (lambda () (interactive) (save-buffer) (delete-file buffer-file-name) (kill-buffer)))
+    (define-key (current-local-map) (kbd "C-c C-c")
+      (lambda () (interactive) (save-buffer) (compile (format "go run %s" buffer-file-name))))))
