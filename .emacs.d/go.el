@@ -23,6 +23,8 @@
   (define-key go-mode-map (kbd "C-c C-t") 'go-goto-first-error)
   (define-key go-mode-map (kbd "C-c C-n") 'go-goto-next-error)
   (define-key go-mode-map (kbd "C-c C-p") 'go-goto-previous-error)
+  (define-key go-mode-map (kbd "C-c C-e") 'go-play)
+  (define-key go-mode-map (kbd "C-c C-o r") 'go-guru-referrers)
 
   (add-hook 'before-save-hook #'gofmt-before-save)
   (add-hook 'after-save-hook #'go-after-save-run-tests))
