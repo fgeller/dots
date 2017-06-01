@@ -30,7 +30,6 @@ else
     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
     keychain --nocolor --quiet --agents ssh id_rsa movio_id_rsa
     source ~/.keychain/`uname -n`-sh
-    source ~/.nvm/nvm.sh
 fi
 
 [[ -f /usr/local/etc/bash_completion ]] && . /usr/local/etc/bash_completion
