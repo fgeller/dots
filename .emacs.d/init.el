@@ -37,8 +37,7 @@
 (package-initialize)
 
 (defun install (package &optional req)
-  (unless (or (package-installed-p package)
-              (assoc package package-archive-contents))
+  (unless (package-installed-p package)
     (package-refresh-contents)
     (package-install package))
   (when req (require package)))
