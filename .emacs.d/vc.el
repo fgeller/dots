@@ -17,6 +17,3 @@
    git-gutter:added-sign " "
    git-gutter:deleted-sign " ")
 (global-git-gutter-mode)
-
-(install 'magit-gh-pulls)
-(add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
