@@ -8,6 +8,14 @@
 (install 'anzu)
 (global-anzu-mode +1)
 
+(defun list-todo-in-current-dir ()
+  (interactive)
+  (message "hello, world")
+  (grep "grep -nHsI --color=never -B1 -A2 TODO *")
+  (save-excursion
+    (with-current-buffer "*grep*"
+      (highlight-regexp "\\(TODO\\|FIXME\\)"))))
+
 ;; https://github.com/purcell/emacs.d/blob/master/lisp/init-windows.el
 
 (defun split-window-vertically-instead ()
@@ -154,6 +162,7 @@
   (define-key fingers-mode-launch-map (kbd "e") 'last-eshell)
   (define-key fingers-mode-launch-map (kbd "m") 'single-window-magit-status)
   (define-key fingers-mode-launch-map (kbd "n") 'notmuch)
+  (define-key fingers-mode-launch-map (kbd "l") 'list-todo-in-current-dir)
   (define-key fingers-mode-launch-map (kbd "oo") 'offlineimap)
 
   (define-key fingers-mode-toggle-map (kbd "s") 'scala-errors-mode)
