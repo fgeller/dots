@@ -26,6 +26,8 @@ then
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/coreutils/libexec/gnubin:$PATH
     export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
+    export NVM_DIR="$HOME/.nvm"
+    . "/usr/local/opt/nvm/nvm.sh"
 else
     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
     keychain --nocolor --quiet --agents ssh id_rsa movio_id_rsa
