@@ -14,7 +14,7 @@ export HISTFILE="${HISTDIRECTORY}/$(date -u +%H.%M.%S)_${HOSTNAME}_$$"
 export PROMPT_COMMAND="history -w;"
 export PS1='$ '
 export GOPATH=$HOME
-export PATH=~/bin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:$PATH
+export PATH=~/bin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
 export CDPATH=".:~:~/src/github.com:~/src/github.com/fgeller:~/src/github.com/movio"
 export EDITOR="emacsclient --alternate-editor="" -nw"
 
