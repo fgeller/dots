@@ -86,6 +86,7 @@
   (custom-theme-set-faces
    'iv
    `(default ((t (:foreground ,black :background ,white :family "Roboto Mono" :height 115))))
+   `(shadow ((t (:foreground ,black :background ,white))))
    `(button ((t (:foreground ,red :underline nil :weight normal))))
    `(comint-highlight-input ((t (:foreground nil :background nil))))
    `(comint-highlight-prompt ((t (:foreground nil :background nil))))
