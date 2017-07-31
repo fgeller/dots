@@ -37,14 +37,10 @@
  org-agenda-files (list (concat org-directory "/Tasks.org")))
 
 (after 'org
+  (setq org-clock-persist 'history)
   (org-clock-persistence-insinuate)
   (dolist (org-mod '(org-crypt org-info org-eshell))
     (require org-mod)))
-
-(defun org-schedule-and-refile ()
-  (interactive)
-  (call-interactively 'org-schedule)
-  (org-refile))
 
 (setq org-todo-keywords '(
                     (sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
@@ -99,22 +95,6 @@
 
 (setq org-agenda-clockreport-parameter-plist '(:link t :maxlevel 5))
 
-(add-hook 'org-capture-before-finalize-hook
-          'org-refile-captured-entry-to-scheduled)
-
-(defun org-refile-captured-entry-to-scheduled ()
-  (save-excursion
-    (org-capture-goto-last-stored)
-    (when (or (org-get-scheduled-time (point))
-              (org-get-deadline-time (point)))
-      (let* ((scheduled-path (list org-default-tasks-file "Scheduled"))
-             (target-marker (org-find-olp scheduled-path)))
-        (org-refile nil nil (list
-                             "Scheduled"
-                             org-default-tasks-file
-                             nil ;; re not needed
-                             (marker-position target-marker)))))))
-
 (setq org-capture-templates
       `(("t" "Task"
          entry (file+olp ,org-default-tasks-file "Inbox" "Personal")
@@ -127,10 +107,7 @@
          "* %?\n\n  %i\n")
         ("b" "Bookmark"
          entry (file+headline ,(expand-file-name "Bookmarks.org" org-directory) "Bookmarks")
-         "* %?\n\n  %c%i\n")
-        ("s" "Scratch"
-         entry (file+headline ,(expand-file-name "scratch.org" user-emacs-directory) "Scratch")
-         "* Scratch it %U\n%i\n   #+begin_src text\n%?\n   #+end_src\n")))
+         "* %?\n\n  %c%i\n")))
 
 (setq
  org-outline-path-complete-in-steps nil
