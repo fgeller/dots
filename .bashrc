@@ -217,3 +217,9 @@ function mca {
 function check-php-files {
     git ls-files -m | while read f ; do php -l $f ; done
 }
+
+function datediff() {
+    d1=$(date -d "$1" +%s)
+    d2=$(date -d "$2" +%s)
+    echo $(( (d1 - d2) / 86400 )) days
+}
