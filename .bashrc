@@ -4,6 +4,10 @@ shopt -s histappend
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
+
+#
+# Keep all the histories!
+#
 # http://unix.stackexchange.com/a/1292
 export HISTSIZE=""
 export HISTCONTROL=ignoredups:erasedups
@@ -12,10 +16,14 @@ export HISTDIRECTORY="$HOME/.history/$(date -u +%Y/%m/%d)"
 [[ ! -e "$HISTDIRECTORY" ]] && mkdir -p $HISTDIRECTORY
 export HISTFILE="${HISTDIRECTORY}/$(date -u +%H.%M.%S)_${HOSTNAME}_$$"
 export PROMPT_COMMAND="history -w;"
+
 export PS1='$ '
+
 export GOPATH=$HOME
+
 export PATH=~/bin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
 export CDPATH=".:~:~/src/github.com:~/src/github.com/fgeller:~/src/github.com/movio"
+
 export EDITOR="emacsclient --alternate-editor="" -nw"
 
 if [[ 'Darwin' == `uname` ]]
@@ -26,8 +34,6 @@ then
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/coreutils/libexec/gnubin:$PATH
     export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
-    export NVM_DIR="$HOME/.nvm"
-    . "/usr/local/opt/nvm/nvm.sh"
 else
     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
     keychain --nocolor --quiet --agents ssh id_rsa movio_id_rsa
@@ -36,7 +42,13 @@ fi
 
 [[ -f /usr/local/etc/bash_completion ]] && . /usr/local/etc/bash_completion
 [[ -f ${GPG_AGENT} ]] && eval "$(gpg-agent -q --daemon --log-file=~/.gnupg/gpg.log)"
-[[ -f ~/src/github.com/fgeller/dots/z.sh ]] && . ~/src/github.com/fgeller/dots/z.sh
+
+#
+# NVM (across darwin and linux)
+#
+[[ -f ${HOME}/.nvm ]] && export NVM_DIR="$HOME/.nvm"
+[[ -f /usr/local/opt/nvm/nvm.sh ]] && . "/usr/local/opt/nvm/nvm.sh"
+[[ -f ${HOME}/.nvm/nvm.sh ]] && . "${HOME}/.nvm/nvm.sh"
 
 #
 # Aliases
