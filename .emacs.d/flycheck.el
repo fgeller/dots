@@ -1,5 +1,18 @@
 (install 'flycheck)
 
+;; https://github.com/syl20bnr/spacemacs/tree/master/layers/+frameworks/react
+(defun flycheck-set-eslint-executable ()
+  (require 'flycheck)
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (global-eslint (executable-find "eslint"))
+         (local-eslint (expand-file-name "node_modules/.bin/eslint" root))
+         (eslint (if (file-executable-p local-eslint) local-eslint global-eslint)))
+    (setq-local flycheck-javascript-eslint-executable eslint)))
+
+(add-hook 'rjsx-mode-hook 'flycheck-set-eslint-executable)
+
 (after 'go-mode
   (require 'flycheck)
   (flycheck-define-checker go-unused
