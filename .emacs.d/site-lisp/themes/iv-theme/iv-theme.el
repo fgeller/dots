@@ -134,6 +134,12 @@
    `(avy-lead-face ((t (:foreground ,red :background nil))))
    `(avy-background-face ((t (:foreground ,white))))
 
+   `(company-scrollbar-bg                 ((t (:foreground nil   :background ,white))))
+   `(company-scrollbar-fg                 ((t (:foreground ,black   :background ,black))))
+   `(company-tooltip                      ((t (:foreground ,black   :background ,white))))
+   `(company-tooltip-common               ((t (:foreground ,red   :background nil))))
+   `(company-tooltip-selection            ((t (:foreground nil   :background ,green))))
+
    `(custom-face-tag ((t (:foreground nil :background nil))))
    `(custom-visibility ((t (:foreground ,green :background nil))))
    `(custom-link ((t (:foreground ,green :background nil))))
