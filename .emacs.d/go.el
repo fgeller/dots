@@ -20,6 +20,7 @@
   (define-key go-mode-map (kbd "C-c C-r") 'go-rename)
   (define-key go-mode-map (kbd "C-c C-c") 'go-run-all-tests)
   (define-key go-mode-map (kbd "C-c C-m") 'go-run-this-test)
+  (define-key go-mode-map (kbd "C-c C-l") 'go-tests-toggle-truncate-lines)
   (define-key go-mode-map (kbd "C-c C-t") 'go-goto-first-error)
   (define-key go-mode-map (kbd "C-c C-n") 'go-goto-next-error)
   (define-key go-mode-map (kbd "C-c C-p") 'go-goto-previous-error)
@@ -35,6 +36,11 @@
   (format "*go-test[%s in %s]*"
           (file-name-nondirectory (directory-file-name default-directory))
           (file-name-directory (directory-file-name default-directory))))
+
+(defun go-tests-toggle-truncate-lines ()
+  (interactive)
+  (let ((buf (get-buffer (go-tests-buffer-name))))
+    (when buf (with-current-buffer buf (toggle-truncate-lines)))))
 
 (defun go-after-save-run-tests ()
   (interactive)
