@@ -1,4 +1,4 @@
-(defvar persistent-scratch-filename "~/.emacs.d/scratch")
+(defvar persistent-scratch-filename "~/orgs/scratch")
 
 (defun save-persistent-scratch ()
   (with-current-buffer (get-buffer "scratch")
