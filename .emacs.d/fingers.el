@@ -87,6 +87,7 @@
     (define-key m (kbd "n") 'compilation-goto-first-error)
     (define-key m (kbd "o") 'flycheck-next-error)
     (define-key m (kbd "s") 'sort-lines)
+    (define-key m (kbd "c") 'count-words)
     (define-key m (kbd "te") 'enable-all-tests)
     (define-key m (kbd "ti") 'ignore-all-tests)
     (define-key m (kbd "tn") 'scala-next-test-forward)
