@@ -61,7 +61,6 @@ alias dl='cd ~/Downloads'
 alias e="$EDITOR"
 alias ed='cd ~/.emacs.d'
 alias em="$EDITOR -e \"(progn (magit-status) (delete-other-windows))\""
-alias git=hub
 alias g='git'
 alias ga='git a'
 alias gad='git ad'
