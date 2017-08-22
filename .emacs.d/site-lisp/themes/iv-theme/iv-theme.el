@@ -67,12 +67,12 @@
 (deftheme iv "Minimalistic theme based on 4 colors.")
 
 (defconst iv-colors-alist
-  `(("black" . "black")
-    ("white" . "white")
-    ("yellow" .   ,(if (window-system) "#FFC107" "yellow"))
-    ("red" .   ,(if (window-system) "#F44336" "red"))
-    ("green" . ,(if (window-system) "#66BB6A" "green"))
-    ("blue" . ,(if (window-system) "#66BB6A" "blue")))
+  `(("black"  . "black")
+    ("white"  . "white")
+    ("yellow" . ,(if (window-system) "#FFC107" "yellow"))
+    ("red"    . ,(if (window-system) "#F44336" "red"))
+    ("green"  . ,(if (window-system) "#66BB6A" "green"))
+    ("blue"   . ,(if (window-system) "#66BB6A" "blue")))
   "List of colors.")
 
 (defmacro iv-with-color-variables (&rest body)
@@ -183,8 +183,8 @@
    `(eshell-ls-directory ((t (:foreground nil :background nil :weight normal))))
    `(eshell-ls-executable ((t (:foreground nil :background nil :weight normal))))
 
-   `(flycheck-error ((t (:foreground ,red :background nil :weight normal))))
-   `(flycheck-warning ((t (:foreground ,red :background nil :weight normal))))
+   `(flycheck-error ((t (:foreground ,white :background ,red :weight normal))))
+   `(flycheck-warning ((t (:foreground ,white :background ,red :weight normal))))
 
    `(font-lock-builtin-face ((t :foreground nil :background nil)))
    `(font-lock-comment-delimiter-face ((t :foreground nil :background nil)))
