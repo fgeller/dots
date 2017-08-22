@@ -1,0 +1,7 @@
+# -*- mode:snippet; coding: utf-8 -*-
+# name: Fun
+# key: f
+# --
+func ($1 *$2) ${3:name}(${4:args}) (${5: error}) {
+     $0
+}
