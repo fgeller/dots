@@ -8,6 +8,8 @@
 (install 'anzu)
 (global-anzu-mode +1)
 
+(install 'multiple-cursors)
+
 (defun list-todo-in-current-dir ()
   (interactive)
   (message "hello, world")
