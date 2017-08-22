@@ -148,6 +148,7 @@
   (define-key fingers-mode-map (kbd "m") 'jump-to-register)
 
   (define-key fingers-mode-map (kbd "|") 'mc/edit-lines)
+  (define-key fingers-mode-map (kbd "\\") 'goto-line)
 
   (define-key fingers-mode-c-map (kbd "RET") 'browse-url-at-point)
 
