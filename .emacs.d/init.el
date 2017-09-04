@@ -47,6 +47,8 @@
   (let ((exec-path-from-shell-variables '("PATH" "MANPATH" "GPG_AGENT_INFO" "SSH_AUTH_SOCK" "LANG")))
     (exec-path-from-shell-initialize)))
 
+(setq epg-gpg-program "gpg2")
+
 (setq auto-save-default nil)
 
 (global-auto-revert-mode 1)
