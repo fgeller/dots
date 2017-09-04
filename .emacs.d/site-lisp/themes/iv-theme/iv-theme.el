@@ -156,6 +156,14 @@
 
    `(eldoc-highlight-function-argument ((t (:weight normal :foreground ,red :background nil))))
 
+   `(ensime-breakpoint-face ((t (:weight normal :foreground ,red :background nil))))
+   `(ensime-compile-errline ((t (:weight normal :foreground ,red :background nil))))
+   `(ensime-compile-warnline ((t (:weight normal :foreground ,yellow :background nil))))
+   `(ensime-errline-highlight ((t (:weight normal :foreground ,red :background nil))))
+   `(ensime-warnline-highlight ((t (:weight normal :foreground ,yellow :background nil))))
+   `(ensime-implicit-highlight ((t (:weight normal :foreground ,blue :background nil))))
+   `(ensime-writable-value-face ((t (:weight normal :foreground ,green :background nil))))
+
    `(erc-action-face ((t (:foreground ,black :background nil))))
    `(erc-bold-face ((t (:foreground ,black :background nil))))
    `(erc-button ((t (:foreground ,black :background nil))))
@@ -183,8 +191,8 @@
    `(eshell-ls-directory ((t (:foreground nil :background nil :weight normal))))
    `(eshell-ls-executable ((t (:foreground nil :background nil :weight normal))))
 
-   `(flycheck-error ((t (:foreground ,white :background ,red :weight normal))))
-   `(flycheck-warning ((t (:foreground ,white :background ,red :weight normal))))
+   `(flycheck-error ((t (:foreground ,red :background nil :weight normal))))
+   `(flycheck-warning ((t (:foreground ,red :background nil :weight normal))))
 
    `(font-lock-builtin-face ((t :foreground nil :background nil)))
    `(font-lock-comment-delimiter-face ((t :foreground nil :background nil)))
