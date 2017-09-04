@@ -165,7 +165,7 @@
     (when grt
       (let* ((default-directory grt)
 	     (q (or filter ""))
-	     (cmd (format "git ls-files --full-name -- | grep \"%s\" | head -100" q)))
+	     (cmd (format "git ls-files --full-name -- | grep \"%s\" | head -1000" q)))
         (split-string (shell-command-to-string cmd) "\n" t)))))
 
 (defun ivy-git-files-candidates (&optional filter)
