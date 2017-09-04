@@ -24,7 +24,7 @@ export GOPATH=$HOME
 export PATH=~/bin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
 export CDPATH=".:~:~/src/github.com:~/src/github.com/fgeller:~/src/github.com/movio"
 
-export EDITOR="emacsclient --alternate-editor="" -nw"
+export EDITOR="emacs -nw"
 
 if [[ 'Darwin' == `uname` ]]
 then
@@ -60,7 +60,6 @@ alias cqlsh='cqlsh --no-color'
 alias dl='cd ~/Downloads'
 alias e="$EDITOR"
 alias ed='cd ~/.emacs.d'
-alias em="$EDITOR -e \"(progn (magit-status) (delete-other-windows))\""
 alias g='git'
 alias ga='git a'
 alias gad='git ad'
@@ -117,6 +116,10 @@ function tmp {
 
     cd ~/tmp
     md "$1-`date +%Y-%m-%dT%H:%M:%S`"
+}
+
+function em {
+    $EDITOR --eval "(progn (magit-status \"$PWD/$(git rev-parse --show-cdup)\") (delete-other-windows))"
 }
 
 function ydl {
