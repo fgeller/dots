@@ -16,3 +16,4 @@ lib-src
 .#*
 .stfolder
 quickfix
+.ensime_cache
