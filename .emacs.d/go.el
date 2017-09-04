@@ -20,6 +20,7 @@
   (define-key go-mode-map (kbd "C-c C-r") 'go-rename)
   (define-key go-mode-map (kbd "C-c C-c") 'go-run-all-tests)
   (define-key go-mode-map (kbd "C-c C-m") 'go-run-this-test)
+  (define-key go-mode-map (kbd "C-c C-v") 'go-build-this)
   (define-key go-mode-map (kbd "C-c C-l") 'go-tests-toggle-truncate-lines)
   (define-key go-mode-map (kbd "C-c C-t") 'go-goto-first-error)
   (define-key go-mode-map (kbd "C-c C-n") 'go-goto-next-error)
@@ -53,6 +54,10 @@
                         (save-excursion
                           (re-search-backward "func \\(Test.+\\)(" (point-min))
                           (match-string 1)))))
+
+(defun go-build-this ()
+  (interactive)
+  (go-run-tests (format "go build -i .")))
 
 (defun go-run-all-tests ()
   (interactive)
