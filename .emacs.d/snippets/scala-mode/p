@@ -2,4 +2,4 @@
 # name: p
 # key: p
 # --
-println(s"$1\$\{$0\}")
+println(s">>> $1\$\{$0\}")
