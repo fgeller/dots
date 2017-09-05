@@ -55,7 +55,7 @@ fi
 #
 alias ...='cd ../..'
 alias ..='cd ..'
-alias a='grep -i'
+alias a='ag -i --color-match="31;47"'
 alias cqlsh='cqlsh --no-color'
 alias dl='cd ~/Downloads'
 alias e="$EDITOR"
@@ -214,7 +214,7 @@ function rd {
 }
 
 function ha {
-    grep -ri "$@" $HOME/.history | cut -d":" -f2- | sort | uniq
+    ag -ri "$@" $HOME/.history | cut -d":" -f2- | sort | uniq
 }
 
 function sum {
