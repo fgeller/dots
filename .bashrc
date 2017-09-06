@@ -55,7 +55,8 @@ fi
 #
 alias ...='cd ../..'
 alias ..='cd ..'
-alias a='ag -i --color-match="31;47"'
+alias a='ag -i --no-group --color-match="31;47" --color-path="" --color-line-number=""'
+alias am='ag -i --ignore=src/test --ignore=vendor --no-group --color-match="31;47" --color-path="" --color-line-number=""'
 alias cqlsh='cqlsh --no-color'
 alias dl='cd ~/Downloads'
 alias e="$EDITOR"
