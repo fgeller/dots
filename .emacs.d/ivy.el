@@ -1,5 +1,4 @@
 (install 'pulse)
-(install 'recentf)
 (install 'seq)
 
 (install 'ivy)
@@ -165,11 +164,11 @@
     (when grt
       (let* ((default-directory grt)
 	     (q (or filter ""))
-	     (cmd (format "git ls-files --full-name -- | grep \"%s\" | head -1000" q)))
+	     (cmd (format "git ls-files --full-name -- | grep \"%s\" | head -5000" q)))
         (split-string (shell-command-to-string cmd) "\n" t)))))
 
 (defun ivy-git-files-candidates (&optional filter)
-  (let ((bfns (mapcar 'buffer-file-name (buffer-list))))
+  (let ((bfns (mapcar 'buffer-name (buffer-list))))
     (ivy-add-action-to-candidates
      (cl-remove-if (lambda (gf) (member gf bfns)) (git-ls-files filter))
      (lambda (n) (with-ivy-window

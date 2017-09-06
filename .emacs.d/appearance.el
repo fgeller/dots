@@ -2,7 +2,7 @@
 (global-font-lock-mode -1)
 (remove-hook 'occur-mode-hook 'turn-on-font-lock)
 
-(install 'highlight-thing 'and-require)
+(install 'highlight-thing)
 (setq highlight-thing-what-thing 'symbol)
 (global-highlight-thing-mode 1)
 

@@ -7,8 +7,9 @@
   (let ((name (file-relative-name file)))
     (vc-git-command buf 'async nil "blame" "--date=short" "-C" "-C" rev "--" name)))
 
-(install 'magit)
 (setq git-commit-summary-max-length 72)
+
+(install 'magit)
 
 (install 'git-gutter)
 (setq

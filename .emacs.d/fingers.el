@@ -2,17 +2,16 @@
 
 (install 'avy)
 (setq avy-all-windows nil
-      avy-keys '(?a ?s ?h ?g ?y ?t ?n ?e ?o ?i ?' ?u ?p ?d ?r ?c ?k))
-(setq avy-timeout-seconds 0.2)
+      avy-keys '(?a ?s ?h ?g ?y ?t ?n ?e ?o ?i ?' ?u ?p ?d ?r ?c ?k)
+      avy-timeout-seconds 0.2)
 
-(install 'anzu)
+(install 'anzu 'require)
 (global-anzu-mode +1)
 
 (install 'multiple-cursors)
 
 (defun list-todo-in-current-dir ()
   (interactive)
-  (message "hello, world")
   (grep "grep -nHsI --color=never -B1 -A2 TODO *")
   (save-excursion
     (with-current-buffer "*grep*"
@@ -105,7 +104,6 @@
     m))
 
 (defun fingers-mode-custom-bindings ()
-  (message "applying custom fingers bindings...")
   (interactive)
   (after 'dired (define-key dired-mode-map (kbd "C-o") nil))
   (after 'wdired (define-key wdired-mode-map (kbd "C-o") nil))
@@ -120,10 +118,10 @@
   ;;   apr    avy      jmp  undo
   (define-key fingers-mode-map (kbd "f") 'ag)
   (define-key fingers-mode-map (kbd "F") 'ag-with-thing-at-point)
-  (define-key fingers-mode-map (kbd "u") 'ivy-ag-with-thing-at-point)
+  (define-key fingers-mode-map (kbd "u") 'counsel-ag)
   (define-key fingers-mode-map (kbd "U") 'ivy-ag-with-thing-at-point-grt)
-  (define-key fingers-mode-map (kbd "p") (fingers-nav-command swiper-tweaked))
-  (define-key fingers-mode-map (kbd "P") (fingers-nav-command swiper-with-thing-at-point))
+  (define-key fingers-mode-map (kbd "p") 'swiper-tweaked)
+  (define-key fingers-mode-map (kbd "P") 'swiper-with-thing-at-point)
   (define-key fingers-mode-map (kbd "k") 'ivy-apropos)
   (define-key fingers-mode-map (kbd "l") 'avy-goto-char-timer)
   (define-key fingers-mode-map (kbd "L") 'avy-goto-char-in-line)
@@ -366,7 +364,7 @@
 ;; func(a,b,c)
 
 (add-hook 'fingers-after-reset-hook 'fingers-mode-custom-bindings)
-(install 'fingers 'and-require)
+(install 'fingers)
 (global-fingers-mode 1)
 
 (after 'dired
