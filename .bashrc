@@ -49,6 +49,7 @@ fi
 [[ -f ${HOME}/.nvm ]] && export NVM_DIR="$HOME/.nvm"
 [[ -f /usr/local/opt/nvm/nvm.sh ]] && . "/usr/local/opt/nvm/nvm.sh"
 [[ -f ${HOME}/.nvm/nvm.sh ]] && . "${HOME}/.nvm/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #
 # Aliases
