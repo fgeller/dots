@@ -1,6 +1,6 @@
 (install 'pulse)
 (install 'seq)
-
+(install 'swiper)
 (install 'ivy)
 (setq ivy-use-virtual-buffers t)
 (ivy-mode 1)
@@ -113,10 +113,10 @@
   (interactive)
   (with-ivy-calling
    (let ((init-dir (or dir
-		       (ivy-read "Root: " 'read-file-name-internal
-				 :initial-input default-directory
-				 :matcher #'ivy-directory-filter)))
-	 (tap (strip-text-properties (or (thing-at-point 'symbol) ""))))
+		                   (ivy-read "Root: " 'read-file-name-internal
+				                         :initial-input default-directory
+				                         :matcher #'ivy-directory-filter)))
+	       (tap (strip-text-properties (or (thing-at-point 'symbol) ""))))
      (message "setting grep dir %s" init-dir)
      (setq counsel--git-grep-dir init-dir)
      (ivy-read "ag: " 'ivy-ag-function
