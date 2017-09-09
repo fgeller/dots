@@ -110,6 +110,14 @@
   (after 'compile (define-key compilation-mode-map (kbd "C-o") nil))
   (define-key global-map (kbd "C-o") 'global-fingers-mode)
 
+  (define-key fingers-mode-map (kbd "<up>") 'windmove-up)
+  (define-key fingers-mode-map (kbd "<down>") 'windmove-down)
+  (define-key fingers-mode-map (kbd "<right>") 'windmove-right)
+  (define-key fingers-mode-map (kbd "<left>") 'windmove-left)
+
+  (define-key fingers-mode-map (kbd "S") 'fingers-end-of-line-and-insert)
+  (define-key fingers-mode-map (kbd "A") 'fingers-beginning-of-line-and-insert)
+
   ;;     j    f    u    p    ;     [    ]
   ;; E/bob   ag   iag  swi  pop  occ< occ>
   ;;     y    n    e    o    i     '
@@ -178,7 +186,7 @@
   (define-key fingers-mode-map (kbd "M-<down>") 'windmove-down)
   (define-key fingers-mode-map (kbd "M-<right>") 'windmove-right)
   (define-key fingers-mode-map (kbd "M-<left>") 'windmove-left)
-  
+
   (define-key fingers-mode-map (kbd "S-<up>") 'enlarge-window)
   (define-key fingers-mode-map (kbd "S-<down>") 'shrink-window)
   (define-key fingers-mode-map (kbd "S-<left>") 'shrink-window-horizontally)
