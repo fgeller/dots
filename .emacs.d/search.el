@@ -1,3 +1,4 @@
+(install 's)
 (install 'ag)
 (install 'wgrep)
 (install 'wgrep-ag)
