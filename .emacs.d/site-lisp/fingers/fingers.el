@@ -529,11 +529,13 @@
 (defun fingers-looking-at-word-p ()
   (if subword-mode
       (or (looking-at "\\b")
-	  (save-excursion
-	    (forward-char -1)
-	    (let* ((case-fold-search nil))
-	      (looking-at "[a-z][A-Z]"))))
-      (looking-at "\\b")))
+          (let ((pos-start (point)) pos-after)
+            (save-excursion
+              (subword-forward -1)
+              (subword-forward 1)
+              (setq pos-after (point)))
+            (= pos-start pos-after)))
+    (looking-at "\\b")))
 
 (defun fingers-beginning-of-word ()
   (while (not (fingers-looking-at-word-p))

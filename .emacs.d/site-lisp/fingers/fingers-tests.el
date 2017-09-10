@@ -53,6 +53,23 @@
     (fingers-kill-current-region)
     (buffer-substring (point-min) (point-max))))
 
+(defun fingers-test-fingers-mark-word-with-subword (input pos)
+  (with-temp-buffer
+    (insert input)
+    (goto-char pos)
+    (subword-mode 1)
+    (fingers-mark-word)
+    (fingers-kill-current-region)
+    (buffer-substring (point-min) (point-max))))
+
+(ert-deftest fingers-test:fingers-mark-word-with-subword ()
+  (should (string= "HTTP" (fingers-test-fingers-mark-word-with-subword "HTTPRequest" 5)))
+  (should (string= "HTTP" (fingers-test-fingers-mark-word-with-subword "HTTPRequest" 7)))
+  (should (string= "HTTP" (fingers-test-fingers-mark-word-with-subword "HTTPRequest" 11)))
+  (should (string= "Request" (fingers-test-fingers-mark-word-with-subword "HTTPRequest" 2)))
+  (should (string= "Request" (fingers-test-fingers-mark-word-with-subword "HTTPRequest" 0)))
+  )
+
 (ert-deftest fingers-test:fingers-mark-inside-pair ()
   (should (string= "  ()" (fingers-test-fingers-mark-inside-pair-strings "  (abc)" 5 "(" ")")))
   (should (string= "  []" (fingers-test-fingers-mark-inside-pair-strings "  [abc]" 5 "[" "]")))
