@@ -9,7 +9,7 @@
 (defun scala-customizations ()
   (setq tab-width 2)
   (font-lock-mode -1)
-  (setq ensime-sem-high-enabled-p t)
+  (setq ensime-sem-high-enabled-p nil)
   (setq ensime-eldoc-hints 'all)
   (setq ensime-typecheck-when-idle nil)
   (subword-mode 1)
