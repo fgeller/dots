@@ -60,3 +60,5 @@
     fontdiff = -family \"Roboto Mono\" -size 13 -weight normal -slant roman -underline 0 -overstrike 0
 [github]
     user = fgeller
+[credential]
+	helper = store
