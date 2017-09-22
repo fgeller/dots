@@ -126,14 +126,15 @@
   ;;   apr    avy      jmp  undo
   (define-key fingers-mode-map (kbd "f") 'ag)
   (define-key fingers-mode-map (kbd "F") 'ag-with-thing-at-point)
-  (define-key fingers-mode-map (kbd "u") 'counsel-ag)
-  (define-key fingers-mode-map (kbd "U") 'ivy-ag-with-thing-at-point-grt)
+  (define-key fingers-mode-map (kbd "u") 'save-buffer)
+  (define-key fingers-mode-map (kbd "U") 'recenter-top-bottom)
   (define-key fingers-mode-map (kbd "p") 'swiper-tweaked)
   (define-key fingers-mode-map (kbd "P") 'swiper-with-thing-at-point)
   (define-key fingers-mode-map (kbd "k") 'ivy-apropos)
   (define-key fingers-mode-map (kbd "l") 'avy-goto-char-timer)
   (define-key fingers-mode-map (kbd "L") 'avy-goto-char-in-line)
   (define-key fingers-mode-map (kbd ".") 'ivy-jump)
+  (define-key fingers-mode-map (kbd ",") 'pop-to-mark-command)
 
   ;;     q    d    r    w    b
   ;;  cstm   del in/rp qrp  cpy/slrp
