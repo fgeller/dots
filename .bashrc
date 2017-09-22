@@ -40,15 +40,16 @@ else
     source ~/.keychain/`uname -n`-sh
 fi
 
-[[ -f /usr/local/etc/bash_completion ]] && . /usr/local/etc/bash_completion
-[[ -f ${GPG_AGENT} ]] && eval "$(gpg-agent -q --daemon --log-file=~/.gnupg/gpg.log)"
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+[ -f ${GPG_AGENT} ] && eval "$(gpg-agent -q --daemon --log-file=~/.gnupg/gpg.log)"
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
 #
 # NVM (across darwin and linux)
 #
-[[ -f ${HOME}/.nvm ]] && export NVM_DIR="$HOME/.nvm"
-[[ -f /usr/local/opt/nvm/nvm.sh ]] && . "/usr/local/opt/nvm/nvm.sh"
-[[ -f ${HOME}/.nvm/nvm.sh ]] && . "${HOME}/.nvm/nvm.sh"
+[ -f ~/.nvm ] && export NVM_DIR="$HOME/.nvm"
+[ -f /usr/local/opt/nvm/nvm.sh ] && . "/usr/local/opt/nvm/nvm.sh"
+[ -f ~/.nvm/nvm.sh ] && . "${HOME}/.nvm/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #
