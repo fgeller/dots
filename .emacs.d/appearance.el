@@ -3,7 +3,9 @@
 (remove-hook 'occur-mode-hook 'turn-on-font-lock)
 
 (install 'highlight-thing)
-(setq highlight-thing-what-thing 'symbol)
+(setq
+ highlight-thing-what-thing 'symbol
+ highlight-thing-prefer-active-region t)
 (global-highlight-thing-mode 1)
 
 (tool-bar-mode -1)
