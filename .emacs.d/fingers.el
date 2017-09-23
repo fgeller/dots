@@ -161,6 +161,9 @@
 
   (define-key fingers-mode-c-map (kbd "RET") 'browse-url-at-point)
 
+  (define-key fingers-mode-x-map (kbd "s") nil)
+  (define-key fingers-mode-x-map (kbd "o") nil)
+
   (define-key fingers-mode-x-map (kbd "f") 'counsel-find-file)
   (define-key fingers-mode-x-map (kbd "x") 'counsel-M-x)
   (define-key fingers-mode-x-map (kbd "vs") 'show-eshell-git-status)
