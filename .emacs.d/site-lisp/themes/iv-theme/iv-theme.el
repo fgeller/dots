@@ -81,11 +81,13 @@
                    iv-colors-alist))
      ,@body))
 
+;; `(default ((t (:foreground ,black :background ,white :family "Roboto Mono" :height 115))))
+
 ;;; Theme Faces
 (iv-with-color-variables
   (custom-theme-set-faces
    'iv
-   `(default ((t (:foreground ,black :background ,white :family "Roboto Mono" :height 115))))
+   `(default ((t (:foreground ,black :background ,white :height 80 :family "Roboto Mono"))))
    `(shadow ((t (:foreground ,black :background ,white))))
    `(button ((t (:foreground ,red :underline nil :weight normal))))
    `(comint-highlight-input ((t (:foreground nil :background nil))))

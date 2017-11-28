@@ -1,6 +1,7 @@
 [user]
     name = Felix Geller
     email = fgeller@gmail.com
+	signingkey = 71E54A69B0C4269F
 [color]
     ui = true
 [color "diff"]
@@ -39,7 +40,7 @@
     ff = merge --ff-only
     g = grep
     l =  log -15 --format=' %<(7,trunc)%an %<(65,trunc)%s'
-    ll =  log -15 --format=' %<(7,trunc)%an %ad %h %<(80,trunc)%s %<(40,trunc)%d' --date=short
+    ll =  log -15 --format=' %<(7,trunc)%an %ad %h %G? %<(80,trunc)%s %<(40,trunc)%d' --date=short
     lg = log --format=' %<(15,trunc)%an %ad %C(blue)%h%Creset %<(60,trunc)%s %<(30,trunc) %C(blue)%d%Creset' --date=short
     p = push
     pu = push -u
@@ -55,6 +56,7 @@
 
 [commit]
     template = ~/.gitmsg.txt
+	gpgsign = true
 [gui]
     fontui = -family Roboto -size 14 -weight normal -slant roman -underline 0 -overstrike 0
     fontdiff = -family \"Roboto Mono\" -size 13 -weight normal -slant roman -underline 0 -overstrike 0

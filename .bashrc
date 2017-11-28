@@ -36,12 +36,11 @@ then
     export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
 else
     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
-    keychain --nocolor --quiet --agents ssh id_rsa movio_id_rsa
-    source ~/.keychain/`uname -n`-sh
+    export GPG_TTY=$(tty)
 fi
 
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-[ -f ${GPG_AGENT} ] && eval "$(gpg-agent -q --daemon --log-file=~/.gnupg/gpg.log)"
+[ -f ${GPG_AGENT} ] && [[ $(gpg-connect-agent /bye) -ne 0 ]] && eval "$(gpg-agent -q --daemon --log-file=~/.gnupg/gpg.log)"
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
 #
@@ -55,8 +54,7 @@ fi
 #
 # Aliases
 #
-alias ...='cd ../..'
-alias ..='cd ..'
+alias ..='cd .. && pwd'
 alias a='ag -i --no-group --color-match="31;47" --color-path="" --color-line-number=""'
 alias am='ag -i --ignore=src/test --ignore=vendor --no-group --color-match="31;47" --color-path="" --color-line-number=""'
 alias cqlsh='cqlsh --no-color'
@@ -93,10 +91,9 @@ alias gs='git s'
 alias gsh='git sh'
 alias gu='git u'
 alias gv='govendor'
-alias gvf='govendor fetch'
-alias gvr='govendor remove +unused'
-alias gvs='govendor sync'
-alias hist='history'
+alias gvf='govendor fetch -v'
+alias gvs='govendor sync -v'
+alias h='history'
 alias jo='jsonify'
 alias j='jq'
 alias kc='kubectl '

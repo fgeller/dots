@@ -45,6 +45,14 @@
 	 (uuid (progn (string-match "[ \t\n]*$" raw) (replace-match "" nil nil raw))))
     (insert uuid)))
 
+(defun uid ()
+  (interactive)
+  (let* ((raw (with-temp-buffer
+		(shell-command "uuidgen" (current-buffer))
+		(buffer-substring (point-min) (point-max))))
+	 (uuid (progn (string-match "[ \t\n]*$" raw) (replace-match "" nil nil raw))))
+    (insert (substring uuid 0 8))))
+
 (defun fingers-mode-visual-toggle-enabled-modeline ()
   (let* ((right (format-mode-line "%*  %l,%c"))
          (left (format-mode-line "%b "))
@@ -93,7 +101,8 @@
     (define-key m (kbd "ti") 'ignore-all-tests)
     (define-key m (kbd "tn") 'scala-next-test-forward)
     (define-key m (kbd "tp") 'scala-next-test-whitespace)
-    (define-key m (kbd "u") 'uuid)
+    (define-key m (kbd "u") 'uid)
+    (define-key m (kbd "U") 'uuid)
     (define-key m (kbd "ve") 'git-gutter:next-hunk)
     (define-key m (kbd "vm") 'git-gutter:mark-hunk)
     (define-key m (kbd "vo") 'git-gutter:previous-hunk)

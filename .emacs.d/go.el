@@ -5,6 +5,9 @@
 (install 'go-eldoc)
 
 (defun golang-customizations ()
+  (defalias 'go-play-buffer nil)
+  (defalias 'go-play-region nil)
+
   (setq company-go-show-annotation 1)
   (setq gofmt-command "goimports")
   (set (make-local-variable 'company-backends) '(company-go))

@@ -8,6 +8,9 @@
 
 (setq calendar-week-start-day 1)
 
+(defalias 'calendar-absolute-from-iso 'calendar-iso-to-absolute)
+(setq org-duration-format 'h:mm)
+
 (setq
  org-hide-emphasis-markers t
  org-hide-leading-stars t)
