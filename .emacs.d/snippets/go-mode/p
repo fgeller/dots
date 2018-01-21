@@ -2,4 +2,4 @@
 # name: Print
 # key: p
 # --
-fmt.Printf("$1\n", $0)
+spew.Printf("$1\n", $0)
