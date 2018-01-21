@@ -49,7 +49,7 @@
 
 (time "initialize packages"
   (setq package-user-dir (file-name (file-name "elpa" custom-site-lisp)))
-  (setq package-archives '(("melpa" . "http://melpa.org/packages/")))
+  (setq package-archives '(("melpa" . "http://melpa.org/packages/") ("gnu" . "http://elpa.gnu.org/packages/")))
   (package-initialize 'no-activate))
 
 (defun install (package &optional req)
