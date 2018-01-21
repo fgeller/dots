@@ -240,3 +240,51 @@ function datediff() {
     d2=$(date -d "$2" +%s)
     echo $(( (d1 - d2) / 86400 )) days
 }
+
+function echoerr() {
+    echo "$@" >&2
+}
+
+function kget() {
+    echo ======= cn ======= >&2
+    kcn get $1 $2
+
+    echo ======= fr ======= >&2
+    kfr get $1 $2
+
+    echo ======= us ======= >&2
+    kus get $1 $2
+}
+
+function kscale() {
+    echo ======= cn ======= >&2
+    kcn scale --replicas=$3 $1 $2
+
+    echo ======= fr ======= >&2
+    kfr scale --replicas=$3 $1 $2
+
+    echo ======= us ======= >&2
+    kus scale --replicas=$3 $1 $2
+}
+
+function krm() {
+    echo ======= cn ======= >&2
+    kcn delete $1 $2
+
+    echo ======= fr ======= >&2
+    kfr delete $1 $2
+
+    echo ======= us ======= >&2
+    kus delete $1 $2
+}
+
+function kapply() {
+    echo ======= cn ======= >&2
+    kcn apply -f kube.deploy.prod-cn.yaml
+
+    echo ======= fr ======= >&2
+    kfr apply -f kube.deploy.prod-fr.yaml
+
+    echo ======= us ======= >&2
+    kus apply -f kube.deploy.prod-us.yaml
+}
