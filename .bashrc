@@ -59,7 +59,9 @@ alias a='ag -i --no-group --color-match="31;47" --color-path="" --color-line-num
 alias am='ag -i --ignore=src/test --ignore=vendor --no-group --color-match="31;47" --color-path="" --color-line-number=""'
 alias cqlsh='cqlsh --no-color'
 alias dl='cd ~/Downloads'
-alias dc='docker-compose'
+alias dstop='docker ps -a | grep -v CONTAINER | cut -d" " -f1 | xargs docker stop'
+alias drm='docker ps -a | grep -v CONTAINER | cut -d" " -f1 | xargs docker rm'
+alias dps='docker ps -a'
 alias e="$EDITOR"
 alias ed='cd ~/.emacs.d'
 alias g='git'
