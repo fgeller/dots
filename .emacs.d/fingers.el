@@ -8,6 +8,8 @@
 (install 'anzu 'require)
 (global-anzu-mode +1)
 
+(install 'move-border)
+
 (install 'multiple-cursors)
 
 (defun list-todo-in-current-dir ()
@@ -200,10 +202,10 @@
   (define-key fingers-mode-map (kbd "M-<right>") 'windmove-right)
   (define-key fingers-mode-map (kbd "M-<left>") 'windmove-left)
 
-  (define-key fingers-mode-map (kbd "S-<up>") 'enlarge-window)
-  (define-key fingers-mode-map (kbd "S-<down>") 'shrink-window)
-  (define-key fingers-mode-map (kbd "S-<left>") 'shrink-window-horizontally)
-  (define-key fingers-mode-map (kbd "S-<right>") 'enlarge-window-horizontally)
+  (define-key fingers-mode-map (kbd "S-<up>") 'move-border-up)
+  (define-key fingers-mode-map (kbd "S-<down>") 'move-border-down)
+  (define-key fingers-mode-map (kbd "S-<left>") 'move-border-left)
+  (define-key fingers-mode-map (kbd "S-<right>") 'move-border-right)
 
   (define-key fingers-mode-map (kbd "q") fingers-custom-map)
   )
