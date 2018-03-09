@@ -34,6 +34,16 @@ then
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/coreutils/libexec/gnubin:$PATH
     export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
+    if $(docker-machine version 2>/dev/null >/dev/null)
+    then
+        echo found it
+        if [[ $(docker-machine status) -ne "Running" ]]
+        then
+            docker-machine start
+        fi
+        eval $(docker-machine env)
+        echo loaded docker-machine env
+    fi
 else
     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
     export GPG_TTY=$(tty)
