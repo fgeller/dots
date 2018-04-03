@@ -300,3 +300,12 @@ function kapply() {
     echo ======= us ======= >&2
     kus apply -f kube.deploy.prod-us.yaml
 }
+
+function cats () {
+  echo "![cat](https://$(curl -s https://imgur.com/r/catsstandingup \
+    | grep -Eo 'i\.imgur\.com/[a-zA-Z0-9]{5,10}\.jpg' \
+    | sed 's/b.jpg/.jpg/' \
+    | sort --random-sort \
+    | head -n1 \
+  ))"
+}
