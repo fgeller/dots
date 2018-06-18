@@ -300,3 +300,12 @@ function kapply() {
     echo ======= us ======= >&2
     kus apply -f kube.deploy.prod-us.yaml
 }
+
+function z() {
+    xz --compress --keep --threads=`nproc` --verbose "$@"
+}
+
+
+function up() {
+    sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+}
