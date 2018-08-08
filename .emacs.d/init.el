@@ -109,6 +109,7 @@
 (load-custom "~/.emacs.d/javascript.el")
 (load-custom "~/.emacs.d/scratch.el")
 (load-custom "~/.emacs.d/flycheck.el")
+(load-custom "~/.emacs.d/3dp.el")
 
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)

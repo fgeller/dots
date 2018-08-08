@@ -1,0 +1,1 @@
+(install 'scad-mode)
