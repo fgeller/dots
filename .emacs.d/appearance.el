@@ -5,7 +5,8 @@
 (install 'highlight-thing)
 (setq
  highlight-thing-what-thing 'symbol
- highlight-thing-prefer-active-region t)
+ highlight-thing-prefer-active-region t
+ highlight-thing-all-visible-buffers-p t)
 (global-highlight-thing-mode 1)
 
 (tool-bar-mode -1)
