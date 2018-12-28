@@ -1,6 +1,6 @@
 ;;; highlight-thing.el --- Minimalistic minor mode to highlight current thing under point.
 
-;; Copyright (c) 2014-2016 Felix Geller
+;; Copyright (c) 2014-2017 Felix Geller
 
 ;; Author: Felix Geller <fgeller@gmail.com>
 ;; Keywords: highlight thing symbol
@@ -80,16 +80,34 @@ functionality."
   :type '(repeat symbol)
   :group 'highlight-thing)
 
+(defcustom highlight-thing-prefer-active-region nil
+  "Highlights active region when active otherwise `highlight-thing-what-thing'."
+  :type 'boolean
+  :group 'highlight-thing)
+
+(defcustom highlight-thing-ignore-list nil
+  "List of strings that should not be highlighted."
+  :type '(repeat string)
+  :group 'highlight-thing)
+
+(defcustom highlight-thing-all-visible-buffers-p nil
+  "Highlights thing in visible buffers in all visible frames rather than only the selected one."
+  :type 'boolean
+  :group 'highlight-thing)
+
 (defface highlight-thing
   '((t (:inherit 'hi-yellow)))
   "Face that is used to highlight things."
   :group 'highlight-thing)
 
-(defvar highlight-thing-last-thing nil
+(defvar highlight-thing-last-regex nil
   "Last highlighted thing.")
 
 (defvar highlight-thing-last-buffer nil
   "Buffer where last thing was highlighted.")
+
+(defvar highlight-thing-last-all-visible-buffers-p nil
+  "Whether all visible buffers were highlighted last time.")
 
 (defvar highlight-thing-timer nil
   "Timer that triggers highlighting.")
@@ -103,16 +121,25 @@ functionality."
   (when highlight-thing-timer (cancel-timer highlight-thing-timer)))
 
 (defun highlight-thing-regexp (thing)
-  (cond ((eq highlight-thing-what-thing 'symbol) (concat "\\_<" (regexp-quote thing) "\\_>"))
-	((eq highlight-thing-what-thing 'word) (concat "\\<" (regexp-quote thing) "\\>"))
-	(t (regexp-quote thing))))
+  (cond
+   ((highlight-thing-should-highlight-region-p) (regexp-quote thing))
+   ((get highlight-thing-what-thing 'highlight-thing-regex-fn)
+    (funcall (get highlight-thing-what-thing 'highlight-thing-regex-fn) thing))
+   ((eq highlight-thing-what-thing 'symbol) (concat "\\_<" (regexp-quote thing) "\\_>"))
+   ((eq highlight-thing-what-thing 'word) (concat "\\<" (regexp-quote thing) "\\>"))
+   (t (regexp-quote thing))))
 
 (defun highlight-thing-remove-last ()
-  (when (and highlight-thing-last-thing
-	     highlight-thing-last-buffer
-	     (buffer-live-p highlight-thing-last-buffer))
-    (with-current-buffer highlight-thing-last-buffer
-      (hi-lock-unface-buffer (highlight-thing-regexp highlight-thing-last-thing)))))
+  (when highlight-thing-last-regex
+    (when (or highlight-thing-all-visible-buffers-p
+	      highlight-thing-last-all-visible-buffers-p)
+      (mapcar 'highlight-thing-remove-last-buffer-do (highlight-thing-list-visible-buffers)))
+    (when (and highlight-thing-last-buffer
+	       (buffer-live-p highlight-thing-last-buffer))
+      (highlight-thing-remove-last-buffer-do highlight-thing-last-buffer))))
+
+(defun highlight-thing-remove-last-buffer-do (buf)
+  (with-current-buffer buf (hi-lock-unface-buffer highlight-thing-last-regex)))
 
 (defun highlight-thing-should-highlight-p ()
   (and (not (minibufferp))
@@ -126,15 +153,22 @@ functionality."
   (when (region-active-p)
     (buffer-substring (point) (mark))))
 
+(defun highlight-thing-should-highlight-region-p ()
+  (or (eq highlight-thing-what-thing 'region)
+      (and highlight-thing-prefer-active-region
+           (use-region-p))))
+
 (defun highlight-thing-get-thing-at-point ()
-  (cond ((eq highlight-thing-what-thing 'region) (highlight-thing-get-active-region))
-        (t (thing-at-point highlight-thing-what-thing))))
+  (let ((thing (if (highlight-thing-should-highlight-region-p) (highlight-thing-get-active-region)
+                 (thing-at-point highlight-thing-what-thing))))
+    (unless (member thing highlight-thing-ignore-list)
+      thing)))
 
 (defun highlight-thing-remove-overlays-at-point (thing)
   (let* ((bounds (if (region-active-p) (cons (region-beginning) (region-end))
-		   (bounds-of-thing-at-point highlight-thing-what-thing)))
-	 (start (car bounds))
-	 (end (cdr bounds)))
+		               (bounds-of-thing-at-point highlight-thing-what-thing)))
+	       (start (car bounds))
+	       (end (cdr bounds)))
     (remove-overlays start end 'hi-lock-overlay-regexp (highlight-thing-regexp thing))
     (remove-overlays start end 'hi-lock-overlay t)
     (remove-overlays start end 'face 'highlight-thing)))
@@ -145,14 +179,21 @@ functionality."
         (font-lock-mode nil))
     (highlight-thing-remove-last)
     (when (and (highlight-thing-should-highlight-p) thing)
-      (save-restriction
-        (widen)
-        (when (highlight-thing-should-narrow-p) (narrow-to-defun))
-        (let ((case-fold-search (if highlight-thing-case-sensitive-p nil case-fold-search)))
-          (highlight-regexp (highlight-thing-regexp thing) 'highlight-thing)
-          (when highlight-thing-exclude-thing-under-point (highlight-thing-remove-overlays-at-point thing))))
-      (setq highlight-thing-last-buffer (current-buffer))
-      (setq highlight-thing-last-thing thing))))
+      (let ((case-fold-search (if highlight-thing-case-sensitive-p nil case-fold-search))
+            (regex (highlight-thing-regexp thing))
+	    (bufs (if highlight-thing-all-visible-buffers-p (highlight-thing-list-visible-buffers) (list (current-buffer)))))
+	(mapcar 'highlight-thing-buffer-do bufs)
+	(setq highlight-thing-last-all-visible-buffers-p highlight-thing-all-visible-buffers-p)
+        (setq highlight-thing-last-buffer (current-buffer))
+        (setq highlight-thing-last-regex regex)))))
+
+(defun highlight-thing-buffer-do (buf)
+  (with-current-buffer buf
+    (save-restriction
+      (widen)
+      (when (highlight-thing-should-narrow-p) (narrow-to-defun))
+      (highlight-regexp (highlight-thing-regexp thing) 'highlight-thing)
+      (when highlight-thing-exclude-thing-under-point (highlight-thing-remove-overlays-at-point thing)))))
 
 (defun highlight-thing-mode-maybe-activate ()
   (when (highlight-thing-should-highlight-p)
@@ -160,9 +201,14 @@ functionality."
 
 (defun highlight-thing-schedule-timer ()
   (unless highlight-thing-timer
-      (setq highlight-thing-timer
-            (run-with-idle-timer
-             highlight-thing-delay-seconds t 'highlight-thing-loop))))
+    (setq highlight-thing-timer
+          (run-with-idle-timer
+           highlight-thing-delay-seconds t 'highlight-thing-loop))))
+
+(defun highlight-thing-list-visible-buffers ()
+  (mapcan (lambda (f)
+	    (mapcar (lambda (w) (window-buffer w)) (window-list f)))
+	  (visible-frame-list)))
 
 ;;;###autoload
 (define-minor-mode highlight-thing-mode
