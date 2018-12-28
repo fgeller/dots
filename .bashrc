@@ -65,8 +65,8 @@ fi
 # Aliases
 #
 alias ..='cd .. && pwd'
-alias a='ag -i --no-group --color-match="31;47" --color-path="" --color-line-number=""'
-alias am='ag -i --ignore=src/test --ignore=vendor --no-group --color-match="31;47" --color-path="" --color-line-number=""'
+alias a='rg -i'
+alias am='ag -i --ignore=src/test --ignore=vendor'
 alias cqlsh='cqlsh --no-color'
 alias dl='cd ~/Downloads'
 alias dstop='docker ps -a | grep -v CONTAINER | cut -d" " -f1 | xargs docker stop'
@@ -118,9 +118,11 @@ alias l='less -R'
 alias la='ls -hlA'
 alias ll='ls -hlA'
 alias lt='ls -ltrA'
+alias ltr='ls -ltrA'
 alias m='make'
 alias pa='ps aux | grep '
 alias psa='ps aux'
+alias r='rg --no-heading '
 alias td='tmux attach -d'
 
 #
@@ -233,6 +235,10 @@ function rd {
 
 function ha {
     ag -ri "$@" $HOME/.history | cut -d":" -f2- | sort | uniq
+}
+
+function hr {
+    rg --no-heading --no-filename -N "$@" $HOME/.history | sort | uniq
 }
 
 function sum {
