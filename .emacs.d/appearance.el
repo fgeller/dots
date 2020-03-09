@@ -9,7 +9,7 @@
  highlight-thing-all-visible-buffers-p t)
 (global-highlight-thing-mode 1)
 
-(tool-bar-mode -1)
+(when tool-bar-mode (tool-bar-mode -1))
 (menu-bar-mode -1)  ;; shows full-screen button for mac port
 (setq-default
  blink-cursor-delay 0.5
