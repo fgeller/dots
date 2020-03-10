@@ -1,19 +1,13 @@
-(install 'ensime)
 (install 'sbt-mode)
 (install 'scala-mode)
 (add-hook 'scala-mode-hook 'scala-customizations)
 
-(setq ensime-startup-notification nil
-      ensime-startup-snapshot-notification nil)
-
 (defun scala-customizations ()
   (setq tab-width 2)
   (font-lock-mode -1)
-  (setq ensime-sem-high-enabled-p nil)
-  (setq ensime-eldoc-hints 'all)
-  (setq ensime-typecheck-when-idle nil)
   (subword-mode 1)
-  (yas-minor-mode 1))
+  (yas-minor-mode 1)
+  (lsp-deferred))
 
 (defun scala-ignore-all-tests ()
   (interactive)
