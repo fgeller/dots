@@ -1,16 +1,17 @@
 (install 'go-mode)
 (install 'go-rename)
-(install 'company-go)
 (install 'go-guru)
 (install 'go-eldoc)
+
+(install 'lsp-mode)
+(install 'lsp-ui)
+(install 'company-lsp)
 
 (defun golang-customizations ()
   (defalias 'go-play-buffer nil)
   (defalias 'go-play-region nil)
 
-  (setq company-go-show-annotation 1)
-  (setq gofmt-command "goimports")
-  (set (make-local-variable 'company-backends) '(company-go))
+  (lsp-deferred)
 
   (subword-mode 1)
   (yas-minor-mode 1)
@@ -19,7 +20,6 @@
   (flycheck-mode 1)
   (go-eldoc-setup)
 
-  (define-key go-mode-map (kbd "M-.") 'godef-jump)
   (define-key go-mode-map (kbd "C-c C-r") 'go-rename)
   (define-key go-mode-map (kbd "C-c C-c") 'go-run-all-tests)
   (define-key go-mode-map (kbd "C-c C-m") 'go-run-this-test)
@@ -31,7 +31,9 @@
   (define-key go-mode-map (kbd "C-c C-e") 'go-play)
   (define-key go-mode-map (kbd "C-c C-o r") 'go-guru-referrers)
 
-  (add-hook 'before-save-hook #'gofmt-before-save)
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t)
+
   (add-hook 'after-save-hook #'go-after-save-run-tests))
 
 (add-hook 'go-mode-hook 'golang-customizations)
