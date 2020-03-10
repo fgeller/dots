@@ -33,7 +33,8 @@ then
     GPG_TTY=`tty`
     export GPG_TTY
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-    export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/coreutils/libexec/gnubin:$PATH
+    export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/openjdk/bin:$PATH
+
     export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
     if $(docker-machine version 2>/dev/null >/dev/null)
     then
