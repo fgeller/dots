@@ -20,6 +20,7 @@ export PROMPT_COMMAND="history -w;"
 export PS1='$ '
 
 export GOPATH=$HOME
+export GO111MODULE=on
 
 export PATH=~/bin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
 export CDPATH=".:~:~/src/github.com:~/src/github.com/fgeller:~/src/github.com/movio"
