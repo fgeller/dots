@@ -27,6 +27,10 @@ export CDPATH=".:~:~/src/github.com:~/src/github.com/fgeller:~/src/github.com/mo
 
 export EDITOR="emacs -nw"
 
+# makefile target auto-completion
+# https://zgadzaj.com/development/makefile/bash-auto-completion-for-makefile-targets-in-macos
+complete -W "\`grep -oE '^[a-zA-Z0-9_.-]+:([^=]|$)' makefile | sed 's/[^a-zA-Z0-9_.-]*$//'\`" make
+
 if [[ 'Darwin' == `uname` ]]
 then
     GPG_AGENT=$(which gpg-agent)
