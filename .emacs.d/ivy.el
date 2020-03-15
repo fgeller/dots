@@ -1,6 +1,7 @@
+;; -*- lexical-binding: t -*-
+
 (install 'pulse)
 (install 'seq)
-(install 'swiper)
 (install 'ivy)
 (setq ivy-use-virtual-buffers t)
 (ivy-mode 1)
@@ -178,13 +179,13 @@
 
 (defun ivy-buffer-name-candidates ()
   (ivy-add-action-to-candidates
-   (remove-if (lambda (c) (or (string-prefix-p " *" c)
+   (cl-remove-if (lambda (c) (or (string-prefix-p " *" c)
 			      (string-prefix-p "*Minibuf-" c)))
               (mapcar 'buffer-name (buffer-list)))
    (lambda (n) (with-ivy-window (switch-to-buffer n nil 'force-same-window)))))
 
 (defun ivy-org-heading-action (f)
-  (lexical-let ((fn f))
+  (let ((fn f))
     (lambda (c)
       (with-ivy-window
         (find-file fn)
@@ -289,7 +290,7 @@
    (replace-regexp-in-string "[ \t]*\\'" "" str)))
 
 (defun ivy-mark-ring-action (buf pos)
-  (lexical-let* ((buf buf)
+  (let* ((buf buf)
                  (pos pos))
     (lambda (mn)
       (with-ivy-window

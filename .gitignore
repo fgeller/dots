@@ -9,3 +9,6 @@
 
 # Undo-tree save-files
 *.~undo-tree
+/.emacs.d/package-quickstart.el
+/.emacs.d/.lsp-session-v1
+/.emacs.d/transient/

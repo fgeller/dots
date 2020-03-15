@@ -35,7 +35,6 @@
 (setq custom-site-lisp (file-name "~/.emacs.d/site-lisp"))
 (add-to-list 'load-path custom-site-lisp)
 (add-to-load-path custom-site-lisp)
-(add-to-load-path (file-name "elpa" custom-site-lisp))
 
 (mapcar (lambda (file)
 	        (when (file-directory-p file) (add-to-list 'custom-theme-load-path file)))
@@ -43,14 +42,15 @@
 
 (time "require basic features"
   (require 'package)
-  (require 'cl)
+  (require 'cl-lib)
   (require 'uniquify)
   (require 'subword))
 
-(time "initialize packages"
-  (setq package-user-dir (file-name (file-name "elpa" custom-site-lisp)))
-  (setq package-archives '(("melpa" . "http://melpa.org/packages/") ("gnu" . "http://elpa.gnu.org/packages/")))
-  (package-initialize 'no-activate))
+(time "setup packages"
+  (setq package-quickstart t)
+  (setq package-archives '(("melpa" . "http://melpa.org/packages/")
+			   ("gnu" . "http://elpa.gnu.org/packages/"))))
+
 
 (defun install (package &optional req)
   (unless (or (package-installed-p package)
@@ -102,14 +102,11 @@
 (load-custom "~/.emacs.d/vc.el")
 (load-custom "~/.emacs.d/search.el")
 (load-custom "~/.emacs.d/auto-complete.el")
+(load-custom "~/.emacs.d/lsp.el")
 (load-custom "~/.emacs.d/emacs-lisp.el")
-(load-custom "~/.emacs.d/scala.el")
 (load-custom "~/.emacs.d/go.el")
 (load-custom "~/.emacs.d/compilation.el")
-(load-custom "~/.emacs.d/javascript.el")
 (load-custom "~/.emacs.d/scratch.el")
-(load-custom "~/.emacs.d/flycheck.el")
-(load-custom "~/.emacs.d/3dp.el")
 
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)

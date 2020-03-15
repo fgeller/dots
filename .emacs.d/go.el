@@ -1,11 +1,4 @@
 (install 'go-mode)
-(install 'go-rename)
-(install 'go-guru)
-(install 'go-eldoc)
-
-(install 'lsp-mode)
-(install 'lsp-ui)
-(install 'company-lsp)
 
 (defun golang-customizations ()
   (defalias 'go-play-buffer nil)
@@ -17,8 +10,6 @@
   (yas-minor-mode 1)
   (font-lock-mode 1)
   (eldoc-mode 1)
-  (flycheck-mode 1)
-  (go-eldoc-setup)
 
   (define-key go-mode-map (kbd "C-c C-r") 'go-rename)
   (define-key go-mode-map (kbd "C-c C-c") 'go-run-all-tests)
@@ -29,7 +20,6 @@
   (define-key go-mode-map (kbd "C-c C-n") 'go-goto-next-error)
   (define-key go-mode-map (kbd "C-c C-p") 'go-goto-previous-error)
   (define-key go-mode-map (kbd "C-c C-e") 'go-play)
-  (define-key go-mode-map (kbd "C-c C-o r") 'go-guru-referrers)
 
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t)

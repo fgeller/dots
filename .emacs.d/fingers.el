@@ -1,16 +1,9 @@
-(install 'flycheck)
-
 (install 'avy)
 (setq avy-all-windows nil
       avy-keys '(?a ?s ?h ?g ?y ?t ?n ?e ?o ?i ?' ?u ?p ?d ?r ?c ?k)
       avy-timeout-seconds 0.2)
 
-(install 'anzu 'require)
-(global-anzu-mode +1)
-
 (install 'move-border)
-
-(install 'multiple-cursors)
 
 (defun list-todo-in-current-dir ()
   (interactive)
@@ -97,7 +90,7 @@
     (define-key m (kbd "e") 'explode-arguments-into-multiple-lines)
     (define-key m (kbd "m") 'ivy-jump-to-project)
     (define-key m (kbd "n") 'compilation-goto-first-error)
-    (define-key m (kbd "o") 'flycheck-next-error)
+    (define-key m (kbd "o") nil)
     (define-key m (kbd "s") 'sort-lines)
     (define-key m (kbd "te") 'enable-all-tests)
     (define-key m (kbd "ti") 'ignore-all-tests)
@@ -130,13 +123,13 @@
   (define-key fingers-mode-map (kbd "A") 'fingers-beginning-of-line-and-insert)
 
   ;;     j    f    u    p    ;     [    ]
-  ;; E/bob   ag   iag  swi  pop  occ< occ>
+  ;; E/bob   ag   sav  swi  pop  occ< occ>
   ;;     y    n    e    o    i     '
   ;; Bop/bol  <    v    ^    >   Eop/eol
   ;;     k    l    ?    .    /
   ;;   apr    avy      jmp  undo
-  (define-key fingers-mode-map (kbd "f") 'ag)
-  (define-key fingers-mode-map (kbd "F") 'ag-with-thing-at-point)
+  (define-key fingers-mode-map (kbd "f") 'dumb-jump-go)
+  (define-key fingers-mode-map (kbd "F") 'dumb-jump-back)
   (define-key fingers-mode-map (kbd "u") 'save-buffer)
   (define-key fingers-mode-map (kbd "U") 'recenter-top-bottom)
   (define-key fingers-mode-map (kbd "p") 'swiper-tweaked)
@@ -167,7 +160,6 @@
   (define-key fingers-mode-map (kbd "M") 'kmacro-to-register)
   (define-key fingers-mode-map (kbd "m") 'jump-to-register)
 
-  (define-key fingers-mode-map (kbd "|") 'mc/edit-lines)
   (define-key fingers-mode-map (kbd "\\") 'goto-line)
 
   (define-key fingers-mode-c-map (kbd "RET") 'browse-url-at-point)

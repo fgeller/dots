@@ -13,8 +13,8 @@
 
 (install 'git-gutter)
 (setq
-   git-gutter:window-width 1
-   git-gutter:modified-sign " "
-   git-gutter:added-sign " "
-   git-gutter:deleted-sign " ")
+  git-gutter:window-width 1
+  git-gutter:modified-sign " "
+  git-gutter:added-sign " "
+  git-gutter:deleted-sign " ")
 (global-git-gutter-mode)

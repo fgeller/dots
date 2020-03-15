@@ -1,19 +1,5 @@
-(install 's)
-(install 'ag)
+(install 'rg)
 (install 'wgrep)
-(install 'wgrep-ag)
+(after 'rg (wgrep-rg-setup))
 
-(after 'ag
-  (setq ag-group-matches nil)
-  (add-to-list 'ag-ignore-list "vendor" t)
-  (add-to-list 'ag-ignore-list "target" t))
-
-(defun ag-project-with-thing-at-point ()
-  (interactive)
-  (let ((thing (thing-at-point 'symbol)))
-    (ag-project thing)))
-
-(defun ag-with-thing-at-point ()
-  (interactive)
-  (let ((thing (thing-at-point 'symbol)))
-    (ag thing default-directory)))
+(install 'dumb-jump)

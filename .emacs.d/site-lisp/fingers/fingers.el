@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 ;;; fingers.el --- Modal editing with universal text manipulation helpers.
 
 ;; Copyright (c) 2014-2015 Felix Geller
@@ -65,7 +66,7 @@
         (append (kbd kbd-string) unread-command-events)))
 
 (defun fingers-pass-events-command (k)
-  (lexical-let ((kbd-string k)) ;; rebind so it isn't lost
+  (let ((kbd-string k)) ;; rebind so it isn't lost
     (defalias (intern (concat "fingers-pass-events-" (replace-regexp-in-string " " "_" kbd-string t t)))
       #'(lambda nil
           "Generated function to pass a keybard event (last part of the name) through via `fingers-pass-events'."
@@ -76,7 +77,7 @@
   (let (loop)
     (setq loop 0)
     (while (<= loop ?z)
-      (define-key map (char-to-string loop) nil)
+      (define-key keymap (char-to-string loop) nil)
       (setq loop (1+ loop)))))
 
 (defun fingers-define-keys (layout-mapper map bindings)

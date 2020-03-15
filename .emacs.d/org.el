@@ -43,7 +43,7 @@
   (setq org-clock-persist 'history)
   (setq org-time-clocksum-format (quote (:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
   (org-clock-persistence-insinuate)
-  (dolist (org-mod '(org-crypt org-info org-eshell))
+  (dolist (org-mod '(org-crypt))
     (require org-mod)))
 
 (setq org-todo-keywords '(
