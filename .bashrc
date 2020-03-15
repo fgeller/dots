@@ -38,8 +38,7 @@ then
     export GPG_TTY
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/openjdk/bin:$PATH
-
-    export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
+    export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home
     if $(docker-machine version 2>/dev/null >/dev/null)
     then
         echo found it
@@ -109,17 +108,10 @@ alias gs='git s'
 alias gsh='git sh'
 alias gu='git u'
 alias gv='govendor'
-alias gvf='govendor fetch -v'
-alias gvs='govendor sync -v'
 alias h='history'
 alias jo='jsonify'
 alias j='jq'
 alias kc='kubectl '
-alias kdev='kubectl --context=movio-dev'
-alias kfr='kubectl --context=movio-prod-fr'
-alias keu='kubectl --context=movio-prod-eu'
-alias kus='kubectl --context=movio-prod-us'
-alias kcn='kubectl --context=movio-prod-cn'
 alias l='less -R'
 alias la='ls -hlA'
 alias ll='ls -hlA'
@@ -148,10 +140,6 @@ function em {
     $EDITOR --eval "(progn (magit-status \"$PWD/$(git rev-parse --show-cdup)\") (delete-other-windows))"
 }
 
-function ydl {
-    cd ~/Downloads && youtube-dl "$@"
-}
-
 function md {
     mkdir -p "$1"
     cd "$1"
@@ -163,17 +151,9 @@ function thumb {
     convert $file -adaptive-resize 200x200 ${file%\.*}-resized.${file##*\.}
 }
 
-function gotest {
-    ls *.go | entr bash -c 'go test |& tee quickfix'
-}
-
 function reload {
     . ~/.bashrc
     echo "loaded ~/.bashrc"
-}
-
-function jf {
-    python -m json.tool
 }
 
 function f {
@@ -186,10 +166,6 @@ function dpass {
 
 function pw {
     pass -c web/$1
-}
-
-function pm {
-    pass -c movio/$1
 }
 
 function set_title {
@@ -247,12 +223,12 @@ function hr {
     rg --no-heading --no-filename -N "$@" $HOME/.history | sort | uniq
 }
 
-function sum {
-    while read n; do ((sum += n)); done; echo $sum;
+function hf {
+    eval $( rg --no-heading --no-filename -N '^[^#]' $HOME/.history | awk '!x[$0]++' | fzf --preview='' )
 }
 
-function mca {
-    kt consume -topic mc.red.campaigns.event -brokers $1 -offsets all=newest-10: | jq '.value |= fromjson | .value.created |= (. / 1000 / 1000 / 1000 | todate) | .value'
+function sum {
+    while read n; do ((sum += n)); done; echo $sum;
 }
 
 function check-php-files {
@@ -269,55 +245,16 @@ function echoerr() {
     echo "$@" >&2
 }
 
-function kget() {
-    echo ======= cn ======= >&2
-    kcn get $1 $2
-
-    echo ======= fr ======= >&2
-    kfr get $1 $2
-
-    echo ======= us ======= >&2
-    kus get $1 $2
-}
-
-function kscale() {
-    echo ======= cn ======= >&2
-    kcn scale --replicas=$3 $1 $2
-
-    echo ======= fr ======= >&2
-    kfr scale --replicas=$3 $1 $2
-
-    echo ======= us ======= >&2
-    kus scale --replicas=$3 $1 $2
-}
-
-function krm() {
-    echo ======= cn ======= >&2
-    kcn delete $1 $2
-
-    echo ======= fr ======= >&2
-    kfr delete $1 $2
-
-    echo ======= us ======= >&2
-    kus delete $1 $2
-}
-
-function kapply() {
-    echo ======= cn ======= >&2
-    kcn apply -f kube.deploy.prod-cn.yaml
-
-    echo ======= fr ======= >&2
-    kfr apply -f kube.deploy.prod-fr.yaml
-
-    echo ======= us ======= >&2
-    kus apply -f kube.deploy.prod-us.yaml
-}
-
 function z() {
     xz --compress --keep --threads=`nproc` --verbose "$@"
 }
 
 
 function up() {
-    sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+    if [[ 'Darwin' == `uname` ]]
+    then
+        brew update && brew upgrade && brew cleanup
+    else
+        sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+    fi
 }
