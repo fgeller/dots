@@ -58,6 +58,10 @@ fi
 [ -f ${GPG_AGENT} ] && [[ $(gpg-connect-agent /bye) -ne 0 ]] && eval "$(gpg-agent -q --daemon --log-file=~/.gnupg/gpg.log)"
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_COMMAND='rg --files'
+export FZF_DEFAULT_OPTS="--height=20 --color=bw"
+
 #
 # NVM (across darwin and linux)
 #
