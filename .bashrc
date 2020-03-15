@@ -23,7 +23,7 @@ export GOPATH=$HOME
 export GO111MODULE=on
 
 export PATH=~/bin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
-export CDPATH=".:~:~/src/github.com:~/src/github.com/fgeller:~/src/github.com/movio"
+export CDPATH=".:~:~/src/github.com:~/src/github.com/fgeller:~/src/github.com/fgeller/dots"
 
 export EDITOR="emacs -nw"
 
