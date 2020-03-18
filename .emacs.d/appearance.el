@@ -1,6 +1,5 @@
-(setq-default global-font-lock-mode nil)
-(global-font-lock-mode -1)
-(remove-hook 'occur-mode-hook 'turn-on-font-lock)
+(setq-default global-font-lock-mode t)
+(global-font-lock-mode 1)
 
 (install 'highlight-thing)
 (setq
@@ -75,7 +74,6 @@
                (window-height . 0.3)))
 
 (setq ediff-split-window-function 'split-window-horizontally)
-
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 (install 'leerzeichen)
