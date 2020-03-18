@@ -1,8 +1,5 @@
 My Emacs configuration.
 
-Dependencies are either included via git's subtree functionality or installed
-on start-up via regular ELPA functionality.
-
 #+attr_html: :width 500px
 [[https://www.gnu.org/software/emacs/][file:https://www.gnu.org/graphics/meditate.png]]
 [[https://www.gnu.org/graphics/meditate.html][Copyright (C) 2001 Free Software Foundation, Inc.]]
