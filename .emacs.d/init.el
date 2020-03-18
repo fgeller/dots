@@ -102,6 +102,7 @@
 (load-custom "~/.emacs.d/vc.el")
 (load-custom "~/.emacs.d/search.el")
 (load-custom "~/.emacs.d/auto-complete.el")
+(load-custom "~/.emacs.d/flycheck.el")
 (load-custom "~/.emacs.d/lsp.el")
 (load-custom "~/.emacs.d/emacs-lisp.el")
 (load-custom "~/.emacs.d/go.el")
