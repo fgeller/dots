@@ -107,6 +107,13 @@
     (define-key m (kbd "wb") 'balance-windows)
     m))
 
+(defun query-replace-word-at-point ()
+  (interactive)
+  (let* ((candidate (read-string (format "Replace: ") (thing-at-point 'word)))
+	 (replacement (read-string (format "Replace [%s] with: " candidate))))
+    (unless (looking-at-p "\\<") (backward-word))
+    (query-replace candidate replacement)))
+
 (defun fingers-mode-custom-bindings ()
   (interactive)
   (after 'dired (define-key dired-mode-map (kbd "C-o") nil))
@@ -148,8 +155,8 @@
   ;;   zoom  x-  jreg  c-   opn
   (define-key fingers-mode-map (kbd "r") 'fingers-insert-char)
   (define-key fingers-mode-map (kbd "R") 'fingers-replace-with-char)
-  (define-key fingers-mode-map (kbd "w") 'anzu-query-replace-regexp)
-  (define-key fingers-mode-map (kbd "W") 'anzu-query-replace-at-cursor)
+  (define-key fingers-mode-map (kbd "w") 'query-replace-word-at-point)
+  (define-key fingers-mode-map (kbd "W") 'query-replace-regexp)
   (define-key fingers-mode-map (kbd "b") 'fingers-slurp-forward)
   (define-key fingers-mode-map (kbd "B") 'fingers-barf-forward)
 
