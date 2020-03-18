@@ -12,9 +12,9 @@
 (put 'time 'lisp-indent-function 1)
 
 (setq
- init-gc-cons-threshold gc-cons-threshold
  init-file-name-handler-alist file-name-handler-alist
  gc-cons-threshold 100000000
+ read-process-output-max (* 10 1024 1024)
  file-name-handler-alist nil)
 
 (defalias 'after 'with-eval-after-load)
@@ -115,7 +115,6 @@
 (auto-revert-set-timer)
 
 (setq
- gc-cons-threshold init-gc-cons-threshold
  file-name-handler-alist init-file-name-handler-alist)
 
 (message "%sms to start up. (%.00fms measured)" (format-time-string "%3N" (time-subtract (current-time) global-startup)) (* time-measured-blocks 1000.0))
