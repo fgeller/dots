@@ -64,7 +64,7 @@
     (cond (fingers-mode
            (mapcar (lambda (face)
                      (set-face-foreground face "black")
-                     (set-face-background face "white")
+                     (set-face-background face "brightwhite")
                      (set-face-attribute face nil :height (face-attribute 'default :height)))
                    faces-to-toggle)
            (setq header-line-format nil))
