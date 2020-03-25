@@ -25,6 +25,7 @@ export GO111MODULE=on
 export PATH=~/bin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
 export CDPATH=".:~:~/src/github.com:~/src/github.com/fgeller:~/src/github.com/fgeller/dots"
 
+export TERM=xterm-24bit
 export EDITOR="emacs -nw"
 
 # makefile target auto-completion
@@ -125,6 +126,7 @@ alias m='make'
 alias pa='ps aux | grep '
 alias psa='ps aux'
 alias r='rg --no-heading '
+alias ssh="TERM=xterm-256color ssh"
 alias td='tmux attach -d'
 
 #
@@ -179,12 +181,6 @@ function set_title {
 function mosh {
     set_title "m[$*]"
     command mosh "$@"
-    set_title "bash"
-}
-
-function ssh {
-    set_title "s[$*]"
-    command ssh "$@"
     set_title "bash"
 }
 
