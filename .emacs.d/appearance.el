@@ -1,6 +1,8 @@
 (setq-default global-font-lock-mode t)
 (global-font-lock-mode 1)
 
+(install 'rainbow-mode)
+
 (install 'highlight-thing)
 (setq
  highlight-thing-what-thing 'symbol
