@@ -9,10 +9,10 @@
   (subword-mode 1)
   (yas-minor-mode 1)
   (font-lock-mode 1)
-  (eldoc-mode 1)
 
   (define-key go-mode-map (kbd "C-c C-r") 'go-rename)
   (define-key go-mode-map (kbd "C-c C-c") 'go-run-all-tests)
+  (define-key go-mode-map (kbd "C-c b") 'go-make-build)
   (define-key go-mode-map (kbd "C-c C-m") 'go-run-this-test)
   (define-key go-mode-map (kbd "C-c C-v") 'go-build-this)
   (define-key go-mode-map (kbd "C-c C-l") 'go-tests-toggle-truncate-lines)
@@ -63,6 +63,14 @@
          (buf (go-tests-buffer-name)))
     (if (get-buffer buf) (with-current-buffer buf (compile cmd))
       (compile cmd)
+      (with-current-buffer "*compilation*" (rename-buffer buf)))))
+
+(defun go-make-build ()
+  (interactive)
+  (let* ((dir (file-name-nondirectory (directory-file-name default-directory)))
+         (buf (go-tests-buffer-name)))
+    (if (get-buffer buf) (with-current-buffer buf (compile "make build"))
+      (compile "make build")
       (with-current-buffer "*compilation*" (rename-buffer buf)))))
 
 (defmacro go-goto-error (&rest body)
