@@ -56,8 +56,7 @@ else
 fi
 
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-[ -f ${GPG_AGENT} ] && [[ $(gpg-connect-agent /bye) -ne 0 ]] && eval "$(gpg-agent -q --daemon --log-file=~/.gnupg/gpg.log)"
-[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+[ -f ${GPG_AGENT} ] && eval "$(gpg-agent -q --daemon --log-file=~/.gnupg/gpg.log)"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export FZF_DEFAULT_COMMAND='rg --files'
