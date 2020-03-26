@@ -76,7 +76,7 @@
 (defun ivy-ag-function (string)
   "Grep in the current directory for STRING."
   (if (< (length string) 3)
-      (counsel-more-chars 3)
+      (ivy-more-chars)
     (let* ((default-directory counsel--git-grep-dir)
            (re (counsel-unquote-regex-parens
                 (setq ivy--old-re (ivy--regex string))))
@@ -208,27 +208,15 @@
 
 (defun ivy-recentf-candidates ()
   (require 'recentf)
+  (recentf-mode)
   (ivy-add-action-to-candidates recentf-list 'find-file))
 
 (defun ivy-jump-candidates ()
   "Returns a list of candidates for jumping to with associated actions as text properties"
-  (let* ((start-time (current-time))
-         (bufs (ivy-buffer-name-candidates))
-	 (bufs-elapsed (time-subtract (current-time) start-time))
+  (let* ((bufs (ivy-buffer-name-candidates))
          (gfs (ivy-git-files-candidates))
-	 (gfs-elapsed (time-subtract (current-time) start-time))
          (rfs (ivy-recentf-candidates))
-	 (rfs-elapsed (time-subtract (current-time) start-time))
-	 ;; (cs (seq-uniq (seq-concatenate 'list bufs gfs rfs)))
-	 (cs (seq-uniq (seq-concatenate 'list bufs gfs)))
-         (elapsed (time-subtract (current-time) start-time)))
-    (message "it took [%s]micros to compute jump candidates. bufs [%s] gfs |%s| [%s] rfs [%s]"
-	     (format-time-string "%6N" elapsed)
-	     (format-time-string "%6N" bufs-elapsed)
-	     (length gfs)
-	     (format-time-string "%6N" gfs-elapsed)
-	     (format-time-string "%6N" rfs-elapsed)
-	     )
+	 (cs (seq-uniq (seq-concatenate 'list bufs gfs rfs))))
     cs))
 
 (defun ivy-jump ()
