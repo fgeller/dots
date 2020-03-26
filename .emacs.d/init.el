@@ -60,11 +60,6 @@
   (load (format "%s-autoloads.el" package) 'no-error 'no-message)
   (when req (require package)))
 
-(when (memq window-system '(mac ns))
-  (install 'exec-path-from-shell)
-  (let ((exec-path-from-shell-variables '("PATH" "MANPATH" "GPG_AGENT_INFO" "SSH_AUTH_SOCK" "LANG")))
-    (exec-path-from-shell-initialize)))
-
 (time "setq and setq-default basics"
   (setq
    auto-save-default nil
