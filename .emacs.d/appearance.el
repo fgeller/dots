@@ -63,7 +63,8 @@
    (interactive)
    (set-font-height (- (face-attribute 'default :height) 10)))
 
-(load-theme 'iv t)
+(load-theme 'ruhe t)
+(enable-theme 'ruhe)
 
 (show-paren-mode 1)
 (setq show-paren-delay 0)
