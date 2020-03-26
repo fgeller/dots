@@ -17,4 +17,5 @@
   git-gutter:modified-sign " "
   git-gutter:added-sign " "
   git-gutter:deleted-sign " ")
-(global-git-gutter-mode)
+
+(global-git-gutter-mode +1)
