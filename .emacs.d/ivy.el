@@ -229,11 +229,8 @@
              :action 'ivy-actioner)))
 
 (defun project-directories ()
-  (let* ((repos (seq-concatenate
-		 'list
-		 (mapcar (lambda (git) (file-name-directory git))
-			 (split-string (shell-command-to-string "find ~/src -maxdepth 4 -name .git -type d") "\n" t))
-		 (list "~/dots")))
+  (let* ((repos (mapcar (lambda (git) (file-name-directory git))
+			(split-string (shell-command-to-string "find ~/src -maxdepth 4 -name .git -type d") "\n" t)))
 	 (sub-dirs (cl-mapcan (lambda (repo) (split-string (shell-command-to-string (format "find %s -maxdepth 1 -type d" repo)) "\n" t))
 			      repos)))
     (delete-dups (seq-concatenate 'list repos sub-dirs))))
@@ -297,7 +294,7 @@
               (string-trim (buffer-substring (line-beginning-position) (point)))
               (string-trim (buffer-substring (point) (line-end-position)))))))
 
-(defun ivy-mark-ring-candidates (ring)
+(defun ivy-mark-ring-candidates ()
   (let* ((start-time (current-time))
          cs)
     (mapc
@@ -310,35 +307,13 @@
                 (can (format "%15.15s:%s" bn des)))
            (add-ivy-action can (ivy-mark-ring-action buf pos))
            (push can cs))))
-     ring)
+     (append mark-ring global-mark-ring))
     cs))
 
-(defun ivy-global-mark-ring ()
+(defun ivy-mark-ring ()
   (interactive)
   (with-ivy-calling
    (ivy-read
     "global mark "
-    (ivy-mark-ring-candidates global-mark-ring)
+    (ivy-mark-ring-candidates)
     :action 'ivy-actioner)))
-
-(defun ivy-local-mark-ring ()
-  (interactive)
-  (with-ivy-calling
-   (ivy-read
-    "local mark "
-    (ivy-mark-ring-candidates mark-ring)
-    :action 'ivy-actioner)))
-
-(defun swiper-with-thing-at-point ()
-  (interactive)
-  (swiper (thing-at-point 'symbol))
-  (let ((recenter-positions '(middle)))
-    (recenter-top-bottom)
-    (pulse-momentary-highlight-one-line (point) 'swiper-line-face)))
-
-(defun swiper-tweaked ()
-  (interactive)
-  (swiper)
-  (let ((recenter-positions '(middle)))
-    (recenter-top-bottom)
-    (pulse-momentary-highlight-one-line (point) 'swiper-line-face)))
