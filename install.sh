@@ -14,3 +14,6 @@ for f in bash_profile bashrc emacs.d gitconfig gitmsg.txt globalgitignore inputr
 do
     ensure_link $f
 done
+
+cp -v $target/e $HOME/bin/
+chmod +x $HOME/bin/e

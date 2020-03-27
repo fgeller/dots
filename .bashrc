@@ -81,7 +81,6 @@ alias dl='cd ~/Downloads'
 alias dstop='docker ps -a | grep -v CONTAINER | cut -d" " -f1 | xargs docker stop'
 alias drm='docker ps -a | grep -v CONTAINER | cut -d" " -f1 | xargs docker rm'
 alias dps='docker ps -a'
-alias e="$EDITOR"
 alias ed='cd ~/.emacs.d'
 alias g='git'
 alias ga='git a'
