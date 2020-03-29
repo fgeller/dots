@@ -43,6 +43,22 @@
       avy-keys '(?a ?s ?h ?g ?y ?t ?n ?e ?o ?i ?' ?u ?p ?d ?r ?c ?k)
       avy-timeout-seconds 0.2)
 
+(defconst region-specifiers
+  '((char . ?v)
+    (char-and-whitespace . ?V)
+    (line . ?y)
+    (line-rest . ?g)
+    (word . ?h)
+    (word-and-whitespace . ?H)
+    (symbol . ?t)
+    (symbol-and-whitespace . ?T)
+    (between-whitespace . ?c)
+    (with-surrounding-whitespace . ?C)
+    (inside-pair . ?s)
+    (with-pair . ?a)
+    (with-pair-and-whitespace . ?A))
+  "Mapping from region type to identifier key")
+
 ;; c-map
 (defconst c-bindings-map
   (let ((map (make-sparse-keymap)))
@@ -420,22 +436,6 @@
     (save-excursion
       (forward-word)
       (set-mark (point)))))
-
-(defconst region-specifiers
-  '((char . ?v)
-    (char-and-whitespace . ?V)
-    (line . ?y)
-    (line-rest . ?g)
-    (word . ?h)
-    (word-and-whitespace . ?H)
-    (symbol . ?t)
-    (symbol-and-whitespace . ?T)
-    (between-whitespace . ?c)
-    (with-surrounding-whitespace . ?C)
-    (inside-pair . ?s)
-    (with-pair . ?a)
-    (with-pair-and-whitespace . ?A))
-  "Mapping from region type to identifier key")
 
 (defun region-specifier (type)
   (cdr (assoc type region-specifiers)))
