@@ -19,3 +19,6 @@
   git-gutter:deleted-sign " ")
 
 (global-git-gutter-mode +1)
+
+(install 'git-messenger)
+(setq git-messenger:use-magit-popup t)

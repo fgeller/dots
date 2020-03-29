@@ -109,6 +109,7 @@
     (define-key map (kbd "tw") 'leerzeichen-mode)
 
     (define-key map (kbd "ve") 'git-gutter:next-hunk)
+    (define-key map (kbd "vm") 'git-messenger:popup-message)
     (define-key map (kbd "vo") 'git-gutter:previous-hunk)
     (define-key map (kbd "vp") 'git-gutter:popup-hunk)
     (define-key map (kbd "vr") 'git-gutter:revert-hunk)
