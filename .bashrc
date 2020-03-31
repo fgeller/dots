@@ -83,6 +83,7 @@ alias dstop='docker ps -a | grep -v CONTAINER | cut -d" " -f1 | xargs docker sto
 alias drm='docker ps -a | grep -v CONTAINER | cut -d" " -f1 | xargs docker rm'
 alias dps='docker ps -a'
 alias ed='cd ~/.emacs.d'
+alias eb="$EDITOR ~/.bashrc"
 alias g='git'
 alias ga='git a'
 alias gad='git ad'
