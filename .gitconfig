@@ -66,3 +66,5 @@
 	helper = store
 [magit]
 	hideCampaign = true
+[gpg]
+	program = /usr/local/bin/gpg
