@@ -540,7 +540,7 @@
        ((= nk (region-specifier 'with-pair)) (mark-with-pair))
        ((= nk (region-specifier 'with-pair-and-whitespace)) (mark-with-pair-and-whitespace))
        (t (mark-word))))) ; defaults to word
-  (let ((rp (read-string "Replace with: " (buffer-substring (point) (mark)))))
+  (let ((rp (read-string "Replace with: ")))
     (delete-region (point) (mark))
     (insert rp)))
 
