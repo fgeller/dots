@@ -132,6 +132,15 @@ alias td='tmux attach -d'
 #
 # Functions
 #
+
+
+# always print pwd when changing dirs.
+# if CDPATH is set it prints absolute path changes, but not `cd ..`
+function cd() {
+    builtin cd "$@" >/dev/null
+    pwd
+}
+
 function tmp {
     if [ $# -eq 0 ] ; then
 	echo "Expects single argument to name temporary folder."
