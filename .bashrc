@@ -133,6 +133,21 @@ alias td='tmux attach -d'
 # Functions
 #
 
+function e() {
+    if [ -t 0 ]
+    then
+	echo expecting input on stdin
+	$EDITOR $@
+    else
+	tmpf=$(mktemp)
+	while read line
+	do
+	    echo "$line" >> $tmpf
+	done < /dev/stdin
+
+	$EDITOR "$tmpf"
+    fi
+}
 
 # always print pwd when changing dirs.
 # if CDPATH is set it prints absolute path changes, but not `cd ..`
