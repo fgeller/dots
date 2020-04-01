@@ -202,7 +202,7 @@
 (define-key modal-mode-map (kbd "V") nil)
 (define-key modal-mode-map (kbd "k") 'ivy-jump)
 (define-key modal-mode-map (kbd "K") 'ivy-git-ls-files-project)
-(define-key modal-mode-map (kbd "l") 'counsel-rg)
+(define-key modal-mode-map (kbd "l") 'counsel-ag)
 (define-key modal-mode-map (kbd "L") nil)
 (define-key modal-mode-map (kbd ",") 'dumb-jump-go)
 (define-key modal-mode-map (kbd "<") 'dumb-jump-back)

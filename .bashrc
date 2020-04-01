@@ -30,7 +30,7 @@ export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
 export CDPATH=".:~:~/src/github.com:~/src/github.com/fgeller:~/src/github.com/fgeller/dots"
 
 export TERM=xterm-24bit
-export EDITOR="emacs -nw"
+export EDITOR="emacsclient -nw -a /usr/bin/nano"
 
 # makefile target auto-completion
 # https://zgadzaj.com/development/makefile/bash-auto-completion-for-makefile-targets-in-macos
