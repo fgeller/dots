@@ -75,7 +75,7 @@ export FZF_ALT_C_COMMAND='fd -E Library -E pkg -E Applications -E .git -E orgs -
 # Aliases
 #
 alias ..='cd .. && pwd'
-alias a='rg -i'
+alias a='ag'
 alias am='ag -i --ignore=src/test --ignore=vendor'
 alias cqlsh='cqlsh --no-color'
 alias dl='cd ~/Downloads'
