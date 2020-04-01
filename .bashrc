@@ -22,7 +22,11 @@ export PS1='$ '
 export GOPATH=$HOME
 export GO111MODULE=on
 
-export PATH=~/bin:/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
+export PATH=/usr/local/opt/findutils/libexec/gnubin:$PATH
+export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:$PATH
+export PATH=/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:$PATH
+export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
+
 export CDPATH=".:~:~/src/github.com:~/src/github.com/fgeller:~/src/github.com/fgeller/dots"
 
 export TERM=xterm-24bit
