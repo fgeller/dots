@@ -58,7 +58,7 @@ else
 fi
 
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
-[ -f ${GPG_AGENT} ] && eval "$(gpg-agent -q --daemon --log-file=~/.gnupg/gpg.log)"
+[ -f ${GPG_AGENT} ] && eval "$(gpg-agent -q --daemon --log-file=~/.gnupg/gpg.log 2>/dev/null)"
 export SSH_AUTH_SOCK=~/.gnupg/S.gpg-agent.ssh   ## needed to cache ssh pass
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
