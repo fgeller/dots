@@ -101,8 +101,8 @@
 (load-custom "~/.emacs.d/lsp.el")
 (load-custom "~/.emacs.d/emacs-lisp.el")
 (load-custom "~/.emacs.d/go.el")
+(load-custom "~/.emacs.d/javascript.el")
 (load-custom "~/.emacs.d/compilation.el")
-(load-custom "~/.emacs.d/scratch.el")
 
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)

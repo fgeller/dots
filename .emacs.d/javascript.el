@@ -1,17 +1,20 @@
-(install 'tern)
-(install 'company-tern)
+(install 'prettier-js)
 
-(after 'company-mode
-  (add-to-list 'company-backends 'company-tern))
+;; follows gts setup
+;; https://github.com/google/gts/blob/master/.prettierrc.json
+(setq prettier-js-args
+      '(
+	"--trailing-comma" "es5"
+	"--bracket-spacing" "false"
+	"--single-quote" "true"
+	"--arrow-parens" "avoid"
+	))
 
-(install 'rjsx-mode)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-(defun rjsx-mode-customizations ()
-  (setq js2-basic-offset 2)
+(defun js-customizations ()
+  (lsp-deferred)
+  (subword-mode 1)
+  (yas-minor-mode 1)
   (font-lock-mode 1)
-  (tern-mode 1))
-(add-hook 'rjsx-mode-hook 'rjsx-mode-customizations)
+  (prettier-js-mode 1))
 
-
-
-
+(add-hook 'js-mode-hook 'js-customizations)
