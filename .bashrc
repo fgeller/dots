@@ -65,13 +65,6 @@ export SSH_AUTH_SOCK=~/.gnupg/S.gpg-agent.ssh   ## needed to cache ssh pass
 export FZF_DEFAULT_COMMAND='rg --files'
 export FZF_DEFAULT_OPTS="--height=20 --color=bw"
 
-#
-# NVM (across darwin and linux)
-#
-[ -f ~/.nvm ] && export NVM_DIR="$HOME/.nvm"
-[ -f /usr/local/opt/nvm/nvm.sh ] && . "/usr/local/opt/nvm/nvm.sh"
-[ -f ~/.nvm/nvm.sh ] && . "${HOME}/.nvm/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #
 # Aliases
