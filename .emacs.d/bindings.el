@@ -257,6 +257,11 @@
 (define-key modal-mode-map (kbd "/") 'undo)
 (define-key modal-mode-map (kbd "?") nil)
 
+(define-key modal-mode-map (kbd "S-<left>") 'shrink-window-horizontally)
+(define-key modal-mode-map (kbd "S-<right>") 'enlarge-window-horizontally)
+(define-key modal-mode-map (kbd "S-<up>") 'enlarge-window)
+(define-key modal-mode-map (kbd "S-<down>") 'shrink-window)
+
 (defun scroll-down-half-page ()
   (interactive)
   (scroll-down-command (/ (window-height) 4))
