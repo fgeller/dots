@@ -8,7 +8,9 @@
  highlight-thing-what-thing 'symbol
  highlight-thing-prefer-active-region t
  highlight-thing-all-visible-buffers-p t)
-(global-highlight-thing-mode 1)
+(global-highlight-thing-mode +1)
+
+(global-hl-line-mode +1)
 
 (when tool-bar-mode (tool-bar-mode -1))
 (menu-bar-mode -1)  ;; shows full-screen button for mac port
