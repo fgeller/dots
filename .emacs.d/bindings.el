@@ -1,6 +1,32 @@
-;; TODO expand/contract - region?
-;; TODO review specifiers
-;; TODO ivy jump projects?
+;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
+;; |             ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
+;; |     `       ||       1       ||       2      ||       3       ||       4       ||       5       ||       6       ||       7       ||       8       ||       9       ||       0       ||       -       ||       =       ||        backspace         |
+;; |             ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
+;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
+
+;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
+;; |                    ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                  |
+;; |       tab          ||       q       ||       d       ||       r       ||       w       ||       b       ||       j       ||       f       ||       u       ||       p       ||       ;       ||       [       ||       ]       ||        \         |
+;; |                    ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                  |
+;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
+
+;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
+;; |                        ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                               |
+;; |         control        ||       a       ||       s       ||       h       ||       t       ||       g       ||       y       ||       n       ||       e       ||       o       ||       i       ||       '       ||              return           |
+;; |                        ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                               |
+;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
+
+;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
+;; |                              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                                          |
+;; |           shift              ||       z       ||       x       ||       m       ||       c       ||       v       ||       k       ||       l       ||       ,       ||       .       ||       /       ||                shift                     |
+;; |                              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                                          |
+;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
+
+
+;; ========================================================================================================================================================================================================================================================
+;; ========================================================================================================================================================================================================================================================
+;; ========================================================================================================================================================================================================================================================
+
 
 ;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
 ;; |             ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
@@ -43,20 +69,40 @@
       avy-keys '(?a ?s ?h ?g ?y ?t ?n ?e ?o ?i ?' ?u ?p ?d ?r ?c ?k)
       avy-timeout-seconds 0.2)
 
+;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
+;; |             ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
+;; |     `       ||       1       ||       2      ||       3       ||       4       ||       5       ||       6       ||       7       ||       8       ||       9       ||       0       ||       -       ||       =       ||        backspace         |
+;; |             ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
+;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
+
+;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
+;; |                    ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                  |
+;; |       tab          ||       q       ||       d       ||       r       ||       w       ||       b       ||       j       ||       f       ||       u       ||       p       ||       ;       ||       [       ||       ]       ||        \         |
+;; |                    ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                  |
+;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
+
+;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
+;; |                        ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                               |
+;; |         control        ||       a       ||       s       ||       h       ||       t       ||       g       ||       y       ||       n       ||       e       ||       o       ||       i       ||       '       ||              return           |
+;; |                        ||    with-pair  ||  inside-pair  ||    word       ||    symbol     ||    line-rest  ||    line       ||     char      ||     white     ||               ||               ||               ||                               |
+;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
+
+;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
+;; |                              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                                          |
+;; |           shift              ||       z       ||       x       ||       m       ||       c       ||       v       ||       k       ||       l       ||       ,       ||       .       ||       /       ||                shift                     |
+;; |                              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                                          |
+;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
+
+; TODO: whitespace
 (defconst region-specifiers
-  '((char . ?v)
-    (char-and-whitespace . ?V)
+  '((char . ?n)
     (line . ?y)
     (line-rest . ?g)
     (word . ?h)
-    (word-and-whitespace . ?H)
     (symbol . ?t)
-    (symbol-and-whitespace . ?T)
-    (between-whitespace . ?c)
-    (with-surrounding-whitespace . ?C)
+    (whitespace . ?e)
     (inside-pair . ?s)
-    (with-pair . ?a)
-    (with-pair-and-whitespace . ?A))
+    (with-pair . ?a))
   "Mapping from region type to identifier key")
 
 ;; c-map
@@ -447,18 +493,13 @@
 	(t (let ((nk (read-char "Kill: ")))
 	     (cond
 	      ((= nk (region-specifier 'char)) (kill-char))
-	      ((= nk (region-specifier 'char-and-whitespace)) (kill-char-and-whitespace))
 	      ((= nk (region-specifier 'line)) (kill-whole-line))
 	      ((= nk (region-specifier 'line-rest)) (kill-until-end-of-line))
 	      ((= nk (region-specifier 'word)) (kill-word))
-	      ((= nk (region-specifier 'word-and-whitespace)) (kill-word-and-whitespace))
 	      ((= nk (region-specifier 'symbol)) (kill-symbol))
-	      ((= nk (region-specifier 'symbol-and-whitespace)) (kill-symbol-and-whitespace))
-	      ((= nk (region-specifier 'between-whitespace)) (kill-between-whitespace))
-	      ((= nk (region-specifier 'with-surrounding-whitespace)) (kill-with-surrounding-whitespace))
 	      ((= nk (region-specifier 'inside-pair)) (kill-inside-pair))
 	      ((= nk (region-specifier 'with-pair)) (kill-with-pair))
-	      ((= nk (region-specifier 'with-pair-and-whitespace)) (kill-with-pair-and-whitespace))
+	      ((= nk (region-specifier 'whitespace)) (kill-whitespace))
 	      (t (set-mark (point))
 		 (call-interactively (key-binding (kbd (string nk))))
 		 (kill-region (point) (mark))))))))
@@ -512,6 +553,10 @@
   (mark-with-pair)
   (kill-region (point) (mark)))
 
+(defun kill-whitespace ()
+  (mark-whitespace)
+  (kill-region (point) (mark)))
+
 (defun kill-with-pair-and-whitespace ()
   (mark-with-pair-and-whitespace)
   (kill-region (point) (mark)))
@@ -527,18 +572,13 @@
     (let ((nk (read-char "Mark: ")))
       (cond
        ((= nk (region-specifier 'char)) (mark-char))
-       ((= nk (region-specifier 'char-and-whitespace)) (mark-char-and-whitespace))
        ((= nk (region-specifier 'line)) (mark-whole-line))
        ((= nk (region-specifier 'line-rest)) (mark-until-end-of-line))
        ((= nk (region-specifier 'word)) (mark-word))
-       ((= nk (region-specifier 'word-and-whitespace)) (mark-word-and-whitespace))
        ((= nk (region-specifier 'symbol)) (mark-symbol))
-       ((= nk (region-specifier 'symbol-and-whitespace)) (mark-symbol-and-whitespace))
-       ((= nk (region-specifier 'between-whitespace)) (mark-between-whitespace))
-       ((= nk (region-specifier 'with-surrounding-whitespace)) (mark-with-surrounding-whitespace))
        ((= nk (region-specifier 'inside-pair)) (mark-inside-pair))
        ((= nk (region-specifier 'with-pair)) (mark-with-pair))
-       ((= nk (region-specifier 'with-pair-and-whitespace)) (mark-with-pair-and-whitespace))
+       ((= nk (region-specifier 'whitespace)) (mark-whitespace))
        (t (mark-word))))) ; defaults to word
   (let ((rp (read-string "Replace with: ")))
     (delete-region (point) (mark))
@@ -550,18 +590,13 @@
     (let ((nk (read-char "Mark: ")))
       (cond
        ((= nk (region-specifier 'char)) (mark-char))
-       ((= nk (region-specifier 'char-and-whitespace)) (mark-char-and-whitespace))
        ((= nk (region-specifier 'line)) (mark-whole-line))
        ((= nk (region-specifier 'line-rest)) (mark-until-end-of-line))
        ((= nk (region-specifier 'word)) (mark-word))
-       ((= nk (region-specifier 'word-and-whitespace)) (mark-word-and-whitespace))
        ((= nk (region-specifier 'symbol)) (mark-symbol))
-       ((= nk (region-specifier 'symbol-and-whitespace)) (mark-symbol-and-whitespace))
-       ((= nk (region-specifier 'between-whitespace)) (mark-between-whitespace))
-       ((= nk (region-specifier 'with-surrounding-whitespace)) (mark-with-surrounding-whitespace))
        ((= nk (region-specifier 'inside-pair)) (mark-inside-pair))
        ((= nk (region-specifier 'with-pair)) (mark-with-pair))
-       ((= nk (region-specifier 'with-pair-and-whitespace)) (mark-with-pair-and-whitespace))
+       ((= nk (region-specifier 'whitespace)) (mark-whitespace))
        (t (set-mark (point))
 	  (pass-events (string nk)))))))
 
@@ -636,6 +671,12 @@
 
 (defun mark-with-pair ()
   (dispatch-with-pair 'mark-with-pair-strings))
+
+(defun mark-whitespace ()
+  (interactive)
+  (skip-chars-backward " \t")
+  (set-mark (point))
+  (skip-chars-forward " \t"))
 
 (defun mark-with-pair-strings (start end)
   (move-point-to-pair-starting-string start end)
