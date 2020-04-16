@@ -52,8 +52,8 @@
  `(border ((t (:background "#b4b7b4"))))
  `(cursor ((t (:foreground nil :background "#ff5722"))))
  `(fringe ((t (:foreground "#373b41"))))
- `(highlight ((t (:background "#e0e0e0")))) ;ffeb3b
- `(highlight-thing ((t (:background "#37474F" :distant-foreground "#000000"))))
+ `(highlight ((t (:background "#455A64" :distant-foreground "#000000")))) ;ffeb3b
+ `(highlight-thing ((t (:background "#3F51B5" :foreground "#ffffff" :distant-foreground "#000000"))))
  `(pulse-highlight ((t (:background "#ffeb3b"))))
  `(pulse-highlight-start-face ((t (:background "#ffeb3b"))))
  `(minibuffer-prompt ((t (:foreground "#eceff1" :background "#2196f3"))))
@@ -63,7 +63,7 @@
  `(mode-line-inactive ((t (:foreground "#263238" :background "#cfd8dc"))))
  `(header-line ((t (:foreground "#673ab7" :background nil :inherit mode-line))))
  `(vertical-border ((t (:inherit mode-line))))
- `(region ((t (:background "#455A64" :distant-foreground "#373b41"))))
+ `(region ((t (:background "#cddc39" :foreground "#263238"))))
  `(secondary-selection ((t (:background "#cfd8dc" :distant-foreground "#373b41"))))
 
  `(trailing-whitespace ((t (:background "#2196f3"))))
