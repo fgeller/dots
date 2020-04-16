@@ -35,21 +35,21 @@
 ;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
 
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
-;; |                    ||               ||  delete-back  || duplicate-lin ||   join-line   ||     barf      ||               ||               ||               ||   swiper-all  || pop-to-mark   || prev-word-occ || next-word-occ ||                  |
+;; |                    ||               || delete-back   || duplicate-lin ||   join-line   ||     barf      ||               ||               ||               ||   swiper-all  || pop-to-mark   || prev-word-occ || next-word-occ ||                  |
 ;; |       tab          ||       q       ||       d       ||       r       ||       w       ||       b       ||       j       ||       f       ||       u       ||       p       ||       ;       ||       [       ||       ]       ||        \         |
-;; |                    ||               ||     delete    || query-repl-rx ||   open-line   ||     slurp     ||               ||               || avy-goto-char ||     swiper    || ivy-mark-ring ||  prev-sym-occ || next-sym-occ  ||  goto-line       |
+;; |                    ||  surround     ||     delete    || query-repl-rx ||   open-line   ||     slurp     ||               ||               || avy-goto-char ||     swiper    || ivy-mark-ring ||  prev-sym-occ || next-sym-occ  ||  goto-line       |
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
 
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
-;; |                        ||    insert     ||  surround     ||  counsel-yank ||               ||               ||  beg-buffer   ||  back-symbl   ||   page-down   ||    page-up    ||   fwd-symbl   ||  end-buffer   ||                               |
+;; |                        ||               ||               ||  counsel-yank ||               ||               ||  beg-buffer   ||  back-symbl   ||   page-down   ||    page-up    ||   fwd-symbl   ||  end-buffer   ||                               |
 ;; |         control        ||       a       ||       s       ||       h       ||       t       ||       g       ||       y       ||       n       ||       e       ||       o       ||       i       ||       '       ||              return           |
-;; |                        ||     replace   || rem-encl-pair ||      yank     ||     kill      ||  insert-mode  || begining-line ||     left      ||     down      ||      up       ||     right     ||   end-line    ||                               |
+;; |                        ||     replace   || rem-encl-pair ||      yank     ||     kill      ||    insert     || begining-line ||     left      ||     down      ||      up       ||     right     ||   end-line    ||                               |
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
 
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
 ;; |                              ||  ivy-resume   ||               ||               ||               ||               ||               ||               ||dumb-jump-back || xref-jump-back||               ||                                          |
 ;; |           shift              ||       z       ||       x       ||       m       ||       c       ||       v       ||       k       ||       l       ||       ,       ||       .       ||       /       ||                shift                     |
-;; |                              ||   win-zoom    ||     x-map     ||  macro-map    ||     c-map     || save-buffer   || counsel-open  ||  counsel-rg   || dumb-jump-go  || xref-jump-to  ||      undo     ||                                          |
+;; |                              ||   win-zoom    ||     x-map     ||  macro-map    ||     c-map     || save-buffer   || counsel-open  ||  counsel-ag   || dumb-jump-go  || xref-jump-to  ||      undo     ||                                          |
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
 
 (install 'modal)
@@ -78,13 +78,13 @@
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
 ;; |                    ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                  |
 ;; |       tab          ||       q       ||       d       ||       r       ||       w       ||       b       ||       j       ||       f       ||       u       ||       p       ||       ;       ||       [       ||       ]       ||        \         |
-;; |                    ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                  |
+;; |                    ||               ||      char     ||    white      ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                  |
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
 
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
 ;; |                        ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                               |
 ;; |         control        ||       a       ||       s       ||       h       ||       t       ||       g       ||       y       ||       n       ||       e       ||       o       ||       i       ||       '       ||              return           |
-;; |                        ||    with-pair  ||  inside-pair  ||    word       ||    symbol     ||    line-rest  ||    line       ||     char      ||     white     ||               ||               ||               ||                               |
+;; |                        ||    with-pair  ||  inside-pair  ||    word       ||    symbol     ||    line-rest  ||    line       ||               ||               ||               ||               ||               ||                               |
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
 
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
@@ -95,12 +95,12 @@
 
 ; TODO: whitespace
 (defconst region-specifiers
-  '((char . ?n)
+  '((char . ?d)
     (line . ?y)
     (line-rest . ?g)
     (word . ?h)
     (symbol . ?t)
-    (whitespace . ?e)
+    (whitespace . ?r)
     (inside-pair . ?s)
     (with-pair . ?a))
   "Mapping from region type to identifier key")
@@ -186,7 +186,7 @@
 (define-key modal-mode-map (kbd "+") 'increment-integer-at-point)
 (define-key modal-mode-map (kbd "-") 'decrement-integer-at-point)
 
-(define-key modal-mode-map (kbd "q") nil)
+(define-key modal-mode-map (kbd "q") 'enclose-in-pair)
 (define-key modal-mode-map (kbd "Q") nil)
 (define-key modal-mode-map (kbd "d") 'delete-forward-char)
 (define-key modal-mode-map (kbd "D") 'delete-backward-char)
@@ -214,14 +214,14 @@
 (define-key modal-mode-map (kbd "|") nil)
 
 (define-key modal-mode-map (kbd "a") 'replace-select)
-(define-key modal-mode-map (kbd "A") 'insert-literal)
+(define-key modal-mode-map (kbd "A") nil)
 (define-key modal-mode-map (kbd "s") 'remove-enclosing-pair)
-(define-key modal-mode-map (kbd "S") 'enclose-in-pair)
+(define-key modal-mode-map (kbd "S") nil)
 (define-key modal-mode-map (kbd "h") 'yank)
 (define-key modal-mode-map (kbd "H") 'counsel-yank-pop)
 (define-key modal-mode-map (kbd "t") 'kill-select)
 (define-key modal-mode-map (kbd "T") nil)
-(define-key modal-mode-map (kbd "g") 'modal-mode-deactivate)
+(define-key modal-mode-map (kbd "g") 'insert-literal)
 (define-key modal-mode-map (kbd "G") nil)
 (define-key modal-mode-map (kbd "y") 'beginning-of-line)
 (define-key modal-mode-map (kbd "Y") 'beginning-of-buffer)
