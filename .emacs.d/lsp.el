@@ -8,4 +8,4 @@
  lsp-ui-doc-enable nil
  lsp-ui-sideline-enable nil
  lsp-prefer-capf t
- lsp-idle-delay 0.2)
+ lsp-idle-delay 0.75)
