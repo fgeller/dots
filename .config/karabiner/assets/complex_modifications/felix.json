@@ -1,0 +1,58 @@
+{
+  "title": "felix rules",
+  "rules": [
+    {
+      "description": "Change caps_lock to control if pressed with other keys, to backspace if pressed alone.",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "caps_lock",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_control"
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "delete_or_backspace"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Change return_or_enter to control if pressed with other keys, to return_or_enter if pressed alone.",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "return_or_enter",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "right_control"
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "return_or_enter"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

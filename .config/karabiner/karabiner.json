@@ -1,0 +1,473 @@
+{
+    "global": {
+        "check_for_updates_on_startup": true,
+        "show_in_menu_bar": true,
+        "show_profile_name_in_menu_bar": true
+    },
+    "profiles": [
+        {
+            "complex_modifications": {
+                "parameters": {
+                    "basic.simultaneous_threshold_milliseconds": 50,
+                    "basic.to_delayed_action_delay_milliseconds": 200,
+                    "basic.to_if_alone_timeout_milliseconds": 200,
+                    "basic.to_if_held_down_threshold_milliseconds": 200,
+                    "mouse_motion_to_scroll.speed": 100
+                },
+                "rules": [
+                    {
+                        "description": "Change caps_lock to control if pressed with other keys, to backspace if pressed alone.",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_control"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "delete_or_backspace"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Change return_or_enter to control if pressed with other keys, to return_or_enter if pressed alone.",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "return_or_enter",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "right_control"
+                                    }
+                                ],
+                                "to_if_alone": [
+                                    {
+                                        "key_code": "return_or_enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "devices": [],
+            "fn_function_keys": [
+                {
+                    "from": {
+                        "key_code": "f1"
+                    },
+                    "to": {
+                        "consumer_key_code": "display_brightness_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f2"
+                    },
+                    "to": {
+                        "consumer_key_code": "display_brightness_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f3"
+                    },
+                    "to": {
+                        "key_code": "mission_control"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f4"
+                    },
+                    "to": {
+                        "key_code": "launchpad"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f5"
+                    },
+                    "to": {
+                        "key_code": "illumination_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f6"
+                    },
+                    "to": {
+                        "key_code": "illumination_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f7"
+                    },
+                    "to": {
+                        "consumer_key_code": "rewind"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f8"
+                    },
+                    "to": {
+                        "consumer_key_code": "play_or_pause"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f9"
+                    },
+                    "to": {
+                        "consumer_key_code": "fastforward"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f10"
+                    },
+                    "to": {
+                        "consumer_key_code": "mute"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f11"
+                    },
+                    "to": {
+                        "consumer_key_code": "volume_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f12"
+                    },
+                    "to": {
+                        "consumer_key_code": "volume_increment"
+                    }
+                }
+            ],
+            "name": "workman",
+            "parameters": {
+                "delay_milliseconds_before_open_device": 1000
+            },
+            "selected": true,
+            "simple_modifications": [
+                {
+                    "from": {
+                        "key_code": "b"
+                    },
+                    "to": {
+                        "key_code": "v"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "c"
+                    },
+                    "to": {
+                        "key_code": "m"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "d"
+                    },
+                    "to": {
+                        "key_code": "h"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "e"
+                    },
+                    "to": {
+                        "key_code": "r"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f"
+                    },
+                    "to": {
+                        "key_code": "t"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "h"
+                    },
+                    "to": {
+                        "key_code": "y"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "i"
+                    },
+                    "to": {
+                        "key_code": "u"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "j"
+                    },
+                    "to": {
+                        "key_code": "n"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "k"
+                    },
+                    "to": {
+                        "key_code": "e"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "l"
+                    },
+                    "to": {
+                        "key_code": "o"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "m"
+                    },
+                    "to": {
+                        "key_code": "l"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "n"
+                    },
+                    "to": {
+                        "key_code": "k"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "o"
+                    },
+                    "to": {
+                        "key_code": "p"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "p"
+                    },
+                    "to": {
+                        "key_code": "semicolon"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "r"
+                    },
+                    "to": {
+                        "key_code": "w"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "semicolon"
+                    },
+                    "to": {
+                        "key_code": "i"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "t"
+                    },
+                    "to": {
+                        "key_code": "b"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "u"
+                    },
+                    "to": {
+                        "key_code": "f"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "v"
+                    },
+                    "to": {
+                        "key_code": "c"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "w"
+                    },
+                    "to": {
+                        "key_code": "d"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "y"
+                    },
+                    "to": {
+                        "key_code": "j"
+                    }
+                }
+            ],
+            "virtual_hid_keyboard": {
+                "country_code": 0,
+                "mouse_key_xy_scale": 100
+            }
+        },
+        {
+            "complex_modifications": {
+                "parameters": {
+                    "basic.simultaneous_threshold_milliseconds": 50,
+                    "basic.to_delayed_action_delay_milliseconds": 500,
+                    "basic.to_if_alone_timeout_milliseconds": 1000,
+                    "basic.to_if_held_down_threshold_milliseconds": 500,
+                    "mouse_motion_to_scroll.speed": 100
+                },
+                "rules": []
+            },
+            "devices": [],
+            "fn_function_keys": [
+                {
+                    "from": {
+                        "key_code": "f1"
+                    },
+                    "to": {
+                        "consumer_key_code": "display_brightness_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f2"
+                    },
+                    "to": {
+                        "consumer_key_code": "display_brightness_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f3"
+                    },
+                    "to": {
+                        "key_code": "mission_control"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f4"
+                    },
+                    "to": {
+                        "key_code": "launchpad"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f5"
+                    },
+                    "to": {
+                        "key_code": "illumination_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f6"
+                    },
+                    "to": {
+                        "key_code": "illumination_increment"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f7"
+                    },
+                    "to": {
+                        "consumer_key_code": "rewind"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f8"
+                    },
+                    "to": {
+                        "consumer_key_code": "play_or_pause"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f9"
+                    },
+                    "to": {
+                        "consumer_key_code": "fastforward"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f10"
+                    },
+                    "to": {
+                        "consumer_key_code": "mute"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f11"
+                    },
+                    "to": {
+                        "consumer_key_code": "volume_decrement"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "f12"
+                    },
+                    "to": {
+                        "consumer_key_code": "volume_increment"
+                    }
+                }
+            ],
+            "name": "qwerty",
+            "parameters": {
+                "delay_milliseconds_before_open_device": 1000
+            },
+            "selected": false,
+            "simple_modifications": [],
+            "virtual_hid_keyboard": {
+                "country_code": 0,
+                "mouse_key_xy_scale": 100
+            }
+        }
+    ]
+}
