@@ -90,8 +90,8 @@
  `(company-echo-common ((t (:inherit secondary-selection))))
 
  `(font-lock-builtin-face ((t (:inherit default))))
- `(font-lock-comment-delimiter-face ((t (:foreground "#90a4ae"))))
- `(font-lock-comment-face ((t (:foreground "#2196f3"))))
+ `(font-lock-comment-delimiter-face ((t (:foreground "#3F51B5"))))
+ `(font-lock-comment-face ((t (:foreground "#3F51B5"))))
  `(font-lock-constant-face ((t (:inherit default))))
  `(font-lock-doc-face ((t (:inherit font-lock-comment-face))))
  `(font-lock-doc-string-face ((t (:inherit default))))
