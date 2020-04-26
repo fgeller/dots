@@ -48,13 +48,13 @@
 
 (custom-theme-set-faces
  'ruhe
- `(default ((t (:foreground "#ffffff" :background "#263238"))))
+ `(default ((t (:foreground "#000000" :background "#ffffff"))))
  `(border ((t (:background "#b4b7b4"))))
  `(cursor ((t (:foreground nil :background "#ff5722"))))
  `(fringe ((t (:foreground "#373b41"))))
- `(highlight ((t (:background "#455A64" :distant-foreground "#000000")))) ;ffeb3b
- `(highlight-thing ((t (:background "#3F51B5" :foreground "#ffffff" :distant-foreground "#000000"))))
- `(pulse-highlight ((t (:background "#ffeb3b"))))
+ `(highlight ((t (:background "#AED581" :distant-foreground "#000000"))))
+ `(pulse-highlight ((t (:background "#AED581"))))
+ `(highlight-thing ((t (:background "#FFF176" :distant-foreground "#000000"))))
  `(pulse-highlight-start-face ((t (:background "#ffeb3b"))))
  `(minibuffer-prompt ((t (:foreground "#eceff1" :background "#2196f3"))))
  `(tooltip ((t (:foreground "#eceff1" :background "#78909c"))))
@@ -63,7 +63,7 @@
  `(mode-line-inactive ((t (:foreground "#263238" :background "#cfd8dc"))))
  `(header-line ((t (:foreground "#673ab7" :background nil :inherit mode-line))))
  `(vertical-border ((t (:inherit mode-line))))
- `(region ((t (:background "#cddc39" :foreground "#263238"))))
+ `(region ((t (:background "#64B5F6"))))
  `(secondary-selection ((t (:background "#cfd8dc" :distant-foreground "#373b41"))))
 
  `(trailing-whitespace ((t (:background "#2196f3"))))
@@ -106,9 +106,9 @@
  `(font-lock-variable-name-face ((t (:inherit default))))
  `(font-lock-warning-face ((t (:inherit warning))))
 
- `(git-gutter:added ((t :foreground "#8bc34a" :background "#8bc34a")))
- `(git-gutter:deleted ((t :foreground "#f44336" :background "#f44336")))
- `(git-gutter:modified ((t :foreground "#2196f3" :background "#2196f3")))
+ `(git-gutter:added ((t :foreground "#A5D6A7" :background "#A5D6A7")))
+ `(git-gutter:deleted ((t :foreground "#EF9A9A" :background "#EF9A9A")))
+ `(git-gutter:modified ((t :foreground "#90CAF9" :background "#90CAF9")))
 
  `(ivy-current-match ((t (:foreground "#eceff1" :background "#2196f3"))))
  `(ivy-minibuffer-match-face-1 ((t (:foreground "#a36ac7"))))
