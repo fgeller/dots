@@ -262,6 +262,11 @@
 (define-key modal-mode-map (kbd "S-<up>") 'enlarge-window)
 (define-key modal-mode-map (kbd "S-<down>") 'shrink-window)
 
+(define-key modal-mode-map (kbd "C-<left>") 'windmove-left)
+(define-key modal-mode-map (kbd "C-<right>") 'windmove-right)
+(define-key modal-mode-map (kbd "C-<up>") 'windmove-up)
+(define-key modal-mode-map (kbd "C-<down>") 'windmove-down)
+
 (defun scroll-down-half-page ()
   (interactive)
   (scroll-down-command (/ (window-height) 4))
