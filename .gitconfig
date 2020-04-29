@@ -14,7 +14,10 @@
     excludesfile = ~/.globalgitignore
     fileMode = false
     trustctime = false
-    pager = cat
+    pager = delta --plus-color="#012800" --minus-color="#340001" --theme='GitHub'
+[interactive]
+    diffFilter = delta --color-only
+
 [branch]
     autosetuprebase = always
 [push]
