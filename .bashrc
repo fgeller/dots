@@ -145,7 +145,7 @@ function e() {
 	    echo "$line" >> $tmpf
 	done < /dev/stdin
 
-	$EDITOR "$tmpf"
+	emacsclient -nw -e "(progn (find-file \"$tmpf\") (delete-other-windows) (ansi-colorize-buffer) (save-buffer))"
     fi
 }
 
@@ -168,6 +168,10 @@ function tmp {
 
 function em {
     $EDITOR --eval "(progn (magit-status \"$PWD/$(git rev-parse --show-cdup)\") (delete-other-windows))"
+}
+
+function man {
+    emacsclient -nw -e "(progn (switch-to-buffer (man \"$1\") nil t) (delete-other-windows))"
 }
 
 function md {
