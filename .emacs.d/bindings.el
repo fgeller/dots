@@ -54,6 +54,14 @@
 
 (install 'modal)
 (global-modal-mode 1)
+
+(defun exit-view-mode ()
+  (message "entering view mode, about to disable")
+  (view-mode-exit t nil t))
+
+; xref jump triggers view mode, which is redundant when defaulting to modal mode
+(add-hook 'view-mode-hook 'exit-view-mode)
+
 (after 'dired (define-key dired-mode-map (kbd "C-o") nil))
 (after 'wdired (define-key wdired-mode-map (kbd "C-o") nil))
 (after 'compile (define-key compilation-mode-map (kbd "C-o") nil))
