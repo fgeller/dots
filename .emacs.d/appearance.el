@@ -12,6 +12,9 @@
 
 (global-hl-line-mode +1)
 
+;; alternative character: │
+(set-display-table-slot standard-display-table 'vertical-border ? )
+
 (when tool-bar-mode (tool-bar-mode -1))
 (menu-bar-mode -1)  ;; shows full-screen button for mac port
 (setq-default
