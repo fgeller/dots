@@ -1,5 +1,5 @@
 (setq-default global-font-lock-mode t)
-(global-font-lock-mode 1)
+(global-font-lock-mode +1)
 
 (install 'rainbow-mode)
 
@@ -14,6 +14,53 @@
 
 ;; alternative character: │
 (set-display-table-slot standard-display-table 'vertical-border ? )
+
+(defconst mode-line-wanted-minor-modes '(lsp-mode flycheck-mode))
+
+(defun line-filler (left right)
+  (let ((len (- (window-total-width) (length left) (length right))))
+    (format (format "%%%ss" len) " ")))
+
+(setq mode-line-format-left
+      `(" "))
+
+(setq mode-line-format-right
+      `(
+	" " "%e"
+	" " ,(cl-remove-if-not
+	      (lambda (p) (member (car p) mode-line-wanted-minor-modes))
+	      minor-mode-alist)
+	" " mode-line-process
+	))
+
+(setq header-line-format-left
+      `(
+	" " (:propertize "%b" face mode-line-buffer-id)
+	" " "%1*"
+	))
+
+(setq header-line-format-right
+      `(
+	" " "line: " "%l"
+	" " "column: " "%c"
+	" "
+	))
+
+
+(defun make-mode-line-format ()
+  (let* ((left (format-mode-line mode-line-format-left))
+	 (right (format-mode-line mode-line-format-right))
+	 (filler (line-filler left right)))
+    (concat left filler right)))
+
+(defun make-header-line-format ()
+  (let* ((left (format-mode-line header-line-format-left))
+	 (right (format-mode-line header-line-format-right))
+	 (filler (line-filler left right)))
+    (concat left filler right)))
+
+(setq-default mode-line-format '((:eval (make-mode-line-format))))
+(setq-default header-line-format '((:eval (make-header-line-format))))
 
 (when tool-bar-mode (tool-bar-mode -1))
 (menu-bar-mode -1)  ;; shows full-screen button for mac port
