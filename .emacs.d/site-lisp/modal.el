@@ -1,22 +1,22 @@
 ;; -*- lexical-binding: t -*-
 
-(defvar modal-modeline-active-fg "#eceff1")
-(defvar modal-modeline-active-bg "#4caf50")
-(defvar modal-modeline-inactive-fg "#263238")
-(defvar modal-modeline-inactive-bg "#cfd8dc")
+(defconst modal-modeline-active-fg "#263238")
+(defconst modal-modeline-active-bg "#cfd8dc")
+(defconst modal-modeline-inactive-fg "#263238")
+(defconst modal-modeline-inactive-bg "#DCEDC8")
 
 (defun modal-mode-visual-toggle ()
   (interactive)
   (let ((faces-to-toggle '(mode-line mode-line-inactive)))
     (cond (modal-mode
            (mapcar (lambda (face)
-                     (set-face-foreground face modal-modeline-inactive-fg)
-                     (set-face-background face modal-modeline-inactive-bg))
+                     (set-face-foreground face modal-modeline-active-fg)
+                     (set-face-background face modal-modeline-active-bg))
                    faces-to-toggle))
           (t
            (mapcar (lambda (face)
-                     (set-face-background face modal-modeline-active-bg)
-                     (set-face-foreground face modal-modeline-active-fg))
+                     (set-face-background face modal-modeline-inactive-bg)
+                     (set-face-foreground face modal-modeline-inactive-fg))
                    faces-to-toggle)))))
 
 (defvar modal-mode-map
