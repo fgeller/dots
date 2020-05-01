@@ -50,23 +50,24 @@
  'ruhe
  `(default ((t (:foreground "#000000" :background "#ffffff"))))
  `(border ((t (:background "#b4b7b4"))))
- `(cursor ((t (:foreground nil :background "#ff5722"))))
+ `(cursor ((t (:foreground "#ffffff" :background "#ff5722"))))
  `(fringe ((t (:foreground "#373b41"))))
- `(highlight ((t (:background "#AED581" :distant-foreground "#000000"))))
- `(pulse-highlight ((t (:background "#AED581"))))
- `(highlight-thing ((t (:background "#FFF176" :distant-foreground "#000000"))))
+ `(highlight ((t (:background "#DCEDC8" :distant-foreground "#000000"))))
+ `(pulse-highlight ((t (:background "#DCEDC8"))))
+ `(highlight-thing ((t (:background "#FFF9C4" :distant-foreground "#000000"))))
  `(pulse-highlight-start-face ((t (:background "#ffeb3b"))))
  `(minibuffer-prompt ((t (:foreground "#eceff1" :background "#2196f3"))))
  `(tooltip ((t (:foreground "#eceff1" :background "#78909c"))))
 
  `(mode-line ((t (:foreground "#eceff1" :background "#4caf50"))))
+ `(header-line ((t (:inherit mode-line))))
  `(mode-line-inactive ((t (:foreground "#263238" :background "#cfd8dc"))))
- `(header-line ((t (:foreground "#673ab7" :background nil :inherit mode-line))))
  `(vertical-border ((t (:inherit mode-line))))
- `(region ((t (:background "#64B5F6"))))
+ `(region ((t (:background "#BBDEFB"))))
  `(secondary-selection ((t (:background "#cfd8dc" :distant-foreground "#373b41"))))
 
  `(trailing-whitespace ((t (:background "#2196f3"))))
+ `(show-paren-match ((t (:inherit cursor))))
 
  `(widget-button ((t (:underline t))))
  `(widget-field ((t (:background "#b4b7b4" :box (:line-width 1 :color "#282a2e")))))
@@ -90,7 +91,7 @@
  `(company-echo-common ((t (:inherit secondary-selection))))
 
  `(font-lock-builtin-face ((t (:inherit default))))
- `(font-lock-comment-delimiter-face ((t (:foreground "#3F51B5"))))
+ `(font-lock-comment-delimiter-face ((t (:foreground "#C5CAE9"))))
  `(font-lock-comment-face ((t (:foreground "#3F51B5"))))
  `(font-lock-constant-face ((t (:inherit default))))
  `(font-lock-doc-face ((t (:inherit font-lock-comment-face))))
@@ -106,7 +107,7 @@
  `(font-lock-variable-name-face ((t (:inherit default))))
  `(font-lock-warning-face ((t (:inherit warning))))
 
- `(git-gutter:added ((t :foreground "#A5D6A7" :background "#A5D6A7")))
+ `(git-gutter:added ((t :foreground "#DCEDC8" :background "#DCEDC8")))
  `(git-gutter:deleted ((t :foreground "#EF9A9A" :background "#EF9A9A")))
  `(git-gutter:modified ((t :foreground "#90CAF9" :background "#90CAF9")))
 
