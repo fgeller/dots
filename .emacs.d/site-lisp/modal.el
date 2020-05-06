@@ -3,7 +3,7 @@
 (defconst modal-modeline-active-fg "#263238")
 (defconst modal-modeline-active-bg "#cfd8dc")
 (defconst modal-modeline-inactive-fg "#263238")
-(defconst modal-modeline-inactive-bg "#DCEDC8")
+(defconst modal-modeline-inactive-bg "#8BC34A")
 
 (defun modal-mode-visual-toggle ()
   (interactive)
