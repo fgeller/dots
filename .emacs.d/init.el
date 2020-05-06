@@ -64,7 +64,7 @@
   (setq
    auto-save-default nil
    make-backup-files nil
-   echo-keystrokes 0.01
+   echo-keystrokes 0.1
    scroll-step 1
    scroll-conservatively 10000
    enable-local-variables :all
@@ -108,7 +108,7 @@
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
-(setq auto-revert-interval 0.1)
+(setq auto-revert-interval 0.5)
 (auto-revert-set-timer)
 
 (setq
