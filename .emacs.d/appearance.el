@@ -1,72 +1,14 @@
 (setq-default global-font-lock-mode t)
 (global-font-lock-mode +1)
 
-(install 'rainbow-mode)
-
-(install 'highlight-thing)
-(setq
- highlight-thing-what-thing 'symbol
- highlight-thing-prefer-active-region t
- highlight-thing-all-visible-buffers-p t)
-(global-highlight-thing-mode +1)
-
 (global-hl-line-mode +1)
 
-;; alternative character: │
 (set-display-table-slot standard-display-table 'vertical-border ? )
-
-(defconst mode-line-wanted-minor-modes '(lsp-mode flycheck-mode))
-
-(defun line-filler (left right)
-  (let ((len (- (window-total-width) (length left) (length right))))
-    (format (format "%%%ss" len) " ")))
-
-(setq mode-line-format-left
-      `(" "))
-
-(setq mode-line-format-right
-      `(
-	" " "%e"
-	" " ,(cl-remove-if-not
-	      (lambda (p) (member (car p) mode-line-wanted-minor-modes))
-	      minor-mode-alist)
-	" " mode-line-process
-	))
-
-(setq header-line-format-left
-      `(
-	" " (:propertize "%b" face mode-line-buffer-id)
-	" " "%1*"
-	))
-
-(setq header-line-format-right
-      `(
-	" " "line: " "%l"
-	" " "column: " "%c"
-	" "
-	))
-
-
-(defun make-mode-line-format ()
-  (let* ((left (format-mode-line mode-line-format-left))
-	 (right (format-mode-line mode-line-format-right))
-	 (filler (line-filler left right)))
-    (concat left filler right)))
-
-(defun make-header-line-format ()
-  (let* ((left (format-mode-line header-line-format-left))
-	 (right (format-mode-line header-line-format-right))
-	 (filler (line-filler left right)))
-    (concat left filler right)))
-
-(setq-default mode-line-format '((:eval (make-mode-line-format))))
-(setq-default header-line-format '((:eval (make-header-line-format))))
 
 (when tool-bar-mode (tool-bar-mode -1))
 (menu-bar-mode -1)  ;; shows full-screen button for mac port
+
 (setq-default
- blink-cursor-delay 0.5
- blink-cursor-interval 1
  use-file-dialog nil
  use-dialog-box nil
  inhibit-startup-screen t
@@ -74,61 +16,21 @@
  truncate-lines t
  truncate-partial-width-windows nil
  visible-bell 1
- transient-mark-mode t   ;; highlight the active region when mark is active
- show-trailing-whitespace t ;; don't show trailing whitespace globally
- blink-matching-paren t
- initial-frame-alist '((left-fringe . 1) (right-fringe . 1) (scroll-bar-width . 0) (vertical-scroll-bars . nil))
- default-frame-alist '((left-fringe . 1) (right-fringe . 1) (scroll-bar-width . 0) (vertical-scroll-bars . nil))
- scroll-bar-width 0
- default-frame-scroll-bars nil)
+ transient-mark-mode t
+ show-trailing-whitespace nil)
 
-(defun mode-line-bell ()
-  (let ((orig (face-attribute 'mode-line :background)))
-    (set-face-attribute 'mode-line nil :background "red")
-    (sit-for 0 70)
-    (set-face-attribute 'mode-line nil :background orig)))
-
-(setq
- visible-bell nil
- ring-bell-function 'mode-line-bell)
-
-(defun set-default-face-attributes ()
-  (interactive)
-  (set-face-attribute 'default nil
-                      :family mono-space-font-family
-                      :height mono-space-font-height
-                      :weight 'normal))
-
-(setq mono-space-font-family "Roboto Mono")
-(setq mono-space-font-height 140)
-
-(defun set-font-height (height)
-  (interactive
-   (list (read-number "Height: " mono-space-font-height)))
-  (setq mono-space-font-height height)
-  (set-default-face-attributes))
-
-(defun increase-font-height ()
-   (interactive)
-   (set-font-height (+ (face-attribute 'default :height) 10)))
-(defun decrease-font-height ()
-   (interactive)
-   (set-font-height (- (face-attribute 'default :height) 10)))
+(load-custom "~/.emacs.d/mode-line.el")
+(load-custom "~/.emacs.d/windows.el")
 
 (load-theme 'ruhe t)
 (enable-theme 'ruhe)
 
 (show-paren-mode 1)
-(setq show-paren-delay 0)
+(setq show-paren-delay 0.5)
 (setq show-paren-style 'parenthesis)
 
-(add-to-list 'display-buffer-alist
-             `(,(rx bos "*Compile-" (* not-newline) "*" eos)
-               (display-buffer-in-side-window)
-               (inhibit-same-window . t)
-               (window-height . 0.3)))
-
-(setq ediff-split-window-function 'split-window-horizontally)
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
+(install 'rainbow-mode)
 (install 'leerzeichen)
+
+(install 'highlight-thing)
+(global-highlight-thing-mode +1)
