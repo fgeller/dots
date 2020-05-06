@@ -127,6 +127,9 @@
     (define-key map (kbd "lr") 'lsp-rename)
     (define-key map (kbd "la") 'xref-find-apropos)
 
+    (define-key map (kbd "en") 'flycheck-next-error)
+    (define-key map (kbd "ep") 'flycheck-previous-error)
+
     (define-key map (kbd "q") 'fill-paragraph)
 
     map))
@@ -147,7 +150,9 @@
     (define-key map (kbd "bw") 'delete-trailing-whitespace)
 
     (define-key map (kbd "c") 'save-buffers-kill-terminal)
-    (define-key map (kbd "e") 'eval-last-sexp)
+    (define-key map (kbd "ee") 'eval-last-sexp)
+    (define-key map (kbd "eb") 'eval-buffer)
+    (define-key map (kbd "er") 'eval-region)
     (define-key map (kbd "f") 'counsel-find-file)
     (define-key map (kbd "h") 'mark-whole-buffer)
     (define-key map (kbd "k") 'kill-buffer)
@@ -271,10 +276,8 @@
 (define-key modal-mode-map (kbd "S-<up>") 'enlarge-window)
 (define-key modal-mode-map (kbd "S-<down>") 'shrink-window)
 
-(define-key modal-mode-map (kbd "C-<left>") 'windmove-left)
-(define-key modal-mode-map (kbd "C-<right>") 'windmove-right)
-(define-key modal-mode-map (kbd "C-<up>") 'windmove-up)
-(define-key modal-mode-map (kbd "C-<down>") 'windmove-down)
+(define-key modal-mode-map (kbd "M-]") 'windmove-right)
+(define-key modal-mode-map (kbd "M-[") 'windmove-left)
 
 (defun scroll-down-half-page ()
   (interactive)
