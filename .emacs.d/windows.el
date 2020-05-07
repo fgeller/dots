@@ -102,14 +102,30 @@
   (interactive)
   (select-window (car (window-at-side-list nil 'left))))
 
+(defun cv-left-window-insert ()
+  (interactive)
+  (select-window (car (window-at-side-list nil 'left)))
+  (global-modal-mode -1))
+
 (defun cv-right-window ()
   (interactive)
   (select-window (car (window-at-side-list nil 'right))))
+
+(defun cv-right-window-insert ()
+  (interactive)
+  (select-window (car (window-at-side-list nil 'right)))
+  (global-modal-mode -1))
 
 (defun cv-middle-window ()
   (interactive)
   (select-window (car (window-at-side-list nil 'left)))
   (windmove-right))
+
+(defun cv-middle-window-insert ()
+  (interactive)
+  (select-window (car (window-at-side-list nil 'left)))
+  (windmove-right)
+  (global-modal-mode -1))
 
 (defun cv-display-buffer-right-side (buf alist)
   (let* ((cw (count-windows))
