@@ -7,7 +7,6 @@
   (lsp-deferred)
 
   (subword-mode 1)
-  (yas-minor-mode 1)
   (font-lock-mode 1)
 
   (define-key go-mode-map (kbd "C-c C-r") 'go-rename)

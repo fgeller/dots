@@ -20,7 +20,6 @@
 (setq org-footnote-auto-label 'plain)
 
 (defun org-mode-per-buffer-customization ()
-  (yas-minor-mode)
   (turn-on-auto-fill))
 
 (add-hook 'org-mode-hook 'org-mode-per-buffer-customization)

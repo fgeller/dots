@@ -4,9 +4,7 @@
 
 (defun scala-customizations ()
   (setq tab-width 2)
-  (font-lock-mode -1)
   (subword-mode 1)
-  (yas-minor-mode 1)
   (lsp-deferred))
 
 (defun scala-ignore-all-tests ()

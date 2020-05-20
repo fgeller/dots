@@ -13,8 +13,8 @@
 (defun js-customizations ()
   (lsp-deferred)
   (subword-mode 1)
-  (yas-minor-mode 1)
   (font-lock-mode 1)
-  (prettier-js-mode 1))
+  (prettier-js-mode 1)
+  (setq tab-width 2))
 
 (add-hook 'js-mode-hook 'js-customizations)
