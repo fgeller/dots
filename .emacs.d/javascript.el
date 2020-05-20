@@ -18,3 +18,6 @@
   (setq tab-width 2))
 
 (add-hook 'js-mode-hook 'js-customizations)
+
+(install 'typescript-mode)
+(add-hook 'typescript-mode-hook 'js-customizations)
