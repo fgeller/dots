@@ -89,7 +89,6 @@
   (time (format "load %s" n)
     (load n nil 'no-message)))
 
-(load-custom "~/.emacs.d/ivy.el")
 (load-custom "~/.emacs.d/bindings.el")
 (load-custom "~/.emacs.d/appearance.el")
 (load-custom "~/.emacs.d/org.el")
