@@ -25,9 +25,7 @@
 (install 'live-completions)
 (live-completions-mode +1)
 (setq live-completions-columns 'single)
-
-;; TODO this break find-file
-;; (setq live-completions-sort-order 'cycle)
+(setq live-completions-sort-order 'cycle)
 
 (dolist (map (list minibuffer-local-completion-map
 		   minibuffer-inactive-mode-map
