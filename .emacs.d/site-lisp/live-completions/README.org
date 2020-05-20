@@ -1,0 +1,176 @@
+* Overview 
+  :PROPERTIES:
+  :TOC:      :include all :ignore this
+  :END:
+
+This packages provides a minibuffer completion UI.  It pops up the
+traditional =*Completions*= buffer and keeps it updated as you type in
+the minibuffer.  Besides the traditional multicolumn view of the
+completions, this package offers a single column view ---in case the
+changing number of columns of the traditional view proves too
+dizzying.
+
+:CONTENTS:
+- [[#why-write-a-new-completion-ui][Why write a new completion UI?]]
+- [[#screenshot][Screenshot]]
+- [[#sort-orders-for-candidates][Sort orders for candidates]]
+- [[#setting-a-maximum-height-for-the-completions-buffer][Setting a maximum height for the completions buffer]]
+- [[#defining-your-own-commands-with-live-completion][Defining your own commands with live completion]]
+:END:
+
+* Why write a new completion UI?
+
+There are many excellent minibuffer completion UIs for Emacs: the
+built-in packages Icomplete, and Ido; and external packages such as
+[[https://github.com/abo-abo/swiper][Ivy]], [[https://github.com/emacs-helm/helm][Helm]] and [[https://github.com/raxod502/selectrum][Selectrum]].  What distinguishes this one?
+
+- This package puts the completions in a buffer. This is like Helm,
+  but unlike Icomplete, Ido, Ivy and Selectrum. (While Ivy doesn't use
+  a buffer by default, it has the =ivy-occur= command which produces a
+  neat buffer.) Buffers are great! You can easily navigate around
+  them, copy text from them, save their contents in a file, etc. All
+  of that is sometimes desirable for completions and is awkward to do
+  when the completions reside in the minibuffer.
+
+  If you want to define your own actions for the candidate at point in
+  the =*Completions*= buffer, Emacs already has a convenient
+  =completion-list-mode-map= keymap where you can bind them.
+
+- It has both the traditional compact view of completions, in several
+  columns, and a single column view, with an easy toggle between
+  them. Helm, Ivy and Selectrum only present single column views;
+  Icomplete and Ido are horizontal by default, but can be configured
+  to give single-column vertical views (see [[https://github.com/oantolin/icomplete-vertical][icomplete-vertical]] and
+  [[https://github.com/creichert/ido-vertical-mode.el][ido-vertical]]).
+
+I'd say those are arguably pros. Now some things which are arguably
+cons:
+
+- It is very modest in scope: like Icomplete it is /only/ a minibuffer
+  completion UI, and it relies on Emacs' completion styles to supply
+  the actual completions. In fact, it's pretty much the same as
+  cosntantly hitting the =?= key to pop up the =*Completions*= buffer.
+
+  Selectrum is almost as modest in scope: it also mostly focuses on
+  selecting items from lists but instead of using the standard
+  completion machinery, it has it's own API and a few extra
+  convenience commands. Ivy and Helm of course have tons of extra
+  functionality beyond selecting items from lists. Ido is a weird mix:
+  it doesn't take over all completion (well, not by default, see
+  [[https://github.com/DarwinAwardWinner/ido-completing-read-plus][ido-completing-read+]]), but offers some extra functionality where it
+  does take over completion.
+
+- It isn't very pretty. It just looks like the =*Completions*= buffer,
+  you've seen it before. The traditional multicolumn view sometimes
+  even gets misaligned! This package does however highlight the
+  completion that would be entered into the minibuffer by
+  =minibuffer-force-complete=, so at least that's a small splash of
+  color.
+
+* Screenshot
+
+  [[./images/describe-variable.png]]
+
+  (Did you spot the misalignment? :P)
+
+* Sort orders for candidates
+
+  The variable =live-completions-sort-order= controls the sorting of
+  completion candidates. You can customize this variable. It can take
+  three values:
+
+  - =display=: this is the order of the classic =*Completions*= buffer, it
+    is the default.
+  - =cycle=: this is the order that tab cycling in the default
+    minibuffer tab completion uses, and is also the order Icomplete uses.
+  - =nil=: no sorting, even if the completion source specifies a sort
+    function.
+
+  The =cycle= and =nil= options put the candidate that force completion
+  would select at the top of the list. The classic =display= oder does
+  not, but it should be easy to spot this candidate because is is
+  higlighted.
+
+* Setting a maximum height for the completions buffer
+
+  You can use the built-in =temp-buffer-resize-mode= to limit the height
+  of the completions buffer. Set the variable =temp-buffer-max-height=
+  to either an integer, the maximum height in lines, or to a function
+  that computes the maximum height.
+
+  To set a maximum height of 10 lines for all temporary buffers (not
+  just the completions buffer):
+
+  #+begin_src emacs-lisp
+    (setq temp-buffer-max-height 10)
+    (temp-buffer-resize-mode)
+  #+end_src
+
+  To set the maximum height only for the completions buffer and keep
+  the default (which is half the frame height) for all other temporary
+  buffers:
+
+  #+begin_src emacs-lisp
+    (defvar old-max-height-function temp-buffer-max-height)
+
+    (defun max-completions-height (buffer)
+      (if (string= (buffer-name buffer) "*Completions*")
+          10
+        (funcall old-max-height-function temp-buffer-max-height)))
+
+    (setq temp-buffer-max-height #'max-completions-height)
+    (temp-buffer-resize-mode)
+  #+end_src
+
+  #+RESULTS:
+  : t
+
+  If you use a function rather than a number, you can also make the
+  maximum height depend on current circumstances. For example you use
+  =(/ (frame-height) 3)= to make the maximum height a third of the
+  height of the frame.
+
+* Defining your own commands with live completion
+
+If you don't want to use =live-completions-mode= all the time but you
+want to define a few commands that provide live completion, use the
+=live-completions-do= macro.  You can ask it to start in signle-column
+mode, which is useful for lists with naturally long candidates, such
+as filesystem paths or kill-ring entries.
+
+For example, let's implement a command to yank from the kill-ring
+using completion. Often the kills are multiline, so for improved
+usability we'll need (1) the completion to start in single column
+mode, (2) the number of lines used to display entries to be relatively
+large, and (3) the separator to be, say, a red dotted line:
+
+#+begin_src emacs-lisp
+  (defun insert-kill-ring-item ()
+    "Insert item from kill-ring, selected with completion."
+    (interactive)
+    (live-completions-do
+        (:columns 'single
+         :separator (propertize "\n··········\n" 'face '(:foreground "red"))
+         :height 30)
+      (insert (completing-read "Yank: " kill-ring nil t))))
+#+end_src
+
+Note that the completion merely /starts out/ in single column mode:
+nothing keeps you from toggling between single and multiple columns
+while =insert-kill-ring-item= is active. Once the command finishes
+running, your previous column completion configuration will be
+restored.
+
+All of the options, =:columns=, =:separator=, =:height= and =:sort= (not shown
+in the example), are optional. The =:separator= is only used in
+single-column mode and defaults to
+=live-completions-horizontal-separator=. If you don't include a =:height=
+the default is to follow =temp-buffer-resize-mode= if you have it active
+and to use =fit-window-to-buffer= otherwise (this lets the completions
+buffer take up most of the frame). If you omit all four parts you
+still need to include the empty parenthesis: =(live-completions-do ()
+...)=!.
+
+This package contains the =live-completions-do= macro for you to
+implement your own commands. It does not define any commands that use
+the macro.
