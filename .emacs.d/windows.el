@@ -146,7 +146,7 @@
 	     (setq win
 		   (if is-side-win
 		       right-win
-		     (delete-window rightwin)
+		     (delete-window right-win)
 		     (cv-create-right-side-window)))))
 	  (t
 	   (message "unexpected window count %s" cw)
@@ -154,17 +154,19 @@
     (set-window-buffer win buf)
     (balance-windows)))
 
-;; (defun cv-find-file-second-column (file-name &optional wildcards)
-;;   (interactive
-;;    (find-file-read-args "Find file in second column: "
-;;                         (confirm-nonexistent-file-or-buffer)))
-;;   (let ((buf (find-file-noselect file-name nil nil wildcards)))
-
+;; limit height of *Completions* buffer
+(temp-buffer-resize-mode +1)
+(setq temp-buffer-max-height 15)
 
 (setq display-buffer-alist
-      `((,(rx bos (or "*Help*" "*Compilation*" "*Warnings*" "*Messages*" "*Faces*" "*Backtrace*"))
-	 (cv-display-buffer-right-side))))
-
+      `(
+	(,(rx (or "*Help*" "*Compilation*" "*Warnings*" "*Messages*" "*Faces*" "*Backtrace*"))
+	 (cv-display-buffer-right-side)
+	 )
+	(".*\\*Completions.*"
+	 (display-buffer-reuse-window display-buffer-in-side-window)
+	 (side . bottom)
+	)))
 
 (setq ediff-split-window-function 'split-window-horizontally)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
