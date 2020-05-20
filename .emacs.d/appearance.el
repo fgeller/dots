@@ -1,6 +1,3 @@
-(setq-default global-font-lock-mode t)
-(global-font-lock-mode +1)
-
 (global-hl-line-mode +1)
 
 (set-display-table-slot standard-display-table 'vertical-border ? )
@@ -23,9 +20,8 @@
 (load-custom "~/.emacs.d/windows.el")
 
 (load-theme 'ruhe t)
-(enable-theme 'ruhe)
 
-(show-paren-mode 1)
+(show-paren-mode +1)
 (setq show-paren-delay 0.5)
 (setq show-paren-style 'parenthesis)
 
