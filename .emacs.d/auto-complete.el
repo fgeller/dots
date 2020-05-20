@@ -86,8 +86,9 @@
     (seq-uniq (seq-concatenate 'list
 			       other-buf
 			       buffers
+			       recentfs
 			       git-files
-			       recentfs))))
+			       ))))
 
 (defun jump ()
   (interactive)
