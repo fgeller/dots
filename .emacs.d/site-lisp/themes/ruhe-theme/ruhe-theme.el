@@ -1,3 +1,4 @@
+
 (deftheme ruhe "mostly black on white, some additional material design colors.")
 
 ;; https://material.io/design/color/the-color-system.html#tools-for-picking-colors
@@ -76,6 +77,12 @@
  `(warning ((t (:foreground "#ff5722" :weight bold))))
  `(success ((t (:foreground "#4caf50" :weight bold))))
  `(shadow ((t (:foreground "#b4b7b4"))))
+
+ `(completions-annotations ((t (:foreground "#3F51B5"))))
+ `(completions-common-part ((t (:background "#2196f3" :foreground "#ffffff"))))
+ `(completions-first-difference ((t (:background nil :foreground nil))))
+ 
+ `(live-completions-forceable-candidate ((t (:foreground "#000000" :background "#DCEDC8"))))
 
  `(company-tooltip ((t (:inherit tooltip))))
  `(company-scrollbar-bg ((t (:inherit tooltip))))
