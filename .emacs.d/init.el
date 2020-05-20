@@ -40,17 +40,14 @@
 	        (when (file-directory-p file) (add-to-list 'custom-theme-load-path file)))
 	      (directory-files (file-name (file-name "themes" custom-site-lisp)) t))
 
-(time "require basic features"
-  (require 'package)
-  (require 'cl-lib)
-  (require 'uniquify)
-  (require 'subword))
+(require 'cl-lib)
+(require 'uniquify)
+(require 'subword)
 
-(time "setup packages"
-  (setq package-quickstart t)
-  (setq package-archives '(("melpa" . "http://melpa.org/packages/")
-			   ("gnu" . "http://elpa.gnu.org/packages/"))))
-
+(require 'package)
+(setq package-quickstart t)
+(setq package-archives '(("melpa" . "http://melpa.org/packages/")
+			 ("gnu" . "http://elpa.gnu.org/packages/")))
 
 (defun install (package &optional req)
   (unless (or (package-installed-p package)
@@ -60,30 +57,28 @@
   (load (format "%s-autoloads.el" package) 'no-error 'no-message)
   (when req (require package)))
 
-(time "setq and setq-default basics"
-  (setq
-   auto-save-default nil
-   make-backup-files nil
-   echo-keystrokes 0.1
-   scroll-step 1
-   scroll-conservatively 10000
-   enable-local-variables :all
-   epg-gpg-program "gpg2"
-   uniquify-buffer-name-style 'post-forward-angle-brackets
-   uniquify-after-kill-buffer-p t
-   uniquify-ignore-buffers-re "^\\*"
-   dired-dwim-target t
-   dired-listing-switches "-laGh")
+(setq
+ auto-save-default nil
+ make-backup-files nil
+ echo-keystrokes 0.1
+ scroll-step 1
+ scroll-conservatively 10000
+ enable-local-variables :all
+ epg-gpg-program "gpg2"
+ uniquify-buffer-name-style 'post-forward-angle-brackets
+ uniquify-after-kill-buffer-p t
+ uniquify-ignore-buffers-re "^\\*"
+ dired-dwim-target t
+ dired-listing-switches "-laGh")
 
-  (setq-default
-   fill-column 80
-   custom-file (file-name "~/.emacs.d/custom.el")
-   require-final-newline t))
+(setq-default
+ fill-column 80
+ custom-file (file-name "~/.emacs.d/custom.el")
+ require-final-newline t)
 
-(time "start basic minor modes"
-  (column-number-mode 1)
-  (electric-indent-mode 1)
-  (electric-pair-mode 1))
+(column-number-mode 1)
+(electric-indent-mode 1)
+(electric-pair-mode 1)
 
 (defun load-custom (n)
   (time (format "load %s" n)
