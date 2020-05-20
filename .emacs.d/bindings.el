@@ -35,9 +35,9 @@
 ;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
 
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
-;; |                    ||               || delete-back   || duplicate-lin ||   join-line   ||     barf      ||               ||               ||               ||   swiper-all  || pop-to-mark   || prev-word-occ || next-word-occ ||                  |
+;; |                    ||               || delete-back   || duplicate-lin ||   join-line   ||     barf      ||               ||               ||               ||     occur     || pop-to-mark   || prev-word-occ || next-word-occ ||                  |
 ;; |       tab          ||       q       ||       d       ||       r       ||       w       ||       b       ||       j       ||       f       ||       u       ||       p       ||       ;       ||       [       ||       ]       ||        \         |
-;; |                    ||  surround     ||     delete    || query-repl-rx ||   open-line   ||     slurp     ||               ||               || avy-goto-char ||     swiper    || ivy-mark-ring ||  prev-sym-occ || next-sym-occ  ||  goto-line       |
+;; |                    ||  surround     ||     delete    || query-repl-rx ||   open-line   ||     slurp     ||               ||               || avy-goto-char ||    isearch    || ivy-mark-ring ||  prev-sym-occ || next-sym-occ  ||  goto-line       |
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
 
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
@@ -62,15 +62,18 @@
 ; xref jump triggers view mode, which is redundant when defaulting to modal mode
 (add-hook 'view-mode-hook 'exit-view-mode)
 
+;; clear out some existing C-o bindings
 (after 'dired (define-key dired-mode-map (kbd "C-o") nil))
 (after 'wdired (define-key wdired-mode-map (kbd "C-o") nil))
 (after 'compile (define-key compilation-mode-map (kbd "C-o") nil))
+(after 'replace (define-key occur-mode-map (kbd "C-o") nil))
+(after 'replace (define-key occur-edit-mode-map (kbd "C-o") nil))
+(after 'replace (define-key occur-menu-map (kbd "C-o") nil))
+(after 'xref (define-key xref--xref-buffer-mode-map (kbd "C-o") nil))
+;; so we can rely on C-o to toggle modal mode
 (define-key global-map (kbd "C-o") 'global-modal-mode)
 
 (install 'visual-regexp)
-(install 'dumb-jump)
-(install 'nlinum)
-(install 'move-border)
 
 (install 'avy)
 (setq avy-all-windows nil
@@ -101,7 +104,6 @@
 ;; |                              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                                          |
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
 
-; TODO: whitespace
 (defconst region-specifiers
   '((char . ?d)
     (line . ?y)
@@ -142,7 +144,7 @@
     (define-key map (kbd "-") 'split-window-vertically-instead)
     (define-key map (kbd "\\") 'split-window-horizontally-instead)
 
-    (define-key map (kbd "a") 'counsel-apropos)
+    (define-key map (kbd "a") 'apropos)
 
     (define-key map (kbd "bb") 'switch-to-buffer)
     (define-key map (kbd "bR") 'rename-buffer)
@@ -152,12 +154,13 @@
     (define-key map (kbd "c") 'save-buffers-kill-terminal)
     (define-key map (kbd "ee") 'eval-last-sexp)
     (define-key map (kbd "eb") 'eval-buffer)
+    (define-key map (kbd "ed") 'eval-defun)
     (define-key map (kbd "er") 'eval-region)
-    (define-key map (kbd "f") 'counsel-find-file)
+    (define-key map (kbd "f") 'find-file)
     (define-key map (kbd "h") 'mark-whole-buffer)
     (define-key map (kbd "k") 'kill-buffer)
     (define-key map (kbd "m") 'magit-status)
-    (define-key map (kbd "o") 'other-window)
+    (define-key map (kbd "o") nil)
     (define-key map (kbd "r") 'eval-region)
     (define-key map (kbd "s") 'save-buffer)
     (define-key map (kbd "S") 'save-some-buffer)
@@ -175,7 +178,7 @@
     (define-key map (kbd "vr") 'git-gutter:revert-hunk)
     (define-key map (kbd "v<SPC>") 'git-gutter:mark-hunk)
 
-    (define-key map (kbd "x") 'counsel-M-x)
+    (define-key map (kbd "x") 'm-x-with-bindings)
 
     (define-key map (kbd "0") 'delete-window)
     (define-key map (kbd "1") 'delete-other-windows)
@@ -225,9 +228,9 @@
 (define-key modal-mode-map (kbd "F") nil)
 (define-key modal-mode-map (kbd "u") 'avy-goto-char-timer)
 (define-key modal-mode-map (kbd "U") nil)
-(define-key modal-mode-map (kbd "p") 'swiper)
-(define-key modal-mode-map (kbd "P") 'swiper-all)
-(define-key modal-mode-map (kbd ";") 'ivy-mark-ring)
+(define-key modal-mode-map (kbd "p") 'isearch-forward)
+(define-key modal-mode-map (kbd "P") 'occur)
+(define-key modal-mode-map (kbd ";") nil) ;; TODO
 (define-key modal-mode-map (kbd ":") 'pop-to-mark-command)
 (define-key modal-mode-map (kbd "[") 'move-to-previous-symbol-occurrence)
 (define-key modal-mode-map (kbd "{") 'move-to-previous-word-occurrence)
@@ -241,7 +244,7 @@
 (define-key modal-mode-map (kbd "s") 'remove-enclosing-pair)
 (define-key modal-mode-map (kbd "S") nil)
 (define-key modal-mode-map (kbd "h") 'yank)
-(define-key modal-mode-map (kbd "H") 'counsel-yank-pop)
+(define-key modal-mode-map (kbd "H") 'yank-pop)
 (define-key modal-mode-map (kbd "t") 'kill-select)
 (define-key modal-mode-map (kbd "T") nil)
 (define-key modal-mode-map (kbd "g") 'insert-literal)
@@ -269,12 +272,12 @@
 (define-key modal-mode-map (kbd "C") nil)
 (define-key modal-mode-map (kbd "v") 'save-buffer)
 (define-key modal-mode-map (kbd "V") nil)
-(define-key modal-mode-map (kbd "k") 'ivy-jump)
+(define-key modal-mode-map (kbd "k") 'jump)
 (define-key modal-mode-map (kbd "K") 'ivy-git-ls-files-project)
 (define-key modal-mode-map (kbd "l") 'counsel-ag)
 (define-key modal-mode-map (kbd "L") nil)
-(define-key modal-mode-map (kbd ",") 'dumb-jump-go)
-(define-key modal-mode-map (kbd "<") 'dumb-jump-back)
+(define-key modal-mode-map (kbd ",") nil)
+(define-key modal-mode-map (kbd "<") nil)
 (define-key modal-mode-map (kbd ".") 'xref-find-definitions)
 (define-key modal-mode-map (kbd ">") 'xref-pop-marker-stack)
 (define-key modal-mode-map (kbd "/") 'undo)
@@ -521,19 +524,20 @@
 (defun kill-select ()
   (interactive)
   (cond ((region-active-p) (kill-region (point) (mark)))
-	(t (let ((nk (read-char "Kill: ")))
-	     (cond
-	      ((= nk (region-specifier 'char)) (kill-char))
-	      ((= nk (region-specifier 'line)) (kill-whole-line))
-	      ((= nk (region-specifier 'line-rest)) (kill-until-end-of-line))
-	      ((= nk (region-specifier 'word)) (kill-word))
-	      ((= nk (region-specifier 'symbol)) (kill-symbol))
-	      ((= nk (region-specifier 'inside-pair)) (kill-inside-pair))
-	      ((= nk (region-specifier 'with-pair)) (kill-with-pair))
-	      ((= nk (region-specifier 'whitespace)) (kill-whitespace))
-	      (t (set-mark (point))
-		 (call-interactively (key-binding (kbd (string nk))))
-		 (kill-region (point) (mark))))))))
+	(t
+	 (let* ((nk (read-char "Kill: ")))
+	   (cond
+	    ((= nk (region-specifier 'char)) (kill-char))
+	    ((= nk (region-specifier 'line)) (kill-whole-line))
+	    ((= nk (region-specifier 'line-rest)) (kill-until-end-of-line))
+	    ((= nk (region-specifier 'word)) (kill-word))
+	    ((= nk (region-specifier 'symbol)) (kill-symbol))
+	    ((= nk (region-specifier 'inside-pair)) (kill-inside-pair))
+	    ((= nk (region-specifier 'with-pair)) (kill-with-pair))
+	    ((= nk (region-specifier 'whitespace)) (kill-whitespace))
+	    ((/= nk help-char) (set-mark (point))
+	     (call-interactively (key-binding (kbd (string nk))))
+	     (kill-region (point) (mark))))))))
 
 (defun kill-char ()
   (mark-char)
@@ -600,7 +604,7 @@
 (defun replace-select ()
   (interactive)
   (unless (region-active-p)
-    (let ((nk (read-char "Mark: ")))
+    (let* ((nk (read-char "Mark: ")))
       (cond
        ((= nk (region-specifier 'char)) (mark-char))
        ((= nk (region-specifier 'line)) (mark-whole-line))
@@ -618,7 +622,7 @@
 (defun mark-select ()
   (interactive)
   (if (region-active-p) (kill-ring-save nil nil 'region)
-    (let ((nk (read-char "Mark: ")))
+    (let* ((nk (read-char "Mark: ")))
       (cond
        ((= nk (region-specifier 'char)) (mark-char))
        ((= nk (region-specifier 'line)) (mark-whole-line))
@@ -755,7 +759,7 @@
 (defun dispatch-with-pair (target &optional default)
   (let* ((last-key-seq (this-single-command-keys))
 	 (last-key (elt last-key-seq (1- (length last-key-seq))))
-	 (next-key (read-char "Pair start character: "))
+	 (next-key (read-char "Pair start character: ")) ;; TODO pair help
 	 (inner-most-pair (find-next-left-pair-start)))
     (cond ((= next-key ?\() (funcall target "(" ")"))
           ((= next-key ?\{) (funcall target "{" "}"))
