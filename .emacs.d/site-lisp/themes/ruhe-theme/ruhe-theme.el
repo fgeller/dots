@@ -51,24 +51,24 @@
  'ruhe
  `(default ((t (:foreground "#000000" :background "#ffffff"))))
  `(border ((t (:background "#b4b7b4"))))
- `(cursor ((t (:foreground "#ffffff" :background "#ff5722"))))
+ `(cursor ((t (:foreground "#ffffff" :background "#0000ff"))))
  `(fringe ((t (:foreground "#373b41"))))
- `(highlight ((t (:background "#DCEDC8" :distant-foreground "#000000"))))
+ `(highlight ((t (:background "#E3F2FD" :distant-foreground "#000000"))))
  `(pulse-highlight ((t (:background "#DCEDC8"))))
- `(highlight-thing ((t (:background "#FFF9C4" :distant-foreground "#000000"))))
+ `(highlight-thing ((t (:foreground "#43A047" :weight bold :distant-foreground "#000000"))))
  `(pulse-highlight-start-face ((t (:background "#ffeb3b"))))
  `(minibuffer-prompt ((t (:foreground "#eceff1" :background "#2196f3"))))
  `(tooltip ((t (:foreground "#eceff1" :background "#78909c"))))
 
- `(mode-line ((t (:foreground "#eceff1" :background "#4caf50"))))
+ `(mode-line ((t (:foreground "#eceff1" :background "#039BE5"))))
  `(header-line ((t (:inherit mode-line))))
- `(mode-line-inactive ((t (:foreground "#263238" :background "#cfd8dc"))))
+ `(mode-line-inactive ((t (:foreground "#263238" :background "#039BE5"))))
  `(vertical-border ((t (:inherit mode-line))))
  `(region ((t (:background "#BBDEFB"))))
  `(secondary-selection ((t (:background "#cfd8dc" :distant-foreground "#373b41"))))
 
  `(trailing-whitespace ((t (:background "#2196f3"))))
- `(show-paren-match ((t (:inherit cursor))))
+ `(show-paren-match ((t (:background "#43A047" :foreground "#ffffff"))))
 
  `(widget-button ((t (:underline t))))
  `(widget-field ((t (:background "#b4b7b4" :box (:line-width 1 :color "#282a2e")))))
@@ -81,7 +81,7 @@
  `(completions-annotations ((t (:foreground "#3F51B5"))))
  `(completions-common-part ((t (:background "#2196f3" :foreground "#ffffff"))))
  `(completions-first-difference ((t (:background nil :foreground nil))))
- 
+
  `(live-completions-forceable-candidate ((t (:foreground "#000000" :background "#DCEDC8"))))
 
  `(company-tooltip ((t (:inherit tooltip))))
@@ -127,7 +127,7 @@
  `(ivy-match-required-face ((t (:foreground "#cc342b"))))
  `(ivy-virtual ((t (:foreground "#969896"))))
  `(ivy-action ((t (:foreground "#2196f3"))))
- 
+
  ;; `(magit-bisect-bad ((t (:background nil :foreground nil))))
  ;; `(magit-bisect-good ((t (:background nil :foreground nil))))
  ;; `(magit-bisect-skip ((t (:background nil :foreground nil))))

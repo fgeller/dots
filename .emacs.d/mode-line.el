@@ -12,7 +12,7 @@
 		" "
 		))
 
-(setq-default mode-line-format "")
+(setq-default mode-line-format nil)
 
 (defun mode-line-bell ()
   (let ((orig-active (face-attribute 'mode-line :background))
