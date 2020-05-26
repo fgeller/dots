@@ -141,9 +141,6 @@
   (let ((map (make-sparse-keymap)))
     (suppress-keymap map t)
 
-    (define-key map (kbd "-") 'split-window-vertically-instead)
-    (define-key map (kbd "\\") 'split-window-horizontally-instead)
-
     (define-key map (kbd "a") 'apropos)
 
     (define-key map (kbd "bb") 'switch-to-buffer)
@@ -922,26 +919,6 @@
     (with-current-buffer "*grep*"
       (highlight-regexp "\\(TODO\\|FIXME\\)"))))
 
-
-;; https://github.com/purcell/emacs.d/blob/master/lisp/init-windows.el
-
-(defun split-window-vertically-instead ()
-  (interactive)
-  (let* ((next-buffer (window-buffer (next-window))))
-    (delete-other-windows)
-    (split-window-vertically)
-    (other-window 1)
-    (switch-to-buffer next-buffer)
-    (other-window 1)))
-
-(defun split-window-horizontally-instead ()
-  (interactive)
-  (let* ((next-buffer (window-buffer (next-window))))
-    (delete-other-windows)
-    (split-window-horizontally)
-    (other-window 1)
-    (switch-to-buffer next-buffer)
-    (other-window 1)))
 
 (defun uuid ()
   (interactive)
