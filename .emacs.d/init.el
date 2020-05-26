@@ -86,6 +86,8 @@
   (time (format "load %s" n)
     (load n nil 'no-message)))
 
+(load-custom "~/.emacs.d/edit.el")
+(load-custom "~/.emacs.d/motion.el")
 (load-custom "~/.emacs.d/bindings.el")
 (load-custom "~/.emacs.d/appearance.el")
 (load-custom "~/.emacs.d/org.el")
