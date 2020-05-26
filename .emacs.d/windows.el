@@ -160,7 +160,7 @@
 
 (setq display-buffer-alist
       `(
-	(,(rx (or "*Help*" "*Compilation*" "*Warnings*" "*Messages*" "*Faces*" "*Backtrace*"))
+	(,(rx (or "*Backtrace*" "*Compilation*" "*Faces*" "*Help*" "*Messages*" "*Occur*" "*Warnings*"))
 	 (cv-display-buffer-right-side)
 	 )
 	(".*\\*Completions.*"
