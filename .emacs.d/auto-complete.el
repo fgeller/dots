@@ -100,3 +100,17 @@
 	 (action (cdr (assoc target candidates))))
     ;; (message "jump>> elapsed %s" (format-time-string "%3N" elapsed))
     (funcall action target)))
+
+;; TODO trim whitespace, uniq
+(defun yank-from-kill-ring ()
+  (interactive)
+  (insert (completing-read (format "Insert [%s]: " (car kill-ring)) kill-ring nil t nil nil (car kill-ring))))
+
+;; TODO: format buffer:line
+(defun jump-to-global-mark ()
+  (interactive)
+  (completing-read (format "Jump to [%s]: " (car global-mark-ring)) global-mark-ring nil nil nil nil (car global-mark-ring)))
+
+(defun jump-to-local-mark ()
+  (interactive)
+  (completing-read (format "Jump to [%s]: " (car mark-ring)) global-mark-ring nil nil nil nil (car mark-ring)))

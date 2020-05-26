@@ -31,17 +31,17 @@
 ;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
 ;; |             ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
 ;; |     `       ||       1       ||       2      ||       3       ||       4       ||       5       ||       6       ||       7       ||       8       ||       9       ||       0       ||       -       ||       =       ||        backspace         |
-;; |counsel-unic ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
+;; |  ucs-insert ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
 ;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
 
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
-;; |                    ||               || delete-back   || duplicate-lin ||   join-line   ||     barf      ||               ||               ||               ||     occur     || pop-to-mark   || prev-word-occ || next-word-occ ||                  |
+;; |                    ||               || delete-back   || duplicate-lin ||   join-line   ||     barf      ||               ||               ||               ||     occur     ||jmp-local-mark || prev-word-occ || next-word-occ ||                  |
 ;; |       tab          ||       q       ||       d       ||       r       ||       w       ||       b       ||       j       ||       f       ||       u       ||       p       ||       ;       ||       [       ||       ]       ||        \         |
-;; |                    ||  surround     ||     delete    || query-repl-rx ||   open-line   ||     slurp     ||               ||               || avy-goto-char ||    isearch    || ivy-mark-ring ||  prev-sym-occ || next-sym-occ  ||  goto-line       |
+;; |                    ||  surround     ||     delete    || query-repl-rx ||   open-line   ||     slurp     ||               ||               || avy-goto-char ||    isearch    ||jmp-global-mark||  prev-sym-occ || next-sym-occ  ||  goto-line       |
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
 
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
-;; |                        ||               ||               ||  counsel-yank ||               ||               ||  beg-buffer   ||  back-symbl   ||   page-down   ||    page-up    ||   fwd-symbl   ||  end-buffer   ||                               |
+;; |                        ||               ||               ||yank-kill-ring ||               ||               ||  beg-buffer   ||  back-symbl   ||   page-down   ||    page-up    ||   fwd-symbl   ||  end-buffer   ||                               |
 ;; |         control        ||       a       ||       s       ||       h       ||       t       ||       g       ||       y       ||       n       ||       e       ||       o       ||       i       ||       '       ||              return           |
 ;; |                        ||     replace   || rem-encl-pair ||      yank     ||     kill      ||    insert     || begining-line ||     left      ||     down      ||      up       ||     right     ||   end-line    ||                               |
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
@@ -197,8 +197,8 @@
     (define-key map (kbd "e") 'kmacro-end-and-call-macro)
     map))
 
-(define-key modal-mode-map (kbd "M-`") 'counsel-unicode-char)
-(define-key modal-mode-map (kbd "`") 'counsel-unicode-char)
+(define-key modal-mode-map (kbd "M-`") 'ucs-insert)
+(define-key modal-mode-map (kbd "`") 'ucs-insert)
 (define-key modal-mode-map (kbd "<SPC>") 'mark-select)
 (define-key modal-mode-map (kbd "+") 'increment-integer-at-point)
 (define-key modal-mode-map (kbd "-") 'decrement-integer-at-point)
@@ -230,8 +230,8 @@
 (define-key modal-mode-map (kbd "U") nil)
 (define-key modal-mode-map (kbd "p") 'isearch-forward)
 (define-key modal-mode-map (kbd "P") 'occur)
-(define-key modal-mode-map (kbd ";") nil) ;; TODO
-(define-key modal-mode-map (kbd ":") 'pop-to-mark-command)
+(define-key modal-mode-map (kbd ";") 'jump-to-global-mark)
+(define-key modal-mode-map (kbd ":") 'jump-to-local-mark)
 (define-key modal-mode-map (kbd "[") 'move-to-previous-symbol-occurrence)
 (define-key modal-mode-map (kbd "{") 'move-to-previous-word-occurrence)
 (define-key modal-mode-map (kbd "]") 'move-to-next-symbol-occurrence)
@@ -244,7 +244,7 @@
 (define-key modal-mode-map (kbd "s") 'remove-enclosing-pair)
 (define-key modal-mode-map (kbd "S") nil)
 (define-key modal-mode-map (kbd "h") 'yank)
-(define-key modal-mode-map (kbd "H") 'yank-pop)
+(define-key modal-mode-map (kbd "H") 'yank-from-kill-ring)
 (define-key modal-mode-map (kbd "t") 'kill-select)
 (define-key modal-mode-map (kbd "T") nil)
 (define-key modal-mode-map (kbd "g") 'insert-literal)
@@ -310,7 +310,7 @@
   (interactive)
   (save-excursion
     (beginning-of-line)
-    (set-mark (point))
+    (push-mark (point))
     (end-of-line)
     (kill-ring-save (point) (mark))
     (open-line 1)
@@ -447,7 +447,7 @@
 	(forward-char -1)
 	(when (looking-at ",") (forward-char 1) (open-line 1) (forward-char -1)))
       (open-line 1)
-      (set-mark (point))
+      (push-mark (point))
       (goto-char (1+ (find-matching-closer (cdr (assoc :start-pos info)))))
       (indent-for-tab-command)
       (goto-char (cdr (assoc :start-pos info))))))
@@ -484,7 +484,7 @@
   (beginning-of-symbol)
   (save-excursion
     (forward-symbol 1)
-    (set-mark (point))))
+    (push-mark (point))))
 
 (defun move-to-previous-symbol-occurrence ()
   (interactive)
@@ -494,7 +494,7 @@
     (search-backward-regexp (concat "\\_<" (regexp-quote thing) "\\_>"))
     (save-excursion
       (forward-symbol 1)
-      (set-mark (point)))))
+      (push-mark (point)))))
 
 (defun move-to-next-word-occurrence ()
   (interactive)
@@ -506,7 +506,7 @@
   (beginning-of-word)
   (save-excursion
     (forward-word)
-    (set-mark (point))))
+    (push-mark (point))))
 
 (defun move-to-previous-word-occurrence ()
   (interactive)
@@ -516,7 +516,7 @@
     (search-backward-regexp (concat "\\<" (regexp-quote thing) "\\>"))
     (save-excursion
       (forward-word)
-      (set-mark (point)))))
+      (push-mark (point)))))
 
 (defun region-specifier (type)
   (cdr (assoc type region-specifiers)))
@@ -535,7 +535,7 @@
 	    ((= nk (region-specifier 'inside-pair)) (kill-inside-pair))
 	    ((= nk (region-specifier 'with-pair)) (kill-with-pair))
 	    ((= nk (region-specifier 'whitespace)) (kill-whitespace))
-	    ((/= nk help-char) (set-mark (point))
+	    ((/= nk help-char) (push-mark (point))
 	     (call-interactively (key-binding (kbd (string nk))))
 	     (kill-region (point) (mark))))))))
 
@@ -636,40 +636,40 @@
 	  (pass-events (string nk)))))))
 
 (defun mark-char ()
-  (set-mark (point))
+  (push-mark (point))
   (forward-char 1))
 
 (defun mark-char-and-whitespace ()
-  (set-mark-before-whitespace-and-return)
+  (push-mark-before-whitespace-and-return)
   (forward-char 1)
   (skip-whitespace-forward))
 
 (defun mark-word ()
   (unless (looking-at-word-p) (beginning-of-word))
-  (set-mark (point))
+  (push-mark (point))
   (forward-word))
 
 (defun mark-word-and-whitespace ()
   (unless (looking-at-word-p) (beginning-of-word))
-  (set-mark-before-whitespace-and-return)
+  (push-mark-before-whitespace-and-return)
   (forward-word)
   (skip-whitespace-forward))
 
 (defun mark-symbol ()
   (unless (looking-at-symbol-p) (beginning-of-symbol))
-  (set-mark (point))
+  (push-mark (point))
   (forward-symbol 1))
 
 (defun mark-symbol-and-whitespace ()
   (unless (looking-at-symbol-p) (beginning-of-symbol))
-  (set-mark-before-whitespace-and-return)
+  (push-mark-before-whitespace-and-return)
   (forward-symbol 1)
   (skip-whitespace-forward))
 
 (defun mark-between-whitespace ()
   (search-backward-regexp "[ \t\n]" (point-min) t)
   (skip-whitespace-forward)
-  (set-mark (point))
+  (push-mark (point))
   (search-forward-regexp "[ \t\n]" (point-max) t)
   (skip-whitespace-backward))
 
@@ -679,28 +679,28 @@
 				   (skip-whitespace-forward)
 				   (point))))
     (skip-whitespace-backward)
-    (set-mark (point))
+    (push-mark (point))
     (goto-char non-whitespace-position)
     (search-forward-regexp "[ \t\n]" (point-max) t)
     (skip-whitespace-forward)))
 
 (defun mark-until-end-of-line ()
-  (set-mark (point))
+  (push-mark (point))
   (end-of-line))
 
 (defun mark-whole-line ()
   (beginning-of-line)
-  (set-mark (point))
+  (push-mark (point))
   (end-of-line))
 
 (defun mark-inside-pair ()
   (dispatch-with-pair 'mark-inside-pair-strings
-                      (lambda () (set-mark (point)))))
+                      (lambda () (push-mark (point)))))
 
 (defun mark-inside-pair-strings (start end)
   (move-point-to-pair-starting-string start end)
   (forward-char 1)
-  (set-mark (point))
+  (push-mark (point))
   (backward-char 1)
   (move-point-to-pair-ending-string start end))
 
@@ -710,12 +710,12 @@
 (defun mark-whitespace ()
   (interactive)
   (skip-chars-backward " \t")
-  (set-mark (point))
+  (push-mark (point))
   (skip-chars-forward " \t"))
 
 (defun mark-with-pair-strings (start end)
   (move-point-to-pair-starting-string start end)
-  (set-mark (point))
+  (push-mark (point))
   (move-point-to-pair-ending-string start end)
   (forward-char 1))
 
@@ -723,7 +723,7 @@
   (move-point-to-pair-starting-string start end)
   (let ((starting-position (point)))
     (skip-whitespace-backward)
-    (set-mark (point))
+    (push-mark (point))
     (goto-char starting-position))
   (move-point-to-pair-ending-string start end)
   (forward-char 1)
@@ -735,7 +735,7 @@
 (defun set-mark-before-whitespace-and-return ()
   (let ((start-position (point)))
     (skip-whitespace-backward)
-    (set-mark (point))
+    (push-mark (point))
     (goto-char start-position)))
 
 (defun skip-whitespace-forward ()
