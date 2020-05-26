@@ -12,7 +12,6 @@
  inhibit-startup-echo-area-message t
  truncate-lines t
  truncate-partial-width-windows nil
- visible-bell 1
  transient-mark-mode t
  show-trailing-whitespace nil)
 
