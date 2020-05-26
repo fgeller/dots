@@ -45,6 +45,8 @@
 (defconst c-bindings-map
   (let ((map (make-sparse-keymap)))
     (suppress-keymap map t)
+    (define-key map (kbd "b") 'help-go-back)
+    (define-key map (kbd "f") 'help-go-back)
 
     (define-key map (kbd "cc") 'with-editor-finish)
     (define-key map (kbd "cm") 'recompile)
