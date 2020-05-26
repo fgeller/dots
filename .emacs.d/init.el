@@ -44,6 +44,8 @@
 (require 'uniquify)
 (require 'subword)
 
+(setq recentf-max-saved-items 256)
+
 (require 'package)
 (setq package-quickstart t)
 (setq package-archives '(("melpa" . "http://melpa.org/packages/")
