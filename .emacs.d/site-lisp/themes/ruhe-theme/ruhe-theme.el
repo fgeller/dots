@@ -50,6 +50,7 @@
 (custom-theme-set-faces
  'ruhe
  `(default ((t (:foreground "#000000" :background "#ffffff"))))
+ `(underline ((t (:inherit default :underline nil))))
  `(border ((t (:background "#b4b7b4"))))
  `(cursor ((t (:foreground "#ffffff" :background "#0000ff"))))
  `(fringe ((t (:foreground "#373b41"))))
@@ -72,8 +73,15 @@
  `(trailing-whitespace ((t (:background "#2196f3"))))
  `(show-paren-match ((t (:background "#43A047" :foreground "#ffffff"))))
 
- `(widget-button ((t (:underline t))))
+ `(button ((t (:foreground "#3F51B5" :underline nil))))
+ `(widget-button ((t (:foreground "#3F51B5" :underline nil))))
  `(widget-field ((t (:background "#b4b7b4" :box (:line-width 1 :color "#282a2e")))))
+ `(browse-url-button ((t (:foreground "#3F51B5" :underline nil))))
+ `(info-menu-header ((t (:weight bold :underline nil))))
+ `(info-xref ((t (:foreground "#3F51B5" :underline nil))))
+ `(info-xref-visited ((t (:foreground "#9C27B0" :underline nil))))
+ `(link ((t (:foreground "#3F51B5" :underline nil))))
+ `(link-visited ((t (:foreground "#9C27B0" :underline nil))))
 
  `(error ((t (:foreground "#f44336" :weight bold))))
  `(warning ((t (:foreground "#ff5722" :weight bold))))
