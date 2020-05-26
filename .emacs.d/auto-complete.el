@@ -12,29 +12,76 @@
 
 (global-company-mode 1)
 
-;; TODO: counsel-unicode
-;; TODO: mark ring
-;; TODO: counsel-yank-pop
-;; TODO: counsel-find-file
+;; based on https://emacs.stackexchange.com/a/13508
+(defun fg/substrings-completion (str table predicate point &optional all-p)
+  (let* ((before-point (substring str 0 point))
+	 (after-point (substring str point))
+	 (boundaries (completion-boundaries before-point table predicate after-point))
+         (prefix (substring before-point 0 (car boundaries)))
+         (infix (concat (substring before-point (car boundaries))
+			(substring after-point 0 (cdr boundaries))))
+         (suffix (substring after-point (cdr boundaries)))
+	 (rxs (split-string infix " " t))
+         (candidates (cl-remove-if-not
+		      (lambda (c) (cl-every (lambda (r) (string-match-p r c))
+					    rxs))
+                      (all-completions prefix table predicate))))
+    (cond
+     (all-p
+      (when candidates
+        (setcdr (last candidates) (length prefix))
+        candidates))
 
-(install 'orderless)
-(setq completion-styles '(orderless))
+     ((and (= (length candidates) 1)
+           (equal infix (car candidates)))
+      t)
+
+     ((= (length candidates) 1)
+      (when (and (> (length (car candidates)) 0)
+                 (> (length suffix) 0)
+                 (char-equal (aref (car candidates)
+                                   (1- (length (car candidates))))
+                             (aref suffix 0)))
+        (setq suffix (substring suffix 1)))
+      (cons (concat prefix (car candidates) suffix)
+            (length (concat prefix (car candidates)))))
+     
+     (t (cons str point)))))
+
+(defun fg/substrings-try-completion (string table predicate point)
+  (fg/substrings-completion string table predicate point))
+
+(defun fg/substrings-all-completions (string table predicate point)
+  (fg/substrings-completion string table predicate point 'all))
+
+(add-to-list 'completion-styles-alist
+             '(
+	       substrings
+	       fg/substrings-try-completion
+	       fg/substrings-all-completions
+	       "Splits query by spaces and matches each as a substring/rx against candidates. Never completes string, only filters matches."
+	       ))
+
+(setq completion-styles '(substrings))
 (setq completion-ignore-case t)
 (setq completion-show-help nil)
+(setq read-file-name-completion-ignore-case t)
+(setq read-buffer-completion-ignore-case t)
+(setq completion-ignore-case t)
 
-(install 'live-completions)
-(live-completions-mode +1)
-(setq live-completions-columns 'single)
-(setq live-completions-sort-order 'cycle)
+(icomplete-mode +1)
+(setq icomplete-separator "  ")
+(setq icomplete-prospects-height 1)
+(setq icomplete-show-matches-on-no-input t)
 
 (dolist (map (list minibuffer-local-completion-map
 		   minibuffer-inactive-mode-map
-		   minibuffer-local-map))
+		   icomplete-minibuffer-map))
   (define-key map (kbd "C-j") 'minibuffer-exit)
   (define-key map (kbd "RET") 'minibuffer-force-complete-and-exit)
   (define-key map (kbd "<return>") 'minibuffer-force-complete-and-exit)
-  (define-key map (kbd "C-v") 'switch-to-completions)
-  )
+  (define-key map (kbd "C-n") 'icomplete-forward-completions)
+  (define-key map (kbd "C-p") 'icomplete-backward-completions))
 
 (defun switch-to-minibuffer ()
   (interactive)
