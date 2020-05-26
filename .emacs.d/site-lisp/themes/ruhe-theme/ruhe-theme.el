@@ -53,7 +53,9 @@
  `(border ((t (:background "#b4b7b4"))))
  `(cursor ((t (:foreground "#ffffff" :background "#0000ff"))))
  `(fringe ((t (:foreground "#373b41"))))
- `(highlight ((t (:background "#FFECB3" :distant-foreground "#000000"))))
+ `(highlight ((t (:background "#FFC107" :distant-foreground "#000000"))))
+ `(hi-yellow ((t (:inherit highlight))))
+ `(match ((t (:inherit highlight))))
  `(pulse-highlight ((t (:background "#DCEDC8"))))
  `(highlight-thing ((t (:weight bold :distant-foreground "#000000"))))
  `(pulse-highlight-start-face ((t (:background "#ffeb3b"))))
@@ -75,7 +77,7 @@
 
  `(error ((t (:foreground "#f44336" :weight bold))))
  `(warning ((t (:foreground "#ff5722" :weight bold))))
- `(success ((t (:foreground "#4caf50" :weight bold))))
+ `(success ((t (:foreground "#4caf50" :weight bold :underline nil))))
  `(shadow ((t (:foreground "#b4b7b4"))))
 
  `(completions-annotations ((t (:foreground "#3F51B5"))))
@@ -98,10 +100,10 @@
  `(company-echo-common ((t (:inherit secondary-selection))))
 
  `(font-lock-builtin-face ((t (:inherit default))))
- `(font-lock-comment-delimiter-face ((t (:foreground "#C5CAE9"))))
- `(font-lock-comment-face ((t (:foreground "#3F51B5"))))
+ `(font-lock-comment-delimiter-face ((t (:foreground "#C5CAE9" :background "#ECEFF1"))))
+ `(font-lock-comment-face ((t (:foreground nil :background "#ECEFF1" :underline nil))))
  `(font-lock-constant-face ((t (:inherit default))))
- `(font-lock-doc-face ((t (:inherit font-lock-comment-face))))
+ `(font-lock-doc-face ((t (:inherit default :underline nil))))
  `(font-lock-doc-string-face ((t (:inherit default))))
  `(font-lock-function-name-face ((t (:inherit default))))
  `(font-lock-keyword-face ((t (:inherit default))))
