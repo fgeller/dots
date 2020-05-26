@@ -199,7 +199,7 @@
 (define-key modal-mode-map (kbd "V") nil)
 (define-key modal-mode-map (kbd "k") 'jump)
 (define-key modal-mode-map (kbd "K") nil)
-(define-key modal-mode-map (kbd "l") 'grep)
+(define-key modal-mode-map (kbd "l") 'ag)
 (define-key modal-mode-map (kbd "L") nil)
 (define-key modal-mode-map (kbd ",") nil)
 (define-key modal-mode-map (kbd "<") nil)
