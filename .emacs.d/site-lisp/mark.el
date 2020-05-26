@@ -144,6 +144,39 @@ key    region
   (dispatch-with-pair 'mark-inside-pair-strings
                       (lambda () (push-mark (point)))))
 
+(defun move-point-to-balanced-start (start end)
+  (move-point-to-balanced t start end))
+
+(defun move-point-to-balanced-end (start end)
+  (move-point-to-balanced nil start end))
+
+(defun move-point-to-balanced (look-for-start start end)
+  (let ((counter 1))
+    (while (> counter 0)
+      (if look-for-start (backward-char 1) (forward-char 1))
+      (cond ((looking-at (regexp-quote (if look-for-start end start))) (setq counter (1+ counter)))
+            ((looking-at (regexp-quote (if look-for-start start end))) (setq counter (1- counter)))))))
+
+(defun move-point-to-pair-start-simple (pair)
+  (backward-char 1)
+  (while (not (looking-at (regexp-quote pair)))
+    (backward-char 1)))
+
+(defun move-point-to-pair-end-simple (pair)
+  (forward-char 1)
+  (while (not (looking-at (regexp-quote pair)))
+    (forward-char 1)))
+
+(defun move-point-to-pair-starting-string (start end)
+  (if (string= start end)
+      (move-point-to-pair-start-simple start)
+    (move-point-to-balanced-start start end)))
+
+(defun move-point-to-pair-ending-string (start end)
+  (if (string= start end)
+      (move-point-to-pair-end-simple start)
+    (move-point-to-balanced-end start end)))
+
 (defun mark-inside-pair-strings (start end)
   (move-point-to-pair-starting-string start end)
   (forward-char 1)
