@@ -65,8 +65,9 @@
 
  `(mode-line ((t (:foreground "#000000" :background "#e5e5e5"))))
  `(header-line ((t (:inherit mode-line))))
- `(mode-line-inactive ((t (:foreground "#000000" :background "#e5e5e5"))))
+ `(mode-line-inactive ((t (:inherit mode-line))))
  `(vertical-border ((t (:inherit mode-line))))
+
  `(region ((t (:background "#BBDEFB"))))
  `(secondary-selection ((t (:background "#cfd8dc" :distant-foreground "#373b41"))))
 
@@ -108,8 +109,8 @@
  `(company-echo-common ((t (:inherit secondary-selection))))
 
  `(font-lock-builtin-face ((t (:inherit default))))
- `(font-lock-comment-delimiter-face ((t (:foreground "#C5CAE9" :background "#ECEFF1"))))
- `(font-lock-comment-face ((t (:foreground nil :background "#ECEFF1" :underline nil))))
+ `(font-lock-comment-delimiter-face ((t (:foreground "#C5CAE9" :background "#e5e5e5")))) ;; ECEFF1
+ `(font-lock-comment-face ((t (:foreground nil :background "#e5e5e5" :underline nil))))
  `(font-lock-constant-face ((t (:inherit default))))
  `(font-lock-doc-face ((t (:inherit default :underline nil))))
  `(font-lock-doc-string-face ((t (:inherit default))))
@@ -124,9 +125,11 @@
  `(font-lock-variable-name-face ((t (:inherit default))))
  `(font-lock-warning-face ((t (:inherit warning))))
 
- `(git-gutter:added ((t :foreground "#DCEDC8" :background "#DCEDC8")))
- `(git-gutter:deleted ((t :foreground "#EF9A9A" :background "#EF9A9A")))
- `(git-gutter:modified ((t :foreground "#90CAF9" :background "#90CAF9")))
+ `(git-gutter:separator ((t :inherit mode-line)))
+ `(git-gutter:unchanged ((t :inherit mode-line)))
+ `(git-gutter:added ((t :foreground "#ffffff" :background "#DCEDC8")))
+ `(git-gutter:deleted ((t :foreground "#ffffff" :background "#EF9A9A")))
+ `(git-gutter:modified ((t :foreground "#ffffff" :background "#90CAF9")))
 
  `(ivy-current-match ((t (:foreground "#eceff1" :background "#2196f3"))))
  `(ivy-minibuffer-match-face-1 ((t (:foreground "#a36ac7"))))

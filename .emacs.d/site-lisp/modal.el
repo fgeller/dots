@@ -5,7 +5,7 @@
   (let ((faces-to-toggle '(mode-line mode-line-inactive header-line header-line-highlight vertical-border)))
     (cond (modal-mode
            (mapcar (lambda (face)
-                     (set-face-background face "#f5f5f5"))
+                     (set-face-background face "#e5e5e5"))
                    faces-to-toggle))
           (t
            (mapcar (lambda (face)

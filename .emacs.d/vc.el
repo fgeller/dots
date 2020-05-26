@@ -13,11 +13,13 @@
 (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
 
 (install 'git-gutter)
-(setq
-  git-gutter:window-width 1
-  git-gutter:modified-sign " "
-  git-gutter:added-sign " "
-  git-gutter:deleted-sign " ")
+(setq git-gutter:window-width 1)
+(setq git-gutter:modified-sign " ")
+(setq git-gutter:added-sign " ")
+(setq git-gutter:deleted-sign " ")
+(setq git-gutter:separator-sign " ")
+(setq git-gutter:always-show-separator t)
+(setq git-gutter:unchanged-sign " ")
 
 (global-git-gutter-mode +1)
 
