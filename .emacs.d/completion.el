@@ -148,16 +148,41 @@
     ;; (message "jump>> elapsed %s" (format-time-string "%3N" elapsed))
     (funcall action target)))
 
-;; TODO trim whitespace, uniq
 (defun yank-from-kill-ring ()
   (interactive)
   (insert (completing-read (format "Insert [%s]: " (car kill-ring)) kill-ring nil t nil nil (car kill-ring))))
 
-;; TODO: format buffer:line
-(defun jump-to-global-mark ()
-  (interactive)
-  (completing-read (format "Jump to [%s]: " (car global-mark-ring)) global-mark-ring nil nil nil nil (car global-mark-ring)))
+(defun fg/format-marker (m)
+  (when (and m
+	     (marker-buffer m)
+	     (marker-position m))
+    (let* ((buf (marker-buffer m))
+	   (pos (marker-position m))
+	   (lin (with-current-buffer buf
+		  (save-excursion
+		    (goto-char pos)
+		    (buffer-substring (point-at-bol) (point-at-eol))))))
+      (format "%s: |%s|" buf lin))))
 
-(defun jump-to-local-mark ()
+(defun fg/jump-to-mark (prompt ring)
+  (let* ((coll-all (mapcar (lambda (m)
+			     (let* ((dsc (fg/format-marker m)))
+			       (when dsc (cons dsc m))))
+			   ring))
+	 (coll (cl-remove-if-not #'identity coll-all))
+	 (keys (mapcar #'car coll-all))
+	 (def (car keys))
+	 (key (completing-read prompt keys nil nil nil nil def))
+	 (mrk (cdr (assoc key coll)))
+	 (buf (marker-buffer mrk))
+	 (pos (marker-position mrk)))
+    (switch-to-buffer buf)
+    (goto-char pos)))
+
+(defun fg/jump-to-global-mark ()
   (interactive)
-  (completing-read (format "Jump to [%s]: " (car mark-ring)) global-mark-ring nil nil nil nil (car mark-ring)))
+  (fg/jump-to-mark "Global mark: " global-mark-ring))
+
+(defun fg/jump-to-local-mark ()
+  (interactive)
+  (fg/jump-to-mark "Local mark:" mark-ring))
