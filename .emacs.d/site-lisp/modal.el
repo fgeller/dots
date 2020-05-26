@@ -2,7 +2,7 @@
 
 (defun modal-mode-visual-toggle ()
   (interactive)
-  (let ((faces-to-toggle '(highlight)))
+  (let ((faces-to-toggle '(mode-line mode-line-inactive header-line header-line-highlight vertical-border)))
     (cond (modal-mode
            (mapcar (lambda (face)
                      (set-face-background face "#f5f5f5"))
