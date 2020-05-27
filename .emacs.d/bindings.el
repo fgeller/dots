@@ -17,7 +17,7 @@
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
 ;; |                              ||  ivy-resume   ||               ||               ||               ||               ||               ||               ||  local-mark   || xref-jump-back||               ||                                          |
 ;; |           shift              ||       z       ||       x       ||       m       ||       c       ||       v       ||       k       ||       l       ||       ,       ||       .       ||       /       ||                shift                     |
-;; |                              ||   win-zoom    ||     x-map     ||  macro-map    ||     c-map     || save-buffer   ||      jump     ||      ag       || global-mark   || xref-jump-to  ||      undo     ||                                          |
+;; |                              ||   win-zoom    ||     x-map     ||  macro-map    ||     c-map     || save-buffer   ||      jump     ||  ag-project   || global-mark   || xref-jump-to  ||      undo     ||                                          |
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
 
 (defun exit-view-mode ()
@@ -199,7 +199,7 @@
 (define-key modal-mode-map (kbd "V") nil)
 (define-key modal-mode-map (kbd "k") 'jump)
 (define-key modal-mode-map (kbd "K") nil)
-(define-key modal-mode-map (kbd "l") 'ag)
+(define-key modal-mode-map (kbd "l") 'ag-project)
 (define-key modal-mode-map (kbd "L") nil)
 (define-key modal-mode-map (kbd ",") 'fg/jump-to-global-mark)
 (define-key modal-mode-map (kbd "<") 'fg/jump-to-local-mark)
