@@ -1,5 +1,3 @@
-(global-hl-line-mode -1)
-
 (set-display-table-slot standard-display-table 'vertical-border ? )
 
 (when tool-bar-mode (tool-bar-mode -1))

@@ -7,9 +7,7 @@
   (lsp-deferred)
 
   (subword-mode 1)
-  (font-lock-mode 1)
 
-  (define-key go-mode-map (kbd "C-c C-r") 'go-rename)
   (define-key go-mode-map (kbd "C-c C-c") 'go-run-all-tests)
   (define-key go-mode-map (kbd "C-c b") 'go-make-build)
   (define-key go-mode-map (kbd "C-c C-m") 'go-run-this-test)
