@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: select after
-# key: selaft
-# --
-select {
-case <-time.After($1 * time.Millisecond):
-  $0
-}

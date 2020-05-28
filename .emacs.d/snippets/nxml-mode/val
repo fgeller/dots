@@ -1,5 +1,0 @@
-# Author: Felix Geller <fgeller@gmail.com>
-# name: val
-# key: val
-# --
-<xsl:value-of select="$0" />

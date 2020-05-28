@@ -1,7 +1,0 @@
-# Author: Felix
-# name: def
-# key: def
-# --
-def $1($2): $3 = {
-  $0
-}

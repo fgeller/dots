@@ -1,5 +1,0 @@
-# Author: Felix Geller
-# name: it(descr)(pending)
-# key: it
-# --
-it("$1")(pending$0)
