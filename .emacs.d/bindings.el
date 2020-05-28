@@ -140,16 +140,21 @@
 (define-key modal-mode-map (kbd "B") 'barf-forward)
 (define-key modal-mode-map (kbd "j") nil)
 (define-key modal-mode-map (kbd "J") nil)
+
+;; TODO f map?
 (define-key modal-mode-map (kbd "f1") 'cv-1)
 (define-key modal-mode-map (kbd "f2") 'cv-2)
 (define-key modal-mode-map (kbd "f3") 'cv-3)
+(define-key modal-mode-map (kbd "f4") 'cv-2-1)
+(define-key modal-mode-map (kbd "fb") 'balance-windows)
 (define-key modal-mode-map (kbd "fa") 'cv-left-window)
 (define-key modal-mode-map (kbd "fA") 'cv-left-window-insert)
 (define-key modal-mode-map (kbd "fs") 'cv-middle-window)
 (define-key modal-mode-map (kbd "fS") 'cv-middle-window-insert)
 (define-key modal-mode-map (kbd "fh") 'cv-right-window)
 (define-key modal-mode-map (kbd "fH") 'cv-right-window-insert)
-(define-key modal-mode-map (kbd "ft") 'cv-toggle-right-side-window)
+(define-key modal-mode-map (kbd "ft") 'cv-toggle-side-window)
+
 (define-key modal-mode-map (kbd "F") nil)
 (define-key modal-mode-map (kbd "u") 'avy-goto-char-timer)
 (define-key modal-mode-map (kbd "U") nil)

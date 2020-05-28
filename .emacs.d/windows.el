@@ -1,104 +1,151 @@
-;; TODO xF to open in window 2
-;; TODO K to open in window 2
-;; TODO xref in right or middle window
-;; TODO do we need to call set-window-buffer
+;; TODO read up on quit-restore window-parameter, cf quit-restore-window
 
-(defun cv-create-right-side-window ()
-  (let* ((old-win (selected-window))
-	 (quit-restore (window-parameter old-win 'quit-restore))
-	 (right-win (car (window-at-side-list nil 'right)))
-	 (new-win (split-window right-win nil 'right)))
-    (set-window-parameter new-win 'quit-restore quit-restore)
-    (set-window-parameter new-win 'window-side 'right)
-    new-win))
+(defconst cv-side-window-rx (rx (or "*Backtrace*" "*Compilation*" "*Faces*" "*Help*" "*Messages*" "*Occur*" "*Warnings*"))
+  "Regex that matches buffer names that should be displayed on the right side")
 
-(defun cv-get-right-side-window ()
-  (let* ((right-win (car (window-at-side-list nil 'right)))
-	 (is-side-win (eq 'right (window-parameter right-win 'window-side))))
-    (when is-side-win right-win)))
+(defconst cv-side-buffer-store nil
+  "Can hold a buffer that was displayed on the side, to enable toggling it.")
+
+(defun cv-get-displayed-side-buffer ()
+  "Returns buffer displayed on the side in case it matches `cv-side-window-rx'"
+  (let* ((rw (car (window-at-side-list nil 'right)))
+	 (bf (window-buffer rw))
+	 (bn (buffer-name bf)))
+    (when (string-match-p cv-side-window-rx bn) bf)))
 
 (defun cv-1 ()
+  "Maximizes left-most window, optionally storing a right side window if present."
   (interactive)
-  (let ((rw (cv-get-right-side-window)))
-    (when (and rw (not cv-side-window-store))
-      (setq cv-side-window-store (window-buffer rw))))
+  (let ((bf (cv-get-displayed-side-buffer)))
+    (when bf (setq cv-side-buffer-store bf)))
+  (select-window (car (window-at-side-list nil 'left)))
   (delete-other-windows))
 
+(defun cv-2-1 ()
+  "Changes window layout to two columns that are split two parts to one.
+Assumes column-view layout."
+  (interactive)
+  (let* ((cw (count-windows))
+	 (tc (round (* 0.667 (frame-total-cols)))))
+    (cond 
+     ((= 1 cw) ;; split window on the right
+      (let* ((nw (split-window-right tc))
+	     (ob (or cv-side-buffer-store (other-buffer))))
+	(when ob (set-window-buffer nw ob))))
+     
+     ((= 2 cw) ;; grow left window
+      (let* ((lw (car (window-at-side-list nil 'left))))
+	(balance-windows)
+	(window-resize lw (- tc (window-total-width lw)) 'horizontal)))
+     
+     ((= 3 cw) ;; delete middle window
+      (let* ((lw (car (window-at-side-list nil 'left)))
+	     (mw (window-in-direction 'right lw)))
+	(delete-window mw)
+	(balance-windows)
+	(window-resize lw (- tc (window-total-width lw)) 'horizontal)))
+
+     (t ;; maximize current window, like cw = 1
+      (message "unexpected window count %s" cw)
+      (let* ((nw (split-window-right tc))
+	     (ob (or cv-side-buffer-store
+		     (other-buffer))))
+	(when ob (set-window-buffer nw ob))))
+     )))
+
 (defun cv-2 ()
+  "Organizes windows into two evenly split columns."
   (interactive)
   (let* ((cw (count-windows)))
-    (cond ((= 1 cw)
+    (cond ((= 1 cw) ;; split window on the right
 	   (let* ((nw (split-window-right))
-		  (ob (other-buffer)))
-	     (when ob (set-window-buffer nw ob))))
+		  (ob (or cv-side-buffer-store (other-buffer))))
+	     (when ob (set-window-buffer nw ob))
+	     (balance-windows)))
 
-	  ((= 2 cw)	   ;; nothing to do here
-	   )
+	  ((= 2 cw)) ;; nothing to do here
 
-	  ((= 3 cw)
-	   (let ((rw (cv-get-right-side-window)))
-	     (when (and rw (not cv-side-window-store))
-	       (setq cv-side-window-store (window-buffer rw))))
-	   (delete-window (car (window-at-side-list nil 'right))))
+	  ((= 3 cw) ;; delete right window
+	   (let ((rw (car (window-at-side-list nil 'right)))
+		 (rb (window-buffer rw)))
+	     (when (string-match-p cv-side-window-rx (buffer-name rb))
+	       (setq cv-side-buffer-store rb))
+	     (delete-window rw)
+	     (balance-windows)))
 
-	  (t
+	  (t ;; maximize current window, like cw  = 1
 	   (message "unexpected window count %s" cw)
 	   (delete-other-windows)
 	   (let* ((nw (split-window-right))
-		  (ob (other-buffer)))
-	     (when ob (set-window-buffer nw ob))))))
-  (balance-windows))
+		  (ob ( cv-side-buffer-store (other-buffer))))
+	     (when ob (set-window-buffer nw ob))
+	     (balance-windows)))
+    )))
 
 (defun cv-3 ()
+  "Organizes windows into three evenly split columns."
   (interactive)
-  (let* ((cw (count-windows)))
-    (cond ((= 1 cw)
+  (let* ((cw (count-windows))
+	 (ow (selected-window)))
+    (cond ((= 1 cw) ;; split window on the right, twice
 	   (let* ((nw (split-window-right))
 		  (ob (other-buffer)))
 	     (when ob (set-window-buffer nw ob))
+	     (select-window nw)
 	     (let* ((nnw (split-window-right))
-		    (oob (other-buffer)))
+		    (oob (or cv-side-buffer-store (other-buffer))))
 	       (when oob (set-window-buffer nnw oob)))))
 
-	  ((= 2 cw)
-	   (let* ((rw (cv-get-right-side-window))
-		  (ws (car (window-at-side-list nil (if rw 'left 'right))))
-		  (ob (other-buffer))
-		  nw)
-	     (setq nw (split-window ws nil 'right))
-	     (when ob (set-window-buffer nw ob))))
+	  ((= 2 cw) ;; split in the middle or on right when no side buffer present
+	   (let* ((br (cv-get-displayed-side-buffer))
+		  (ob (or cv-side-buffer-store (other-buffer))))
+	     (if br
+		 (progn ;; split left to create a middle window
+		   (select-window (car (window-at-side-list nil 'left)))
+		   (let* ((mw (split-window-right))
+			  (ob (other-buffer)))
+		     (when ob (set-window-buffer mw ob))))
+	       ;; split right
+	       (select-window (car (window-at-side-list nil 'right)))
+	       (let* ((rw (split-window-right))
+		      (ob (or cv-side-buffer-store (other-buffer))))
+		 (when ob (set-window-buffer rw ob))))))
 
-	  ((= 3 cw) ;; nothing to do here
-	   )
+	  ((= 3 cw)) ;; nothing to do here
 
-	  (t
+	  (t ;; like cw = 1
 	   (message "unexpected window count %s" cw)
 	   (delete-other-windows)
 	   (let* ((nw (split-window-right))
 		  (ob (other-buffer)))
-	     (when ob (set-window-buffer nw ob))))))
+	     (when ob (set-window-buffer nw ob)))))
+    (select-window ow)
+    (balance-windows)))
 
-  (balance-windows (selected-frame)))
-
-(defconst cv-side-window-store nil)
-
-(defun cv-toggle-right-side-window ()
+(defun cv-toggle-side-window ()
+  "Toggles the display of a side buffer
+If there's a buffer displayed on the right whose name matches
+`cv-side-window-rx', store it and delete the corresponding
+window. Else if there is a stored buffer to display, display it
+in the rightmost window."
   (interactive)
-  (let* ((rw (cv-get-right-side-window)))
-    (if rw
-	(progn
-	  (message "found right side-win %s" rw)
-	  (setq cv-side-window-store (window-buffer rw))
-	  (delete-window rw)
-	  (balance-windows))
-      (if cv-side-window-store
-	  (progn
-	    (message "found stored side-win %s" cv-side-window-store)
-	    (cv-display-buffer-right-side cv-side-window-store nil))
-	(message "found no live or stored side-window")
-	))))
+  (let* ((rb (cv-get-displayed-side-buffer))
+	 (rw (car (window-at-side-list nil 'right))))
+    (if rb
+	;; store buffer and delete window
+	(progn 
+	  (setq cv-side-buffer-store rb)
+	  (delete-window rw))
+      ;; show stored buffer if present
+      (when cv-side-buffer-store
+	(let* ((nw (if (= 1 (count-windows))
+		       (split-window-right)
+		     (car (window-at-side-list nil 'right)))))
+	(set-window-buffer nw cv-side-buffer-store)))
+      )))
 
 (defun cv-left-window ()
+  "Select left-most window"
   (interactive)
   (select-window (car (window-at-side-list nil 'left))))
 
@@ -108,6 +155,7 @@
   (global-modal-mode -1))
 
 (defun cv-right-window ()
+  "Select right-most window"
   (interactive)
   (select-window (car (window-at-side-list nil 'right))))
 
@@ -117,6 +165,7 @@
   (global-modal-mode -1))
 
 (defun cv-middle-window ()
+  "Selects the second window from the left"
   (interactive)
   (select-window (car (window-at-side-list nil 'left)))
   (windmove-right))
@@ -128,41 +177,22 @@
   (global-modal-mode -1))
 
 (defun cv-display-buffer-right-side (buf alist)
+  "Display buffer in right most window, split single window 2/1 if necessary"
   (let* ((cw (count-windows))
-	 win)
-    (setq cw (count-windows))
-    (cond ((= 1 cw)
-	   (setq win (cv-create-right-side-window)))
-	  ((= 2 cw)
-	   (let* ((right-win (car (window-at-side-list nil 'right)))
-		  (is-side-win (eq 'right (window-parameter right-win 'window-side))))
-	     (setq win
-		   (if is-side-win
-		       right-win
-		     (cv-create-right-side-window)))))
-	  ((= 3 cw)
-	   (let* ((right-win (car (window-at-side-list nil 'right)))
-		  (is-side-win (eq 'right (window-parameter right-win 'window-side))))
-	     (setq win
-		   (if is-side-win
-		       right-win
-		     (delete-window right-win)
-		     (cv-create-right-side-window)))))
-	  (t
-	   (message "unexpected window count %s" cw)
-	   (setq win (selected-window))))
-    (set-window-buffer win buf)
-    (balance-windows)))
-
+	 (tc (round (* 0.667 (frame-total-cols))))
+	 (rw (car (window-at-side-list nil 'right))))
+    (if (= 1 cw)
+	(set-window-buffer (split-window-right tc) buf)
+      (set-window-buffer rw buf))))
+  
 ;; limit height of *Completions* buffer
 (temp-buffer-resize-mode +1)
 (setq temp-buffer-max-height 15)
 
 (setq display-buffer-alist
       `(
-	(,(rx (or "*Backtrace*" "*Compilation*" "*Faces*" "*Help*" "*Messages*" "*Occur*" "*Warnings*"))
-	 (cv-display-buffer-right-side)
-	 )
+	(,cv-side-window-rx (cv-display-buffer-right-side))
+
 	(".*\\*Completions.*"
 	 (display-buffer-reuse-window display-buffer-in-side-window)
 	 (side . bottom)
