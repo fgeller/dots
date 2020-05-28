@@ -112,7 +112,7 @@
  `(font-lock-comment-delimiter-face ((t (:foreground "#C5CAE9" :background "#e5e5e5")))) ;; ECEFF1
  `(font-lock-comment-face ((t (:foreground nil :background "#e5e5e5" :underline nil))))
  `(font-lock-constant-face ((t (:inherit default))))
- `(font-lock-doc-face ((t (:inherit default :underline nil))))
+ `(font-lock-doc-face ((t (:background "#BBDEFB" :underline nil))))
  `(font-lock-doc-string-face ((t (:inherit default))))
  `(font-lock-function-name-face ((t (:inherit default))))
  `(font-lock-keyword-face ((t (:inherit default))))
@@ -124,6 +124,9 @@
  `(font-lock-type-face ((t (:inherit default))))
  `(font-lock-variable-name-face ((t (:inherit default))))
  `(font-lock-warning-face ((t (:inherit warning))))
+
+ `(flycheck-error ((t (:inherit warning))))
+ `(flycheck-warning ((t (:inherit warning))))
 
  `(git-gutter:separator ((t :inherit mode-line)))
  `(git-gutter:unchanged ((t :inherit mode-line)))
