@@ -78,6 +78,8 @@
  custom-file (file-name "~/.emacs.d/custom.el")
  require-final-newline t)
 
+(save-place-mode +1)
+
 (column-number-mode 1)
 (electric-indent-mode 1)
 (electric-pair-mode 1)
