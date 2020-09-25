@@ -14,7 +14,9 @@
   (lsp-deferred)
   (subword-mode 1)
   (prettier-js-mode 1)
+  (setq-local tab-width 2)
   (setq-local indent-tabs-mode nil)
+  (setq-local typescript-indent-level 2)
   (setq-local js-indent-level 2))
 
 (add-hook 'js-mode-hook 'fg/js)
