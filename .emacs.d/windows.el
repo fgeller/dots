@@ -60,27 +60,24 @@ Assumes column-view layout."
     (cond ((= 1 cw) ;; split window on the right
 	   (let* ((nw (split-window-right))
 		  (ob (or cv-side-buffer-store (other-buffer))))
-	     (when ob (set-window-buffer nw ob))
-	     (balance-windows)))
+	     (when ob (set-window-buffer nw ob))))
 
-	  ((= 2 cw)) ;; nothing to do here
+	  ((= 2 cw))
 
 	  ((= 3 cw) ;; delete right window
 	   (let ((rw (car (window-at-side-list nil 'right)))
 		 (rb (window-buffer rw)))
 	     (when (string-match-p cv-side-window-rx (buffer-name rb))
 	       (setq cv-side-buffer-store rb))
-	     (delete-window rw)
-	     (balance-windows)))
+	     (delete-window rw)))
 
 	  (t ;; maximize current window, like cw  = 1
 	   (message "unexpected window count %s" cw)
 	   (delete-other-windows)
 	   (let* ((nw (split-window-right))
 		  (ob ( cv-side-buffer-store (other-buffer))))
-	     (when ob (set-window-buffer nw ob))
-	     (balance-windows)))
-    )))
+	     (when ob (set-window-buffer nw ob)))))
+    (balance-windows)))
 
 (defun cv-3 ()
   "Organizes windows into three evenly split columns."
