@@ -88,7 +88,7 @@
     (define-key map (kbd "o") nil)
     (define-key map (kbd "r") 'eval-region)
     (define-key map (kbd "s") 'save-buffer)
-    (define-key map (kbd "S") 'save-some-buffer)
+    (define-key map (kbd "S") 'save-some-buffers)
 
     (define-key map (kbd "td") 'toggle-debug-on-error)
     (define-key map (kbd "tf") 'font-lock-mode)
