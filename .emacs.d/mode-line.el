@@ -28,3 +28,19 @@
 (setq
  visible-bell nil
  ring-bell-function 'mode-line-bell)
+
+(defun modal-mode-visual-toggle ()
+  (interactive)
+  (let ((faces-to-toggle '(header-line)))
+    (cond (modal-mode
+           (mapcar (lambda (face)
+                     (set-face-background face "#f1f1f1"))
+                   faces-to-toggle))
+          (t
+           (mapcar (lambda (face)
+                     (set-face-background face "#FFD54F"))
+                   faces-to-toggle)))))
+
+(add-hook 'modal-mode-hook 'modal-mode-visual-toggle)
+
+

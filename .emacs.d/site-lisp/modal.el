@@ -1,17 +1,5 @@
 ;; -*- lexical-binding: t -*-
 
-(defun modal-mode-visual-toggle ()
-  (interactive)
-  (let ((faces-to-toggle '(mode-line mode-line-inactive header-line header-line-highlight vertical-border)))
-    (cond (modal-mode
-           (mapcar (lambda (face)
-                     (set-face-background face "#f5f5f5"))
-                   faces-to-toggle))
-          (t
-           (mapcar (lambda (face)
-                     (set-face-background face "#FFD54F"))
-                   faces-to-toggle)))))
-
 (defvar modal-mode-map
   (let ((map (make-sparse-keymap)))
     (suppress-keymap map t)
@@ -46,6 +34,5 @@ Available bindings:
   modal-mode-maybe-activate
   :group 'modal)
 
-(add-hook 'modal-mode-hook 'modal-mode-visual-toggle)
-
 (provide 'modal)
+
