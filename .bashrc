@@ -22,6 +22,7 @@ export PS1='$ '
 export GOPATH=$HOME
 export GO111MODULE=on
 
+export PATH=~/src/github.com/flutter/flutter/bin:$PATH
 export PATH=/usr/local/opt/findutils/libexec/gnubin:$PATH
 export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:$PATH
 export PATH=/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:$PATH
@@ -43,7 +44,8 @@ then
     export GPG_TTY
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/openjdk/bin:$PATH
-    export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home
+    # export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home
+    export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/jdk/Contents/Home/
     # if $(docker-machine version 2>/dev/null >/dev/null)
     # then
     #     if [[ $(docker-machine status 2>/dev/null) -ne "Running" ]]
