@@ -17,7 +17,7 @@
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
 ;; |                              ||  ivy-resume   ||               ||               ||               ||               ||               ||               ||  local-mark   || xref-jump-back||               ||                                          |
 ;; |           shift              ||       z       ||       x       ||       m       ||       c       ||       v       ||       k       ||       l       ||       ,       ||       .       ||       /       ||                shift                     |
-;; |                              ||   win-zoom    ||     x-map     ||  macro-map    ||     c-map     || save-buffer   ||      jump     ||  ag-project   || global-mark   || xref-jump-to  ||      undo     ||                                          |
+;; |                              ||   repeat      ||     x-map     ||  macro-map    ||     c-map     || save-buffer   ||      jump     ||  ag-project   || global-mark   || xref-jump-to  ||      undo     ||                                          |
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
 
 (defun exit-view-mode ()
@@ -192,7 +192,7 @@
 (define-key modal-mode-map (kbd "'") 'end-of-line)
 (define-key modal-mode-map (kbd "\"") 'end-of-buffer)
 
-(define-key modal-mode-map (kbd "z") 'toggle-window-zoom)
+(define-key modal-mode-map (kbd "z") 'repeat)
 (define-key modal-mode-map (kbd "Z") 'ivy-resume)
 (define-key modal-mode-map (kbd "x") x-bindings-map)
 (define-key modal-mode-map (kbd "X") nil)
