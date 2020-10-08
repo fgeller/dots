@@ -110,7 +110,8 @@
 (setq auto-revert-interval 0.5)
 (auto-revert-set-timer)
 
-(when (eq window-system 'ns)
+(when (or (eq window-system 'mac)
+	  (eq window-system 'ns))
   (install 'exec-path-from-shell)
   (exec-path-from-shell-initialize)
   (server-start))
