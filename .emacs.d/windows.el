@@ -18,7 +18,6 @@
   (interactive)
   (let ((bf (cv-get-displayed-side-buffer)))
     (when bf (setq cv-side-buffer-store bf)))
-  (select-window (car (window-at-side-list nil 'left)))
   (delete-other-windows))
 
 (defun cv-2-1 ()
