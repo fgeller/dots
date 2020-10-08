@@ -31,3 +31,15 @@
 (defun fg/add-todo-keyword ()
   (font-lock-add-keywords nil '(("\\(TODO\\|FIXME\\)" 1 font-lock-warning-face prepend))))
 (add-hook 'font-lock-mode-hook 'fg/add-todo-keyword)
+
+(setq default-frame-alist
+      (append (list
+	       '(height . 58)
+               '(font . "Roboto Mono 11")
+               '(vertical-scroll-bars . nil)
+               '(tool-bar-lines . 0)
+	       '(drag-internal-border . 1)
+	       '(drag-with-header-line . t)
+	       '(internal-border-width . 1))))
+
+
