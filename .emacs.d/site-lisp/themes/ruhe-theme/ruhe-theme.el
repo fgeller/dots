@@ -1,10 +1,9 @@
-
 (deftheme ruhe "mostly black on white, some additional material design colors.")
 
 ;; https://material.io/design/color/the-color-system.html#tools-for-picking-colors
 ;;
 ;; material design 500
-;; r ed         #F44336;
+;; r ed         #F44336
 ;; p ink        #E91E63
 ;; p urple      #9C27B0
 ;; deep p urple #673AB7
@@ -52,22 +51,23 @@
  `(default ((t (:foreground "#000000" :background "#ffffff"))))
  `(underline ((t (:inherit default :underline nil))))
  `(border ((t (:background "#b4b7b4"))))
- `(cursor ((t (:foreground "#ffffff" :background "#0000ff"))))
+ `(cursor ((t (:foreground "#ffffff" :background "#F44336"))))
  `(fringe ((t (:foreground "#373b41"))))
+ `(internal-border ((t (:background "#777777"))))
  `(highlight ((t (:background "#FFC107" :distant-foreground "#000000"))))
  `(hi-yellow ((t (:inherit highlight))))
  `(match ((t (:inherit highlight))))
  `(pulse-highlight ((t (:background "#DCEDC8"))))
- `(highlight-thing ((t (:weight normal :background "#ffeb3b" :distant-foreground "#000000"))))
- `(pulse-highlight-start-face ((t (:background "#ffeb3b"))))
+ `(highlight-thing ((t (:background "#ffd54f" :distant-foreground "#000000"))))
+ `(pulse-highlight-start-face ((t (:background "#ffd54f"))))
  `(minibuffer-prompt ((t (:foreground "#eceff1" :background "#2196f3"))))
  `(tooltip ((t (:foreground "#eceff1" :background "#78909c"))))
 
  `(mode-line ((t (:foreground "#000000" :background "#ffffff"))))
- `(mode-line-highlight ((t (:inherit mode-line :weight bold))))
+ `(mode-line-highlight ((t (:inherit mode-line))))
  `(mode-line-buffer-id ((t (:inherit mode-line-highlight))))
  `(mode-line-emphasis ((t (:inherit mode-line-highlight))))
- `(header-line ((t (:inherit mode-line :background "#f5f5f5"))))
+ `(header-line ((t (:background "#f1f1f1" :foreground "#000000"))))
  `(mode-line-inactive ((t (:inherit mode-line))))
  `(vertical-border ((t (:inherit mode-line :underline nil))))
 
@@ -112,10 +112,10 @@
  `(company-echo-common ((t (:inherit secondary-selection))))
 
  `(font-lock-builtin-face ((t (:inherit default))))
- `(font-lock-comment-delimiter-face ((t (:foreground "#C5CAE9" :background "#e5e5e5")))) ;; ECEFF1
- `(font-lock-comment-face ((t (:foreground nil :background "#e5e5e5" :underline nil))))
+ `(font-lock-comment-delimiter-face ((t (:foreground "#C5CAE9" :background "#f1f1f1"))))
+ `(font-lock-comment-face ((t (:foreground nil :background "#f1f1f1" :underline nil))))
  `(font-lock-constant-face ((t (:inherit default))))
- `(font-lock-doc-face ((t (:background "#BBDEFB" :underline nil))))
+ `(font-lock-doc-face ((t (:inherit default))))
  `(font-lock-doc-string-face ((t (:inherit default))))
  `(font-lock-function-name-face ((t (:inherit default))))
  `(font-lock-keyword-face ((t (:inherit default))))
@@ -131,8 +131,8 @@
  `(flycheck-error ((t (:inherit error))))
  `(flycheck-warning ((t (:inherit warning))))
 
- `(git-gutter:separator ((t :inherit mode-line :underline nil)))
- `(git-gutter:unchanged ((t :inherit mode-line :underline nil)))
+ `(git-gutter:separator ((t :background "#ffffff")))
+ `(git-gutter:unchanged ((t :background "#ffffff")))
  `(git-gutter:added ((t :foreground "#ffffff" :background "#DCEDC8" :underline nil)))
  `(git-gutter:deleted ((t :foreground "#ffffff" :background "#EF9A9A" :underline nil)))
  `(git-gutter:modified ((t :foreground "#ffffff" :background "#90CAF9" :underline nil)))
@@ -165,7 +165,7 @@
  ;; `(magit-branch-upstream ((t (:background nil :foreground nil))))
  ;; `(magit-cherry-equivalent ((t (:background nil :foreground nil))))
  ;; `(magit-cherry-unmatched ((t (:background nil :foreground nil))))
- `(magit-diff-added ((t (:background "#F1F8E9"))))
+ `(magit-diff-added ((t (:background "#E8F5E9"))))
  `(magit-diff-added-highlight ((t (:background "#E8F5E9"))))
  `(magit-diff-base ((t (:background nil :foreground nil))))
  `(magit-diff-base-highlight ((t (:background nil :foreground nil))))
@@ -175,15 +175,15 @@
  ;; `(magit-diff-file-heading ((t (:background nil :foreground nil))))
  ;; `(magit-diff-file-heading-highlight ((t (:background nil :foreground nil))))
  ;; `(magit-diff-file-heading-selection ((t (:background nil :foreground nil))))
- `(magit-diff-hunk-heading ((t (:background nil :foreground nil))))
- `(magit-diff-hunk-heading-highlight ((t (:background nil :foreground nil))))
+ `(magit-diff-hunk-heading ((t (:background "#f1f1f1" :foreground nil))))
+ `(magit-diff-hunk-heading-highlight ((t (:background "#FFEB3B" :foreground nil))))
  `(magit-diff-hunk-heading-selection ((t (:background nil :foreground nil))))
  `(magit-diff-hunk-region ((t (:background nil :foreground nil))))
  ;; `(magit-diff-lines-boundary ((t (:background nil :foreground nil))))
  ;; `(magit-diff-lines-heading ((t (:background nil :foreground nil))))
  ;; `(magit-diff-our ((t (:background nil :foreground nil))))
  ;; `(magit-diff-our-highlight ((t (:background nil :foreground nil))))
- `(magit-diff-removed ((t (:background "#FBE9E7"))))
+ `(magit-diff-removed ((t (:background "#FFCCBC"))))
  `(magit-diff-removed-highlight ((t (:background "#FFCCBC"))))
  ;; `(magit-diff-revision-summary ((t (:background nil :foreground nil))))
  ;; `(magit-diff-revision-summary-highlight ((t (:background nil :foreground nil))))
