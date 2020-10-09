@@ -105,10 +105,10 @@
 
     (define-key map (kbd "x") 'm-x-with-bindings)
 
-    (define-key map (kbd "0") 'delete-window)
-    (define-key map (kbd "1") 'delete-other-windows)
-    (define-key map (kbd "2") 'split-window-below)
-    (define-key map (kbd "3") 'split-window-right)
+    ;; (define-key map (kbd "0") 'delete-window)
+    ;; (define-key map (kbd "1") 'delete-other-windows)
+    ;; (define-key map (kbd "2") 'split-window-below)
+    ;; (define-key map (kbd "3") 'split-window-right)
 
     map))
 
