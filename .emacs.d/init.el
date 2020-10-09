@@ -101,6 +101,7 @@
 (load-custom "~/.emacs.d/emacs-lisp.el")
 (load-custom "~/.emacs.d/go.el")
 (load-custom "~/.emacs.d/javascript.el")
+(load-custom "~/.emacs.d/dart.el")
 (load-custom "~/.emacs.d/yaml.el")
 (load-custom "~/.emacs.d/compilation.el")
 
