@@ -15,9 +15,9 @@
 ;; |                        ||     replace   || rem-encl-pair ||      yank     ||     kill      ||    insert     || begining-line ||     left      ||     down      ||      up       ||     right     ||   end-line    ||                               |
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
-;; |                              ||  ivy-resume   ||               ||               ||               ||               ||               ||               ||  local-mark   || xref-jump-back||               ||                                          |
+;; |                              ||  ivy-resume   ||               ||               ||               ||               ||               ||               ||               || xref-jump-back||               ||                                          |
 ;; |           shift              ||       z       ||       x       ||       m       ||       c       ||       v       ||       k       ||       l       ||       ,       ||       .       ||       /       ||                shift                     |
-;; |                              ||   repeat      ||     x-map     ||  macro-map    ||     c-map     || save-buffer   ||      jump     ||  ag-project   || global-mark   || xref-jump-to  ||      undo     ||                                          |
+;; |                              ||   repeat      ||     x-map     ||  macro-map    ||     c-map     || save-buffer   ||      jump     || expand-region ||contract-region|| xref-jump-to  ||      undo     ||                                          |
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
 
 (defun exit-view-mode ()
@@ -40,6 +40,8 @@
 (install 'modal)
 (global-modal-mode +1)
 (define-key global-map (kbd "C-o") 'global-modal-mode)
+
+(install 'expand-region)
 
 ;; c-map
 (defconst c-bindings-map
@@ -204,10 +206,10 @@
 (define-key modal-mode-map (kbd "V") nil)
 (define-key modal-mode-map (kbd "k") 'jump)
 (define-key modal-mode-map (kbd "K") nil)
-(define-key modal-mode-map (kbd "l") 'ag-project)
-(define-key modal-mode-map (kbd "L") nil)
-(define-key modal-mode-map (kbd ",") 'fg/jump-to-global-mark)
-(define-key modal-mode-map (kbd "<") 'fg/jump-to-local-mark)
+(define-key modal-mode-map (kbd "l") 'er/expand-region)
+(define-key modal-mode-map (kbd "L") 'nil)
+(define-key modal-mode-map (kbd ",") 'er/contract-region)
+(define-key modal-mode-map (kbd "<") 'nil)
 (define-key modal-mode-map (kbd ".") 'xref-find-definitions)
 (define-key modal-mode-map (kbd ">") 'xref-pop-marker-stack)
 (define-key modal-mode-map (kbd "/") 'undo)
