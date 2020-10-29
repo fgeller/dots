@@ -7,7 +7,7 @@
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
 ;; |                    ||               || delete-back   || duplicate-lin ||   join-line   ||     barf      ||               ||               ||               ||     occur     ||               || prev-word-occ || next-word-occ ||                  |
 ;; |       tab          ||       q       ||       d       ||       r       ||       w       ||       b       ||       j       ||       f       ||       u       ||       p       ||       ;       ||       [       ||       ]       ||        \         |
-;; |                    ||  surround     ||     delete    || query-repl-rx ||   open-line   ||     slurp     ||               ||               || avy-goto-char ||    isearch    ||               ||  prev-sym-occ || next-sym-occ  ||  goto-line       |
+;; |                    ||  surround     ||     delete    || query-repl-rx ||   open-line   ||     slurp     ||               ||               || avy-goto-char ||    isearch    ||      ag       ||  prev-sym-occ || next-sym-occ  ||  goto-line       |
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
 ;; |                        ||               ||               ||yank-kill-ring ||               ||               ||  beg-buffer   ||  back-symbl   ||   page-down   ||    page-up    ||   fwd-symbl   ||  end-buffer   ||                               |
@@ -163,7 +163,7 @@
 (define-key modal-mode-map (kbd "U") nil)
 (define-key modal-mode-map (kbd "p") 'isearch-forward)
 (define-key modal-mode-map (kbd "P") 'occur)
-(define-key modal-mode-map (kbd ";") 'nil)
+(define-key modal-mode-map (kbd ";") 'ag)
 (define-key modal-mode-map (kbd ":") 'nil)
 (define-key modal-mode-map (kbd "[") 'move-to-previous-symbol-occurrence)
 (define-key modal-mode-map (kbd "{") 'move-to-previous-word-occurrence)
