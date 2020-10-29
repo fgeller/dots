@@ -104,6 +104,7 @@
 (load-custom "~/.emacs.d/dart.el")
 (load-custom "~/.emacs.d/yaml.el")
 (load-custom "~/.emacs.d/compilation.el")
+(load-custom "~/.emacs.d/term.el")
 (load-custom "~/.emacs.d/snippets.el")
 
 (global-auto-revert-mode 1)

@@ -35,6 +35,7 @@
 (after 'replace (define-key occur-edit-mode-map (kbd "C-o") nil))
 (after 'replace (define-key occur-menu-map (kbd "C-o") nil))
 (after 'xref (define-key xref--xref-buffer-mode-map (kbd "C-o") nil))
+(after 'vterm (define-key vterm-mode-map (kbd "C-o") nil))
 ;; so we can rely on C-o to toggle modal mode
 
 (install 'modal)
