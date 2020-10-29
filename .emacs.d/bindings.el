@@ -1,4 +1,3 @@
-
 ;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
 ;; |             ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
 ;; |     `       ||       1       ||       2      ||       3       ||       4       ||       5       ||       6       ||       7       ||       8       ||       9       ||       0       ||       -       ||       =       ||        backspace         |
@@ -108,11 +107,6 @@
 
     (define-key map (kbd "x") 'm-x-with-bindings)
 
-    ;; (define-key map (kbd "0") 'delete-window)
-    ;; (define-key map (kbd "1") 'delete-other-windows)
-    ;; (define-key map (kbd "2") 'split-window-below)
-    ;; (define-key map (kbd "3") 'split-window-right)
-
     map))
 
 ;; macro map - cf `kmacro-keymap'
@@ -157,6 +151,7 @@
 (define-key modal-mode-map (kbd "fh") 'cv-right-window)
 (define-key modal-mode-map (kbd "fH") 'cv-right-window-insert)
 (define-key modal-mode-map (kbd "ft") 'cv-toggle-side-window)
+(define-key modal-mode-map (kbd "fo") 'other-window)
 
 (define-key modal-mode-map (kbd "F") nil)
 (define-key modal-mode-map (kbd "u") 'avy-goto-char-timer)
