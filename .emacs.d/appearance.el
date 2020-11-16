@@ -34,7 +34,9 @@
 
 (setq default-frame-alist
       (append (list
-	       '(height . 58)
+	       '(top . 0)
+	       '(left . 0)
+	       '(height . 59)
                '(font . "Roboto Mono 11")
                '(vertical-scroll-bars . nil)
                '(tool-bar-lines . 0)
