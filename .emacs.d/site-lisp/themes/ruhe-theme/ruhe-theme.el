@@ -87,7 +87,7 @@
  `(link ((t (:foreground "#3F51B5" :underline nil))))
  `(link-visited ((t (:foreground "#9C27B0" :underline nil))))
 
- `(error ((t (:background "#f44336" :foreground "#ffffff" :weight bold))))
+ `(error ((t (:background "#f44336" :foreground "#ffffff"))))
  `(warning ((t (:foreground "#ff5722" :weight bold))))
  `(success ((t (:foreground "#4caf50" :weight bold :underline nil))))
  `(shadow ((t (:foreground "#b4b7b4"))))
@@ -96,6 +96,13 @@
  `(completions-common-part ((t (:background "#2196f3" :foreground "#ffffff"))))
  `(completions-first-difference ((t (:background nil :foreground nil))))
 
+ `(compilation-error ((t (:foreground "#f44336" :background nil))))
+ `(compilation-info ((t (:foreground "#ff5722" :background nil))))
+ `(compilation-mode-line-exit ((t (:foreground "#000000" :background nil))))
+ `(compilation-mode-line-fail ((t (:foreground "#f44336" :background nil))))
+ `(compilation-mode-line-run ((t (:inherit success))))
+ `(compilation-warning ((t (:inherit warning))))
+ 
  `(icomplete-first-match ((t (:foreground "#000000" :background "#FFD54F"))))
 
  `(company-tooltip ((t (:inherit tooltip))))
@@ -128,7 +135,8 @@
  `(font-lock-variable-name-face ((t (:inherit default))))
  `(font-lock-warning-face ((t (:inherit warning))))
 
- `(flycheck-error ((t (:inherit error))))
+ `(flycheck-error ((t (:foreground "#f44336" :background "#ffffff"))))
+ `(flycheck-error-list-id ((t (:foreground "#f44336" :background "#ffffff"))))
  `(flycheck-warning ((t (:inherit warning))))
 
  `(git-gutter:separator ((t :background "#ffffff")))
