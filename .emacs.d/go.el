@@ -8,6 +8,8 @@
 
   (subword-mode 1)
 
+  (setq tab-width 4)
+
   (define-key go-mode-map (kbd "C-c C-c") 'go-run-all-tests)
   (define-key go-mode-map (kbd "C-c b") 'go-make-build)
   (define-key go-mode-map (kbd "C-c C-m") 'go-run-this-test)
