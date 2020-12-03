@@ -67,7 +67,7 @@
  `(mode-line-highlight ((t (:inherit mode-line))))
  `(mode-line-buffer-id ((t (:inherit mode-line-highlight))))
  `(mode-line-emphasis ((t (:inherit mode-line-highlight))))
- `(header-line ((t (:background "#f1f1f1" :foreground "#000000"))))
+ `(header-line ((t (:background "#f1f1f1" :foreground "#000000" :height 120))))
  `(mode-line-inactive ((t (:inherit mode-line))))
  `(vertical-border ((t (:inherit mode-line :underline nil))))
 

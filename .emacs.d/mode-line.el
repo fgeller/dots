@@ -13,8 +13,8 @@
 		   (list
 		    (propertize " %b" 'face '(:weight bold))
 		    "%1* "
-		    (propertize " " 'display '(raise +0.25))
-		    (propertize " " 'display '(raise -0.30))
+		    (propertize " " 'display '(raise +0.75))
+		    (propertize " " 'display '(raise -0.90))
 		    ))
 		  (format-mode-line
 		   (list
