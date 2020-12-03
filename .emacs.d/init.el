@@ -82,7 +82,7 @@
 
 (column-number-mode 1)
 (electric-indent-mode 1)
-(electric-pair-mode 1)
+(electric-pair-mode -1)
 
 (defun load-custom (n)
   (time (format "load %s" n)
