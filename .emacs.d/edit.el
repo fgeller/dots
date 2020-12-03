@@ -48,6 +48,19 @@
     (forward-line 1)
     (indent-for-tab-command)))
 
+
+(defun replace-char ()
+  (interactive)
+  (let ((c (read-char "Replace with: ")))
+    (mark-char)
+    (delete-region (point) (mark))
+    (insert c)))
+
+(defun insert-char ()
+  (interactive)
+  (let ((c (read-char "Insert: ")))
+    (insert c)))
+
 (defun find-next-left-pair-start ()
   (save-excursion
     (search-backward-regexp "\\((\\|{\\|\\[\\|<\\|'\\|\"\\|`\\)" (point-min) t)

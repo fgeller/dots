@@ -4,14 +4,14 @@
 ;; |  ucs-insert ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
 ;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
-;; |                    ||               || delete-back   || duplicate-lin ||   join-line   ||     barf      ||               ||               ||               ||     occur     ||               || prev-word-occ || next-word-occ ||                  |
+;; |                    ||  rem-encl-pair|| delete-back   || duplicate-lin ||   join-line   ||     barf      ||               ||               ||               ||     occur     ||               || prev-word-occ || next-word-occ ||                  |
 ;; |       tab          ||       q       ||       d       ||       r       ||       w       ||       b       ||       j       ||       f       ||       u       ||       p       ||       ;       ||       [       ||       ]       ||        \         |
 ;; |                    ||  surround     ||     delete    || query-repl-rx ||   open-line   ||     slurp     ||               ||               || avy-goto-char ||    isearch    ||      ag       ||  prev-sym-occ || next-sym-occ  ||  goto-line       |
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
-;; |                        ||               ||               ||yank-kill-ring ||               ||               ||  beg-buffer   ||  back-symbl   ||   page-down   ||    page-up    ||   fwd-symbl   ||  end-buffer   ||                               |
+;; |                        ||  replace-sel  ||     insert    ||yank-kill-ring ||               ||               ||  beg-buffer   ||  back-symbl   ||   page-down   ||    page-up    ||   fwd-symbl   ||  end-buffer   ||                               |
 ;; |         control        ||       a       ||       s       ||       h       ||       t       ||       g       ||       y       ||       n       ||       e       ||       o       ||       i       ||       '       ||              return           |
-;; |                        ||     replace   || rem-encl-pair ||      yank     ||     kill      ||    insert     || begining-line ||     left      ||     down      ||      up       ||     right     ||   end-line    ||                               |
+;; |                        || replace-char  ||   insert-char ||      yank     ||     kill      ||               || begining-line ||     left      ||     down      ||      up       ||     right     ||   end-line    ||                               |
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
 ;; |                              ||  ivy-resume   ||               ||               ||               ||               ||               ||               ||               || xref-jump-back||               ||                                          |
@@ -126,7 +126,7 @@
 (define-key modal-mode-map (kbd "-") 'decrement-integer-at-point)
 
 (define-key modal-mode-map (kbd "q") 'enclose-in-pair)
-(define-key modal-mode-map (kbd "Q") nil)
+(define-key modal-mode-map (kbd "Q") 'remove-enclosing-pair)
 (define-key modal-mode-map (kbd "d") 'delete-forward-char)
 (define-key modal-mode-map (kbd "D") 'delete-backward-char)
 (define-key modal-mode-map (kbd "r") 'vr/query-replace)
@@ -167,15 +167,15 @@
 (define-key modal-mode-map (kbd "\\") 'goto-line)
 (define-key modal-mode-map (kbd "|") nil)
 
-(define-key modal-mode-map (kbd "a") 'replace-select)
-(define-key modal-mode-map (kbd "A") nil)
-(define-key modal-mode-map (kbd "s") 'remove-enclosing-pair)
-(define-key modal-mode-map (kbd "S") nil)
+(define-key modal-mode-map (kbd "a") 'replace-char)
+(define-key modal-mode-map (kbd "A") 'replace-select)
+(define-key modal-mode-map (kbd "S") 'insert-literal)
+(define-key modal-mode-map (kbd "s") 'insert-char)
 (define-key modal-mode-map (kbd "h") 'yank)
 (define-key modal-mode-map (kbd "H") 'yank-from-kill-ring)
 (define-key modal-mode-map (kbd "t") 'kill-select)
 (define-key modal-mode-map (kbd "T") nil)
-(define-key modal-mode-map (kbd "g") 'insert-literal)
+(define-key modal-mode-map (kbd "g") nil)
 (define-key modal-mode-map (kbd "G") nil)
 (define-key modal-mode-map (kbd "y") 'beginning-of-line)
 (define-key modal-mode-map (kbd "Y") 'beginning-of-buffer)
