@@ -9,14 +9,14 @@
 ;; |                    ||  surround     ||     delete    || query-repl-rx ||   open-line   ||     slurp     ||               ||               || avy-goto-char ||    isearch    ||      ag       ||  prev-sym-occ || next-sym-occ  ||  goto-line       |
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
-;; |                        ||  replace-sel  ||     insert    ||yank-kill-ring ||               ||               ||  beg-buffer   ||  back-symbl   ||   page-down   ||    page-up    ||   fwd-symbl   ||  end-buffer   ||                               |
+;; |                        ||  replace-sel  ||     insert    ||yank-kill-ring ||               ||contract-region||  beg-buffer   ||  back-symbl   ||   page-down   ||    page-up    ||   fwd-symbl   ||  end-buffer   ||                               |
 ;; |         control        ||       a       ||       s       ||       h       ||       t       ||       g       ||       y       ||       n       ||       e       ||       o       ||       i       ||       '       ||              return           |
-;; |                        || replace-char  ||   insert-char ||      yank     ||     kill      ||               || begining-line ||     left      ||     down      ||      up       ||     right     ||   end-line    ||                               |
+;; |                        || replace-char  ||   insert-char ||      yank     ||     kill      || expand-region || begining-line ||     left      ||     down      ||      up       ||     right     ||   end-line    ||                               |
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
 ;; |                              ||  ivy-resume   ||               ||               ||               ||               ||               ||               ||               || xref-jump-back||               ||                                          |
 ;; |           shift              ||       z       ||       x       ||       m       ||       c       ||       v       ||       k       ||       l       ||       ,       ||       .       ||       /       ||                shift                     |
-;; |                              ||   repeat      ||     x-map     ||  macro-map    ||     c-map     || save-buffer   ||      jump     || expand-region ||contract-region|| xref-jump-to  ||      undo     ||                                          |
+;; |                              ||   repeat      ||     x-map     ||  macro-map    ||     c-map     || save-buffer   ||      jump     ||               ||               || xref-jump-to  ||      undo     ||                                          |
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
 
 (defun exit-view-mode ()
@@ -177,8 +177,8 @@
 (define-key modal-mode-map (kbd "H") 'yank-from-kill-ring)
 (define-key modal-mode-map (kbd "t") 'kill-select)
 (define-key modal-mode-map (kbd "T") nil)
-(define-key modal-mode-map (kbd "g") nil)
-(define-key modal-mode-map (kbd "G") nil)
+(define-key modal-mode-map (kbd "g") 'er/expand-region)
+(define-key modal-mode-map (kbd "G") 'er/contract-region)
 (define-key modal-mode-map (kbd "y") 'beginning-of-line)
 (define-key modal-mode-map (kbd "Y") 'beginning-of-buffer)
 (define-key modal-mode-map (kbd "n") 'left-char)
@@ -204,9 +204,9 @@
 (define-key modal-mode-map (kbd "V") nil)
 (define-key modal-mode-map (kbd "k") 'jump)
 (define-key modal-mode-map (kbd "K") nil)
-(define-key modal-mode-map (kbd "l") 'er/expand-region)
-(define-key modal-mode-map (kbd "L") 'nil)
-(define-key modal-mode-map (kbd ",") 'er/contract-region)
+(define-key modal-mode-map (kbd "l") nil)
+(define-key modal-mode-map (kbd "L") nil)
+(define-key modal-mode-map (kbd ",") nil)
 (define-key modal-mode-map (kbd "<") 'nil)
 (define-key modal-mode-map (kbd ".") 'xref-find-definitions)
 (define-key modal-mode-map (kbd ">") 'xref-pop-marker-stack)
