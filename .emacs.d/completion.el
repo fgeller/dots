@@ -2,8 +2,8 @@
 
 (setq
  company-backends '(company-capf company-files company-elisp company-dabbrev)
- company-idle-delay .75
- company-tooltip-idle-delay .75
+ company-idle-delay .1
+ company-tooltip-idle-delay .1
  company-tooltip-align-annotations t)
 
 (after 'company
