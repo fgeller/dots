@@ -1,6 +1,6 @@
 ;; TODO read up on quit-restore window-parameter, cf quit-restore-window
 
-(defconst cv-side-window-rx (rx (or "*Backtrace*" "*Compilation*" "*Faces*" "*Help*" "*Messages*" "*Occur*" "*Warnings*" "vterm" "*ag search"))
+(defconst cv-side-window-rx (rx (or "*Backtrace*" "*Compilation*" "*Faces*" "*Help*" "*Messages*" "*Occur*" "*Warnings*" "*ag search"))
   "Regex that matches buffer names that should be displayed on the right side")
 
 (defconst cv-side-buffer-store nil
