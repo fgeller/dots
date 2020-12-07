@@ -59,6 +59,8 @@
     (define-key map (kbd "lr") 'lsp-rename)
     (define-key map (kbd "la") 'xref-find-apropos)
 
+    (define-key map (kbd "v") 'vterm)
+
     (define-key map (kbd "en") 'flycheck-next-error)
     (define-key map (kbd "ep") 'flycheck-previous-error)
 
