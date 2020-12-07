@@ -59,6 +59,7 @@
     (define-key map (kbd "lr") 'lsp-rename)
     (define-key map (kbd "la") 'xref-find-apropos)
 
+    (define-key map (kbd "m") 'magit)
     (define-key map (kbd "v") 'vterm)
 
     (define-key map (kbd "en") 'flycheck-next-error)
@@ -88,7 +89,6 @@
     (define-key map (kbd "f") 'find-file)
     (define-key map (kbd "h") 'mark-whole-buffer)
     (define-key map (kbd "k") 'kill-buffer)
-    (define-key map (kbd "m") 'magit-status)
     (define-key map (kbd "o") nil)
     (define-key map (kbd "r") 'eval-region)
     (define-key map (kbd "s") 'save-buffer)
