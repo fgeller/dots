@@ -115,11 +115,23 @@
 	  (t
 	   (3w-split-3-from-1)))))
 
-;; (3w-split-1)
-;; (3w-split-2)
-;; (3w-split-2-1)
-;; (3w-split-3)
+(defun 3w-jump-1 ()
+  (interactive)
+  (select-window
+   (car (window-at-side-list nil (if (3w-is-column-split-p) 'left 'top)))))
 
+(defun 3w-jump-2 ()
+  (interactive)
+  (let* ((is-cs (3w-is-column-split-p)))
+  (select-window (car (window-at-side-list nil (if is-cs 'left 'top))))
+  (if is-cs (windmove-right) (windmove-down))))
+
+(defun 3w-jump-3 ()
+  (interactive)
+  (select-window
+   (car (window-at-side-list nil (if (3w-is-column-split-p) 'right 'bottom)))))
+
+;; TODO cv-display-buffer-right-side
 ;; TODO is it possible to listen / add hook to frame resize
 ;; TODO test cases
 
