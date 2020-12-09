@@ -163,7 +163,70 @@
 	   (message "3w: unexpected case for 3w-toggle-side-window store=%s sw=%s cw=%s"
 		    3w-side-buffer-store sw cw)))))
 
-;; TODO is it possible to listen / add hook to frame resize
-;; TODO test cases
+(ert-deftest 3w-1->2c->1 ()
+  (3w-test-fixture
+   (lambda ()
+     (delete-other-windows)
+     (let* ((3w-minimal-window-width 50)
+	    (ow (selected-window)))
+       (set-frame-size nil 100 50)
+       (3w-split-2)
+       (should (= 2 (count-windows)))
+       (should (<= 48 (window-width) 50))
+       (windmove-right)
+       (should-not (eq ow (selected-window)))
+       (should (<= 48 (window-width) 50))
+       (windmove-left)
+       (3w-split-1)
+       (should (= 1 (count-windows)))
+       (should (eq ow (selected-window)))))))
+
+(ert-deftest 3w-1->2c->3r ()
+  (3w-test-fixture
+   (lambda ()
+     (delete-other-windows)
+     (let* ((3w-minimal-window-width 50)
+	    (ow (selected-window)))
+       (set-frame-size nil 100 50)
+       (3w-split-2)
+       (should (= 2 (count-windows)))
+       (should (<= 48 (window-width) 50))
+       (3w-split-3)
+       (should (= 3 (count-windows)))
+       (should (eq ow (selected-window)))
+       (should (<= 98 (window-width) 100))
+       (should (<= (1- (/ 50 3)) (window-height) (1+ (/ 50 3))))
+       ))))
+
+(ert-deftest 3w-1->2r->1 ()
+  (3w-test-fixture
+   (lambda ()
+     (delete-other-windows)
+     (let* ((3w-minimal-window-width 50)
+	    (ow (selected-window)))
+       (set-frame-size nil 80 50)
+       (3w-split-2)
+       (should (= 2 (count-windows)))
+       (should (<= 78 (window-width) 80))
+       (should (<= 24 (window-height) 25))
+       (windmove-down)
+       (should-not (eq ow (selected-window)))
+       (should (<= 78 (window-width) 80))
+       (should (<= 24 (window-height) 25))
+       (windmove-up)
+       (3w-split-1)
+       (should (= 1 (count-windows)))
+       (should (eq ow (selected-window)))))))
+
+(defun 3w-test-fixture (body)
+  (let* (fh fw)
+    (unwind-protect
+	(progn
+	  (setq fw (frame-width))
+	  (setq fh (frame-height))
+	  (funcall body))
+      (set-frame-size nil fw fh))))
+
+;; (ert "^3w-")
 
 (provide '3w)
