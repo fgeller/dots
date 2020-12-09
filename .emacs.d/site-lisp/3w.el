@@ -18,8 +18,8 @@
 	 (sw (car (window-at-side-list nil (if is-cs 'right 'bottom)))))
     (when (3w-side-window-name-p sw) (window-buffer sw))))
 
-(defun 3w-store-side-buffer ()
-  (let* ((sb (3w-get-side-window-buffer)))
+(defun 3w-store-side-buffer (&optional buf)
+  (let* ((sb (or buf (3w-get-side-window-buffer))))
     (when sb
       (setq 3w-side-buffer-store sb)
       (message "3w: stored side window buffer %s" sb))))
@@ -131,7 +131,38 @@
   (select-window
    (car (window-at-side-list nil (if (3w-is-column-split-p) 'right 'bottom)))))
 
-;; TODO cv-display-buffer-right-side
+(defun 3w-display-as-side-window (buf &optional alist)
+  "Display buffer in right or bottom window, split single window if necessary"
+  (message "3w-display-as-side-window buf=%s" buf)
+  (when (= 1 (count-windows)) (3w-split-2-1))
+  (let* ((is-cs (3w-is-column-split-p))
+	 (sw (car (window-at-side-list nil (if is-cs 'right 'bottom)))))
+    (set-window-buffer sw buf)))
+
+(defun 3w-toggle-side-window ()
+  (interactive)
+  (let* ((is-cs (3w-is-column-split-p))
+	 (sw (car (window-at-side-list nil (if is-cs 'right 'bottom))))
+	 (cw (count-windows)))
+    (cond ((= 1 cw)
+	   (if 3w-side-buffer-store
+	       (3w-display-as-side-window 3w-side-buffer-store)
+	     (message "3w: no side window buffer in store")))
+
+	  ((3w-side-window-name-p sw)
+	   (3w-store-side-buffer (window-buffer sw))
+	   (delete-window sw)
+	   (3w-split-2))
+
+	  (3w-side-buffer-store
+	   (if (= cw 3)
+	       (set-window-buffer sw 3w-side-buffer-store)
+	     (3w-split-3)))
+
+	  (t
+	   (message "3w: unexpected case for 3w-toggle-side-window store=%s sw=%s cw=%s"
+		    3w-side-buffer-store sw cw)))))
+
 ;; TODO is it possible to listen / add hook to frame resize
 ;; TODO test cases
 
