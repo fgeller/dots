@@ -43,12 +43,20 @@
 
 (install 'expand-region)
 
+(defun switch-to-vterm ()
+  (interactive)
+  (let* ((buf (get-buffer "vterm")))
+    (if buf
+	(switch-to-buffer buf)
+      (vterm))))
+
 ;; c-map
 (defconst c-bindings-map
   (let ((map (make-sparse-keymap)))
     (suppress-keymap map t)
-    (define-key map (kbd "b") 'help-go-back)
-    (define-key map (kbd "f") 'help-go-back)
+
+    (define-key map (kbd "hb") 'help-go-back)
+    (define-key map (kbd "hf") 'help-go-back)
 
     (define-key map (kbd "cc") 'with-editor-finish)
     (define-key map (kbd "cm") 'recompile)
@@ -60,7 +68,7 @@
     (define-key map (kbd "la") 'xref-find-apropos)
 
     (define-key map (kbd "m") 'magit)
-    (define-key map (kbd "v") 'vterm)
+    (define-key map (kbd "v") 'switch-to-vterm)
 
     (define-key map (kbd "en") 'flycheck-next-error)
     (define-key map (kbd "ep") 'flycheck-previous-error)
