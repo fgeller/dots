@@ -40,23 +40,30 @@
     (forward-char 1)
     (yank)))
 
-(defun open-line-below ()
+(defun fg/open-line-below ()
   (interactive)
-  (save-excursion
-    (end-of-line)
-    (open-line 1)
-    (forward-line 1)
-    (indent-for-tab-command)))
+  (end-of-line)
+  (open-line 1)
+  (forward-line 1)
+  (indent-for-tab-command)
+  (global-modal-mode -1))
 
+(defun fg/open-line-above ()
+  (interactive)
+  (end-of-line 0) ;; ie -1 🤷‍♂️
+  (open-line 1)
+  (forward-line 1)
+  (indent-for-tab-command)
+  (global-modal-mode -1))
 
-(defun replace-char ()
+(defun fg/replace-char ()
   (interactive)
   (let ((c (read-char "Replace with: ")))
     (mark-char)
     (delete-region (point) (mark))
     (insert c)))
 
-(defun insert-char ()
+(defun fg/insert-char ()
   (interactive)
   (let ((c (read-char "Insert: ")))
     (insert c)))
