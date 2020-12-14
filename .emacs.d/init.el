@@ -73,6 +73,8 @@
  dired-dwim-target t
  dired-listing-switches "-laGh")
 
+(add-hook 'dired-mode-hook 'dired-hide-details-mode)
+
 (setq-default
  fill-column 80
  custom-file (file-name "~/.emacs.d/custom.el")

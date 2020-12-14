@@ -63,6 +63,9 @@
     (define-key map (kbd "cM") 'compile)
     (define-key map (kbd ";") 'comment-dwim)
 
+    (define-key map (kbd "dd") 'dired-hide-details-mode)
+    (define-key map (kbd "dw") 'dired-toggle-read-only)
+
     (define-key map (kbd "ll") 'lsp)
     (define-key map (kbd "lr") 'lsp-rename)
     (define-key map (kbd "la") 'xref-find-apropos)
