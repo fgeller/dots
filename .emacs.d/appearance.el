@@ -32,6 +32,11 @@
   (font-lock-add-keywords nil '(("\\(TODO\\|FIXME\\)" 1 font-lock-warning-face prepend))))
 (add-hook 'font-lock-mode-hook 'fg/add-todo-keyword)
 
+;; via https://emacs.stackexchange.com/a/62228/810
+(when (>= emacs-major-version 27)
+  (set-fontset-font t '(#x1f000 . #x1faff)
+		    (font-spec :family "Noto Color Emoji")))
+
 (setq default-frame-alist
       (append (list
 	       '(top . 0)
