@@ -39,14 +39,9 @@
 
 (setq default-frame-alist
       (append (list
-	       '(top . 0)
-	       '(left . 0)
-	       '(height . 59)
-               '(font . "Roboto Mono 11")
+	       '(font . "Roboto Mono-11:weight=book")
+	       '(left-fringe . 0)
+	       '(right-fringe . 0)
                '(vertical-scroll-bars . nil)
                '(tool-bar-lines . 0)
-	       '(drag-internal-border . 1)
-	       '(drag-with-header-line . t)
-	       '(internal-border-width . 1))))
-
-
+	       '(internal-border-width . 0))))
