@@ -1,4 +1,4 @@
-(defconst 3w-minimal-window-width 60
+(defconst 3w-minimal-window-width 80
   "Minimal width of a single window. This is used to determined
   if 3w should use a horizontal or vertical split. e.g. if the
   minimal width of a window is 60 and the available width is 170
