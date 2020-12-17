@@ -78,6 +78,7 @@
 
     (define-key map (kbd "q") 'fill-paragraph)
 
+    (define-key map (kbd "|") 'mc/edit-lines)
     map))
 
 ;; x-map

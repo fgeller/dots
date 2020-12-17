@@ -1,6 +1,8 @@
 (install 'mark)
 (install 'visual-regexp)
 
+(install 'multiple-cursors)
+
 (defun increment-integer-at-point (&optional increment)
   (interactive "p*")
   (update-integer-at-point (lambda (num) (+ num (if increment increment 1)))))
