@@ -81,7 +81,12 @@
   (define-key map (kbd "RET") 'minibuffer-force-complete-and-exit)
   (define-key map (kbd "<return>") 'minibuffer-force-complete-and-exit)
   (define-key map (kbd "C-n") 'icomplete-forward-completions)
-  (define-key map (kbd "C-p") 'icomplete-backward-completions))
+  (define-key map (kbd "C-p") 'icomplete-backward-completions)
+  (define-key map (kbd "C-.") 'fg/zap-back-till-/))
+
+(defun fg/zap-back-till-/ ()
+  (interactive)
+  (zap-up-to-char -1 ?/))
 
 (defun switch-to-minibuffer ()
   (interactive)
