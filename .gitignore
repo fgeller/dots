@@ -14,3 +14,4 @@
 /.emacs.d/transient/
 /.emacs.d/.cache/
 /.emacs.d/places
+/.emacs.d/.dap-breakpoints
