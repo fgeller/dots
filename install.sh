@@ -15,5 +15,4 @@ do
     ensure_link $f
 done
 
-cp -v $target/e $HOME/bin/
-chmod +x $HOME/bin/e
+/usr/bin/tic -x -o ~/.terminfo xterm-24bit.terminfo
