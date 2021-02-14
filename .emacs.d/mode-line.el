@@ -48,11 +48,13 @@
   (let ((faces-to-toggle '(header-line mode-line fringe)))
     (cond (modal-mode
            (mapcar (lambda (face)
-                     (set-face-background face "#f1f1f1"))
+                     (set-face-background face "#1565c0")
+                     (set-face-foreground face "white"))
                    faces-to-toggle))
           (t
            (mapcar (lambda (face)
-                     (set-face-background face "#FFD54F"))
+                     (set-face-background face "#FFD54F")
+                     (set-face-foreground face "black"))
                    faces-to-toggle)))))
 
 (add-hook 'modal-mode-hook 'modal-mode-visual-toggle)
