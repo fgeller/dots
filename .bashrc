@@ -31,7 +31,7 @@ export PATH="~/.node_modules/bin:$PATH"
 
 export CDPATH=".:~:~/src/github.com:~/src/github.com/fgeller:~/src/github.com/fgeller/dots"
 
-export TERM=xterm
+export TERM=xterm-24bit
 export EDITOR="emacsclient -nw -a /usr/bin/nano"
 
 export npm_config_prefix=~/.node_modules
@@ -44,7 +44,6 @@ if [[ 'Darwin' == `uname` ]]
 then
     GPG_AGENT=$(which gpg-agent)
     GPG_TTY=`tty`
-    export TERM=xterm-24bit
     export GPG_TTY
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/openjdk/bin:$PATH
