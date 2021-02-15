@@ -69,16 +69,6 @@ fi
 export SSH_AUTH_SOCK=~/.gnupg/S.gpg-agent.ssh   ## needed to cache ssh pass
 
 #
-# FZF
-#
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-export FZF_DEFAULT_OPTS="--height=20 --color=bw"
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND='fd -E Library -E pkg -E Applications -E .git -E orgs -E .cache -E .npm -H -t d --full-path $HOME'
-
-
-#
 # Aliases
 #
 alias ..='cd .. && pwd'
@@ -291,18 +281,5 @@ function up() {
         brew update && brew upgrade && brew cleanup
     else
         sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
-    fi
-}
-
-vterm_printf(){
-    if [ -n "$TMUX" ]; then
-        # Tell tmux to pass the escape sequences through
-        # (Source: http://permalink.gmane.org/gmane.comp.terminal-emulators.tmux.user/1324)
-        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-    elif [ "${TERM%%-*}" = "screen" ]; then
-        # GNU screen (screen, screen-256color, screen-256color-bce)
-        printf "\eP\e]%s\007\e\\" "$1"
-    else
-        printf "\e]%s\e\\" "$1"
     fi
 }
