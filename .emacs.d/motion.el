@@ -1,3 +1,11 @@
+(defun fg/save-point ()
+  (interactive)
+  (point-to-register ?p))
+
+(defun fg/restore-point ()
+  (interactive)
+  (jump-to-register ?p))
+
 (install 'avy)
 (setq avy-all-windows nil
       avy-keys '(?a ?s ?h ?g ?y ?t ?n ?e ?o ?i ?' ?u ?p ?d ?r ?c ?k)
