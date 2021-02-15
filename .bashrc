@@ -307,3 +307,12 @@ vterm_printf(){
         printf "\e]%s\e\\" "$1"
     fi
 }
+
+function cats () {
+  echo "![cat](https://$(curl -s https://imgur.com/r/catsstandingup \
+    | grep -Eo 'i\.imgur\.com/[a-zA-Z0-9]{5,10}\.jpg' \
+    | sed 's/b.jpg/.jpg/' \
+    | sort --random-sort \
+    | head -n1 \
+  ))"
+}
