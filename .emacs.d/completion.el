@@ -2,8 +2,9 @@
 
 (setq
  company-backends '(company-capf company-files company-elisp company-dabbrev)
+ company-minimum-prefix-length 1
  company-idle-delay .1
- company-tooltip-idle-delay .1
+ company-tooltip-idle-delay 1.0
  company-tooltip-align-annotations t)
 
 (after 'company
