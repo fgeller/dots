@@ -6,6 +6,7 @@
 
   (lsp-deferred)
 
+  (lsp-diagnostics-modeline-mode)
   (subword-mode 1)
 
   (setq tab-width 4)
