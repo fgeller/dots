@@ -49,12 +49,13 @@
 (custom-theme-set-faces
  'ruhe
  `(default ((t (:foreground "#000000" :background "#ffffff"))))
+ `(fixed-pitch ((t (:inherit default))))
  `(underline ((t (:inherit default :underline nil))))
  `(border ((t (:background "#b4b7b4"))))
  `(cursor ((t (:foreground "#ffffff" :background "#F44336"))))
  `(fringe ((t (:foreground "#373b41" :background "#ffffff"))))
  `(internal-border ((t (:background "#ffffff"))))
- `(highlight ((t (:background "#FFC107" :distant-foreground "#000000"))))
+ `(highlight ((t (:background "#ffeeb5" :distant-foreground "#000000"))))
  `(hi-yellow ((t (:inherit highlight))))
  `(match ((t (:inherit highlight))))
  `(pulse-highlight ((t (:background "#DCEDC8"))))
@@ -63,7 +64,7 @@
  `(minibuffer-prompt ((t (:foreground "#eceff1" :background "#2196f3"))))
  `(tooltip ((t (:foreground "#eceff1" :background "#78909c"))))
  
- `(mode-line ((t (:background "#f1f1f1" :foreground "#000000"))))
+ `(mode-line ((t (:background "#1565c0" :foreground "#ffffff"))))
  `(mode-line-highlight ((t (:inherit mode-line))))
  `(mode-line-buffer-id ((t (:inherit mode-line-highlight))))
  `(mode-line-emphasis ((t (:inherit mode-line-highlight))))

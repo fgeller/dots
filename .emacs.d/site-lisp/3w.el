@@ -9,7 +9,16 @@
 (defconst 3w-side-buffer-store nil
   "Can hold a side-window's buffer")
 
-(defconst 3w-side-window-rx (rx (or "*Backtrace*" "*Compilation*" "*Faces*" "*Help*" "*Messages*" "*Occur*" "*Warnings*" "*ag search"))
+(defconst 3w-side-window-rx (rx (or
+				 "*Backtrace*"
+				 "*Compilation*"
+				 "*Faces*"
+				 "*Help*"
+				 "*Messages*"
+				 "*Occur*"
+				 "*Warnings*"
+				 "*ag search"
+				 ))
   "Regex that matches buffer names that should be displayed in a side window")
 
 (defun 3w-get-side-window-buffer ()
@@ -22,7 +31,8 @@
   (let* ((sb (or buf (3w-get-side-window-buffer))))
     (when sb
       (setq 3w-side-buffer-store sb)
-      (message "3w: stored side window buffer %s" sb))))
+      ;; (message "3w: stored side window buffer %s" sb)
+      )))
 
 (defun 3w-side-window-name-p (w)
   (3w-side-buffer-name-p (window-buffer w)))
@@ -31,7 +41,7 @@
   (string-match-p 3w-side-window-rx (buffer-name b)))
 
 (defun 3w-is-column-split-p ()
-  (= (window-size) (1- (frame-total-lines))))
+  (> (window-size) (- (frame-total-lines) 5)))
 
 (defun 3w-should-split-into-columns-p (count)
   "Indicates whether there is enough space for 3w to split windows into columns"
@@ -84,7 +94,7 @@
 	   (3w-split-2-with-size-from-1 size)))))
 
 (defun 3w-split-3-from-1 (&optional next-buffer next-next-buffer)
-  (message "-from-1: nb=%s nnb=%s" next-buffer next-next-buffer)
+  ;; (message "-from-1: nb=%s nnb=%s" next-buffer next-next-buffer)
   (3w-store-side-buffer)
   (delete-other-windows)
   (let* ((nb (or next-buffer (other-buffer)))
@@ -133,10 +143,12 @@
 
 (defun 3w-display-as-side-window (buf &optional alist)
   "Display buffer in right or bottom window, split single window if necessary"
-  (message "3w-display-as-side-window buf=%s" buf)
-  (when (= 1 (count-windows)) (3w-split-2-1))
+  ;; (message "3w-display-as-side-window buf=%s" buf)
+  (when (= 1 (count-windows))
+    (3w-split-2-1))
   (let* ((is-cs (3w-is-column-split-p))
 	 (sw (car (window-at-side-list nil (if is-cs 'right 'bottom)))))
+    ;; (message "3w-display-as-side-window: is-cs=%s sw=%s buf=%s" is-cs sw buf)
     (set-window-buffer sw buf)))
 
 (defun 3w-toggle-side-window ()
@@ -147,7 +159,8 @@
     (cond ((= 1 cw)
 	   (if 3w-side-buffer-store
 	       (3w-display-as-side-window 3w-side-buffer-store)
-	     (message "3w: no side window buffer in store")))
+	     ;; (message "3w: no side window buffer in store")
+	     ))
 
 	  ((3w-side-window-name-p sw)
 	   (3w-store-side-buffer (window-buffer sw))
