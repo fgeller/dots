@@ -68,4 +68,4 @@
 [magit]
 	hideCampaign = true
 [gpg]
-	program = /usr/local/bin/gpg
+	program = /bin/gpg
