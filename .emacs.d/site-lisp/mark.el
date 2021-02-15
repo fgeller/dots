@@ -1,12 +1,12 @@
 (defconst region-specifiers
-  '((char . ?d)
-    (line . ?y)
-    (line-rest . ?g)
-    (word . ?h)
-    (symbol . ?t)
-    (whitespace . ?r)
-    (inside-pair . ?s)
-    (with-pair . ?a))
+  '((char . ?c)
+    (line . ?l)
+    (line-rest . ?L)
+    (word . ?w)
+    (symbol . ?s)
+    (whitespace . ? )
+    (inside-pair . ?p)
+    (with-pair . ?P))
   "Mapping from region type to identifier key")
 
 (defconst region-specifier-help "
@@ -15,14 +15,14 @@ The following region specifiers are availabe:
 key    region
 ---    ------
 
-  d    char
-  y    line
-  g    line rest
-  h    word
-  t    symbol
-  r    whitespace
-  s    inside-pair
-  a    with-pair
+  c    char
+  l    line
+  L    line rest
+  w    word
+  s    symbol
+       whitespace
+  p    inside-pair
+  P    with-pair
 
 ")
 
