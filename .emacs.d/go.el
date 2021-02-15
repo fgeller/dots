@@ -21,9 +21,7 @@
   (define-key go-mode-map (kbd "C-c C-e") 'go-play)
 
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t)
-
-  (add-hook 'after-save-hook #'go-after-save-run-tests))
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
 
 (add-hook 'go-mode-hook 'golang-customizations)
 
@@ -37,10 +35,6 @@
   (let ((buf (get-buffer (go-tests-buffer-name))))
     (when buf (with-current-buffer buf (toggle-truncate-lines)))))
 
-(defun go-after-save-run-tests ()
-  (interactive)
-  (let ((buf (get-buffer (go-tests-buffer-name))))
-    (when buf (with-current-buffer buf (recompile)))))
 
 (defun go-run-this-test ()
   (interactive)
