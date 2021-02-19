@@ -48,8 +48,8 @@
 
 (require 'package)
 (setq package-quickstart t)
-(setq package-archives '(("melpa" . "http://melpa.org/packages/")
-			 ("gnu" . "http://elpa.gnu.org/packages/")))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			 ("gnu" . "https://elpa.gnu.org/packages/")))
 
 (defun install (package &optional req)
   (unless (or (package-installed-p package)
