@@ -66,7 +66,14 @@ fi
 # brew install bash-completion@2
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 [ -f ${GPG_AGENT} ] && eval "$(gpg-agent -q --daemon --log-file=~/.gnupg/gpg.log 2>/dev/null)"
-export SSH_AUTH_SOCK=~/.gnupg/S.gpg-agent.ssh   ## needed to cache ssh pass
+# export SSH_AUTH_SOCK=~/.gnupg/S.gpg-agent.ssh   ## needed to cache ssh pass
+
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+fi
+if [[ ! "$SSH_AUTH_SOCK" ]]; then
+    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+fi
 
 #
 # Aliases
