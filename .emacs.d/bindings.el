@@ -112,6 +112,7 @@
     (define-key map (kbd "tl") 'toggle-truncate-lines)
     (define-key map (kbd "tw") 'leerzeichen-mode)
     (define-key map (kbd "tr") 'rainbow-mode)
+    (define-key map (kbd "tu") 'markdown-toggle-url-hiding)
 
     (define-key map (kbd "ve") 'git-gutter:next-hunk)
     (define-key map (kbd "vm") 'git-messenger:popup-message)
