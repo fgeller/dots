@@ -1,6 +1,6 @@
 (install 'lsp-mode)
 (install 'lsp-ui)
-(install 'company-lsp)
+;; (install 'company-lsp)
 
 (setq
  lsp-session-file "~/.emacs.d/transient/lsp-session-v1"

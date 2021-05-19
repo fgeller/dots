@@ -1,7 +1,7 @@
-(install 'company 'require)
+;;(install 'company 'require)
 
 (setq
- company-backends '(company-capf company-files company-elisp company-dabbrev)
+ ;; company-backends '(company-capf company-files company-elisp company-dabbrev)
  company-minimum-prefix-length 1
  company-idle-delay .7
  company-tooltip-idle-delay 1.0

@@ -45,7 +45,7 @@
 
 (defun modal-mode-visual-toggle ()
   (interactive)
-  (let ((faces-to-toggle '(header-line mode-line fringe)))
+  (let ((faces-to-toggle '(header-line mode-line)))
     (cond (modal-mode
            (mapcar (lambda (face)
                      (set-face-background face "#1565c0")

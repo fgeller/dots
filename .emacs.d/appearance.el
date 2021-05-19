@@ -13,7 +13,7 @@
  transient-mark-mode t
  show-trailing-whitespace nil)
 
-(load-custom "~/.emacs.d/mode-line.el")
+;; (load-custom "~/.emacs.d/mode-line.el")
 (load-custom "~/.emacs.d/windows.el")
 
 (load-theme 'ruhe t)
@@ -27,8 +27,7 @@
 
 (install 'highlight-thing)
 (global-highlight-thing-mode +1)
-(setq highlight-thing-prefer-active-region t
-      highlight-thing-delay-seconds 0.75)
+(setq highlight-thing-prefer-active-region t)
 
 (defun fg/add-todo-keyword ()
   (font-lock-add-keywords nil '(("\\(TODO\\|FIXME\\)" 1 font-lock-warning-face prepend))))
@@ -41,9 +40,9 @@
 
 (setq default-frame-alist
       (append (list
-	       '(font . "Roboto Mono-12:weight=book")
-	       '(left-fringe . 0)
-	       '(right-fringe . 0)
+	       '(font . "Roboto Mono-14:weight=book")
+	       '(left-fringe . 16)
+	       '(right-fringe . 16)
                '(vertical-scroll-bars . nil)
                '(tool-bar-lines . 0)
 	       '(internal-border-width . 16))))

@@ -1,6 +1,5 @@
 (install 'mark)
 (install 'visual-regexp)
-
 (install 'multiple-cursors)
 
 (defun increment-integer-at-point (&optional increment)
@@ -52,7 +51,7 @@
 
 (defun fg/open-line-above ()
   (interactive)
-  (end-of-line 0) ;; ie -1 🤷‍♂️
+  (end-of-line 0) ;; ie -1 🤷‍
   (open-line 1)
   (forward-line 1)
   (indent-for-tab-command)
