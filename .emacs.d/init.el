@@ -92,6 +92,7 @@
 
 (load-custom "~/.emacs.d/appearance.el")
 (load-custom "~/.emacs.d/windows.el")
+(load-custom "~/.emacs.d/completion.el")
 (load-custom "~/.emacs.d/evil.el")
 (load-custom "~/.emacs.d/vc.el")
 (load-custom "~/.emacs.d/flycheck.el")
