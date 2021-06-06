@@ -107,19 +107,6 @@
  
  `(icomplete-first-match ((t (:foreground "#000000" :background "#FFD54F"))))
 
- `(company-tooltip ((t (:inherit tooltip))))
- `(company-scrollbar-bg ((t (:inherit tooltip))))
- `(company-scrollbar-fg ((t (:background "#2196f3"))))
- `(company-tooltip-annotation ((t (:foreground "#cc342b"))))
- `(company-tooltip-common ((t (:foreground "#000000" :inherit highlight-thing))))
- `(company-tooltip-selection ((t (:background "#2196f3"))))
- `(company-tooltip-search ((t (:inherit match))))
- `(company-tooltip-search-selection ((t (:inherit match))))
- `(company-preview-common ((t (:inherit secondary-selection))))
- `(company-preview ((t (:foreground "#969896"))))
- `(company-preview-search ((t (:inherit match))))
- `(company-echo-common ((t (:inherit secondary-selection))))
-
  `(font-lock-builtin-face ((t (:inherit default))))
  `(font-lock-comment-delimiter-face ((t (:foreground "#C5CAE9" :background "#f1f1f1"))))
  `(font-lock-comment-face ((t (:foreground nil :background "#f1f1f1" :underline nil))))
