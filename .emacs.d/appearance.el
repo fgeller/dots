@@ -13,9 +13,6 @@
  transient-mark-mode t
  show-trailing-whitespace nil)
 
-;; (load-custom "~/.emacs.d/mode-line.el")
-(load-custom "~/.emacs.d/windows.el")
-
 (load-theme 'ruhe t)
 
 (show-paren-mode +1)
