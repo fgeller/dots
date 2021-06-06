@@ -1,68 +1,98 @@
+(setq evil-want-keybinding nil) ;; prefer evil-collection
 (install 'evil)
 (evil-mode 1)
+
 (require 'evil-workman-mode)
 (evil-workman-global-mode 1)
 
-;; tough to move from motion yneo back to home position
-;; text objects and pretty cool
-;; cursor handling f vs t needs some getting used to
-;; TODO evil-surround
-
-(defconst fg/leader-keymap (make-keymap))
-(define-key fg/leader-keymap (kbd "xf") 'find-file)
-(define-key fg/leader-keymap (kbd "xx") 'execute-extended-command)
-(define-key fg/leader-keymap (kbd "xs") 'save-buffer)
-(define-key fg/leader-keymap (kbd "xb") 'switch-to-buffer)
-(define-key fg/leader-keymap (kbd "SPC") 'fg/jump)
-
-(evil-define-key '(visual normal) 'global (kbd "SPC") fg/leader-keymap)
-
- ;; o -> l  (open line below/above)
- ;; j -> n
- ;; k -> e
- ;; h -> y
+(install 'evil-collection)
+(evil-collection-init)
 
 (install 'evil-surround)
 (global-evil-surround-mode 1)
 
-;; JUMP
+(install 'company)
+(setq company-minimum-prefix-length 1
+      company-idle-delay 0.0)
+(global-company-mode)
 
-(defun fg/buffer-name-candidates ()
-  (mapcar (lambda (bn) (cons bn 'switch-to-buffer))
-	  (cl-remove-if (lambda (bn) (string-match " \\*.+\\*"  bn)) ; " *Minibuf..." or " *Echo ..."
-			(mapcar 'buffer-name (buffer-list)))))
+(install 'consult)
+(recentf-mode)
+(setq consult-project-root-function (lambda () (locate-dominating-file "." ".git")))
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
 
-(defun fg/git-ls-files-candidates ()
-  (let ((grt (locate-dominating-file default-directory ".git")))
-    (when grt
-      (let* ((default-directory grt)
-	     (cmd (format "git ls-files --full-name"))
-	     (files (split-string (shell-command-to-string cmd) "\n" t))
-	     (action `(lambda (f) (find-file (file-name f ,grt)))))
-	(mapcar (lambda (f) (cons f action)) files)))))
+(install 'vertico)
+(install 'orderless)
+(vertico-mode)
+(setq completion-styles '(orderless)
+      completion-category-defaults nil
+      completion-category-overrides '((file (styles . (partial-completion)))))
 
-(defun fg/recentf-candidates ()
-  (recentf-mode)
-  (mapcar (lambda (f) (cons f 'find-file)) recentf-list))
-
-(defun fg/jump-candidates ()
-  (recentf-mode)
-  (let* ((other-buf (list (cons (buffer-name (other-buffer)) 'switch-to-buffer)))
-	 (buffers (fg/buffer-name-candidates))
-	 (git-files (fg/git-ls-files-candidates))
-	 (recentfs (fg/recentf-candidates)))
-    (seq-uniq (seq-concatenate 'list
-			       other-buf
-			       buffers
-			       recentfs
-			       git-files
-			       ))))
-
-(defun fg/jump ()
+(defun fg/zap-back-till-/ ()
   (interactive)
-  (let* ((candidates (fg/jump-candidates))
-	 (default (car (car candidates)))
-	 (target (completing-read (format "jump (%s): " default) candidates nil nil nil nil (car (car candidates))))
-	 (action (cdr (assoc target candidates))))
-    (funcall action target)))
+  (zap-up-to-char -1 ?/))
+
+(define-key minibuffer-local-map (kbd "C-.") 'fg/zap-back-till-/)
+
+(install 'deadgrep)
+
+(setq-default mode-line-format
+	      '("%e"
+		mode-line-front-space
+		mode-line-mule-info
+		mode-line-client
+		mode-line-modified
+		mode-line-remote
+		mode-line-frame-identification
+		mode-line-buffer-identification
+		"   "
+		mode-line-position
+		evil-mode-line-tag
+		(vc-mode vc-mode)
+		"  "
+		;;mode-line-modes
+		mode-line-misc-info
+		mode-line-end-spaces))
+
+(defun fg/insert-state-mode-line ()
+  (set-face-background 'mode-line "#FFD54F")
+  (set-face-foreground 'mode-line "black"))
+
+(defun fg/normal-state-mode-line ()
+  (set-face-background 'mode-line "#1565c0")
+  (set-face-foreground 'mode-line "white"))
+
+(defun fg/visual-state-mode-line ()
+  (set-face-background 'mode-line "#00e676")
+  (set-face-foreground 'mode-line "black"))
+
+(add-hook 'evil-normal-state-entry-hook 'fg/normal-state-mode-line)
+(add-hook 'evil-insert-state-entry-hook 'fg/insert-state-mode-line)
+(add-hook 'evil-visual-state-entry-hook 'fg/visual-state-mode-line)
+
+
+(setq enable-recursive-minibuffers t) 
+
+(defconst fg/leader-keymap (make-keymap))
+
+(define-key fg/leader-keymap (kbd "SPC") 'consult-buffer)
+(define-key fg/leader-keymap (kbd "TAB") 'indent-for-tab-command)
+(define-key fg/leader-keymap (kbd "cC") 'compile)
+(define-key fg/leader-keymap (kbd "cc") 'recompile)  
+(define-key fg/leader-keymap (kbd "g") 'consult-ripgrep)
+(define-key fg/leader-keymap (kbd "G") 'deadgrep)
+(define-key fg/leader-keymap (kbd "m") 'magit-status)
+(define-key fg/leader-keymap (kbd "p") 'consult-yank-from-kill-ring)
+(define-key fg/leader-keymap (kbd "q") 'query-replace)
+(define-key fg/leader-keymap (kbd "Q") 'query-replace-regexp)
+(define-key fg/leader-keymap (kbd "s") 'consult-line)
+(define-key fg/leader-keymap (kbd "w") 3w-map) 
+(define-key fg/leader-keymap (kbd "xb") 'switch-to-buffer)
+(define-key fg/leader-keymap (kbd "xf") 'find-file)
+(define-key fg/leader-keymap (kbd "xs") 'save-buffer)
+(define-key fg/leader-keymap (kbd "xx") 'execute-extended-command)
+
+(setq evil-lookup-func 'lsp-describe-thing-at-point)
+(evil-define-key '(visual normal) 'global (kbd "SPC") fg/leader-keymap)
 

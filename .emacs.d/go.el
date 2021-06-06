@@ -20,6 +20,10 @@
   (define-key go-mode-map (kbd "C-c C-n") 'go-goto-next-error)
   (define-key go-mode-map (kbd "C-c C-p") 'go-goto-previous-error)
   (define-key go-mode-map (kbd "C-c C-e") 'go-play)
+  
+  (evil-collection-define-key 'normal 'go-mode-map
+    "gd" 'xref-find-definitions
+    (kbd "C-t") 'xref-pop-marker-stack)
 
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
