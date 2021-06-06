@@ -11,9 +11,7 @@
 (install 'evil-surround)
 (global-evil-surround-mode 1)
 
-(install 'deadgrep)
-
-defun fg/insert-state-mode-line ()
+(defun fg/insert-state-mode-line ()
   (set-face-background 'mode-line "#FFD54F")
   (set-face-foreground 'mode-line "black"))
 
