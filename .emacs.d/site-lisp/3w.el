@@ -176,6 +176,25 @@
 	   (message "3w: unexpected case for 3w-toggle-side-window store=%s sw=%s cw=%s"
 		    3w-side-buffer-store sw cw)))))
 
+(defconst 3w-map (make-keymap) "Keymap to bind to a prefix to conveniently access 3w's and built-in functions")
+
+(define-key 3w-map (kbd "1") '3w-split-1)
+(define-key 3w-map (kbd "2") '3w-split-2)
+(define-key 3w-map (kbd "3") '3w-split-3)
+(define-key 3w-map (kbd "4") '3w-split-2-1)
+(define-key 3w-map (kbd "0") 'delete-window)
+(define-key 3w-map (kbd "d") 'delete-window)
+(define-key 3w-map (kbd "b") 'balance-windows)
+(define-key 3w-map (kbd "a") '3w-jump-1)
+(define-key 3w-map (kbd "s") '3w-jump-2)
+(define-key 3w-map (kbd "h") '3w-jump-3)
+(define-key 3w-map (kbd "t") '3w-toggle-side-window)
+(define-key 3w-map (kbd "o") 'other-window)
+
+;;
+;; Tests
+;;
+
 (ert-deftest 3w-1->2c->1 ()
   (3w-test-fixture
    (lambda ()
