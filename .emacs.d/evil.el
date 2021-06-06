@@ -8,6 +8,8 @@
 (install 'evil-collection)
 (evil-collection-init)
 
+(evil-define-key 'normal magit-mode-map (kbd "SPC") fg/leader-keymap)
+
 (install 'evil-surround)
 (global-evil-surround-mode 1)
 
