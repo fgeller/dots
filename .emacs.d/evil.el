@@ -8,7 +8,10 @@
 (install 'evil-collection)
 (evil-collection-init)
 
-(evil-define-key 'normal magit-mode-map (kbd "SPC") fg/leader-keymap)
+(dolist (map (list magit-mode-map
+		   compilation-mode-map
+		   help-mode-map))
+  (evil-define-key 'normal map (kbd "SPC") fg/leader-keymap))
 
 (install 'evil-surround)
 (global-evil-surround-mode 1)
@@ -29,8 +32,13 @@
 (add-hook 'evil-insert-state-entry-hook 'fg/insert-state-mode-line)
 (add-hook 'evil-visual-state-entry-hook 'fg/visual-state-mode-line)
 
-(defconst fg/leader-keymap (make-keymap))
+(defconst fg/toggle-keymap (make-keymap))
+(let ((map fg/toggle-keymap))
+  (define-key map (kbd "l") 'toggle-truncate-lines)
+  (define-key map (kbd "w") 'leerzeichen-mode)
+  (define-key map (kbd "d") 'toggle-debug-on-error))
 
+(defconst fg/leader-keymap (make-keymap))
 (let ((map fg/leader-keymap))
   (define-key map (kbd "SPC") 'consult-buffer)
   (define-key map (kbd "TAB") 'indent-for-tab-command)
@@ -43,6 +51,7 @@
   (define-key map (kbd "q") 'query-replace)
   (define-key map (kbd "Q") 'query-replace-regexp)
   (define-key map (kbd "s") 'consult-line)
+  (define-key map (kbd "t") fg/toggle-keymap)
   (define-key map (kbd "w") 3w-map) 
   (define-key map (kbd "xb") 'switch-to-buffer)
   (define-key map (kbd "xf") 'find-file)
