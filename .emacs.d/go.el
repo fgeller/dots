@@ -43,18 +43,18 @@
 
 (defun go-run-this-test ()
   (interactive)
-  (go-run-tests (format "go test -i && go test -v -run %s"
+  (go-run-tests (format "go test -v -run %s"
                         (save-excursion
                           (re-search-backward "func \\(Test.+\\)(" (point-min))
                           (match-string 1)))))
 
 (defun go-build-this ()
   (interactive)
-  (go-run-tests (format "go build -i .")))
+  (go-run-tests (format "go build .")))
 
 (defun go-run-all-tests ()
   (interactive)
-  (go-run-tests "go test -i && go test -v"))
+  (go-run-tests "go test -v"))
 
 (defun go-run-tests (cmd)
   (let* ((dir (file-name-nondirectory (directory-file-name default-directory)))
