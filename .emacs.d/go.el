@@ -11,16 +11,6 @@
 
   (setq tab-width 4)
 
-  (define-key go-mode-map (kbd "C-c C-c") 'go-run-all-tests)
-  (define-key go-mode-map (kbd "C-c b") 'go-make-build)
-  (define-key go-mode-map (kbd "C-c C-m") 'go-run-this-test)
-  (define-key go-mode-map (kbd "C-c C-v") 'go-build-this)
-  (define-key go-mode-map (kbd "C-c C-l") 'go-tests-toggle-truncate-lines)
-  (define-key go-mode-map (kbd "C-c C-t") 'go-goto-first-error)
-  (define-key go-mode-map (kbd "C-c C-n") 'go-goto-next-error)
-  (define-key go-mode-map (kbd "C-c C-p") 'go-goto-previous-error)
-  (define-key go-mode-map (kbd "C-c C-e") 'go-play)
-  
   (evil-collection-define-key 'normal 'go-mode-map
     "gd" 'xref-find-definitions
     (kbd "C-t") 'xref-pop-marker-stack)
