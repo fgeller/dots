@@ -49,6 +49,17 @@
     (end-of-line)
     (insert "\n")))
 
+(defun fg/duplicate-line ()
+  (interactive)
+  (save-excursion
+    (beginning-of-line)
+    (push-mark (point))
+    (end-of-line)
+    (kill-ring-save (point) (mark))
+    (open-line 1)
+    (forward-char 1)
+    (yank)))
+
 (defconst fg/elisp-eval-keymap (make-keymap))
 (define-key fg/elisp-eval-keymap (kbd "r") 'eval-region)
 (define-key fg/elisp-eval-keymap (kbd "b") 'eval-buffer)
@@ -69,6 +80,7 @@
   (define-key map (kbd "cC") 'compile)
   (define-key map (kbd "cc") 'recompile)  
   (define-key map (kbd "d") fg/go-keymap)
+  (define-key map (kbd "D") 'fg/duplicate-line)
   (define-key map (kbd "e") fg/elisp-eval-keymap)
   (define-key map (kbd "g") 'consult-ripgrep)
   (define-key map (kbd "G") 'deadgrep)
