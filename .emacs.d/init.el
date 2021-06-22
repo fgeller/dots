@@ -13,9 +13,10 @@
 
 (setq
  init-file-name-handler-alist file-name-handler-alist
- gc-cons-threshold (* 512 1024 1024)
  read-process-output-max (* 10 1024 1024)
  file-name-handler-alist nil)
+
+(setq garbage-collection-messages t)
 
 (defalias 'after 'with-eval-after-load)
 (defalias 'file-name 'expand-file-name)
