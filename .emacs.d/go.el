@@ -33,7 +33,7 @@
 
 (defun fg/go-run-this-test ()
   (interactive)
-  (fg/go-run (format "go test -v -run %s"
+  (fg/go-run (format "go test -v -vet=all -run %s"
                         (save-excursion
                           (re-search-backward "func \\(Test.+\\)(" (point-min))
                           (match-string 1)))))
@@ -48,7 +48,7 @@
 
 (defun fg/go-run-all-tests ()
   (interactive)
-  (fg/go-run "go test -v"))
+  (fg/go-run "go test -v -vet=all"))
 
 (defun fg/go-run (cmd)
   (let* ((dir (file-name-nondirectory (directory-file-name default-directory)))
