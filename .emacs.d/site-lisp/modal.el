@@ -16,7 +16,11 @@
 
 (defun modal-mode-deactivate ()
   (interactive)
-  (modal-mode -1))
+  (global-modal-mode -1))
+
+(defun modal-mode-activate ()
+  (interactive)
+  (global-modal-mode 1))
 
 ;;;###autoload
 (define-minor-mode modal-mode
