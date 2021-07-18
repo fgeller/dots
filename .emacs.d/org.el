@@ -1,5 +1,6 @@
 (setq org-startup-folded 'showall)
 
+(autoload 'org-store-link "ol" "Org Mode." t)
 (setq org-log-done 'time)
 
 (setq

@@ -99,6 +99,7 @@
 (load-custom "~/.emacs.d/flycheck.el")
 (load-custom "~/.emacs.d/lsp.el")
 (load-custom "~/.emacs.d/go.el")
+(load-custom "~/.emacs.d/org.el")
 
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
