@@ -1,3 +1,18 @@
+(defun bol-modal-mode-deactivate ()
+  (interactive)
+  (beginning-of-line)
+  (modal-mode-deactivate))
+
+(defun after-indent-modal-mode-deactivate ()
+  (interactive)
+  (back-to-indentation)
+  (modal-mode-deactivate))
+
+(defun eol-modal-mode-deactivate ()
+  (interactive)
+  (end-of-line)
+  (modal-mode-deactivate))
+
 (defun fg/save-point ()
   (interactive)
   (point-to-register ?p))

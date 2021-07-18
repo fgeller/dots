@@ -1,9 +1,11 @@
 (defconst region-specifiers
   '((char . ?c)
     (line . ?l)
-    (line-rest . ?L)
+    (line-rest . ?$)
     (word . ?w)
     (symbol . ?s)
+    (till . ?t)
+    (till-backwards . ?T)
     (whitespace . ? )
     (inside-pair . ?p)
     (with-pair . ?P))
@@ -17,12 +19,14 @@ key    region
 
   c    char
   l    line
-  L    line rest
+  $    line rest
   w    word
   s    symbol
        whitespace
   p    inside-pair
   P    with-pair
+  t    till
+  T    till-backwards
 
 ")
 
