@@ -16,8 +16,6 @@
  read-process-output-max (* 10 1024 1024)
  file-name-handler-alist nil)
 
-(setq garbage-collection-messages t)
-
 (defalias 'after 'with-eval-after-load)
 (defalias 'file-name 'expand-file-name)
 (defalias 'yes-or-no-p 'y-or-n-p)
