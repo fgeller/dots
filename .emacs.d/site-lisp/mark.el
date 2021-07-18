@@ -48,9 +48,19 @@ key    region
 	    ((= nk (region-specifier 'inside-pair)) (kill-inside-pair))
 	    ((= nk (region-specifier 'with-pair)) (kill-with-pair))
 	    ((= nk (region-specifier 'whitespace)) (kill-whitespace))
+	    ((= nk (region-specifier 'till)) (kill-till))
+	    ((= nk (region-specifier 'till-backwards)) (kill-till-backwards))
 	    ((/= nk help-char) (push-mark (point))
 	     (call-interactively (key-binding (kbd (string nk))))
 	     (kill-region (point) (mark))))))))
+
+(defun kill-till ()
+  (mark-till)
+  (kill-region (point) (mark)))
+
+(defun kill-till-backwards ()
+  (mark-till-backwards)
+  (kill-region (point) (mark)))
 
 (defun kill-char ()
   (mark-char)
@@ -99,6 +109,8 @@ key    region
        ((= nk (region-specifier 'inside-pair)) (mark-inside-pair))
        ((= nk (region-specifier 'with-pair)) (mark-with-pair))
        ((= nk (region-specifier 'whitespace)) (mark-whitespace))
+       ((= nk (region-specifier 'till)) (mark-till))
+       ((= nk (region-specifier 'till-backwards)) (mark-till-backwards))
        (t (mark-word))))) ; defaults to word
   (let ((rp (read-string "Replace with: ")))
     (delete-region (point) (mark))
@@ -118,6 +130,8 @@ key    region
        ((= nk (region-specifier 'inside-pair)) (mark-inside-pair))
        ((= nk (region-specifier 'with-pair)) (mark-with-pair))
        ((= nk (region-specifier 'whitespace)) (mark-whitespace))
+       ((= nk (region-specifier 'till)) (mark-till))
+       ((= nk (region-specifier 'till-backwards)) (mark-till-backwards))
        (t (set-mark (point))
 	  (pass-events (string nk)))))))
 
@@ -134,6 +148,19 @@ key    region
   (unless (looking-at-symbol-p) (beginning-of-symbol))
   (set-mark (point))
   (forward-symbol 1))
+
+(defun mark-till ()
+  (let* ((tc (read-char "Char: "))
+	 (cs (char-to-string tc)))
+    (set-mark (point))
+    (search-forward cs)
+    (backward-char)))
+
+(defun mark-till-backwards ()
+  (let* ((tc (read-char "Char: "))
+	 (cs (char-to-string tc)))
+    (set-mark (point))
+    (search-backward cs)))
 
 (defun mark-until-end-of-line ()
   (set-mark (point))
