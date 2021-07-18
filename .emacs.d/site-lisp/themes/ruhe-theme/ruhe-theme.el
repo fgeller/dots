@@ -104,6 +104,8 @@
  `(compilation-mode-line-fail ((t (:foreground "#f44336" :background nil))))
  `(compilation-mode-line-run ((t (:inherit success))))
  `(compilation-warning ((t (:inherit warning))))
+
+ `(consult-file ((t (:inherit nil))))
  
  `(icomplete-first-match ((t (:foreground "#000000" :background "#FFD54F"))))
 
