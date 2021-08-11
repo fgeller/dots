@@ -26,7 +26,7 @@
 	  (backward-char (+ (length number-string) offset)))
       (message "Can't identify number at point."))))
 
-(defun insert-literal ()
+(defun fg/insert-literal ()
   (interactive)
   (insert (read-string "Insert: ")))
 
@@ -46,7 +46,11 @@
   (end-of-line)
   (open-line 1)
   (forward-line 1)
-  (indent-for-tab-command)
+  (indent-for-tab-command))
+
+(defun fg/open-line-below-insert ()
+  (interactive)
+  (fg/open-line-below)
   (global-modal-mode -1))
 
 (defun fg/open-line-above ()
@@ -54,7 +58,11 @@
   (end-of-line 0) ;; ie -1 🤷‍
   (open-line 1)
   (forward-line 1)
-  (indent-for-tab-command)
+  (indent-for-tab-command))
+
+(defun fg/open-line-above-insert ()
+  (interactive)
+  (fg/open-line-above)
   (global-modal-mode -1))
 
 (defun fg/replace-char ()

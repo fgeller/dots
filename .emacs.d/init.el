@@ -14,6 +14,7 @@
 (setq
  init-file-name-handler-alist file-name-handler-alist
  read-process-output-max (* 10 1024 1024)
+ gc-cons-threshold (* 5 1024 1024)
  file-name-handler-alist nil)
 
 (defalias 'after 'with-eval-after-load)
@@ -97,8 +98,11 @@
 (load-custom "~/.emacs.d/bindings.el")
 (load-custom "~/.emacs.d/vc.el")
 (load-custom "~/.emacs.d/flycheck.el")
+(load-custom "~/.emacs.d/snippets.el")
 (load-custom "~/.emacs.d/lsp.el")
+(load-custom "~/.emacs.d/dap.el")
 (load-custom "~/.emacs.d/go.el")
+(load-custom "~/.emacs.d/emacs-lisp.el")
 (load-custom "~/.emacs.d/org.el")
 
 (global-auto-revert-mode 1)

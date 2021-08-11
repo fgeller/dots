@@ -1,3 +1,43 @@
+(defun fg/jump-to-char ()
+  (interactive)
+  (xref-push-marker-stack)
+  (avy-goto-char-timer))
+   
+(defun fg/beginning-of-buffer ()
+  (interactive)
+  (xref-push-marker-stack)
+  (beginning-of-buffer))
+
+(defun fg/end-of-buffer ()
+  (interactive)
+  (xref-push-marker-stack)
+  (end-of-buffer))
+
+(defun fg/consult-goto-line ()
+  (interactive)
+  (xref-push-marker-stack)
+  (consult-goto-line))
+
+(defun fg/consult-line ()
+  (interactive)
+  (xref-push-marker-stack)
+  (consult-line))
+
+(defun fg/grep ()
+  (interactive)
+  (xref-push-marker-stack)
+  (consult-git-grep))
+
+(defun fg/jump ()
+  (interactive)
+  (xref-push-marker-stack)
+  (consult-buffer))
+
+(defun fg/imenu ()
+  (interactive)
+  (xref-push-marker-stack)
+  (consult-imenu))
+
 (defun bol-modal-mode-deactivate ()
   (interactive)
   (beginning-of-line)
@@ -26,13 +66,15 @@
       avy-keys '(?a ?s ?h ?g ?y ?t ?n ?e ?o ?i ?' ?u ?p ?d ?r ?c ?k)
       avy-timeout-seconds 0.2)
 
-(defun scroll-down-half-page ()
+(defun fg/scroll-down-half-page ()
   (interactive)
+  (xref-push-marker-stack)
   (scroll-down-command (/ (window-height) 4))
   (pulse-momentary-highlight-one-line (point)))
 
-(defun scroll-up-half-page ()
+(defun fg/scroll-up-half-page ()
   (interactive)
+  (xref-push-marker-stack)
   (scroll-up-command (/ (window-height) 4))
   (pulse-momentary-highlight-one-line (point)))
 
@@ -58,8 +100,9 @@
   (while (not (looking-at-word-p))
     (left-char 1)))
 
-(defun move-to-next-symbol-occurrence ()
+(defun fg/move-to-next-symbol-occurrence ()
   (interactive)
+  (xref-push-marker-stack)
   (beginning-of-symbol)
   (forward-symbol 1)
   (let ((thing (thing-at-point 'symbol)))
@@ -70,8 +113,9 @@
     (forward-symbol 1)
     (push-mark (point))))
 
-(defun move-to-previous-symbol-occurrence ()
+(defun fg/move-to-previous-symbol-occurrence ()
   (interactive)
+  (xref-push-marker-stack)
   (beginning-of-symbol)
   (let ((thing (thing-at-point 'symbol)))
     (setq isearch-string thing)
@@ -80,8 +124,9 @@
       (forward-symbol 1)
       (push-mark (point)))))
 
-(defun move-to-next-word-occurrence ()
+(defun fg/move-to-next-word-occurrence ()
   (interactive)
+  (xref-push-marker-stack)
   (beginning-of-word)
   (forward-word)
   (let ((thing (thing-at-point 'word)))
@@ -92,8 +137,9 @@
     (forward-word)
     (push-mark (point))))
 
-(defun move-to-previous-word-occurrence ()
+(defun fg/move-to-previous-word-occurrence ()
   (interactive)
+  (xref-push-marker-stack)
   (beginning-of-word)
   (let ((thing (thing-at-point 'word)))
     (setq isearch-string thing)

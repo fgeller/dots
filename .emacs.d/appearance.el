@@ -42,4 +42,4 @@
 	       '(right-fringe . 16)
                '(vertical-scroll-bars . nil)
                '(tool-bar-lines . 0)
-	       '(internal-border-width . 16))))
+	       '(internal-border-width . 0))))

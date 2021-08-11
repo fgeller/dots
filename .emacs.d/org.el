@@ -20,10 +20,11 @@
 
 (setq org-footnote-auto-label 'plain)
 
-(defun org-mode-per-buffer-customization ()
+(defun fg/org-mode-customization ()
+  (yas-minor-mode)
   (turn-on-auto-fill))
 
-(add-hook 'org-mode-hook 'org-mode-per-buffer-customization)
+(add-hook 'org-mode-hook 'fg/org-mode-customization)
 
 (setq org-enforce-todo-checkbox-dependencies t)
 
@@ -32,6 +33,7 @@
 (setq org-agenda-sticky t)
 
 (add-hook 'org-mode-hook '(lambda () (interactive) (font-lock-mode 1)))
+(add-hook 'org-mode-hook 'org-hide-block-all)
 
 (setq
  org-directory (expand-file-name "~/orgs")

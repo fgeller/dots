@@ -5,15 +5,11 @@
   (defalias 'go-play-region nil)
 
   (lsp-deferred)
-
   (lsp-diagnostics-modeline-mode)
   (subword-mode 1)
-
+  (yas-minor-mode)
+  
   (setq tab-width 4)
-
-  (evil-collection-define-key 'normal 'go-mode-map
-    "gd" 'xref-find-definitions
-    (kbd "C-t") 'xref-pop-marker-stack)
 
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
@@ -30,6 +26,19 @@
   (let ((buf (get-buffer (fg/go-compilation-buffer-name))))
     (when buf (with-current-buffer buf (toggle-truncate-lines)))))
 
+(defun fg/go-compilation-buffer-p (buf)
+  (string-prefix-p "*go-compilation[" (buffer-name buf)))
+
+(defun fg/go-find-compilation-buffer ()
+  (if (get-buffer (fg/go-compilation-buffer-name))
+      (get-buffer (fg/go-compilation-buffer-name))
+    (-first 'fg/go-compilation-buffer-p (buffer-list))))
+
+(defun fg/go-recompile ()
+  (interactive)
+  (let* ((buf (fg/go-find-compilation-buffer)))
+    (when buf
+      (with-current-buffer buf (recompile)))))
 
 (defun fg/go-run-this-test ()
   (interactive)
@@ -73,10 +82,9 @@
       (compile "make test")
       (with-current-buffer "*compilation*" (rename-buffer buf)))))
 
-
 (defmacro fg/go-goto-error (&rest body)
-  `(let ((buf (fg/go-compilation-buffer-name)))
-     (when (get-buffer buf)
+  `(let ((buf (fg/go-find-compilation-buffer)))
+     (when buf
        (with-current-buffer buf
          ,@body
          (compile-goto-error)))))

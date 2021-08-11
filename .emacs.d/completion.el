@@ -1,11 +1,24 @@
 (install 'company)
 (setq company-minimum-prefix-length 1
-      company-idle-delay 0.0)
+      company-idle-delay 0.1)
+;; TODO limit company backends?
+;; (after 'company
+;;   (add-to-list 'company-backends 'company-yasnippet))
 (global-company-mode)
 
+(after 'company
+  (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
+  (define-key company-active-map (kbd "<return>") nil)
+  (define-key company-active-map (kbd "RET") nil)
+  (setq company-auto-commit nil)
+  (setq company-auto-complete-chars nil))
+
+;; Don't forget that M-n binding
 (install 'consult)
 (install 'consult-flycheck)
 (install 'consult-lsp)
+
+
 
 (install 'embark)
 (install 'embark-consult)
@@ -78,15 +91,13 @@
   "Project roots candidate source for `consult-buffer'.")
 
 (after 'consult
-  (add-to-list 'consult-buffer-sources fg/consult--source-git-ls-files)
-  (add-to-list 'consult-buffer-sources fg/consult--source-projects)
-
- (consult-customize
-  consult-ripgrep consult-git-grep consult-grep
-  consult-bookmark consult-recent-file consult-xref
-  consult--source-file consult--source-project-file consult--source-bookmark
-  fg/consult--source-git-ls-files
-  fg/consult--source-projects
-  :preview-key (kbd "C-M-."))
-  )
-
+  (add-to-list 'consult-buffer-sources fg/consult--source-git-ls-files t)
+  (add-to-list 'consult-buffer-sources fg/consult--source-projects t)
+  (consult-customize
+   consult-ripgrep consult-git-grep consult-grep
+   consult-bookmark consult-recent-file consult-xref
+   consult--source-file consult--source-project-file consult--source-bookmark
+   fg/consult--source-git-ls-files
+   fg/consult--source-projects
+   :preview-key (list :debounce 0.5 (kbd "C-M-."))
+   ))
