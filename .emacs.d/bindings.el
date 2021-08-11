@@ -6,7 +6,7 @@
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
 ;; |                    ||  rem-encl-pair|| zap-up-to-char|| duplicate-lin ||open-line-above||               ||               ||               ||               ||     occur     ||               || prev-word-occ || next-word-occ ||                  |
 ;; |       tab          ||       q       ||       d       ||       r       ||       w       ||       b       ||       j       ||       f       ||       u       ||       p       ||       ;       ||       [       ||       ]       ||        \         |
-;; |                    ||  surround     ||     delete    || query-repl-rx ||open-line-below||               ||   join-line   ||     f-map     || avy-goto-char ||    isearch    ||      ag       ||  prev-sym-occ || next-sym-occ  ||consult-goto-line |
+;; |                    ||  surround     ||     delete    || query-repl-rx ||open-line-below||               ||   join-line   ||     f-map     || avy-goto-char ||    isearch    ||consult-git-grp||  prev-sym-occ || next-sym-occ  ||consult-goto-line |
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
 ;; |                        ||  replace-sel  ||     insert    ||yank-kill-ring ||               ||               ||  beg-buffer   ||  back-symbl   ||   page-down   ||    page-up    ||   fwd-symbl   ||  end-buffer   ||                               |
@@ -44,6 +44,9 @@
 (define-key global-map (kbd "<escape>") 'modal-mode-activate)
 
 (install 'expand-region)
+
+(define-key global-map (kbd "M-.") 'embark-act)
+(define-key minibuffer-local-map (kbd "M-.") 'embark-act)
 
 (load-custom "~/.emacs.d/motion.el")
 (load-custom "~/.emacs.d/edit.el")
@@ -174,7 +177,7 @@
 (define-key modal-mode-map (kbd "U") nil)
 (define-key modal-mode-map (kbd "p") 'consult-line)
 (define-key modal-mode-map (kbd "P") 'occur)
-(define-key modal-mode-map (kbd ";") 'consult-ripgrep)
+(define-key modal-mode-map (kbd ";") 'consult-git-grep)
 (define-key modal-mode-map (kbd ":") 'nil)
 (define-key modal-mode-map (kbd "[") 'move-to-previous-symbol-occurrence)
 (define-key modal-mode-map (kbd "{") 'move-to-previous-word-occurrence)
