@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defconst region-specifiers
   '((char . ?c)
     (line . ?l)
@@ -33,90 +35,7 @@ key    region
 (defun region-specifier (type)
   (cdr (assoc type region-specifiers)))
 
-(defun kill-select ()
-  (interactive)
-  (cond ((region-active-p) (kill-region (point) (mark)))
-	(t
-	 (let* ((help-form region-specifier-help)
-		(nk (read-char "Kill: ")))
-	   (cond
-	    ((= nk (region-specifier 'char)) (kill-char))
-	    ((= nk (region-specifier 'line)) (kill-whole-line))
-	    ((= nk (region-specifier 'line-rest)) (kill-until-end-of-line))
-	    ((= nk (region-specifier 'word)) (kill-word))
-	    ((= nk (region-specifier 'symbol)) (kill-symbol))
-	    ((= nk (region-specifier 'inside-pair)) (kill-inside-pair))
-	    ((= nk (region-specifier 'with-pair)) (kill-with-pair))
-	    ((= nk (region-specifier 'whitespace)) (kill-whitespace))
-	    ((= nk (region-specifier 'till)) (kill-till))
-	    ((= nk (region-specifier 'till-backwards)) (kill-till-backwards))
-	    ((/= nk help-char) (push-mark (point))
-	     (call-interactively (key-binding (kbd (string nk))))
-	     (kill-region (point) (mark))))))))
-
-(defun kill-till ()
-  (mark-till)
-  (kill-region (point) (mark)))
-
-(defun kill-till-backwards ()
-  (mark-till-backwards)
-  (kill-region (point) (mark)))
-
-(defun kill-char ()
-  (mark-char)
-  (kill-region (point) (mark)))
-
-(defun kill-word ()
-  (mark-word)
-  (kill-region (point) (mark)))
-
-(defun kill-symbol ()
-  (mark-symbol)
-  (kill-region (point) (mark)))
-
-(defun kill-until-end-of-line ()
-  (mark-until-end-of-line)
-  (kill-region (point) (mark)))
-
-(defun kill-whole-line ()
-  (mark-whole-line)
-  (kill-region (point) (mark))
-  (delete-char 1))
-
-(defun kill-inside-pair ()
-  (mark-inside-pair)
-  (kill-region (point) (mark)))
-
-(defun kill-with-pair ()
-  (mark-with-pair)
-  (kill-region (point) (mark)))
-
-(defun kill-whitespace ()
-  (mark-whitespace)
-  (kill-region (point) (mark)))
-
-(defun replace-select ()
-  (interactive)
-  (unless (region-active-p)
-    (let* ((help-form region-specifier-help)
-	   (nk (read-char "Mark: ")))
-      (cond
-       ((= nk (region-specifier 'char)) (mark-char))
-       ((= nk (region-specifier 'line)) (mark-whole-line))
-       ((= nk (region-specifier 'line-rest)) (mark-until-end-of-line))
-       ((= nk (region-specifier 'word)) (mark-word))
-       ((= nk (region-specifier 'symbol)) (mark-symbol))
-       ((= nk (region-specifier 'inside-pair)) (mark-inside-pair))
-       ((= nk (region-specifier 'with-pair)) (mark-with-pair))
-       ((= nk (region-specifier 'whitespace)) (mark-whitespace))
-       ((= nk (region-specifier 'till)) (mark-till))
-       ((= nk (region-specifier 'till-backwards)) (mark-till-backwards))
-       (t (mark-word))))) ; defaults to word
-  (let ((rp (read-string "Replace with: ")))
-    (delete-region (point) (mark))
-    (insert rp)))
-
-(defun mark-select ()
+(defun fg/mark-select ()
   (interactive)
   (if (region-active-p) (kill-ring-save nil nil 'region)
     (let* ((help-form region-specifier-help)
@@ -129,9 +48,9 @@ key    region
        ((= nk (region-specifier 'symbol)) (mark-symbol))
        ((= nk (region-specifier 'inside-pair)) (mark-inside-pair))
        ((= nk (region-specifier 'with-pair)) (mark-with-pair))
-       ((= nk (region-specifier 'whitespace)) (mark-whitespace))
        ((= nk (region-specifier 'till)) (mark-till))
        ((= nk (region-specifier 'till-backwards)) (mark-till-backwards))
+       ((= nk ? ) (mark-whole-line))
        (t (set-mark (point))
 	  (pass-events (string nk)))))))
 

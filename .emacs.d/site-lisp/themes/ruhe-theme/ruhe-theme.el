@@ -109,8 +109,16 @@
 
  `(lsp-headerline-breadcrumb-path-face ((t (:inherit nil))))
  `(lsp-headerline-breadcrumb-symbols-face ((t (:inherit nil))))
+ `(lsp-lsp-flycheck-error-unnecessary-face ((t (:foreground "#ff5722"))))
  
  `(icomplete-first-match ((t (:foreground "#000000" :background "#FFD54F"))))
+
+ `(avy-background-face ((t (:foreground "#aaaaaa"))))
+ `(avy-goto-char-timer-face ((t (:foreground "#efefef" :background "#FFD54F"))))
+ `(avy-lead-face ((t (:foreground "#ff5722" :weight bold))))
+ `(avy-lead-face-0 ((t (:foreground "#1565c0"))))
+ `(avy-lead-face-1 ((t (:foreground "#1565c0"))))
+ `(avy-lead-face-2 ((t (:foreground "#1565c0"))))
 
  `(font-lock-builtin-face ((t (:foreground "#000000" ))))
  `(font-lock-comment-delimiter-face ((t (:foreground "#C5CAE9" :background "#f1f1f1"))))

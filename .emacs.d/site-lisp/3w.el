@@ -125,6 +125,36 @@
 	  (t
 	   (3w-split-3-from-1)))))
 
+(defun 3w-shift-right ()
+  "Shifts windows to the right"
+  (interactive)
+  (let* ((wc (count-windows)))
+    (cond ((= 1 wc) t)
+	  ((= 2 wc)
+	   (let* ((tw (selected-window))
+		  (wr (car (window-at-side-list nil 'right)))
+		  (wrb (window-buffer wr))
+		  (wl (car (window-at-side-list nil 'left)))
+		  (wlb (window-buffer wl)))
+	     (set-window-buffer wl wrb)
+	     (set-window-buffer wr wlb)
+	     (select-window (other-window 1))))
+	  ((= 3 wc)
+	   (let* ((tw (selected-window))
+		  (lw (car (window-at-side-list nil 'left)))
+		  (lb (window-buffer lw))
+		  (mw (window-in-direction 'right lw))
+		  (mb (window-buffer mw))
+		  (rw (car (window-at-side-list nil 'right)))
+		  (rb (window-buffer rw)))
+	     (message "lw=%s mw=%s rw=%s" lw mw rw)
+	     (set-window-buffer lw rb)
+	     (set-window-buffer mw lb)
+	     (set-window-buffer rw mb)
+	     (cond ((eq tw lw) (select-window mw))
+		   ((eq tw mw) (select-window rw))
+		   ((eq tw rw) (select-window lw))))))))
+
 (defun 3w-jump-1 ()
   (interactive)
   (select-window
@@ -190,6 +220,7 @@
 (define-key 3w-map (kbd "h") '3w-jump-3)
 (define-key 3w-map (kbd "t") '3w-toggle-side-window)
 (define-key 3w-map (kbd "o") 'other-window)
+(define-key 3w-map (kbd "r") '3w-shift-right)
 
 ;;
 ;; Tests
