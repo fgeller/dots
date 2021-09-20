@@ -12,6 +12,7 @@
 (install 'magit)
 (setq magit-auto-revert-mode nil)
 (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
+(setq magit-refresh-status-buffer nil)
 
 (install 'diff-hl)
 (global-diff-hl-mode)
