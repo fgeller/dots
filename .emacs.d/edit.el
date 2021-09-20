@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (install 'mark)
 (install 'visual-regexp)
 (install 'multiple-cursors)
@@ -77,6 +79,109 @@
   (let ((c (read-char "Insert: ")))
     (insert c)))
 
+(defun kill-select ()
+  (interactive)
+  (let* (mrk-fun)
+    (unless (region-active-p)
+      (let* ((help-form region-specifier-help)
+	     (nk (read-char "Kill: ")))
+	(cond
+	 ((region-active-p) t)
+	 ((= nk (region-specifier 'char)) (setq mrk-fun 'mark-char))
+	 ((= nk (region-specifier 'line)) (setq mrk-fun 'mark-whole-line))
+	 ((= nk (region-specifier 'line-rest)) (setq mrk-fun 'mark-until-end-of-line))
+	 ((= nk (region-specifier 'word)) (setq mrk-fun 'mark-word))
+	 ((= nk (region-specifier 'symbol)) (setq mrk-fun 'mark-symbol))
+	 ((= nk (region-specifier 'inside-pair)) (setq mrk-fun 'mark-inside-pair))
+	 ((= nk (region-specifier 'with-pair)) (setq mrk-fun 'mark-with-pair))
+	 ((= nk (region-specifier 'whitespace)) (setq mrk-fun 'mark-whitespace))
+	 ((= nk (region-specifier 'till)) (setq mrk-fun 'mark-till))
+	 ((= nk (region-specifier 'till-backwards)) (setq mrk-fun 'mark-till-backwards)))))
+    (when mrk-fun (funcall mrk-fun))
+    (kill-region (point) (mark))
+    (setq fg/last-edit-command (lambda () (fg/kill-select-do mrk-fun)))))
+
+(defun fg/kill-select-do (mrk-fun)
+  (funcall mrk-fun)
+  (kill-region (point) (mark)))
+
+(defun kill-till ()
+  (mark-till)
+  (kill-region (point) (mark)))
+
+(defun kill-till-backwards ()
+  (mark-till-backwards)
+  (kill-region (point) (mark)))
+
+(defun kill-char ()
+  (mark-char)
+  (kill-region (point) (mark)))
+
+(defun kill-word ()
+  (mark-word)
+  (kill-region (point) (mark)))
+
+(defun kill-symbol ()
+  (mark-symbol)
+  (kill-region (point) (mark)))
+
+(defun kill-until-end-of-line ()
+  (mark-until-end-of-line)
+  (kill-region (point) (mark)))
+
+(defun kill-whole-line ()
+  (mark-whole-line)
+  (kill-region (point) (mark))
+  (delete-char 1))
+
+(defun kill-inside-pair ()
+  (mark-inside-pair)
+  (kill-region (point) (mark)))
+
+(defun kill-with-pair ()
+  (mark-with-pair)
+  (kill-region (point) (mark)))
+
+(defun kill-whitespace ()
+  (mark-whitespace)
+  (kill-region (point) (mark)))
+
+(defconst fg/last-edit-command nil "lambda that can be evaluated to repeat last edit command")
+
+(defun fg/repeat-last-edit ()
+  (interactive)
+  (when fg/last-edit-command
+    (funcall fg/last-edit-command)))
+
+(defun fg/replace-select ()
+  (interactive)
+  (let* (mrk ins)
+    (unless (region-active-p)
+      (let* ((help-form region-specifier-help)
+	     (nk (read-char "Mark: "))) ;; TODO don't need this when region is active
+	(cond
+	 ((= nk (region-specifier 'char)) (setq mrk 'mark-char))
+	 ((= nk (region-specifier 'line)) (setq mrk 'mark-whole-line))
+	 ((= nk (region-specifier 'line-rest)) (setq mrk 'mark-until-end-of-line))
+	 ((= nk (region-specifier 'word)) (setq mrk 'mark-word))
+	 ((= nk (region-specifier 'symbol)) (setq mrk 'mark-symbol))
+	 ((= nk (region-specifier 'inside-pair)) (setq mrk 'mark-inside-pair))
+	 ((= nk (region-specifier 'with-pair)) (setq mrk 'mark-with-pair))
+	 ((= nk (region-specifier 'whitespace)) (setq mrk 'mark-whitespace))
+	 ((= nk (region-specifier 'till)) (setq mrk 'mark-till))
+	 ((= nk (region-specifier 'till-backwards)) (setq mrk 'mark-till-backwards))
+	 (t (setq mrk 'mark-whole-line)))
+	(funcall mrk)))
+    (setq ins (read-string "Replace with: "))
+    (delete-region (point) (mark))
+    (insert ins)
+    (setq fg/last-edit-command (lambda () (fg/replace-select-do mrk ins)))))
+
+(defun fg/replace-select-do (mrk ins)
+  (funcall mrk)
+  (delete-region (point) (mark))
+  (insert ins))
+
 (defun find-next-left-pair-start ()
   (save-excursion
     (search-backward-regexp "\\((\\|{\\|\\[\\|<\\|'\\|\"\\|`\\)" (point-min) t)
@@ -120,7 +225,7 @@
 
 (defun enclose-in-pair ()
   (interactive)
-  (unless (region-active-p) (mark-select))
+  (unless (region-active-p) (fg/mark-select))
   (dispatch-with-pair 'enclose-in-pair-strings))
 
 (defun enclose-in-pair-strings (start end)

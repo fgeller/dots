@@ -48,7 +48,7 @@
   (interactive)
   (zap-up-to-char -1 ?/))
 
-(define-key minibuffer-local-map (kbd "C-.") 'fg/zap-back-till-/)
+(define-key minibuffer-local-map (kbd "C-\\") 'fg/zap-back-till-/)
 
 (setq enable-recursive-minibuffers t) 
 

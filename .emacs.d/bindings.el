@@ -4,9 +4,9 @@
 ;; |  ucs-insert ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
 ;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
-;; |                    ||  rem-encl-pair|| zap-up-to-char|| duplicate-lin ||open-line-above|| ola-insert    ||               ||               ||               ||     occur     ||               || prev-word-occ || next-word-occ ||                  |
+;; |                    ||  rem-encl-pair|| zap-up-to-char|| duplicate-lin ||               || ola-insert    ||               ||backward-to-chr||               ||     occur     ||               || prev-word-occ || next-word-occ ||                  |
 ;; |       tab          ||       q       ||       d       ||       r       ||       w       ||       b       ||       j       ||       f       ||       u       ||       p       ||       ;       ||       [       ||       ]       ||        \         |
-;; |                    ||  surround     ||     delete    || query-repl-rx ||open-line-below|| olb-insert    ||   join-line   ||     f-map     || avy-goto-char ||    isearch    ||consult-git-grp||  prev-sym-occ || next-sym-occ  ||consult-goto-line |
+;; |                    ||  surround     ||     delete    || query-repl-rx ||     w-map     || olb-insert    ||   join-line   ||forward-to-char|| avy-goto-char ||    isearch    ||consult-git-grp||  prev-sym-occ || next-sym-occ  ||consult-goto-line |
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
 ;; |                        ||  replace-sel  ||     insert    ||yank-kill-ring ||               ||               ||  beg-buffer   ||  back-symbl   ||   page-down   ||    page-up    ||   fwd-symbl   ||  end-buffer   ||                               |
@@ -14,9 +14,9 @@
 ;; |                        || replace-char  ||   insert-char ||      yank     ||     kill      ||  consult-buf  || begining-line ||     left      ||     down      ||      up       ||     right     ||   end-line    ||                               |
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
-;; |                              ||  ivy-resume   ||               ||               ||               ||               ||bol-modal-deact||eol-modal-deact||               || xref-jump-back||               ||                                          |
+;; |                              ||  ivy-resume   ||               ||               ||               || backward-sexp ||bol-modal-deact||eol-modal-deact||               || xref-jump-back||               ||                                          |
 ;; |           shift              ||       z       ||       x       ||       m       ||       c       ||       v       ||       k       ||       l       ||       ,       ||       .       ||       /       ||                shift                     |
-;; |                              ||   repeat      ||     x-map     ||  macro-map    ||     c-map     ||               ||aft-indent-deac||modal-deactivat||xref-jump-back || xref-jump-to  ||      undo     ||                                          |
+;; |                              ||   repeat      ||     x-map     ||  macro-map    ||     c-map     || forward-sexp  ||aft-indent-deac||modal-deactivat||xref-jump-back || xref-jump-to  ||      undo     ||                                          |
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
 
 (defun exit-view-mode ()
@@ -72,6 +72,12 @@
     (define-key map (kbd "dn") 'fg/go-goto-next-error)
     (define-key map (kbd "dp") 'fg/go-goto-previous-error)
 
+    (define-key map (kbd "fo") 'origami-open-node)
+    (define-key map (kbd "fO") 'origami-open-all-nodes)
+    (define-key map (kbd "fc") 'origami-close-node)
+    (define-key map (kbd "fC") 'origami-close-all-nodes)
+    
+    (define-key map (kbd "lb") 'dap-breakpoint-add)
     (define-key map (kbd "le") 'consult-lsp-diagnostics)
     (define-key map (kbd "ll") 'lsp)
     (define-key map (kbd "lR") 'lsp-rename)
@@ -86,6 +92,12 @@
 
     (define-key map (kbd "en") 'flycheck-next-error)
     (define-key map (kbd "ep") 'flycheck-previous-error)
+
+    (define-key map (kbd "va") 'vc-annotate)
+    (define-key map (kbd "vs") 'diff-hl-show-hunk)
+    (define-key map (kbd "vn") 'diff-hl-next-hunk)
+    (define-key map (kbd "vp") 'diff-hl-previous-hunk)
+    (define-key map (kbd "vr") 'diff-hl-revert-hunk)
 
     (define-key map (kbd "q") 'fill-paragraph)
 
@@ -145,9 +157,10 @@
 
 (define-key modal-mode-map (kbd "M-`") 'ucs-insert)
 (define-key modal-mode-map (kbd "`") 'ucs-insert)
-(define-key modal-mode-map (kbd "<SPC>") 'mark-select)
+(define-key modal-mode-map (kbd "<SPC>") 'fg/mark-select)
 (define-key modal-mode-map (kbd "+") 'increment-integer-at-point)
 (define-key modal-mode-map (kbd "-") 'decrement-integer-at-point)
+(define-key modal-mode-map (kbd "%") 'fg/jump-to-matching-paren)
 
 (define-key modal-mode-map (kbd "q") 'enclose-in-pair)
 (define-key modal-mode-map (kbd "Q") 'remove-enclosing-pair)
@@ -155,8 +168,8 @@
 (define-key modal-mode-map (kbd "D") 'zap-up-to-char)
 (define-key modal-mode-map (kbd "r") 'vr/query-replace)
 (define-key modal-mode-map (kbd "R") 'duplicate-line)
-(define-key modal-mode-map (kbd "W") 'fg/open-line-above)
-(define-key modal-mode-map (kbd "w") 'fg/open-line-below)
+(define-key modal-mode-map (kbd "W") 'fg/backward-to-char)
+(define-key modal-mode-map (kbd "w") 'fg/forward-to-char)
 (define-key modal-mode-map (kbd "B") 'fg/open-line-above-insert)
 (define-key modal-mode-map (kbd "b") 'fg/open-line-below-insert)
 (define-key modal-mode-map (kbd "j") 'join-line)
@@ -177,7 +190,7 @@
 (define-key modal-mode-map (kbd "\\") 'fg/consult-goto-line)
 (define-key modal-mode-map (kbd "|") 'mc/edit-lines)
 
-(define-key modal-mode-map (kbd "a") 'replace-select)
+(define-key modal-mode-map (kbd "a") 'fg/replace-select)
 (define-key modal-mode-map (kbd "A") 'fg/replace-char)
 (define-key modal-mode-map (kbd "s") 'fg/insert-char)
 (define-key modal-mode-map (kbd "S") 'fg/insert-literal)
@@ -200,7 +213,7 @@
 (define-key modal-mode-map (kbd "'") 'end-of-line)
 (define-key modal-mode-map (kbd "\"") 'fg/end-of-buffer)
 
-(define-key modal-mode-map (kbd "z") 'repeat)
+(define-key modal-mode-map (kbd "z") 'fg/repeat-last-edit)
 (define-key modal-mode-map (kbd "Z") 'ivy-resume)
 (define-key modal-mode-map (kbd "x") x-bindings-map)
 (define-key modal-mode-map (kbd "X") nil)
@@ -208,8 +221,8 @@
 (define-key modal-mode-map (kbd "M") nil)
 (define-key modal-mode-map (kbd "c") c-bindings-map)
 (define-key modal-mode-map (kbd "C") nil)
-(define-key modal-mode-map (kbd "v") nil)
-(define-key modal-mode-map (kbd "V") nil)
+(define-key modal-mode-map (kbd "v") 'forward-sexp)
+(define-key modal-mode-map (kbd "V") 'backward-sexp)
 (define-key modal-mode-map (kbd "k") 'after-indent-modal-mode-deactivate)
 (define-key modal-mode-map (kbd "K") 'bol-modal-mode-deactivate)
 (define-key modal-mode-map (kbd "l") 'modal-mode-deactivate)

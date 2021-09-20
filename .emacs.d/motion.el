@@ -1,7 +1,16 @@
+(install 'avy)
+(setq avy-all-windows nil
+      avy-background t
+      avy-style 'de-bruijn
+      avy-keys '(?a ?s ?h ?t ?n ?e ?o ?i)
+      ;; avy-goto-word-0-regexp "\\(\\b\\sw\\|[(){}]\\)"
+      avy-goto-word-0-regexp "\\b\\sw"
+      avy-timeout-seconds 0.2)
+
 (defun fg/jump-to-char ()
   (interactive)
   (xref-push-marker-stack)
-  (avy-goto-char-timer))
+  (avy-goto-word-0 nil))
    
 (defun fg/beginning-of-buffer ()
   (interactive)
@@ -12,6 +21,28 @@
   (interactive)
   (xref-push-marker-stack)
   (end-of-buffer))
+
+(defun fg/forward-to-char ()
+  (interactive)
+  (let* ((tc (read-char "jump to:")))
+    (right-char 1)
+    (search-forward (char-to-string tc))
+    (left-char 1)))
+
+(defun fg/backward-to-char ()
+  (interactive)
+  (let* ((tc (read-char "jump to:")))
+    (left-char 1)
+    (search-backward (char-to-string tc))))
+
+;; https://www.emacswiki.org/emacs/NavigatingParentheses#h5o-2
+(defun fg/jump-to-matching-paren ()
+  (interactive)
+  (cond ((looking-at "\\s(") (forward-sexp 1))
+        ((looking-back "\\s)" 1) (backward-sexp 1))
+        ;; Now, try to succeed from inside of a bracket
+        ((looking-at "\\s)") (forward-char) (backward-sexp 1))
+        ((looking-back "\\s(" 1) (backward-char) (forward-sexp 1))))
 
 (defun fg/consult-goto-line ()
   (interactive)
@@ -60,11 +91,6 @@
 (defun fg/restore-point ()
   (interactive)
   (jump-to-register ?p))
-
-(install 'avy)
-(setq avy-all-windows nil
-      avy-keys '(?a ?s ?h ?g ?y ?t ?n ?e ?o ?i ?' ?u ?p ?d ?r ?c ?k)
-      avy-timeout-seconds 0.2)
 
 (defun fg/scroll-down-half-page ()
   (interactive)
