@@ -1,15 +1,30 @@
 (install 'go-mode)
 
+;; (setq lsp-go-gopls-server-args '("-logfile" "/home/fgeller/tmp/gopls.log" "-rpc.trace"))
+
 (defun fg/golang-customizations ()
   (defalias 'go-play-buffer nil)
   (defalias 'go-play-region nil)
 
+  ;; (setq lsp-go-goimports-local "refurbed")
+  ;; (setq lsp-go-analyses
+  ;; 	'(("unreachable" . t)
+  ;; 	  ("unusedparams" . t)))
+  ;; https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
+  
   (lsp-deferred)
   (lsp-diagnostics-modeline-mode)
   (subword-mode 1)
   (yas-minor-mode)
+
+  ;; (with-eval-after-load 'lsp-mode
+  ;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\vue\\'")
+  ;;   ;; or
+  ;;   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\].+\\.qtpl\\.go\\'"))
   
   (setq tab-width 4)
+
+  (display-fill-column-indicator-mode +1)
 
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
