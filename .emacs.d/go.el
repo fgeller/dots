@@ -11,9 +11,21 @@
   ;; 	'(("unreachable" . t)
   ;; 	  ("unusedparams" . t)))
   ;; https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
-  
+
+  (require 'lsp-mode)
+
+  (lsp-register-custom-settings
+   '(("gopls.staticcheck" nil t)
+     ("gopls.allowImplicitNetworkAccess" t t)
+     ))
+  (setq lsp-go-build-flags ["-tags=integration_test"])
+  (let ((env (make-hash-table)))
+    (puthash "GOPROXY" "proxy.golang.org,direct" env)
+    (setq lsp-go-env env))
+
   (lsp-deferred)
   (lsp-diagnostics-modeline-mode)
+
   (subword-mode 1)
   (yas-minor-mode)
 
@@ -21,7 +33,7 @@
   ;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\vue\\'")
   ;;   ;; or
   ;;   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\].+\\.qtpl\\.go\\'"))
-  
+
   (setq tab-width 4)
 
   (display-fill-column-indicator-mode +1)
