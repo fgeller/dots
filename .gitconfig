@@ -67,7 +67,7 @@
 [magit]
         hideCampaign = true
 [gpg]
-        program = /bin/gpg
+	program = /bin/gpg
 [init]
         defaultBranch = main
 [gitlab]

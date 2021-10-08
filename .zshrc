@@ -50,8 +50,20 @@ alias gll='git ll'
 alias pc='pass show -c'
 alias k='kubectl'
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+if [ Darwin = `uname` ]; then
+   export NVM_DIR="$HOME/.nvm"
+   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+   source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+   source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+   export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+   export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
+   export PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
+   export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
+   export PATH="/opt/homebrew/bin:$PATH"
+else
+    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+fi
 
 function maybeJSON() {
     tee >(grep -v "^\{") | grep "^\{" | jq -c .
