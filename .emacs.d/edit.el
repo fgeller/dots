@@ -43,6 +43,16 @@
     (forward-char 1)
     (yank)))
 
+(defun fg/end-of-line-insert ()
+  (interactive)
+  (end-of-line)
+  (global-modal-mode -1))
+
+(defun fg/beginning-of-line-insert ()
+  (interactive)
+  (beginning-of-line)
+  (global-modal-mode -1))
+
 (defun fg/open-line-below ()
   (interactive)
   (end-of-line)
