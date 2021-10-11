@@ -27,6 +27,8 @@
 [merge]
     ff = false
     conflictstyle = diff3
+[format]
+    pretty = %C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d%n %Creset%s %C(normal green dim)%-(trailers:key=Close,key=Closes,key=Fixes,key=Fix,key=For,key=Related,separator=%x2C,valueonly)
 [alias]
     a = add -p
     ad = add
@@ -41,7 +43,7 @@
     ff = merge --ff-only
     g = grep
     l =  log -15 --format=' %<(7,trunc)%an %<(65,trunc)%s'
-    ll =  log -15 --format=' %<(7,trunc)%an %ad %h %G? %<(80,trunc)%s %<(40,trunc)%d' --date=short
+    ll =  log -15 --format=' %<(72,trunc)%s %h %<(10,trunc)%an %-(trailers:key=Close,key=Closes,key=Fixes,key=Fix,key=For,key=Related,separator=%x2C,valueonly) %<(32,trunc)%d'
     lg = log --format=' %<(15,trunc)%an %ad %C(blue)%h%Creset %<(60,trunc)%s %<(30,trunc) %C(blue)%d%Creset' --date=short
     p = push
     pu = push -u
