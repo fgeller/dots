@@ -1,7 +1,7 @@
 [user]
     name = Felix Geller
-    email = fgeller@gmail.com
-	signingkey = 71E54A69B0C4269F
+    email = fgeller@protonmail.com
+    signingkey = 71E54A69B0C4269F
 [color]
     ui = true
 [color "diff"]
@@ -33,8 +33,6 @@
     a = add -p
     ad = add
     c = commit
-    ca = commit --amend
-    caq = commit --amend --no-edit
     co = checkout
     d = diff --word-diff=color
     dc = diff --word-diff=color --cached
@@ -45,13 +43,6 @@
     l =  log -15 --format=' %<(7,trunc)%an %<(65,trunc)%s'
     ll =  log -15 --format=' %<(72,trunc)%s %h %<(10,trunc)%an %-(trailers:key=Close,key=Closes,key=Fixes,key=Fix,key=For,key=Related,separator=%x2C,valueonly) %<(32,trunc)%d'
     lg = log --format=' %<(15,trunc)%an %ad %C(blue)%h%Creset %<(60,trunc)%s %<(30,trunc) %C(blue)%d%Creset' --date=short
-    p = push
-    pu = push -u
-    puf = push -u -f
-    r = rebase
-    rh = reset --hard
-    ri = rebase -i
-    rs = reset --soft
     s = status -s -b
     sh = show --color-words
     tags = log --tags --simplify-by-decoration --pretty='format:%ai %d'
@@ -59,17 +50,19 @@
 
 [commit]
     template = ~/.gitmsg.txt
-	gpgsign = true
+    gpgsign = true
 [gui]
     fontui = -family Roboto -size 14 -weight normal -slant roman -underline 0 -overstrike 0
     fontdiff = -family \"Roboto Mono\" -size 13 -weight normal -slant roman -underline 0 -overstrike 0
 [github]
-    user = fgeller
+	user = fgeller
 [credential]
-	helper = store
+        helper = store
 [magit]
-	hideCampaign = true
+        hideCampaign = true
 [gpg]
-	program = /bin/gpg
+        program = /bin/gpg
 [init]
-	defaultBranch = main
+        defaultBranch = main
+[gitlab]
+	user = fgeller
