@@ -37,7 +37,7 @@
 
 (setq default-frame-alist
       (append (list
-	       '(font . "Roboto Mono-14:weight=book")
+	       '(font . "Roboto Mono-10:weight=book")
 	       '(left-fringe . 16)
 	       '(right-fringe . 16)
                '(vertical-scroll-bars . nil)

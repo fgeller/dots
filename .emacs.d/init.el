@@ -46,6 +46,8 @@
 
 (setq recentf-max-saved-items 256)
 
+(setq auth-sources '("~/.authinfo.gpg"))
+
 (require 'package)
 (setq package-quickstart t)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")

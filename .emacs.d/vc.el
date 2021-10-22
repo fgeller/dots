@@ -10,6 +10,7 @@
 (setq git-commit-summary-max-length 72)
 
 (install 'magit)
+(install 'forge)
 (setq magit-auto-revert-mode nil)
 (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
 (setq magit-refresh-status-buffer nil)
