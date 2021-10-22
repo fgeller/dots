@@ -33,13 +33,14 @@ PS1='%F{244}%1~%f %(?.%#.%F{red}%#%f) '
 
 # source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-EDITOR='emacsclient -a /bin/nano'
+EDITOR='emacsclient'
 
 alias grt='if [ "`git rev-parse --show-cdup`" != "" ]; then cd `git rev-parse --show-cdup`; fi'
 alias gs="git status -s -b"
 alias ll="ls -la"
 alias reload="source ~/.zshrc"
 alias g='git'
+alias gll='git ll'
 alias pc='pass show -c'
 alias k='kubectl'
 
