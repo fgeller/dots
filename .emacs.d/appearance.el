@@ -21,6 +21,7 @@
 
 (install 'rainbow-mode)
 (install 'leerzeichen)
+(install 'nlinum)
 
 (install 'highlight-thing)
 (global-highlight-thing-mode +1)
