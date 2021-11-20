@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: TODO fg
+# key: todo
+# --
+TODO(fg) $0
