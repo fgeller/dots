@@ -83,6 +83,7 @@
     (define-key map (kbd "lR") 'lsp-rename)
     (define-key map (kbd "lr") 'lsp-find-references)
     (define-key map (kbd "la") 'consult-lsp-symbols)
+    (define-key map (kbd "lA") 'consult-lsp-file-symbols)
     (define-key map (kbd "ld") 'dap-debug)
     (define-key map (kbd "li") 'lsp-find-implementation)
 
