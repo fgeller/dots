@@ -2,8 +2,8 @@
 (setq company-minimum-prefix-length 1
       company-idle-delay 0.1)
 ;; TODO limit company backends?
-;; (after 'company
-;;   (add-to-list 'company-backends 'company-yasnippet))
+(after 'company
+  (setq company-backends '(company-capf company-files company-yasnippet)))
 (global-company-mode)
 
 (after 'company

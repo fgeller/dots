@@ -3,5 +3,8 @@
 
 (install 'yasnippet-snippets)
 
+(yas-global-mode 1)
+
 (after 'yasnippet
   (yas-reload-all))
+

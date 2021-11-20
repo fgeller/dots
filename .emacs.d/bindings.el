@@ -43,6 +43,9 @@
 (define-key global-map (kbd "C-o") 'modal-mode-deactivate)
 (define-key global-map (kbd "<escape>") 'modal-mode-activate)
 
+(define-key global-map (kbd "C-j") 'yas-expand)
+(after 'org (define-key org-mode-map (kbd "C-j") 'yas-expand))
+
 (install 'expand-region)
 
 (require '3w)
