@@ -27,6 +27,7 @@ export GOPROXY=https://proxy.golang.org
 export PATH=/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:$PATH
 export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
 export PATH="~/.node_modules/bin:$PATH"
+export PATH="/home/fgeller/.yarn/bin:$PATH"
 
 cdpath=(~ ~/src/github.com/fgeller ~/src/gitlab.com/refurbed)
 
