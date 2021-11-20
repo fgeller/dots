@@ -36,6 +36,8 @@
     (search-backward (char-to-string tc))))
 
 ;; https://www.emacswiki.org/emacs/NavigatingParentheses#h5o-2
+(require 'xref)
+
 (defun fg/jump-to-matching-paren ()
   (interactive)
   (cond ((looking-at "\\s(") (forward-sexp 1))
