@@ -36,6 +36,10 @@ PS1='%F{244}%1~%f %(?.%#.%F{red}%#%f) '
 
 EDITOR='emacsclient'
 
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
+bindkey '^H' backward-kill-word
+
 alias grt='if [ "`git rev-parse --show-cdup`" != "" ]; then cd `git rev-parse --show-cdup`; fi'
 alias gs="git status -s -b"
 alias ll="ls -la"
