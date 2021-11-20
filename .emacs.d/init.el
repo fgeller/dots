@@ -106,6 +106,7 @@
 (load-custom "~/.emacs.d/go.el")
 (load-custom "~/.emacs.d/emacs-lisp.el")
 (load-custom "~/.emacs.d/org.el")
+(load-custom "~/.emacs.d/work.el")
 
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
