@@ -137,6 +137,8 @@
  `(font-lock-variable-name-face ((t (:foreground "#000000" ))))
  `(font-lock-warning-face ((t (:inherit warning ))))
 
+ `(linum ((t (:foreground "#aaaaaa" :background "#f5f5f5"))))
+
  `(flycheck-error ((t (:foreground "#f44336" :background nil))))
  `(flycheck-error-list-id ((t (:foreground "#f44336" :background nil))))
  `(flycheck-warning ((t (:inherit warning))))

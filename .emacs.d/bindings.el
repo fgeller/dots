@@ -138,6 +138,7 @@
     (define-key map (kbd "tl") 'toggle-truncate-lines)
     (define-key map (kbd "tw") 'leerzeichen-mode)
     (define-key map (kbd "tr") 'rainbow-mode)
+    (define-key map (kbd "tn") 'nlinum-mode)
     (define-key map (kbd "tu") 'markdown-toggle-url-hiding)
 
     (define-key map (kbd "vg") 'vc-annotate)
