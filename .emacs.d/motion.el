@@ -10,7 +10,7 @@
 (defun fg/jump-to-char ()
   (interactive)
   (xref-push-marker-stack)
-  (avy-goto-word-0 nil))
+  (avy-goto-char-timer))
    
 (defun fg/beginning-of-buffer ()
   (interactive)
