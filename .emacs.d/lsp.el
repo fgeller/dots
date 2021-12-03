@@ -23,6 +23,12 @@
  lsp-client-packages '(lsp-cmake lsp-dockerfile lsp-go lsp-javascript lsp-json lsp-markdown lsp-terraform lsp-xml lsp-yaml)
 )
 
+(defun fg/lsp-customizations ()
+  (setf (alist-get 'styles
+		   (alist-get 'lsp-capf completion-category-defaults))
+	'(orderless)))
+
+(add-hook 'lsp-after-open-hook 'fg/lsp-customizations)
 (add-hook 'lsp-after-open-hook #'lsp-origami-try-enable)
 
 ;; TODO disable unused ones?
