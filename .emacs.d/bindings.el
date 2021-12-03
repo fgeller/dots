@@ -93,6 +93,8 @@
     (define-key map (kbd "m") 'magit)
 
     (define-key map (kbd "ol") 'org-store-link)
+    (define-key map (kbd "oc") 'org-capture)
+    (define-key map (kbd "ot") 'org-todo)
 
     (define-key map (kbd "en") 'flycheck-next-error)
     (define-key map (kbd "ep") 'flycheck-previous-error)
