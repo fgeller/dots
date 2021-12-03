@@ -31,7 +31,7 @@ export PATH="/home/fgeller/.yarn/bin:$PATH"
 
 cdpath=(~ ~/src/github.com/fgeller ~/src/gitlab.com/refurbed)
 
-PS1='%F{244}%1~%f %(?.%#.%F{red}%#%f) '
+PS1='%F{244}%1~%f %(?.%F{green}%#%f.%F{red}%#%f) '
 
 # source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
