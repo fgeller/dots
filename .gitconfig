@@ -8,6 +8,12 @@
     whitespace = red reverse
 [diff]
     algorithm = patience
+    tool = difftastic
+	external = difftastic
+[difftool]
+    prompt = false
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
 [core]
     whitespace=space-before-tab,tab-in-indent,trailing-space,cr-at-eol,tabwidth=2
     tabwidth = 2
