@@ -207,7 +207,7 @@
 (define-key modal-mode-map (kbd "T") nil)
 (define-key modal-mode-map (kbd "g") 'fg/jump)
 (define-key modal-mode-map (kbd "G") nil)
-(define-key modal-mode-map (kbd "y") 'beginning-of-line)
+(define-key modal-mode-map (kbd "y") 'move-beginning-of-line)
 (define-key modal-mode-map (kbd "Y") 'fg/beginning-of-buffer)
 (define-key modal-mode-map (kbd "n") 'left-char)
 (define-key modal-mode-map (kbd "N") 'backward-word)
@@ -217,7 +217,7 @@
 (define-key modal-mode-map (kbd "O") 'fg/scroll-down-half-page)
 (define-key modal-mode-map (kbd "i") 'right-char)
 (define-key modal-mode-map (kbd "I") 'forward-word)
-(define-key modal-mode-map (kbd "'") 'end-of-line)
+(define-key modal-mode-map (kbd "'") 'move-end-of-line)
 (define-key modal-mode-map (kbd "\"") 'fg/end-of-buffer)
 
 (define-key modal-mode-map (kbd "z") 'fg/repeat-last-edit)

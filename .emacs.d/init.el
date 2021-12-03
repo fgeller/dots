@@ -73,7 +73,9 @@
  uniquify-after-kill-buffer-p t
  uniquify-ignore-buffers-re "^\\*"
  dired-dwim-target t
- dired-listing-switches "-laGh")
+ dired-listing-switches "-laGh"
+ initial-major-mode 'fundamental-mode
+ initial-scratch-message "")
 
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
