@@ -37,9 +37,10 @@
 
 (setq
  org-directory (expand-file-name "~/orgs")
- org-default-tasks-file (concat org-directory "/Tasks.org")
+ org-default-tasks-file (concat org-directory "/dump.org")
+ org-default-work-file (concat org-directory "/work.org")
  org-default-notes-file (concat org-directory "/Notes.org")
- org-agenda-files (list (concat org-directory "/Tasks.org")))
+ org-agenda-files (list (concat org-directory "/dump.org")))
 
 (after 'org
   (setq org-clock-persist 'history)
@@ -102,15 +103,12 @@
 (setq org-agenda-clockreport-parameter-plist '(:link t :maxlevel 5))
 
 (setq org-capture-templates
-      `(("t" "Task"
-         entry (file+olp ,org-default-tasks-file "Inbox" "Personal")
-         "* TODO %?\n\n")
-        ("w" "Work task"
-         entry (file+olp ,org-default-tasks-file "Inbox" "Work")
+      `(("n" "note"
+         entry (file ,org-default-tasks-file)
+         "* TODO %?\n\n" :prepend t)
+        ("w" "work note"
+         entry (file ,org-default-work-file)
          "* TODO %? :work:\n\n")
-        ("n" "Note"
-         entry (file+headline ,org-default-notes-file "Notes")
-         "* %?\n\n  %i\n")
         ("b" "Bookmark"
          entry (file+headline ,(expand-file-name "Bookmarks.org" org-directory) "Bookmarks")
          "* %?\n\n  %c%i\n")))
