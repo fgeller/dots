@@ -6,12 +6,6 @@
   (defalias 'go-play-buffer nil)
   (defalias 'go-play-region nil)
 
-  ;; (setq lsp-go-goimports-local "refurbed")
-  ;; (setq lsp-go-analyses
-  ;; 	'(("unreachable" . t)
-  ;; 	  ("unusedparams" . t)))
-  ;; https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
-
   (require 'lsp-mode)
 
   (lsp-register-custom-settings
@@ -29,13 +23,9 @@
   (subword-mode 1)
   (yas-minor-mode)
 
-  ;; (with-eval-after-load 'lsp-mode
-  ;;   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\vue\\'")
-  ;;   ;; or
-  ;;   (add-to-list 'lsp-file-watch-ignored-files "[/\\\\].+\\.qtpl\\.go\\'"))
-
   (setq tab-width 4)
 
+  (setq display-fill-column-indicator-character ?\u2502)
   (display-fill-column-indicator-mode +1)
 
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
