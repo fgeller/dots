@@ -1,10 +1,10 @@
 (install 'company)
 (setq company-minimum-prefix-length 1
       company-idle-delay 0.1)
-;; TODO limit company backends?
+
 (after 'company
   (setq company-backends '(company-capf company-files company-yasnippet)))
-(global-company-mode)
+(global-company-mode +1)
 
 (after 'company
   (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
@@ -13,12 +13,39 @@
   (setq company-auto-commit nil)
   (setq company-auto-complete-chars nil))
 
+;; (install 'corfu)
+;; (setq corfu-auto t
+;;       corfu-quit-no-match t
+;;       corfu-count 5
+;;       ;; corfu-max-width 60
+;;       corfu-auto-prefix 1
+;;       corfu-auto-delay 0.1
+;;       tab-always-indent 'complete)
+
+;; (defun corfu-beginning-of-prompt ()
+;;   "Move to beginning of completion input."
+;;   (interactive)
+;;   (corfu--goto -1)
+;;   (goto-char (car completion-in-region--data)))
+
+;; (defun corfu-end-of-prompt ()
+;;   "Move to end of completion input."
+;;   (interactive)
+;;   (corfu--goto -1)
+;;   (goto-char (cadr completion-in-region--data)))
+
+;; (after 'corfu
+;;   (define-key corfu-map [remap move-beginning-of-line] #'corfu-beginning-of-prompt)
+;;   (define-key corfu-map [remap move-end-of-line] #'corfu-end-of-prompt)
+;;   (define-key corfu-map (kbd "<tab>") 'corfu-complete)
+;;   (define-key corfu-map (kbd "<return>") nil)
+;;   (define-key corfu-map (kbd "RET") nil))
+;; (corfu-global-mode)
+
 ;; Don't forget that M-n binding
 (install 'consult)
 (install 'consult-flycheck)
 (install 'consult-lsp)
-
-
 
 (install 'embark)
 (install 'embark-consult)
