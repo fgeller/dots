@@ -88,7 +88,9 @@ key    region
 (defun mark-whole-line ()
   (beginning-of-line)
   (set-mark (point))
-  (end-of-line))
+  (end-of-line)
+  (unless (eobp)
+    (forward-char 1)))
 
 (defun mark-inside-pair ()
   (dispatch-with-pair 'mark-inside-pair-strings
