@@ -30,7 +30,7 @@ Available bindings:
 
 \\{modal-mode-map}
 "
-  nil " modal" modal-mode-map :group 'modal)
+  :lighter " modal" :keymap modal-mode-map :group 'modal)
 
 ;;;###autoload
 (define-globalized-minor-mode global-modal-mode

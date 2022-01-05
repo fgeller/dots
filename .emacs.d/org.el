@@ -32,7 +32,7 @@
 
 (setq org-agenda-sticky t)
 
-(add-hook 'org-mode-hook '(lambda () (interactive) (font-lock-mode 1)))
+(add-hook 'org-mode-hook #'(lambda () (interactive) (font-lock-mode 1)))
 (add-hook 'org-mode-hook 'org-hide-block-all)
 
 (setq
