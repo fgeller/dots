@@ -99,6 +99,8 @@
     (define-key map (kbd "en") 'flycheck-next-error)
     (define-key map (kbd "ep") 'flycheck-previous-error)
 
+    (define-key map (kbd "tp") 'tree-edit-goto-desired-parent)
+
     (define-key map (kbd "va") 'vc-annotate)
     (define-key map (kbd "vs") 'diff-hl-show-hunk)
     (define-key map (kbd "vn") 'diff-hl-next-hunk)
