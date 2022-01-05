@@ -143,6 +143,10 @@
  `(flycheck-error-list-id ((t (:foreground "#f44336" :background nil))))
  `(flycheck-warning ((t (:inherit warning))))
 
+ `(diff-hl-margin-insert ((t (:background "#4caf50"))))
+ `(diff-hl-margin-delete ((t (:background "#f44336"))))
+ `(diff-hl-margin-change ((t (:background "#1565c0"))))
+
  ;; `(magit-bisect-bad ((t (:background nil :foreground nil))))
  ;; `(magit-bisect-good ((t (:background nil :foreground nil))))
  ;; `(magit-bisect-skip ((t (:background nil :foreground nil))))

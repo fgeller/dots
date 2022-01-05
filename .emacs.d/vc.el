@@ -17,3 +17,10 @@
 
 (install 'diff-hl)
 (global-diff-hl-mode)
+(diff-hl-margin-mode +1)
+
+(setq diff-hl-margin-symbols-alist '((insert . " ")
+				     (delete . " ")
+				     (change . " ")
+				     (unknown . " ")
+				     (ignored . " ")))
