@@ -1,6 +1,15 @@
 (install 'go-mode)
 
 ;; (setq lsp-go-gopls-server-args '("-logfile" "/home/fgeller/tmp/gopls.log" "-rpc.trace"))
+(defun pp-n (n)
+  (when n
+    (format "%s [%s]" (tsc-node-to-sexp n)
+	    (buffer-substring (tsc-node-start-position n)
+			      (tsc-node-end-position n)))))
+
+;; (install 'tree-sitter)
+(install 'tree-sitter-langs)
+(install 'reazon)
 
 (defun fg/golang-customizations ()
   (defalias 'go-play-buffer nil)
@@ -20,6 +29,17 @@
   (lsp-deferred)
   (lsp-diagnostics-modeline-mode)
 
+  (require 'tree-edit-mode)
+  (setq tree-edit-mark-current-node-p t)
+  (setq tree-edit-desired-node-types '(function_declaration method_declaration for_statement if_statement))
+
+  (define-key tree-edit-mode-map (kbd "I") 'tree-edit-goto-next-sibling)
+  (define-key tree-edit-mode-map (kbd "N") 'tree-edit-goto-prev-sibling)
+  (define-key tree-edit-mode-map (kbd "E") 'tree-edit-goto-child)
+  (define-key tree-edit-mode-map (kbd "O") 'tree-edit-goto-parent)
+
+  (tree-edit-mode +1)
+  
   (subword-mode 1)
   (yas-minor-mode)
 
