@@ -7,6 +7,8 @@
  org-special-ctrl-k t
  org-special-ctrl-a t)
 
+(setq org-return-follows-link t)
+
 (setq calendar-week-start-day 1)
 
 (defalias 'calendar-absolute-from-iso 'calendar-iso-to-absolute)
