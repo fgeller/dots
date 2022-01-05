@@ -9,9 +9,9 @@
 ;; |                    ||  surround     ||     delete    || query-repl-rx ||  eol-insert   || olb-insert    ||   join-line   ||forward-to-char|| avy-goto-char ||    isearch    ||consult-git-grp||  prev-sym-occ || next-sym-occ  ||consult-goto-line |
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
-;; |                        ||  replace-sel  ||     insert    ||yank-kill-ring ||               ||               ||  beg-buffer   ||  back-symbl   ||   page-down   ||    page-up    ||   fwd-symbl   ||  end-buffer   ||                               |
+;; |                        || replace-char  ||     insert    ||yank-kill-ring ||               ||               ||  beg-buffer   ||  back-symbl   ||   page-down   ||    page-up    ||   fwd-symbl   ||  end-buffer   ||                               |
 ;; |         control        ||       a       ||       s       ||       h       ||       t       ||       g       ||       y       ||       n       ||       e       ||       o       ||       i       ||       '       ||              return           |
-;; |                        || replace-char  ||   insert-char ||      yank     ||     kill      ||  consult-buf  || begining-line ||     left      ||     down      ||      up       ||     right     ||   end-line    ||                               |
+;; |                        ||  replace-sel  ||   insert-char ||      yank     ||     kill      ||  consult-buf  || begining-line ||     left      ||     down      ||      up       ||     right     ||   end-line    ||                               |
 ;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
 ;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
 ;; |                              ||  ivy-resume   ||               ||               ||               || backward-sexp ||bol-modal-deact||eol-modal-deact||               || xref-jump-back||               ||                                          |
@@ -63,6 +63,8 @@
 
     (define-key map (kbd "hb") 'help-go-back)
     (define-key map (kbd "hf") 'help-go-back)
+
+    (define-key map (kbd "b") 'browse-url)
 
     (define-key map (kbd "cc") 'with-editor-finish)
     (define-key map (kbd "cm") 'recompile)
