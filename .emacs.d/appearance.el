@@ -37,9 +37,9 @@
   (set-fontset-font t '(#x1f000 . #x1faff)
 		    (font-spec :family "Noto Color Emoji")))
 
+(set-face-attribute 'default nil :font "Noto Sans Mono-16:weight=book")
 (setq default-frame-alist
       (append (list
-	       '(font . "Hasklig-10:weight=book")
 	       '(left-fringe . 16)
 	       '(right-fringe . 16)
                '(vertical-scroll-bars . nil)
