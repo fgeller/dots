@@ -26,6 +26,7 @@
 (install 'highlight-thing)
 (global-highlight-thing-mode +1)
 (setq highlight-thing-prefer-active-region t)
+(setq highlight-thing-delay-seconds 0.1)
 
 (defun fg/add-todo-keyword ()
   (font-lock-add-keywords nil '(("\\(TODO\\|FIXME\\)" 1 font-lock-warning-face prepend))))

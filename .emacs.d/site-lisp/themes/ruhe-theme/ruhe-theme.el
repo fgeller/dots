@@ -59,7 +59,7 @@
  `(hi-yellow ((t (:inherit highlight))))
  `(match ((t (:inherit highlight))))
  `(pulse-highlight ((t (:background "#DCEDC8"))))
- `(highlight-thing ((t (:background "#ffd54f" :distant-foreground "#000000"))))
+ ;; `(highlight-thing ((t (:background "#ffd54f" :distant-foreground "#000000"))))
  `(pulse-highlight-start-face ((t (:background "#ffd54f"))))
  `(minibuffer-prompt ((t (:foreground "#eceff1" :background "#2196f3"))))
  `(tooltip ((t (:foreground "#eceff1" :background "#78909c"))))
