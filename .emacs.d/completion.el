@@ -123,7 +123,7 @@
   (consult-customize
    consult-ripgrep consult-git-grep consult-grep
    consult-bookmark consult-recent-file
-   consult--source-file consult--source-project-file consult--source-bookmark
+   ;;consult--source-file consult--source-project-file consult--source-bookmark
    fg/consult--source-git-ls-files
    fg/consult--source-projects
    :preview-key (list :debounce 0.5 (kbd "C-M-."))
