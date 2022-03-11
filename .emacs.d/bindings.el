@@ -245,7 +245,7 @@
 (define-key modal-mode-map (kbd ".") 'xref-find-definitions)
 (define-key modal-mode-map (kbd ">") 'xref-pop-marker-stack)
 (define-key modal-mode-map (kbd "/") 'undo)
-(define-key modal-mode-map (kbd "?") nil)
+(define-key modal-mode-map (kbd "?") 'xref-find-references)
 
 (define-key modal-mode-map (kbd "S-<left>") 'shrink-window-horizontally)
 (define-key modal-mode-map (kbd "S-<right>") 'enlarge-window-horizontally)
