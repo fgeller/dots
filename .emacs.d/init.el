@@ -110,6 +110,7 @@
 (load-custom "~/.emacs.d/org.el")
 (load-custom "~/.emacs.d/work.el")
 (load-custom "~/.emacs.d/markdown.el")
+(load-custom "~/.emacs.d/protobuf.el")
 
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
