@@ -1,6 +1,5 @@
 (install 'lsp-mode)
 (install 'lsp-ui)
-(install 'lsp-origami)
 
 (setq
  lsp-ui-sideline-show-hover nil
@@ -29,7 +28,6 @@
 	'(orderless)))
 
 (add-hook 'lsp-after-open-hook 'fg/lsp-customizations)
-(add-hook 'lsp-after-open-hook #'lsp-origami-try-enable)
 
 ;; TODO disable unused ones?
 ;;   (dolist (feature '(lsp-ui-peek lsp-ui-sideline lsp-ui-doc lsp-ui-imenu))

@@ -77,11 +77,6 @@
     (define-key map (kbd "dn") 'fg/go-goto-next-error)
     (define-key map (kbd "dp") 'fg/go-goto-previous-error)
 
-    (define-key map (kbd "fo") 'origami-open-node)
-    (define-key map (kbd "fO") 'origami-open-all-nodes)
-    (define-key map (kbd "fc") 'origami-close-node)
-    (define-key map (kbd "fC") 'origami-close-all-nodes)
-    
     (define-key map (kbd "lb") 'dap-breakpoint-add)
     (define-key map (kbd "le") 'consult-lsp-diagnostics)
     (define-key map (kbd "ll") 'lsp)
