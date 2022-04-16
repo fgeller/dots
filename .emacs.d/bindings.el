@@ -68,7 +68,7 @@
 
     (define-key map (kbd "cc") 'with-editor-finish)
     (define-key map (kbd "cm") 'recompile)
-    (define-key map (kbd "cM") 'compile)
+    (define-key map (kbd "cM") 'fg/project-compile)
     (define-key map (kbd ";") 'comment-dwim)
 
     (define-key map (kbd "dt") 'fg/go-run-this-test)

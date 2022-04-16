@@ -13,3 +13,8 @@
 (setq compilation-scroll-output 'first-error)
 (setq compilation-always-kill t)
 
+(defun fg/project-compile ()
+  (interactive)
+  (let* ((default-directory (locate-dominating-file "." ".git")))
+    (call-interactively 'compile)))
+

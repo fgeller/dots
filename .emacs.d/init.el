@@ -98,6 +98,7 @@
 (load-custom "~/.emacs.d/mode-line.el")
 (load-custom "~/.emacs.d/windows.el")
 (load-custom "~/.emacs.d/completion.el")
+(load-custom "~/.emacs.d/compilation.el")
 (load-custom "~/.emacs.d/search.el")
 (load-custom "~/.emacs.d/bindings.el")
 (load-custom "~/.emacs.d/vc.el")
