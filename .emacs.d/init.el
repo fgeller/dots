@@ -81,6 +81,7 @@
 
 (setq-default
  fill-column 80
+ tab-width 4
  custom-file (file-name "~/.emacs.d/custom.el")
  require-final-newline t)
 
@@ -112,6 +113,7 @@
 (load-custom "~/.emacs.d/work.el")
 (load-custom "~/.emacs.d/markdown.el")
 (load-custom "~/.emacs.d/protobuf.el")
+(load-custom "~/.emacs.d/html.el")
 
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
