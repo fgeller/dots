@@ -14,7 +14,7 @@
 (setq
  init-file-name-handler-alist file-name-handler-alist
  read-process-output-max (* 10 1024 1024)
- gc-cons-threshold (* 5 1024 1024)
+ gc-cons-threshold (* 100 1024 1024)
  file-name-handler-alist nil)
 
 (defalias 'after 'with-eval-after-load)
