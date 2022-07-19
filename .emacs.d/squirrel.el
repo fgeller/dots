@@ -1,3 +1,5 @@
+(install 'tree-sitter)
+(install 'tree-sitter-langs)
 (require 'squirrel)
 
 (defun fg/enable-squirrel ()
