@@ -7,10 +7,6 @@
   (require 'tree-sitter-langs)
   (when (and (not squirrel-mode)
 			 (assoc major-mode tree-sitter-major-mode-language-alist))
-	(define-key modal-mode-map (kbd "I") 'squirrel-goto-next)
-	(define-key modal-mode-map (kbd "N") 'squirrel-goto-previous)
-	(define-key modal-mode-map (kbd "E") 'squirrel-goto-first-child)
-	(define-key modal-mode-map (kbd "O") 'squirrel-goto-parent)
 	(add-hook 'squirrel-motion-hook 'squirrel-mark-current-node)
 	(squirrel-mode +1)))
 

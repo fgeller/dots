@@ -7,6 +7,30 @@
       avy-goto-word-0-regexp "\\b\\sw"
       avy-timeout-seconds 0.2)
 
+(defun fg/back-node-or-word ()
+  (interactive)
+  (if squirrel-mode
+	  (call-interactively 'squirrel-goto-previous)
+	(call-interactively 'backward-word)))
+
+(defun fg/forward-node-or-word ()
+  (interactive)
+  (if squirrel-mode
+	  (call-interactively 'squirrel-goto-next)
+	(call-interactively 'forward-word)))
+
+(defun fg/down-node-or-scroll ()
+  (interactive)
+  (if squirrel-mode
+	  (call-interactively 'squirrel-goto-first-child)
+	(call-interactively 'fg/scroll-up-half-page)))
+
+(defun fg/up-node-or-scroll ()
+  (interactive)
+  (if squirrel-mode
+	  (call-interactively 'squirrel-goto-parent)
+	(call-interactively 'fg/scroll-down-half-page)))
+
 (defun fg/jump-to-char ()
   (interactive)
   (xref-push-marker-stack)
