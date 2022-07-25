@@ -12,8 +12,12 @@
 (require 'tree-sitter)
 
 (defun squirrel--goto-node (next-node-finder)
-  (let* ((current-node (squirrel--ensure-current-node))
-		 (next-node (funcall next-node-finder current-node)))
+  (let* ((node-active-p (and squirrel--current-node
+							 (squirrel--point-within-node-p)))
+		 (current-node (squirrel--ensure-current-node))
+		 (next-node (if node-active-p
+						(funcall next-node-finder current-node)
+					  current-node)))
 	(when next-node
 	  (squirrel--log "motion: current-node=%s " (squirrel--node-to-string current-node))
 	  (squirrel--log "motion: next-node=%s " (squirrel--node-to-string next-node))
