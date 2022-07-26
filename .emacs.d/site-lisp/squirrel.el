@@ -115,7 +115,7 @@
 (define-minor-mode squirrel-mode
   "Minor mode that provides navigation and mark functions for tree-sitter supported languages.
 "
-  :lighter " sq"
+  :lighter " 🐿️"
   :keymap squirrel-mode-map
   :group 'squirrel
   (tree-sitter--handle-dependent squirrel-mode 'squirrel--setup 'squirrel--teardown))
