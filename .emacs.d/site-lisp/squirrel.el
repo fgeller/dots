@@ -13,7 +13,7 @@
 
 (defun squirrel--goto-node (next-node-finder)
   (let* ((node-active-p (and squirrel--current-node
-							 (squirrel--point-within-node-p)))
+							 (squirrel--point-at-node-start-or-end-p)))
 		 (current-node (squirrel--ensure-current-node))
 		 (next-node (if node-active-p
 						(funcall next-node-finder current-node)
@@ -50,17 +50,23 @@
 
 ;; TODO remove?
 (defun squirrel-mark-current-node ()
-  (let* ((c (squirrel--ensure-current-node)))
+  (let* ((c (squirrel--ensure-current-node))) ;; TODO fail if there's no node rather than ensure?
+	(squirrel--log "mark current node: type=[%s]" (tsc-node-type c))
 	(set-mark (tsc-node-end-position c)))) ;; TODO push-mark?
 
-(defun squirrel--point-within-node-p ()
+(defun squirrel--point-at-node-start-or-end-p ()
   (let ((p (point)))
-	(or (= p (tsc-node-start-position squirrel--current-node))
-		(= p (tsc-node-end-position squirrel--current-node)))))
+	(and squirrel--current-node
+		 (or (= p (tsc-node-start-position squirrel--current-node))
+			 (= p (tsc-node-end-position squirrel--current-node))))))
 
 (defun squirrel--ensure-current-node ()
   (when (or (not squirrel--current-node)
-			(not (squirrel--point-within-node-p)))
+			(not (squirrel--point-at-node-start-or-end-p)))
+	;; e.g. fmt.Println("hello")|
+	;; rather than selecting the outer block, i expect the argument list ("hello") to be selected
+	(when (not (tsc-node-named-p (tree-sitter-node-at-pos)))
+	  (backward-char 1))
 	(setq squirrel--current-node (tree-sitter-node-at-pos :named)))
   (squirrel--log "ensure-current-node: n=[%s]" (squirrel--node-to-string squirrel--current-node))
   squirrel--current-node)
