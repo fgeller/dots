@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 (setq-default mode-line-format
 	      '("%e"
 		mode-line-front-space
@@ -12,9 +14,19 @@
 		evil-mode-line-tag
 		(vc-mode vc-mode)
 		"  "
-		;;mode-line-modes
+		mode-line-modes
 		mode-line-misc-info
 		mode-line-end-spaces))
+
+(install 'diminish)
+(diminish 'company-mode)
+(diminish 'modal-mode)
+(diminish 'highlight-thing-mode)
+(diminish 'yas-minor-mode)
+(diminish 'eldoc-mode)
+(diminish 'tree-sitter-mode)
+(diminish 'subword-mode)
+(diminish 'hi-lock-mode)
 
 (defun modal-mode-visual-toggle ()
   (interactive)
