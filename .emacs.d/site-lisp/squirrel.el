@@ -45,8 +45,21 @@
   (squirrel--goto-node
    (lambda (c) (tsc-get-nth-named-child c 0))))
 
-;; TODO squirrel-goto-node-start
-;; TODO squirrel-goto-node-end
+(defun squirrel-goto-node-start ()
+  (interactive)
+  (let* ((current-node (squirrel--ensure-current-node))
+		 (start-pos (tsc-node-start-position current-node)))
+	(unless (= (point) start-pos)
+	  (goto-char start-pos)
+	  (run-hooks 'squirrel-motion-hook))))
+
+(defun squirrel-goto-node-end ()
+  (interactive)
+  (let* ((current-node (squirrel--ensure-current-node))
+		 (end-pos (tsc-node-end-position current-node)))
+	(unless (= (point) end-pos)
+	  (goto-char end-pos)
+	  (run-hooks 'squirrel-motion-hook))))
 
 ;; TODO remove?
 (defun squirrel-mark-current-node ()
