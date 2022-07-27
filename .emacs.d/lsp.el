@@ -1,5 +1,6 @@
 (install 'lsp-mode)
 (install 'lsp-ui)
+(install 'lsp-marksman)
 
 (setq
  lsp-ui-sideline-show-hover nil
