@@ -19,14 +19,15 @@
 		mode-line-end-spaces))
 
 (install 'diminish)
-(diminish 'company-mode)
-(diminish 'modal-mode)
-(diminish 'highlight-thing-mode)
-(diminish 'yas-minor-mode)
-(diminish 'eldoc-mode)
-(diminish 'tree-sitter-mode)
-(diminish 'subword-mode)
-(diminish 'hi-lock-mode)
+
+(after 'company (diminish 'company-mode))
+(after 'modal (diminish 'modal-mode))
+(after 'highlight-thing (diminish 'highlight-thing-mode))
+(after 'yasnippet (diminish 'yas-minor-mode))
+(after 'eldoc (diminish 'eldoc-mode))
+(after 'tree-sitter (diminish 'tree-sitter-mode))
+(after 'subword (diminish 'subword-mode))
+(after 'hi-lock (diminish 'hi-lock-mode))
 
 (defun modal-mode-visual-toggle ()
   (interactive)
