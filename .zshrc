@@ -29,7 +29,7 @@ export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
 export PATH="~/.node_modules/bin:$PATH"
 export PATH="/home/fgeller/.yarn/bin:$PATH"
 
-cdpath=(~ ~/src/github.com/fgeller ~/src/gitlab.com/refurbed)
+cdpath=(~ ~/src/github.com/fgeller)
 
 PS1='%F{244}%1~%f %(?.%F{green}%#%f.%F{red}%#%f) '
 
@@ -71,4 +71,3 @@ function maybeJSON() {
     #docker logs --follow 3a8ac5b98381 |& grep "^\{" | while read l ; do echo $l ; done | jq
 }
 
-alias goose-local='goose -dir ~/src/gitlab.com/refurbed/platform/misc/migrations/ postgres "dbname=refurbed password=refurbed user=refurbed sslmode=disable"'

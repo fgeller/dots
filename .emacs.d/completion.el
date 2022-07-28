@@ -109,7 +109,7 @@
     :items
     ,(lambda ()
        (let* (ps)
-	 (dolist (dir '("~/src/github.com/fgeller" "~/src/gitlab.com/refurbed"))
+	 (dolist (dir '("~/src/github.com/fgeller"))
 	   (let* ((p (expand-file-name dir))
 		  (cmd (format "ls -d %s/*/" p))
 		  (ds (split-string (shell-command-to-string cmd) "\n" t)))

@@ -29,7 +29,7 @@ export PATH=/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:$PATH
 export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
 export PATH="~/.node_modules/bin:$PATH"
 
-export CDPATH=".:~:~/src/github.com/fgeller:~/src/gitlab.com/refurbed"
+export CDPATH=".:~:~/src/github.com/fgeller"
 
 export TERM=xterm-24bit
 export EDITOR="emacsclient -nw -a /usr/bin/nano"
