@@ -107,6 +107,8 @@
 
  `(consult-file ((t (:inherit nil))))
 
+ `(eshell-prompt ((t (:foreground "#aaaaaa" :background nil))))
+
  `(lsp-headerline-breadcrumb-path-face ((t (:inherit nil))))
  `(lsp-headerline-breadcrumb-symbols-face ((t (:inherit nil))))
  `(lsp-lsp-flycheck-error-unnecessary-face ((t (:foreground "#ff5722"))))
