@@ -107,7 +107,6 @@
 (load-custom "~/.emacs.d/snippets.el")
 (load-custom "~/.emacs.d/lsp.el")
 (load-custom "~/.emacs.d/dap.el")
-(load-custom "~/.emacs.d/squirrel.el")
 (load-custom "~/.emacs.d/go.el")
 (load-custom "~/.emacs.d/emacs-lisp.el")
 (load-custom "~/.emacs.d/org.el")
