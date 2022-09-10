@@ -1,0 +1,5 @@
+.DS_Store
+*.elc
+lint.log
+bin
+test-assets/large-json-file.json
