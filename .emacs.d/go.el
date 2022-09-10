@@ -21,14 +21,6 @@
   (lsp-deferred)
   (lsp-diagnostics-modeline-mode)
 
-  ;; (require 'squirrel)
-  ;; (define-key squirrel-mode-map (kbd "I") 'squirrel-goto-next)
-  ;; (define-key squirrel-mode-map (kbd "N") 'squirrel-goto-previous)
-  ;; (define-key squirrel-mode-map (kbd "E") 'squirrel-goto-first-child)
-  ;; (define-key squirrel-mode-map (kbd "O") 'squirrel-goto-parent)
-  ;; (add-hook 'squirrel-motion-hook 'squirrel-mark-current-node nil t)
-  ;; (squirrel-mode +1)
-  
   (subword-mode 1)
   (yas-minor-mode)
 
