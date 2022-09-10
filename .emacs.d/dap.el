@@ -1,4 +1,5 @@
-(install 'dap-mode)
-;(dap-go-setup)
+;; (install 'dap-mode)
+(install 'dap-dlv-go)
+
 (after 'go-mode
   (require 'dap-go))
