@@ -72,6 +72,7 @@
     (define-key map (kbd ";") 'comment-dwim)
 
     (define-key map (kbd "dt") 'fg/go-run-this-test)
+    (define-key map (kbd "dT") 'fg/go-run-all-tests)
     (define-key map (kbd "dr") 'fg/go-recompile)
     (define-key map (kbd "di") 'fg/imenu)
     (define-key map (kbd "dn") 'fg/go-goto-next-error)
