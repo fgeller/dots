@@ -13,8 +13,16 @@
 (setq compilation-scroll-output 'first-error)
 (setq compilation-always-kill t)
 
+(defun fg/guess-project-directory ()
+  (let* ((dd default-directory)
+		 (git (locate-dominating-file "." ".git"))
+		 (mk (locate-dominating-file "." "makefile")))
+	(or git
+		mk
+		dd)))
+
 (defun fg/project-compile ()
   (interactive)
-  (let* ((default-directory (locate-dominating-file "." ".git")))
+  (let* ((default-directory (fg/guess-project-directory)))
     (call-interactively 'compile)))
 
