@@ -1,5 +1,6 @@
 # Lines configured by zsh-newuser-install
 setopt autocd extendedglob nomatch
+setopt interactive_comments
 bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
