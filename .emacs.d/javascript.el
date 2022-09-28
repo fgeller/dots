@@ -18,8 +18,4 @@
   (setq-local indent-tabs-mode nil)
   (setq-local typescript-indent-level 2)
   (setq-local js-indent-level 2))
-
 (add-hook 'js-mode-hook 'fg/js)
-
-(install 'typescript-mode)
-(add-hook 'typescript-mode-hook 'fg/js)
