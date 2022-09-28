@@ -20,6 +20,7 @@ setopt share_history
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
+export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
 export GOPATH=$HOME
 export GO111MODULE=on
@@ -72,3 +73,4 @@ function maybeJSON() {
     #docker logs --follow 3a8ac5b98381 |& grep "^\{" | while read l ; do echo $l ; done | jq
 }
 
+eval "$(direnv hook zsh)"
