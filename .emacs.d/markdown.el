@@ -36,6 +36,7 @@
 
 (defun fg/markdown-customizations ()
   (require 'lsp-mode)
-  (lsp-deferred))
+  ;; (lsp-deferred)
+  )
 
 (add-hook 'markdown-mode-hook 'fg/markdown-customizations)
