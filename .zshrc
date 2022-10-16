@@ -31,9 +31,12 @@ export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
 export PATH="~/.node_modules/bin:$PATH"
 export PATH="/home/fgeller/.yarn/bin:$PATH"
 
-cdpath=(~ ~/src/github.com/fgeller)
+cdpath=(~)
+for pth in ~/src/github.com/* ; do cdpath+=($pth) ; done
+export cdpath
 
-PS1='%F{244}%1~%f %(?.%F{green}%#%f.%F{red}%#%f) '
+export PS1='%F{244}%1~%f %(?.%F{green}%#%f.%F{red}%#%f) '
+export RPROMPT='' # ensure empty right side
 
 # source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
@@ -51,10 +54,11 @@ alias g='git'
 alias gll='git ll'
 alias pc='pass show -c'
 alias k='kubectl'
+alias j='just'
 
 if [ Darwin = `uname` ]; then
    export NVM_DIR="$HOME/.nvm"
-   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
    source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
    source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
    export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
