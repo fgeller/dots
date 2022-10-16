@@ -1,4 +1,16 @@
 \set QUIET 1
+
+-- no paging by default
 \pset pager off
+
+-- additional highlighting for null
 \pset null '(null)'
+
+-- only whitespace for the prompt for multi-line commands, default '%/%R%x%# '
+\set PROMPT2 '%w'
+
+-- automatically switch between horizontal and vertical output
 \x auto
+
+-- full table border
+\pset border 2
