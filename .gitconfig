@@ -36,6 +36,7 @@
     ad = add
     c = commit
     co = checkout
+	cp = cherry-pick
     d = diff --word-diff=color
     dc = diff --word-diff=color --cached
     dw = "!bash -c \"git diff --word-diff=color | sed 's/\t/» /g'\""
@@ -63,7 +64,6 @@
 [magit]
         hideCampaign = true
 [gpg]
-	program = /bin/gpg
 [init]
         defaultBranch = main
 [gitlab]
