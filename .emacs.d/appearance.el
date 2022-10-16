@@ -37,7 +37,8 @@
   (set-fontset-font t '(#x1f000 . #x1faff)
 		    (font-spec :family "Noto Color Emoji")))
 
-(set-face-attribute 'default nil :font "Noto Sans Mono-16:weight=book")
+(cond (mac-p (set-face-attribute 'default nil :font "Noto Sans Mono-14:weight=book"))
+	  (t (set-face-attribute 'default nil :font "Noto Sans Mono-16:weight=book")))
 (setq default-frame-alist
       (append (list
 	       '(left-fringe . 16)
