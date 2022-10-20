@@ -13,3 +13,4 @@
 (add-hook 'typescript-mode-hook 'fg/ts)
 
 (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescript-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . typescript-mode))
