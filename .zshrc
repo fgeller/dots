@@ -70,5 +70,8 @@ if [ Darwin = `uname` ]; then
 	source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 	export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 	export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
-	export TERM=xterm-24bit
 fi
+
+export TERM=xterm-24bit
+# needed when using ssh
+export GPG_TTY=$(tty)
