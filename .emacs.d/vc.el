@@ -24,3 +24,6 @@
 				     (change . " ")
 				     (unknown . " ")
 				     (ignored . " ")))
+(after 'magit
+(define-key magit-hunk-section-map (kbd "M-RET") 'magit-diff-visit-worktree-file)
+)
