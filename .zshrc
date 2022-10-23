@@ -60,6 +60,11 @@ function maybeJSON() {
     tee >(grep -v "^\{") | grep "^\{" | jq -c .
 }
 
+function em {
+    emacsclient -nw --eval "(progn (magit-status \"$PWD/$(git rev-parse --show-cdup)\") (delete-other-windows))"
+}
+
+
 if [ Darwin = `uname` ]; then
 	eval "$(/opt/homebrew/bin/brew shellenv)"
 	source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
