@@ -1,4 +1,4 @@
-(set-display-table-slot standard-display-table 'vertical-border ? )
+(set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?┃))
 
 (when tool-bar-mode (tool-bar-mode -1))
 (menu-bar-mode -1)  ;; shows full-screen button for mac port
