@@ -120,7 +120,6 @@
 (load-custom "~/.emacs.d/typescript.el")
 (load-custom "~/.emacs.d/sql.el")
 
-
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
@@ -130,10 +129,7 @@
 (install 'exec-path-from-shell)
 (exec-path-from-shell-initialize)
 
-(server-start)
-
-(setq
- file-name-handler-alist init-file-name-handler-alist)
+(setq file-name-handler-alist init-file-name-handler-alist)
 
 (message "%sms to load init.el (%.00fms measured)" (format-time-string "%3N" (time-subtract (current-time) global-startup)) (* time-measured-blocks 1000.0))
 (message "emacs init time: %s" (emacs-init-time))
