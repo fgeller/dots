@@ -38,9 +38,33 @@
 (define-key Buffer-menu-mode-map (kbd "C-o") nil)
 ;; so we can rely on C-o to toggle modal mode
 
+
+;; hacks to get esc to work as a keypress (not M- or ESC ESC ESC) in terminal
+;; https://evil.readthedocs.io/en/latest/faq.html?highlight=terminal#problems-with-the-escape-key-in-the-terminal
+(install 'evil)
+(require 'evil-core)
+(evil-esc-mode +1)
+
+(defun fg/esc (map)
+  "Drops some guards from evil's `evil-esc' so the ESC event is always translated"
+  (if (and (let ((keys (this-single-command-keys)))
+             (and (> (length keys) 0)
+                  (= (aref keys (1- (length keys))) ?\e)))
+           (sit-for evil-esc-delay))
+      (prog1 [escape]
+        (when defining-kbd-macro
+          (end-kbd-macro)
+          (setq last-kbd-macro (vconcat last-kbd-macro [escape]))
+          (start-kbd-macro t t)))
+    map))
+(advice-add 'evil-esc :override 'fg/esc)
+
 (install 'modal)
 (global-modal-mode +1)
+
 (define-key global-map (kbd "C-o") 'modal-mode-deactivate)
+;; this would prevent access to M- in tty
+;; (define-key global-map (kbd "ESC") 'modal-mode-activate)
 (define-key global-map (kbd "<escape>") 'modal-mode-activate)
 
 (define-key global-map (kbd "C-j") 'yas-expand)
