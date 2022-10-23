@@ -71,7 +71,7 @@
  `(mode-line-emphasis ((t (:inherit mode-line-highlight))))
  `(header-line ((t (:background "#f1f1f1" :foreground "#000000"))))
  `(mode-line-inactive ((t (:inherit mode-line))))
- `(vertical-border ((t (:background "#000000" :foreground "#000000" :underline nil))))
+ `(vertical-border ((t (:background "#ffffff" :foreground "#cfd8dc" :underline nil))))
 
  `(region ((t (:background "#BBDEFB"))))
  `(secondary-selection ((t (:background "#cfd8dc" :distant-foreground "#373b41"))))
