@@ -215,7 +215,7 @@
 (define-key modal-mode-map (kbd "p") 'fg/consult-line)
 (define-key modal-mode-map (kbd "P") 'occur)
 (define-key modal-mode-map (kbd ";") 'fg/grep)
-(define-key modal-mode-map (kbd ":") 'nil)
+(define-key modal-mode-map (kbd ":") 'fg/rg)
 (define-key modal-mode-map (kbd "[") 'fg/move-to-previous-symbol-occurrence)
 (define-key modal-mode-map (kbd "{") 'fg/move-to-previous-word-occurrence)
 (define-key modal-mode-map (kbd "]") 'fg/move-to-next-symbol-occurrence)

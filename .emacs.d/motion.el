@@ -85,6 +85,11 @@
   (xref-push-marker-stack)
   (consult-git-grep))
 
+(defun fg/rg ()
+  (interactive)
+  (xref-push-marker-stack)
+  (consult-ripgrep))
+
 (defun fg/jump ()
   (interactive)
   (xref-push-marker-stack)
