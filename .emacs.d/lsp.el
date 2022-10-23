@@ -12,6 +12,7 @@
  lsp-ui-sideline-enable t
  lsp-modeline-diagnostics-scope :file
  lsp-headerline-breadcrumb-enable t
+ lsp-headerline-breadcrumb-icons-enable nil
  lsp-eldoc-render-all nil
  lsp-completion-provider :none
  lsp-idle-delay 1.0
