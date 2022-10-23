@@ -28,8 +28,8 @@ export GOPROXY=https://proxy.golang.org
 
 export PATH=/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:$PATH
 export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
+export PATH=$PATH:/usr/sbin
 export PATH="~/.node_modules/bin:$PATH"
-export PATH="/home/fgeller/.yarn/bin:$PATH"
 
 cdpath=(~)
 for pth in ~/src/github.com/* ; do cdpath+=($pth) ; done
@@ -38,9 +38,7 @@ export cdpath
 export PS1='%F{244}%1~%f %(?.%F{green}%#%f.%F{red}%#%f) '
 export RPROMPT='' # ensure empty right side
 
-# source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-EDITOR='emacsclient'
+EDITOR='emacsclient -nw'
 
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
@@ -55,26 +53,17 @@ alias gll='git ll'
 alias pc='pass show -c'
 alias k='kubectl'
 alias j='just'
+alias e='emacsclient -nw'
 
-if [ Darwin = `uname` ]; then
-   export NVM_DIR="$HOME/.nvm"
-   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-   source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-   source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-   export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-   export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
-   export PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
-   export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
-   export PATH="/opt/homebrew/bin:$PATH"
-else
-    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-fi
 
 function maybeJSON() {
     tee >(grep -v "^\{") | grep "^\{" | jq -c .
-
-    #docker logs --follow 3a8ac5b98381 |& grep "^\{" | while read l ; do echo $l ; done | jq
 }
 
-eval "$(direnv hook zsh)"
+if [ Darwin = `uname` ]; then
+	eval "$(/opt/homebrew/bin/brew shellenv)"
+	source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+	export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+	export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
+	export TERM=xterm-24bit
+fi
