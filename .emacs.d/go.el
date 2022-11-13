@@ -38,9 +38,11 @@
 (add-hook 'go-mode-hook 'fg/golang-customizations)
 
 (defun fg/go-compilation-buffer-name ()
-  (format "*go-compilation[%s in %s]*"
-          (file-name-nondirectory (directory-file-name default-directory))
-          (file-name-directory (directory-file-name default-directory))))
+  (let* ((proj-path (expand-file-name (fg/guess-project-directory)))
+		 (proj-name (file-name-nondirectory (directory-file-name proj-path)))
+		 (loc (substring (directory-file-name (expand-file-name default-directory))
+						 (- (length proj-path) (length proj-name) 1))))
+	(format "*go-compilation[%s]*" loc)))
 
 (defun fg/go-compilation-toggle-truncate-lines ()
   (interactive)
