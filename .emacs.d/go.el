@@ -3,6 +3,9 @@
 ;; (setq lsp-go-gopls-server-args '("-logfile" "/home/fgeller/tmp/gopls.log" "-rpc.trace"))
 ;; (setq lsp-go-gopls-server-args '("serve" "--debug=localhost:6060"))
 
+(when (executable-find "gofumpt")
+  (setq lsp-go-use-gofumpt t))
+
 (defun fg/golang-customizations ()
   (defalias 'go-play-buffer nil)
   (defalias 'go-play-region nil)
