@@ -15,10 +15,11 @@
 (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
 (setq magit-refresh-status-buffer nil)
 
+(install 'git-link)
+
 (install 'diff-hl)
 (global-diff-hl-mode)
 (diff-hl-margin-mode +1)
-
 (setq diff-hl-margin-symbols-alist '((insert . " ")
 				     (delete . " ")
 				     (change . " ")
