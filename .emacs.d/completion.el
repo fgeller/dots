@@ -3,7 +3,7 @@
       company-idle-delay 0.1)
 
 (after 'company
-  (setq company-backends '(company-capf company-files company-yasnippet)))
+  (setq company-backends '((:separate company-yasnippet company-capf company-files))))
 (global-company-mode +1)
 
 (after 'company
