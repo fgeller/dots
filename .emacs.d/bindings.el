@@ -1,7 +1,7 @@
 ;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
 ;; |             ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
 ;; |     `       ||       1       ||       2      ||       3       ||       4       ||       5       ||       6       ||       7       ||       8       ||       9       ||       0       ||       -       ||       =       ||        backspace         |
-;; |  ucs-insert ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
+;; | emoji-search||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
 ;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
 ;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
 ;; |                    ||  rem-encl-pair|| zap-up-to-char|| duplicate-lin ||  bol-insert   || ola-insert    ||               ||backward-to-chr||               ||     occur     ||               || prev-word-occ || next-word-occ ||                  |
@@ -189,8 +189,8 @@
     (define-key map (kbd "e") 'kmacro-end-and-call-macro)
     map))
 
-(define-key modal-mode-map (kbd "M-`") 'ucs-insert)
-(define-key modal-mode-map (kbd "`") 'ucs-insert)
+(define-key modal-mode-map (kbd "M-`") 'emoji-search)
+(define-key modal-mode-map (kbd "`") 'emoji-search)
 (define-key modal-mode-map (kbd "<SPC>") 'fg/mark-select)
 (define-key modal-mode-map (kbd "+") 'increment-integer-at-point)
 (define-key modal-mode-map (kbd "-") 'decrement-integer-at-point)
