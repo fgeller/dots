@@ -103,6 +103,7 @@
     (define-key map (kbd "dp") 'fg/go-goto-previous-error)
 
     (define-key map (kbd "lb") 'dap-breakpoint-add)
+    (define-key map (kbd "lc") 'consult-compile-error)
     (define-key map (kbd "le") 'consult-lsp-diagnostics)
     (define-key map (kbd "ll") 'lsp)
     (define-key map (kbd "lR") 'lsp-rename)
