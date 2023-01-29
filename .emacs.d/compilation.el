@@ -12,6 +12,7 @@
 
 (setq compilation-scroll-output 'first-error)
 (setq compilation-always-kill t)
+(setq compilation-ask-about-save nil)
 
 (defun fg/guess-project-directory ()
   (let* ((dd default-directory)
