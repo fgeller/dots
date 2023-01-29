@@ -75,7 +75,8 @@
  dired-dwim-target t
  dired-listing-switches "-laGh"
  initial-major-mode 'fundamental-mode
- initial-scratch-message "")
+ initial-scratch-message ""
+ warning-minimum-level :emergency)
 
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
