@@ -9,17 +9,21 @@
  lsp-ui-sideline-show-code-actions nil
  lsp-ui-doc-position 'at-point
  lsp-ui-doc-enable nil
- lsp-ui-sideline-enable t
+ lsp-ui-sideline-enable nil
+ lsp-modeline-code-actions-enable nil
+ lsp-diagnostics-provider :flycheck
  lsp-modeline-diagnostics-scope :file
  lsp-headerline-breadcrumb-enable t
  lsp-headerline-breadcrumb-icons-enable nil
  lsp-eldoc-render-all nil
  lsp-completion-provider :none
+ lsp-lens-enable nil
+ lsp-signature-auto-activate nil
  lsp-idle-delay 1.0
  ;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
  lsp-enable-symbol-highlighting nil
  lsp-enable-file-watchers t 
- lsp-file-watch-threshold 1500
+ lsp-file-watch-threshold 5000
  lsp-log-io nil
  lsp-client-packages '(lsp-cmake lsp-dockerfile lsp-go lsp-javascript lsp-json lsp-markdown lsp-terraform lsp-xml lsp-yaml)
 )
