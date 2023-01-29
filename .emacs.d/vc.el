@@ -10,10 +10,13 @@
 (setq git-commit-summary-max-length 72)
 
 (install 'magit)
-(install 'forge)
-(setq magit-auto-revert-mode nil)
 (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
+;; https://magit.vc/manual/magit/Performance.html
+(setq magit-auto-revert-mode nil)
 (setq magit-refresh-status-buffer nil)
+(setq magit-save-repository-buffers nil)
+(setq magit-auto-revert-immediately nil)
+(setq magit-commit-show-diff nil) ;; don't show diff when commit message, C-c C-d to show it
 
 (install 'git-link)
 
