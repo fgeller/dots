@@ -15,6 +15,15 @@
 
 (load-theme 'ruhe t)
 
+;; https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change
+(defun fg/apply-theme (appearance)
+  (mapc #'disable-theme custom-enabled-themes)
+  (pcase appearance
+    ('light (load-theme 'ruhe t))
+    ('dark (load-theme 'ruhe-dark t))))
+
+(add-hook 'ns-system-appearance-change-functions #'fg/apply-theme)
+
 (show-paren-mode +1)
 (setq show-paren-delay 0.5)
 (setq show-paren-style 'parenthesis)
