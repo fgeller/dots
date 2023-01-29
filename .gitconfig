@@ -8,6 +8,7 @@
     whitespace = red reverse
 [diff]
     algorithm = patience
+	external = difft
 [difftool]
     prompt = false
 [core]
@@ -44,7 +45,8 @@
     ff = merge --ff-only
     g = grep
     l =  log -15 --format=' %<(7,trunc)%an %<(65,trunc)%s'
-    ll =  log -15 --format=' %<(72,trunc)%s %h %<(10,trunc)%an %-(trailers:key=Close,key=Closes,key=Fixes,key=Fix,key=For,key=Related,separator=%x2C,valueonly) %<(32,trunc)%d'
+	# %-(trailers:key=Close,key=Closes,key=Fixes,key=Fix,key=For,key=Related,separator=%x2C,valueonly)
+    ll =  log -30 --reverse --ext-diff --format='%C(green)%h%Creset %C(yellow)%as%Creset %C(blue)%<(15,trunc)%an%Creset %s %C(red)%d%Creset'
     lg = log --format=' %<(15,trunc)%an %ad %C(blue)%h%Creset %<(60,trunc)%s %<(30,trunc) %C(blue)%d%Creset' --date=short
     s = status -s -b
     sh = show --color-words
