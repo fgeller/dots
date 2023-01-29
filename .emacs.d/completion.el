@@ -1,46 +1,31 @@
-(install 'company)
-(setq company-minimum-prefix-length 1
-      company-idle-delay 0.1)
+;; (install 'company)
+;; (setq company-minimum-prefix-length 1
+;;       company-idle-delay 0.1)
 
-(after 'company
-  (setq company-backends '((:separate company-yasnippet company-capf company-files))))
-(global-company-mode +1)
+;; (after 'company
+;;   (setq company-backends '((:separate company-yasnippet company-capf company-files))))
+;; (global-company-mode +1)
 
-(after 'company
-  (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
-  (define-key company-active-map (kbd "<return>") nil)
-  (define-key company-active-map (kbd "RET") nil)
-  (setq company-auto-commit nil)
-  (setq company-auto-complete-chars nil))
+;; (after 'company
+;;   (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
+;;   (define-key company-active-map (kbd "<return>") nil)
+;;   (define-key company-active-map (kbd "RET") nil)
+;;   (setq company-auto-commit nil)
+;;   (setq company-auto-complete-chars nil))
 
-;; (install 'corfu)
-;; (setq corfu-auto t
-;;       corfu-quit-no-match t
-;;       corfu-count 5
-;;       ;; corfu-max-width 60
-;;       corfu-auto-prefix 1
-;;       corfu-auto-delay 0.1
-;;       tab-always-indent 'complete)
+(install 'corfu)
 
-;; (defun corfu-beginning-of-prompt ()
-;;   "Move to beginning of completion input."
-;;   (interactive)
-;;   (corfu--goto -1)
-;;   (goto-char (car completion-in-region--data)))
+(setq
+ corfu-cycle t
+ corfu-auto t
+ corfu-auto-delay 0.1
+ corfu-auto-prefix 1)
 
-;; (defun corfu-end-of-prompt ()
-;;   "Move to end of completion input."
-;;   (interactive)
-;;   (corfu--goto -1)
-;;   (goto-char (cadr completion-in-region--data)))
-
-;; (after 'corfu
-;;   (define-key corfu-map [remap move-beginning-of-line] #'corfu-beginning-of-prompt)
-;;   (define-key corfu-map [remap move-end-of-line] #'corfu-end-of-prompt)
-;;   (define-key corfu-map (kbd "<tab>") 'corfu-complete)
-;;   (define-key corfu-map (kbd "<return>") nil)
-;;   (define-key corfu-map (kbd "RET") nil))
-;; (corfu-global-mode)
+(after 'corfu
+  (define-key corfu-map (kbd "<tab>") 'corfu-insert) ;; -complete
+  (define-key corfu-map (kbd "<return>") nil)
+  (define-key corfu-map (kbd "RET") nil))
+(global-corfu-mode)
 
 ;; Don't forget that M-n binding
 (install 'consult)
@@ -61,8 +46,9 @@
 
 (recentf-mode)
 (setq consult-project-root-function (lambda () (locate-dominating-file "." ".git")))
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
+(setq xref-show-xrefs-function #'consult-xref
+      xref-show-definitions-function #'consult-xref)
+(setq xref-prompt-for-identifier nil)
 
 (install 'vertico)
 (install 'orderless)
