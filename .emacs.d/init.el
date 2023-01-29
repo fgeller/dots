@@ -136,3 +136,4 @@
 (message "%sms to load init.el (%.00fms measured)" (format-time-string "%3N" (time-subtract (current-time) global-startup)) (* time-measured-blocks 1000.0))
 (message "emacs init time: %s" (emacs-init-time))
 (put 'downcase-region 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
