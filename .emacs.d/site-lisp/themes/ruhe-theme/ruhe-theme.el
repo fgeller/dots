@@ -106,6 +106,7 @@
  `(compilation-warning ((t (:inherit warning))))
 
  `(consult-file ((t (:inherit nil))))
+ `(embark-collect-group-title ((t (:foreground "#aaaaaa" :inherit nil))))
 
  `(eshell-prompt ((t (:foreground "#aaaaaa" :background nil))))
 

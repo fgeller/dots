@@ -31,6 +31,11 @@ export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
 export PATH=$PATH:/usr/sbin
 export PATH="~/.node_modules/bin:$PATH"
 
+export DFT_SYNTAX_HIGHLIGHT=off
+export DFT_BACKGROUND=light
+export DFT_TAB_WIDTH=4
+#GIT_EXTERNAL_DIFF=difft
+
 cdpath=(~)
 for pth in ~/src/github.com/* ; do cdpath+=($pth) ; done
 export cdpath
@@ -70,6 +75,7 @@ if [ Darwin = `uname` ]; then
 	source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 	export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 	export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
+	export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 fi
 
 export TERM=xterm-24bit
