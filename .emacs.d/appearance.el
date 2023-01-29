@@ -34,15 +34,17 @@
 
 ;; via https://emacs.stackexchange.com/a/62228/810
 (when (>= emacs-major-version 27)
-  (set-fontset-font t '(#x1f000 . #x1faff)
-		    (font-spec :family "Noto Color Emoji")))
+  (let ((font-list (font-family-list)))
+	(dolist (fn '("Apple Color Emoji" "Noto Color Emoji"))
+	  (when (member fn font-list)
+		(set-fontset-font t 'symbol fn)))))
 
-(cond (mac-p (set-face-attribute 'default nil :font "Noto Sans Mono-14:weight=book"))
+(cond (mac-p (set-face-attribute 'default nil :font "Noto Sans Mono-12:weight=book"))
 	  (t (set-face-attribute 'default nil :font "Noto Sans Mono-16:weight=book")))
 (setq default-frame-alist
       (append (list
-	       '(left-fringe . 16)
-	       '(right-fringe . 16)
-               '(vertical-scroll-bars . nil)
-               '(tool-bar-lines . 0)
-	       '(internal-border-width . 0))))
+			   '(left-fringe . 16)
+			   '(right-fringe . 16)
+			   '(vertical-scroll-bars . nil)
+			   '(tool-bar-lines . 0)
+			   '(internal-border-width . 0))))
