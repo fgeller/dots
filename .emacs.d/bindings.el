@@ -154,6 +154,9 @@
     (define-key map (kbd "f") 'find-file)
     (define-key map (kbd "h") 'mark-whole-buffer)
     (define-key map (kbd "k") 'kill-buffer)
+
+	(define-key map (kbd "le") 'eshell)
+
     (define-key map (kbd "o") nil)
     (define-key map (kbd "r") 'eval-region)
     (define-key map (kbd "s") 'save-buffer)

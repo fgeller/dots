@@ -120,6 +120,7 @@
 (load-custom "~/.emacs.d/yaml.el")
 (load-custom "~/.emacs.d/typescript.el")
 (load-custom "~/.emacs.d/sql.el")
+(load-custom "~/.emacs.d/eshell.el")
 
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
