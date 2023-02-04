@@ -18,7 +18,7 @@
 (setq
  corfu-cycle t
  corfu-auto t
- corfu-auto-delay 0.1
+ corfu-auto-delay 0.3
  corfu-auto-prefix 1)
 
 (after 'corfu
@@ -52,8 +52,9 @@
 
 (install 'vertico)
 (install 'orderless)
+
 (vertico-mode)
-(setq completion-styles '(orderless)
+(setq completion-styles '(orderless basic)
       completion-category-defaults nil
       completion-category-overrides '((file (styles . (partial-completion)))))
 
