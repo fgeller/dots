@@ -73,7 +73,7 @@
 (defun fg/consult-goto-line ()
   (interactive)
   (xref-push-marker-stack)
-  (consult-goto-line))
+  (call-interactively 'goto-line))
 
 (defun fg/consult-line ()
   (interactive)

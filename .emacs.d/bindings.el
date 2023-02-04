@@ -113,7 +113,7 @@
     (define-key map (kbd "ld") 'dap-debug)
     (define-key map (kbd "li") 'lsp-find-implementation)
 
-    (define-key map (kbd "m") 'magit)
+    (define-key map (kbd "m") 'vc-dir)
 
     (define-key map (kbd "ol") 'org-store-link)
     (define-key map (kbd "oc") 'org-capture)
@@ -124,12 +124,9 @@
 
     (define-key map (kbd "tp") 'tree-edit-goto-desired-parent)
 
-    (define-key map (kbd "va") 'vc-annotate)
-    (define-key map (kbd "vs") 'diff-hl-show-hunk)
-    (define-key map (kbd "vn") 'diff-hl-next-hunk)
-    (define-key map (kbd "vp") 'diff-hl-previous-hunk)
-    (define-key map (kbd "vr") 'diff-hl-revert-hunk)
-
+    (define-key map (kbd "v") 'vc-prefix-map)
+	(define-key vc-prefix-map (kbd "e") 'fg/vc-ediff-wrapper)
+	
     (define-key map (kbd "q") 'fill-paragraph)
 
     ;; TODO cw -> toggle wdired and wrep
@@ -170,6 +167,7 @@
     (define-key map (kbd "tr") 'rainbow-mode)
     (define-key map (kbd "tn") 'nlinum-mode)
     (define-key map (kbd "tu") 'markdown-toggle-url-hiding)
+    (define-key map (kbd "th") 'global-highlight-thing-mode)
 
     (define-key map (kbd "vg") 'vc-annotate)
     (define-key map (kbd "vn") 'diff-hl-next-hunk)

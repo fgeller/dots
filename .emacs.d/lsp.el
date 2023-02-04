@@ -34,6 +34,3 @@
 	'(orderless)))
 
 (add-hook 'lsp-after-open-hook 'fg/lsp-customizations)
-
-;; TODO disable unused ones?
-;;   (dolist (feature '(lsp-ui-peek lsp-ui-sideline lsp-ui-doc lsp-ui-imenu))

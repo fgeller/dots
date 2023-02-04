@@ -9,25 +9,41 @@
 
 (setq git-commit-summary-max-length 72)
 
-(install 'magit)
-(setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
-;; https://magit.vc/manual/magit/Performance.html
-(setq magit-auto-revert-mode nil)
-(setq magit-refresh-status-buffer nil)
-(setq magit-save-repository-buffers nil)
-(setq magit-auto-revert-immediately nil)
-(setq magit-commit-show-diff nil) ;; don't show diff when commit message, C-c C-d to show it
+(setq diff-font-lock-prettify nil)
+(setq diff-font-lock-syntax nil)
 
 (install 'git-link)
 
 (install 'diff-hl)
 (global-diff-hl-mode)
 (diff-hl-margin-mode +1)
-(setq diff-hl-margin-symbols-alist '((insert . " ")
-				     (delete . " ")
-				     (change . " ")
-				     (unknown . " ")
-				     (ignored . " ")))
-(after 'magit
-(define-key magit-hunk-section-map (kbd "M-RET") 'magit-diff-visit-worktree-file)
-)
+(setq diff-hl-margin-symbols-alist
+	  '((insert . " ")
+		(delete . " ")
+		(change . " ")
+		(unknown . " ")
+		(ignored . " ")))
+
+;; restore win layout after quitting ediff
+;; https://emacs.stackexchange.com/a/17089
+(defvar fg/ediff-last-window-layout nil)
+
+(defun fg/ediff-wrapper ()
+  (interactive)
+  (fg/store-pre-ediff-window-layout)
+  (call-interactively 'ediff))
+
+(defun fg/vc-ediff-wrapper ()
+  (interactive)
+  (fg/store-pre-ediff-window-layout)
+  (call-interactively 'vc-ediff))
+
+(defun fg/store-pre-ediff-window-layout ()
+  (message "storing ediff config")
+  (setq fg/ediff-last-window-layout (current-window-configuration)))
+
+(defun fg/restore-pre-ediff-window-layout ()
+  (set-window-configuration fg/ediff-last-window-layout))
+
+;; (add-hook 'ediff-before-setup-hook #'fg/store-pre-ediff-window-layout)
+(add-hook 'ediff-quit-hook #'fg/restore-pre-ediff-window-layout)
