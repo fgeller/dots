@@ -20,9 +20,11 @@
 [interactive]
 
 [branch]
-    autosetuprebase = always
+    autosetuprebase = always    # always pull from tracking branch
+	autosetupmerge = simple     # setup tracking branch only to be remote with the same name if available
 [push]
-    default = nothing
+    default = simple
+	autosetupremote = true
 [pull]
     rebase = true
 [rerere]
