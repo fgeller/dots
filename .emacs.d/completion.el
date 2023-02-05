@@ -107,4 +107,4 @@
 (after 'consult
   (add-to-list 'consult-buffer-sources fg/consult--source-git-ls-files t)
   (add-to-list 'consult-buffer-sources fg/consult--source-projects t))
-(setq consult-preview-key (kbd "C-t"))
+(setq consult-preview-key "C-t")
