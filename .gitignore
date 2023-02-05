@@ -16,3 +16,4 @@
 /.emacs.d/places
 /.emacs.d/.dap-breakpoints
 /.emacs.d/eln-cache/*
+/.emacs.d/projects
