@@ -9,16 +9,21 @@
 (defconst 3w-side-buffer-store nil
   "Can hold a side-window's buffer")
 
-(defconst 3w-side-window-rx (rx (or
-				 "*Backtrace*"
-				 "*Compilation*"
-				 "*Faces*"
-				 "*Help*"
-				 "*Messages*"
-				 "*Occur*"
-				 "*Warnings*"
-				 "*ag search"
-				 ))
+(defconst 3w-side-window-rx
+  "^*"
+  ;; (rx (or
+  ;; 	   "*Backtrace*"
+  ;; 	   "*Compilation*"
+  ;; 	   "*Faces*"
+  ;; 	   "*Help*"
+  ;; 	   "*Messages*"
+  ;; 	   "*Occur*"
+  ;; 	   "*Warnings*"
+  ;; 	   "*ag search"
+  ;; 	   "*rg"
+  ;; 	   "*vc-"
+  ;; 	   "*go-"
+  ;; 	   ))
   "Regex that matches buffer names that should be displayed in a side window")
 
 (defun 3w-get-side-window-buffer ()
@@ -177,34 +182,56 @@
   (when (= 1 (count-windows))
     (3w-split-2-1))
   (let* ((is-cs (3w-is-column-split-p))
-	 (sw (car (window-at-side-list nil (if is-cs 'right 'bottom)))))
+		 (sw (car (window-at-side-list nil (if is-cs 'right 'bottom)))))
     ;; (message "3w-display-as-side-window: is-cs=%s sw=%s buf=%s" is-cs sw buf)
     (set-window-buffer sw buf)))
 
 (defun 3w-toggle-side-window ()
   (interactive)
   (let* ((is-cs (3w-is-column-split-p))
-	 (sw (car (window-at-side-list nil (if is-cs 'right 'bottom))))
-	 (cw (count-windows)))
+		 (sw (car (window-at-side-list nil (if is-cs 'right 'bottom))))
+		 (cw (count-windows)))
     (cond ((= 1 cw)
-	   (if 3w-side-buffer-store
-	       (3w-display-as-side-window 3w-side-buffer-store)
-	     ;; (message "3w: no side window buffer in store")
-	     ))
+		   (if 3w-side-buffer-store
+			   (3w-display-as-side-window 3w-side-buffer-store)
+			 ;; (message "3w: no side window buffer in store")
+			 ))
 
-	  ((3w-side-window-name-p sw)
-	   (3w-store-side-buffer (window-buffer sw))
-	   (delete-window sw)
-	   (3w-split-2))
+		  ((3w-side-window-name-p sw)
+		   (3w-store-side-buffer (window-buffer sw))
+		   (delete-window sw)
+		   ;; (3w-split-2)
+		   )
 
-	  (3w-side-buffer-store
-	   (if (= cw 3)
-	       (set-window-buffer sw 3w-side-buffer-store)
-	     (3w-split-3)))
+		  (3w-side-buffer-store
+		   (if (= cw 3)
+			   (set-window-buffer sw 3w-side-buffer-store)
+			 (3w-split-3)))
 
-	  (t
-	   (message "3w: unexpected case for 3w-toggle-side-window store=%s sw=%s cw=%s"
-		    3w-side-buffer-store sw cw)))))
+		  (t
+		   (message "3w: unexpected case for 3w-toggle-side-window store=%s sw=%s cw=%s"
+					3w-side-buffer-store sw cw)))))
+
+(defun 3w-set-buffer-in-side-window ()
+  (interactive)
+  (when (= 1 (count-windows)) (3w-split-2-1))
+  (let ((orig-window (selected-window)))
+	(select-window (car (window-at-side-list nil (if (3w-is-column-split-p) 'right 'bottom))))
+	(call-interactively 'switch-to-buffer)
+	(3w-store-side-buffer (window-buffer))
+	(select-window orig-window)))
+
+;; display-buffer action function
+;; try to re-use if visible
+(defun 3w-display-buffer-in-other-window (buf alist)
+  (let* (found-win)
+	(walk-windows (lambda (w) (if (eq buf (window-buffer w)) (setq found-win w))) 'no-minibuf nil)
+	(if found-win found-win
+	  (unless (< 1 (count-windows)) (3w-split-window 1))
+	  (let ((w (next-window (selected-window) 'no-minibuf nil)))
+		(message "3w-display-buffer-in-other-window buf=%s alist=%s w=%s" buf alist w)
+		(window--display-buffer buf w 'reuse alist)
+		w))))
 
 (defconst 3w-map (make-keymap) "Keymap to bind to a prefix to conveniently access 3w's and built-in functions")
 
@@ -219,6 +246,7 @@
 (define-key 3w-map (kbd "s") '3w-jump-2)
 (define-key 3w-map (kbd "h") '3w-jump-3)
 (define-key 3w-map (kbd "t") '3w-toggle-side-window)
+(define-key 3w-map (kbd "T") '3w-set-buffer-in-side-window)
 (define-key 3w-map (kbd "o") 'other-window)
 (define-key 3w-map (kbd "r") '3w-shift-right)
 
