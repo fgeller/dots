@@ -113,7 +113,7 @@
     (define-key map (kbd "ld") 'dap-debug)
     (define-key map (kbd "li") 'lsp-find-implementation)
 
-    (define-key map (kbd "m") 'vc-dir)
+    (define-key map (kbd "m") 'fg/vc-dir-project)
 
     (define-key map (kbd "ol") 'org-store-link)
     (define-key map (kbd "oc") 'org-capture)
@@ -126,7 +126,14 @@
 
     (define-key map (kbd "v") 'vc-prefix-map)
 	(define-key vc-prefix-map (kbd "e") 'fg/vc-ediff-wrapper)
-	
+	(define-key vc-prefix-map (kbd "F") 'vc-update)
+	(define-key vc-prefix-map (kbd "P") 'vc-push)
+	(define-key vc-prefix-map (kbd "s") 'fg/vc-dir-project)
+	(define-key vc-prefix-map (kbd "k") 'vc-revert)
+	(define-key vc-prefix-map (kbd "K") 'vc-delete-file)
+	(define-key vc-prefix-map (kbd "a") 'vc-annotate)
+	(define-key vc-annotate-mode-map (kbd "(") 'vc-annotate-toggle-annotation-visibility)
+
     (define-key map (kbd "q") 'fill-paragraph)
 
     ;; TODO cw -> toggle wdired and wrep

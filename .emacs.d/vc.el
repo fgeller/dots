@@ -24,26 +24,7 @@
 		(unknown . " ")
 		(ignored . " ")))
 
-;; restore win layout after quitting ediff
-;; https://emacs.stackexchange.com/a/17089
-(defvar fg/ediff-last-window-layout nil)
-
-(defun fg/ediff-wrapper ()
+(defun fg/vc-dir-project ()
   (interactive)
-  (fg/store-pre-ediff-window-layout)
-  (call-interactively 'ediff))
-
-(defun fg/vc-ediff-wrapper ()
-  (interactive)
-  (fg/store-pre-ediff-window-layout)
-  (call-interactively 'vc-ediff))
-
-(defun fg/store-pre-ediff-window-layout ()
-  (message "storing ediff config")
-  (setq fg/ediff-last-window-layout (current-window-configuration)))
-
-(defun fg/restore-pre-ediff-window-layout ()
-  (set-window-configuration fg/ediff-last-window-layout))
-
-;; (add-hook 'ediff-before-setup-hook #'fg/store-pre-ediff-window-layout)
-(add-hook 'ediff-quit-hook #'fg/restore-pre-ediff-window-layout)
+  (let ((root (fg/guess-project-directory)))
+	(vc-dir root)))
