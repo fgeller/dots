@@ -111,7 +111,6 @@
 (load-custom "~/.emacs.d/go.el")
 (load-custom "~/.emacs.d/emacs-lisp.el")
 (load-custom "~/.emacs.d/org.el")
-(load-custom "~/.emacs.d/work.el")
 (load-custom "~/.emacs.d/direnv.el")
 
 (load-custom "~/.emacs.d/markdown.el")
