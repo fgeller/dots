@@ -76,7 +76,7 @@
   "Produces two split windows where the left/top window is 2/3 of the frame size"
   (interactive)
   (let* ((should-cs (3w-should-split-into-columns-p 2))
-	 (size (round (* 0.667 (if should-cs (frame-total-cols) (frame-total-lines)) ))))
+	 (size (round (* 0.625 (if should-cs (frame-total-cols) (frame-total-lines)) ))))
     (3w-split-2-with-size size)))
 
 (defun 3w-split-2-with-size-from-1 (size &optional next-buffer)
