@@ -16,7 +16,7 @@
    '(("gopls.staticcheck" nil t)
      ("gopls.allowImplicitNetworkAccess" t t)
      ))
-  (setq lsp-go-build-flags ["-tags=test_dbt"])
+  (setq lsp-go-build-flags ["-tags=test_dbt,local_development"])
   (let ((env (make-hash-table)))
     (puthash "GOPROXY" "proxy.golang.org,direct" env)
     (setq lsp-go-env env))
@@ -65,7 +65,7 @@
 
 (defun fg/go-run-this-test ()
   (interactive)
-  (fg/go-run (format "go test -v -vet=all -tags test_dbt -run %s"
+  (fg/go-run (format "go test -v -vet=all -tags test_dbt,local_development -run %s"
                         (save-excursion
                           (re-search-backward "func \\(Test.+\\)(" (point-min))
                           (match-string 1)))))

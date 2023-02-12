@@ -132,7 +132,6 @@
 	(define-key vc-prefix-map (kbd "k") 'vc-revert)
 	(define-key vc-prefix-map (kbd "K") 'vc-delete-file)
 	(define-key vc-prefix-map (kbd "a") 'vc-annotate)
-	(define-key vc-annotate-mode-map (kbd "(") 'vc-annotate-toggle-annotation-visibility)
 
     (define-key map (kbd "q") 'fill-paragraph)
 

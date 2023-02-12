@@ -1,6 +1,11 @@
 (add-hook 'vc-annotate-mode-hook
 	  (lambda () (setq show-trailing-whitespace nil)))
 
+;; (setq vc-annotate-background-mode nil)
+
+(after 'vc-annotate
+  (define-key vc-annotate-mode-map (kbd "(") 'vc-annotate-toggle-annotation-visibility))
+
 (setq vc-follow-symlinks t)
 
 (defun vc-git-annotate-command (file buf &optional rev)
@@ -15,8 +20,10 @@
 (install 'git-link)
 
 (install 'diff-hl)
-(global-diff-hl-mode)
-(diff-hl-margin-mode +1)
+
+;; (global-diff-hl-mode)
+;; (diff-hl-margin-mode +1)
+
 (setq diff-hl-margin-symbols-alist
 	  '((insert . " ")
 		(delete . " ")
