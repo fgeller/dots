@@ -51,6 +51,9 @@ bindkey '^H' backward-kill-word
 
 alias grt='if [ "`git rev-parse --show-cdup`" != "" ]; then cd `git rev-parse --show-cdup`; fi'
 alias gs="git status -s -b"
+alias gd="git diff"
+alias gdc="git diff --cached"
+alias gff="git ff"
 alias ll="ls -la"
 alias reload="source ~/.zshrc"
 alias g='git'
