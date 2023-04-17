@@ -132,6 +132,9 @@
 
 (setq file-name-handler-alist init-file-name-handler-alist)
 
+(require 'server)
+(unless (server-running-p) (server-start))
+
 (message "%sms to load init.el (%.00fms measured)" (format-time-string "%3N" (time-subtract (current-time) global-startup)) (* time-measured-blocks 1000.0))
 (message "emacs init time: %s" (emacs-init-time))
 (put 'downcase-region 'disabled nil)
