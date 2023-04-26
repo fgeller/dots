@@ -147,7 +147,7 @@
 
     (define-key map (kbd "bb") 'switch-to-buffer)
     (define-key map (kbd "br") 'rename-buffer)
-    (define-key map (kbd "bg") 'revert-buffer)
+    (define-key map (kbd "bg") 'revert-buffer-quick)
     (define-key map (kbd "bw") 'delete-trailing-whitespace)
 
     (define-key map (kbd "c") 'save-buffers-kill-terminal)
@@ -156,6 +156,7 @@
     (define-key map (kbd "ed") 'eval-defun)
     (define-key map (kbd "er") 'eval-region)
     (define-key map (kbd "f") 'find-file)
+    (define-key map (kbd "g") 'revert-buffer-quick)
     (define-key map (kbd "h") 'mark-whole-buffer)
     (define-key map (kbd "k") 'kill-buffer)
 
