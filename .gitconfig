@@ -8,7 +8,7 @@
     whitespace = red reverse
 [diff]
     algorithm = patience
-	external = difft
+    external = difft
 [difftool]
     prompt = false
 [core]
@@ -21,10 +21,10 @@
 
 [branch]
     autosetuprebase = always    # always pull from tracking branch
-	autosetupmerge = simple     # setup tracking branch only to be remote with the same name if available
+    autosetupmerge = simple     # setup tracking branch only to be remote with the same name if available
 [push]
-    default = simple
-	autosetupremote = true
+    default = current # https://git-scm.com/docs/git-push#Documentation/git-push.txt-pushdefault
+    autosetupremote = true
 [pull]
     rebase = true
 [rerere]
@@ -39,7 +39,7 @@
     ad = add
     c = commit
     co = checkout
-	cp = cherry-pick
+    cp = cherry-pick
     d = diff --word-diff=color
     dc = diff --word-diff=color --cached
     dw = "!bash -c \"git diff --word-diff=color | sed 's/\t/» /g'\""
@@ -47,7 +47,7 @@
     ff = merge --ff-only
     g = grep
     l =  log -15 --format=' %<(7,trunc)%an %<(65,trunc)%s'
-	# %-(trailers:key=Close,key=Closes,key=Fixes,key=Fix,key=For,key=Related,separator=%x2C,valueonly)
+    # %-(trailers:key=Close,key=Closes,key=Fixes,key=Fix,key=For,key=Related,separator=%x2C,valueonly)
     ll =  log -30 --reverse --ext-diff --format='%C(green)%h%Creset %C(yellow)%as%Creset %C(blue)%<(15,trunc)%an%Creset %s %C(red)%d%Creset'
     lg = log --format=' %<(15,trunc)%an %ad %C(blue)%h%Creset %<(60,trunc)%s %<(30,trunc) %C(blue)%d%Creset' --date=short
     s = status -s -b
@@ -62,7 +62,7 @@
     fontui = -family Roboto -size 14 -weight normal -slant roman -underline 0 -overstrike 0
     fontdiff = -family \"Roboto Mono\" -size 13 -weight normal -slant roman -underline 0 -overstrike 0
 [github]
-	user = fgeller
+    user = fgeller
 [credential]
         helper = store
 [magit]
@@ -71,4 +71,4 @@
 [init]
         defaultBranch = main
 [gitlab]
-	user = fgeller
+    user = fgeller
