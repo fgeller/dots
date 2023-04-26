@@ -63,6 +63,7 @@ alias k='kubectl'
 alias j='just'
 alias e='emacsclient -nw'
 
+alias gpr="git push && gh pr create"
 
 function maybeJSON() {
     tee >(grep -v "^\{") | grep "^\{" | jq -c .
