@@ -89,8 +89,10 @@
 (save-place-mode +1)
 
 (column-number-mode 1)
-(electric-indent-mode 1)
+(electric-indent-mode -1)
 (electric-pair-mode -1)
+(electric-quote-mode -1)
+(electric-layout-mode -1)
 
 (defun load-custom (n)
   (time (format "load %s" n)
