@@ -53,7 +53,6 @@ alias grt='if [ "`git rev-parse --show-cdup`" != "" ]; then cd `git rev-parse --
 alias gs="git status -s -b"
 alias gd="git diff"
 alias gdc="git diff --cached"
-alias gff="git ff"
 alias ll="ls -la"
 alias reload="source ~/.zshrc"
 alias g='git'
@@ -64,13 +63,23 @@ alias j='just'
 alias e='emacsclient -nw'
 
 alias gpr="git push && gh pr create"
+alias gmm="git remote update && git merge origin/main"
+alias gff="git remote update && git merge --ff-only origin/main"
+alias gp="git push"
+alias gc="git commit -m "
+alias ga="git add"
+alias gds="git diff --name-only"
+
+function gch() {
+	git checkout "$(git branch --all | fzf | tr -d '[:space:]')"
+}
 
 function maybeJSON() {
-    tee >(grep -v "^\{") | grep "^\{" | jq -c .
+	tee >(grep -v "^\{") | grep "^\{" | jq -c .
 }
 
 function em {
-    emacsclient -nw --eval "(progn (magit-status \"$PWD/$(git rev-parse --show-cdup)\") (delete-other-windows))"
+	emacsclient -nw --eval "(progn (magit-status \"$PWD/$(git rev-parse --show-cdup)\") (delete-other-windows))"
 }
 
 
