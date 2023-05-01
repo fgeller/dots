@@ -42,12 +42,7 @@
 		 (proj-name (file-name-nondirectory (directory-file-name proj-path)))
 		 (loc (substring (directory-file-name (expand-file-name default-directory))
 						 (- (length proj-path) (length proj-name) 1))))
-	(format "*go-compilation[%s]*" loc)))
-
-(defun fg/go-compilation-toggle-truncate-lines ()
-  (interactive)
-  (let ((buf (get-buffer (fg/go-compilation-buffer-name))))
-    (when buf (with-current-buffer buf (toggle-truncate-lines)))))
+	(format "*go-compilation[%s]*" proj-name)))
 
 (defun fg/go-compilation-buffer-p (buf)
   (string-prefix-p "*go-compilation[" (buffer-name buf)))
@@ -62,6 +57,15 @@
   (let* ((buf (fg/go-find-compilation-buffer)))
     (when buf
       (with-current-buffer buf (recompile)))))
+
+(defun fg/kill-go-buffers ()
+  (interactive)
+  (mapc (lambda (b) (let* ((name (buffer-name b)))
+					  (when (or (string-suffix-p ".go" name)
+								(string-prefix-p "*gopls" name)
+								(string-prefix-p "*go-compilation" name))
+						(kill-buffer b))))
+		(buffer-list)))
 
 (defun fg/go-run-this-test ()
   (interactive)
@@ -87,7 +91,9 @@
          (buf (fg/go-compilation-buffer-name)))
     (if (get-buffer buf) (with-current-buffer buf (compile cmd))
       (compile cmd)
-      (with-current-buffer "*compilation*" (rename-buffer buf)))))
+      (with-current-buffer "*compilation*" 
+		(rename-buffer buf)
+		(toggle-truncate-lines -1)))))
 
 (defun fg/go-make-build ()
   (interactive)
