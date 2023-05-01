@@ -19,7 +19,11 @@
  corfu-cycle t
  corfu-auto t
  corfu-auto-delay 0.3
- corfu-auto-prefix 1)
+ corfu-auto-prefix 1
+ corfu-quit-no-match 'separator
+ corfu-on-exact-match 'quit
+ corfu-preview-current nil
+ )
 
 (after 'corfu
   (define-key corfu-map (kbd "<tab>") 'corfu-insert) ;; -complete
