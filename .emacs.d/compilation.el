@@ -17,9 +17,11 @@
 (defun fg/guess-project-directory ()
   (let* ((dd default-directory)
 		 (git (locate-dominating-file "." ".git"))
-		 (mk (locate-dominating-file "." "makefile")))
-	(or git
+		 (mk (locate-dominating-file "." "makefile"))
+		 (jst (locate-dominating-file "." "Justfile")))
+	(or jst
 		mk
+		git
 		dd)))
 
 (defun fg/project-compile ()
