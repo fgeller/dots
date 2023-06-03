@@ -66,22 +66,23 @@ alias gpr="git push && gh pr create"
 alias gmm="git remote update && git merge origin/main"
 alias gff="git remote update && git merge --ff-only origin/main"
 alias gp="git push"
-alias gc="git commit -m "
 alias ga="git add"
 alias gds="git diff --name-only"
+alias gu="git remote update"
+alias gsa="git stash apply stash@{0}"
+alias gbs="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative))' --sort=-committerdate"
 
 function gch() {
-	git checkout "$(git branch --all | fzf | tr -d '[:space:]')"
+	git checkout "$(git branch --all | fzf --query=$@ | tr -d '[:space:]')"
+}
+
+function gc() {
+	git commit -m "$@"
 }
 
 function maybeJSON() {
 	tee >(grep -v "^\{") | grep "^\{" | jq -c .
 }
-
-function em {
-	emacsclient -nw --eval "(progn (magit-status \"$PWD/$(git rev-parse --show-cdup)\") (delete-other-windows))"
-}
-
 
 if [ Darwin = `uname` ]; then
 	eval "$(/opt/homebrew/bin/brew shellenv)"
