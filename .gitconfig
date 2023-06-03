@@ -47,7 +47,6 @@
     ff = merge --ff-only
     g = grep
     l =  log -15 --format=' %<(7,trunc)%an %<(65,trunc)%s'
-    # %-(trailers:key=Close,key=Closes,key=Fixes,key=Fix,key=For,key=Related,separator=%x2C,valueonly)
     ll =  log -30 --reverse --ext-diff --format='%C(green)%h%Creset %C(yellow)%as%Creset %C(blue)%<(15,trunc)%an%Creset %s %C(red)%d%Creset'
     lg = log --format=' %<(15,trunc)%an %ad %C(blue)%h%Creset %<(60,trunc)%s %<(30,trunc) %C(blue)%d%Creset' --date=short
     s = status -s -b
@@ -64,11 +63,13 @@
 [github]
     user = fgeller
 [credential]
-        helper = store
+    helper = store
 [magit]
-        hideCampaign = true
+    hideCampaign = true
 [gpg]
 [init]
-        defaultBranch = main
+    defaultBranch = main
 [gitlab]
     user = fgeller
+[credential "https://dev.azure.com"]
+    useHttpPath = true
