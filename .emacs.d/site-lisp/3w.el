@@ -249,6 +249,7 @@
 (define-key 3w-map (kbd "T") '3w-set-buffer-in-side-window)
 (define-key 3w-map (kbd "o") 'other-window)
 (define-key 3w-map (kbd "r") '3w-shift-right)
+(define-key 3w-map (kbd "k") 'delete-window)
 
 ;;
 ;; Tests
