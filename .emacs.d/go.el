@@ -1,8 +1,5 @@
 (install 'go-mode)
 
-;; (setq lsp-go-gopls-server-args '("-logfile" "/home/fgeller/tmp/gopls.log" "-rpc.trace"))
-;; (setq lsp-go-gopls-server-args '("serve" "--debug=localhost:6060"))
-
 (when (executable-find "gofumpt")
   (setq lsp-go-use-gofumpt t))
 
@@ -60,8 +57,9 @@
 
 (defun fg/kill-go-buffers ()
   (interactive)
-  (mapc (lambda (b) (let* ((name (buffer-name b)))
-					  (when (or (string-suffix-p ".go" name)
+  (mapc (lambda (b) (let* ((name (buffer-name b))
+						   (mm (with-current-buffer b major-mode)))
+					  (when (or (eq mm 'go-mode)
 								(string-prefix-p "*gopls" name)
 								(string-prefix-p "*go-compilation" name))
 						(kill-buffer b))))
@@ -87,21 +85,20 @@
   (fg/go-run "go test -v -vet=all"))
 
 (defun fg/go-run (cmd)
-  (let* ((dir (file-name-nondirectory (directory-file-name default-directory)))
+  (let* ((current-dir default-directory)
+		 (dir (file-name-nondirectory (directory-file-name default-directory)))
          (buf (fg/go-compilation-buffer-name)))
-    (if (get-buffer buf) (with-current-buffer buf (compile cmd))
+	(when (and (get-buffer buf)
+			   (with-current-buffer buf (not (string= current-dir default-directory))))
+	  (kill-buffer buf))
+    (if (get-buffer buf) 
+		(with-current-buffer buf
+		  (message "default-dir: %s" default-directory)
+		  (compile cmd))
       (compile cmd)
       (with-current-buffer "*compilation*" 
 		(rename-buffer buf)
 		(toggle-truncate-lines -1)))))
-
-(defun fg/go-make-build ()
-  (interactive)
-  (let* ((dir (file-name-nondirectory (directory-file-name default-directory)))
-         (buf (fg/go-compilation-buffer-name)))
-    (if (get-buffer buf) (with-current-buffer buf (compile "make build"))
-      (compile "make build")
-      (with-current-buffer "*compilation*" (rename-buffer buf)))))
 
 (defun fg/go-make-tests ()
   (interactive)
@@ -158,7 +155,17 @@ func main() {
 }")
     (goto-char 55)
     (go-mode)
-    (define-key (current-local-map) (kbd "C-c C-k")
-      (lambda () (interactive) (save-buffer) (delete-file buffer-file-name) (kill-buffer)))
-    (define-key (current-local-map) (kbd "C-c C-c")
-      (lambda () (interactive) (save-buffer) (compile (format "go run %s" buffer-file-name))))))
+    (define-key (current-local-map) (kbd "C-c C-k") 'fg/go-play-kill)
+    (define-key (current-local-map) (kbd "C-c C-c") 'fg/go-play-run)))
+
+(defun fg/go-play-run ()
+  (interactive)
+  (save-buffer)
+  (exec-path-from-shell-initialize)
+  (compile (format "/opt/homebrew/bin/go run %s" buffer-file-name)))
+
+(defun fg/go-play-kill ()
+  (interactive)
+  (save-buffer)
+  (delete-file buffer-file-name)
+  (kill-buffer))
