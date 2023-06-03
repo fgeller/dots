@@ -112,8 +112,8 @@
          entry (file ,org-default-work-file)
          "* TODO %? :work:\n\n")
         ("b" "Bookmark"
-         entry (file+headline ,(expand-file-name "Bookmarks.org" org-directory) "Bookmarks")
-         "* %?\n\n  %c%i\n")))
+         entry (file+headline ,(expand-file-name "bm.org" org-directory) "Bookmarks")
+		 "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n" :empty-lines 1)))
 
 (setq
  org-outline-path-complete-in-steps nil
