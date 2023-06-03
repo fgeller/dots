@@ -115,9 +115,11 @@
 
     (define-key map (kbd "m") 'fg/vc-dir-project)
 
-    (define-key map (kbd "ol") 'org-store-link)
+    (define-key map (kbd "oL") 'org-store-link)
+    (define-key map (kbd "ol") 'org-insert-link)
     (define-key map (kbd "oc") 'org-capture)
     (define-key map (kbd "ot") 'org-todo)
+    (define-key map (kbd "os") 'org-insert-structure-template)
 
     (define-key map (kbd "en") 'flycheck-next-error)
     (define-key map (kbd "ep") 'flycheck-previous-error)
@@ -230,6 +232,7 @@
 (define-key modal-mode-map (kbd "]") 'fg/move-to-next-symbol-occurrence)
 (define-key modal-mode-map (kbd "}") 'fg/move-to-next-word-occurrence)
 (define-key modal-mode-map (kbd "\\") 'fg/consult-goto-line)
+(define-key modal-mode-map (kbd "1") 'fg/consult-goto-line)
 (define-key modal-mode-map (kbd "|") 'mc/edit-lines)
 
 (define-key modal-mode-map (kbd "a") 'fg/replace-select)
