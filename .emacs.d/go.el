@@ -1,7 +1,6 @@
 (install 'go-mode)
 
-(when (executable-find "gofumpt")
-  (setq lsp-go-use-gofumpt t))
+(when (executable-find "gofumpt") (setq lsp-go-use-gofumpt t))
 
 (defun fg/golang-customizations ()
   (defalias 'go-play-buffer nil)
