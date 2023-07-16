@@ -35,7 +35,7 @@
 (install 'highlight-thing)
 (global-highlight-thing-mode +1)
 (setq highlight-thing-prefer-active-region t)
-(setq highlight-thing-delay-seconds 0.1)
+(setq highlight-thing-delay-seconds 0.3)
 
 (defun fg/add-todo-keyword ()
   (font-lock-add-keywords nil '(("\\(TODO\\|FIXME\\)" 1 font-lock-warning-face prepend))))
@@ -50,6 +50,7 @@
 
 (cond (mac-p (set-face-attribute 'default nil :font "Noto Sans Mono-12:weight=book"))
 	  (t (set-face-attribute 'default nil :font "Noto Sans Mono-16:weight=book")))
+
 (setq default-frame-alist
       (append (list
 			   '(left-fringe . 16)
