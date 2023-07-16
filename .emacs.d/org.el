@@ -106,11 +106,14 @@
 
 (setq org-capture-templates
       `(("n" "note"
+         entry (file ,org-default-notes-file)
+         "* %?\n\n" :prepend t)
+        ("t" "task"
          entry (file ,org-default-tasks-file)
          "* TODO %?\n\n" :prepend t)
-        ("w" "work note"
+        ("w" "work task"
          entry (file ,org-default-work-file)
-         "* TODO %? :work:\n\n")
+         "* TODO %? \n\n")
         ("b" "Bookmark"
          entry (file+headline ,(expand-file-name "bm.org" org-directory) "Bookmarks")
 		 "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n" :empty-lines 1)))
