@@ -120,7 +120,6 @@
 (load-custom "~/.emacs.d/html.el")
 (load-custom "~/.emacs.d/yaml.el")
 (load-custom "~/.emacs.d/typescript.el")
-(load-custom "~/.emacs.d/sql.el")
 (load-custom "~/.emacs.d/eshell.el")
 (load-custom "~/.emacs.d/nix.el")
 
