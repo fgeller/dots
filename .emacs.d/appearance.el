@@ -15,6 +15,8 @@
 
 (load-theme 'ruhe t)
 
+(global-font-lock-mode -1)
+
 ;; https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change
 (defun fg/apply-theme (appearance)
   (mapc #'disable-theme custom-enabled-themes)
