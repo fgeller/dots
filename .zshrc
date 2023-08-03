@@ -78,7 +78,7 @@ function gch() {
 }
 
 function gc() {
-	git commit -m "$@"
+	git commit -m "$*"
 }
 
 function maybeJSON() {
