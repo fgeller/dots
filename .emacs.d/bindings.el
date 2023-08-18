@@ -113,7 +113,8 @@
     (define-key map (kbd "ld") 'dap-debug)
     (define-key map (kbd "li") 'lsp-find-implementation)
 
-    (define-key map (kbd "m") 'fg/vc-dir-project)
+    (define-key map (kbd "m") 'outline-cycle)
+    (define-key map (kbd "M") 'outline-cycle-buffer)
 
     (define-key map (kbd "oL") 'org-store-link)
     (define-key map (kbd "ol") 'org-insert-link)
@@ -124,16 +125,23 @@
     (define-key map (kbd "en") 'flycheck-next-error)
     (define-key map (kbd "ep") 'flycheck-previous-error)
 
+    (define-key map (kbd "p") 'fg/visit-project)
+
     (define-key map (kbd "tp") 'tree-edit-goto-desired-parent)
 
     (define-key map (kbd "v") 'vc-prefix-map)
+	(define-key vc-prefix-map (kbd "c") 'fg/pick-rev)
+	(define-key vc-prefix-map (kbd "p") 'fg/pick-pr)
 	(define-key vc-prefix-map (kbd "e") 'fg/vc-ediff-wrapper)
+	(define-key vc-prefix-map (kbd "f") 'fg/git-fetch)
 	(define-key vc-prefix-map (kbd "F") 'vc-update)
 	(define-key vc-prefix-map (kbd "P") 'vc-push)
 	(define-key vc-prefix-map (kbd "s") 'fg/vc-dir-project)
 	(define-key vc-prefix-map (kbd "k") 'vc-revert)
 	(define-key vc-prefix-map (kbd "K") 'vc-delete-file)
+	(define-key vc-prefix-map (kbd "n") 'fg/new-branch)
 	(define-key vc-prefix-map (kbd "a") 'vc-annotate)
+	(define-key vc-prefix-map (kbd "o") 'fg/branch-overview)
 
     (define-key map (kbd "q") 'fill-paragraph)
 
@@ -197,12 +205,45 @@
     (define-key map (kbd "e") 'kmacro-end-and-call-macro)
     map))
 
+
+(defconst @-bindings-map
+  (let ((map (make-sparse-keymap)))
+    (suppress-keymap map t)
+
+    (define-key map (kbd "a") 'outline-show-all)
+    (define-key map (kbd "b") 'outline-backward-same-level)
+    (define-key map (kbd "c") 'outline-hide-entry)
+    (define-key map (kbd "d") 'outline-hide-subtree)
+    (define-key map (kbd "e") 'outline-show-entry)
+    (define-key map (kbd "f") 'outline-forward-same-level)
+    (define-key map (kbd "TAB") 'outline-show-children)
+    (define-key map (kbd "k") 'outline-show-branches)
+    (define-key map (kbd "l") 'outline-hide-leaves)
+    (define-key map (kbd "RET") 'outline-insert-heading)
+    (define-key map (kbd "RET") 'insert-heading)
+	(define-key map (kbd "n") 'outline-next-visible-heading)
+	(define-key map (kbd "o") 'outline-hide-other)
+	(define-key map (kbd "p") 'outline-previous-visible-heading)
+	(define-key map (kbd "q") 'outline-hide-sublevels)
+	(define-key map (kbd "s") 'outline-show-subtree)
+	(define-key map (kbd "t") 'outline-hide-body)
+	(define-key map (kbd "u") 'outline-up-heading)
+	(define-key map (kbd "v") 'outline-move-subtree-down)
+	(define-key map (kbd "^") 'outline-move-subtree-up)
+	(define-key map (kbd "@") 'outline-mark-subtree)
+	(define-key map (kbd "<") 'outline-promote)
+	(define-key map (kbd ">") 'outline-demote)
+
+	map))
+
 (define-key modal-mode-map (kbd "M-`") 'emoji-search)
 (define-key modal-mode-map (kbd "`") 'emoji-search)
 (define-key modal-mode-map (kbd "<SPC>") 'fg/mark-select)
 (define-key modal-mode-map (kbd "+") 'increment-integer-at-point)
 (define-key modal-mode-map (kbd "-") 'decrement-integer-at-point)
 (define-key modal-mode-map (kbd "%") 'fg/jump-to-matching-paren)
+
+(define-key modal-mode-map (kbd "@") @-bindings-map)
 
 (define-key modal-mode-map (kbd "q") 'enclose-in-pair)
 (define-key modal-mode-map (kbd "Q") 'remove-enclosing-pair)
@@ -220,6 +261,8 @@
 (define-key modal-mode-map (kbd "J") nil)
 
 (define-key modal-mode-map (kbd "f") 3w-map)
+(define-key 3w-map (kbd "z") 'fg/store-window-layout)
+(define-key 3w-map (kbd "Z") 'fg/restore-window-layout)
 (define-key modal-mode-map (kbd "F") nil)
 (define-key modal-mode-map (kbd "u") 'fg/jump-to-char)
 (define-key modal-mode-map (kbd "U") nil)
