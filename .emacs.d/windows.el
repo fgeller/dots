@@ -14,9 +14,16 @@
 		 (side . bottom)
 		 )))
 
+(defun fg/store-window-layout () 
+  (interactive)
+  (setq fg/last-window-layout (current-window-configuration)))
+
+(defun fg/restore-window-layout ()
+  (interactive)
+  (set-window-configuration fg/last-window-layout))
+
 (setq ediff-split-window-function 'split-window-horizontally)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
 
 ;; restore win layout after quitting ediff
 ;; https://emacs.stackexchange.com/a/17089
