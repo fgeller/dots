@@ -9,6 +9,11 @@
 (defconst 3w-side-buffer-store nil
   "Can hold a side-window's buffer")
 
+(defun 3w-get-stored-side-buffer ()
+  (if (buffer-live-p 3w-side-buffer-store)
+	  3w-side-buffer-store
+	(setq 3w-side-buffer-store nil)))
+
 (defconst 3w-side-window-rx
   "^*"
   ;; (rx (or
@@ -76,12 +81,13 @@
   "Produces two split windows where the left/top window is 2/3 of the frame size"
   (interactive)
   (let* ((should-cs (3w-should-split-into-columns-p 2))
-	 (size (round (* 0.625 (if should-cs (frame-total-cols) (frame-total-lines)) ))))
+		 (size (round (* 0.625 (if should-cs (frame-total-cols) (frame-total-lines)) ))))
     (3w-split-2-with-size size)))
 
 (defun 3w-split-2-with-size-from-1 (size &optional next-buffer)
   (delete-other-windows)
-  (let* ((nb (or next-buffer 3w-side-buffer-store (other-buffer)))
+  (let* ((stored-side-buf (3w-get-stored-side-buffer))
+		 (nb (or next-buffer stored-side-buf (other-buffer)))
 	 (nw (3w-split-window 2 size)))
     (set-window-buffer nw nb)))
    
@@ -103,12 +109,13 @@
   (3w-store-side-buffer)
   (delete-other-windows)
   (let* ((nb (or next-buffer (other-buffer)))
-	 (nnb (or next-next-buffer
-		  (unless (eq nb 3w-side-buffer-store) 3w-side-buffer-store)
-		  (other-buffer nb)))
-	 (ow (selected-window))
-	 (nw (3w-split-window 3))
-	 (nnw (progn (select-window nw) (3w-split-window 3))))
+		 (stored-side-buf (3w-get-stored-side-buffer))
+		 (nnb (or next-next-buffer
+				  (unless (eq nb stored-side-buf) stored-side-buf)
+				  (other-buffer nb)))
+		 (ow (selected-window))
+		 (nw (3w-split-window 3))
+		 (nnw (progn (select-window nw) (3w-split-window 3))))
     (set-window-buffer nw nb)
     (set-window-buffer nnw nnb)
     (select-window ow)
@@ -190,10 +197,11 @@
   (interactive)
   (let* ((is-cs (3w-is-column-split-p))
 		 (sw (car (window-at-side-list nil (if is-cs 'right 'bottom))))
-		 (cw (count-windows)))
+		 (cw (count-windows))
+		 (stored-side-buf (3w-get-stored-side-buffer)))
     (cond ((= 1 cw)
-		   (if 3w-side-buffer-store
-			   (3w-display-as-side-window 3w-side-buffer-store)
+		   (if stored-side-buf
+			   (3w-display-as-side-window stored-side-buf)
 			 ;; (message "3w: no side window buffer in store")
 			 ))
 
@@ -203,14 +211,14 @@
 		   ;; (3w-split-2)
 		   )
 
-		  (3w-side-buffer-store
+		  (stored-side-buf
 		   (if (= cw 3)
-			   (set-window-buffer sw 3w-side-buffer-store)
+			   (set-window-buffer sw stored-side-buf)
 			 (3w-split-3)))
 
 		  (t
 		   (message "3w: unexpected case for 3w-toggle-side-window store=%s sw=%s cw=%s"
-					3w-side-buffer-store sw cw)))))
+					stored-side-buf sw cw)))))
 
 (defun 3w-set-buffer-in-side-window ()
   (interactive)
