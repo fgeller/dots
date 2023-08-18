@@ -81,6 +81,11 @@ function gc() {
 	git commit -m "$*"
 }
 
+function gss() {
+	git add .
+	git commit -m chip
+}
+
 function maybeJSON() {
 	tee >(grep -v "^\{") | grep "^\{" | jq -c .
 }
