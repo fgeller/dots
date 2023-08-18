@@ -26,6 +26,7 @@
  lsp-file-watch-threshold 5000
  lsp-log-io nil
  lsp-client-packages '(lsp-cmake lsp-dockerfile lsp-go lsp-javascript lsp-json lsp-markdown lsp-terraform lsp-xml lsp-yaml)
+ lsp-restart 'ignore
 )
 
 (defun fg/lsp-customizations ()
