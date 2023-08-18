@@ -35,3 +35,133 @@
   (interactive)
   (let ((root (fg/guess-project-directory)))
 	(vc-dir root)))
+
+(install 'agitate)
+(add-hook 'diff-mode-hook #'agitate-diff-enable-outline-minor-mode)
+
+(defun fg/customize-diff ()
+  (define-key diff-mode-shared-map (kbd "TAB") 'outline-cycle)
+  (define-key diff-mode-map (kbd "TAB") 'outline-cycle))
+
+(add-hook 'diff-mode-hook 'fg/customize-diff)
+
+(defun fg/project-name-p (str) 
+  (and (not (member str (list "." "..")))
+	   (not (string-prefix-p "." str))))
+
+(defun fg/git-fetch ()
+  (interactive)
+  (shell-command "git fetch"))
+
+(defun fg/git-merge-main ()
+  (interactive)
+  (shell-command "git merge --ff-only origin/main"))
+
+(defun fg/visit-project ()
+  (interactive)
+  (let* ((github "~/src/github.com/")
+		 org-path
+		 proj-path
+		 projs
+		 selected-proj)
+	(dolist (org (directory-files (expand-file-name github)))
+	  (setq org-path (format "%s%s" github org))
+	  (when (fg/project-name-p org)
+		(dolist (proj (directory-files (expand-file-name org github)))
+		  (setq proj-path (format "%s/%s" org-path proj))
+		  (when (fg/project-name-p proj)
+			(setq projs (cons proj-path projs))))))
+	(setq selected-proj (completing-read "Select project: " projs nil t))
+	(find-file selected-proj)
+	(when (vc-responsible-backend selected-proj 'no-error)
+	  (vc-dir selected-proj))
+	(delete-other-windows)))
+
+(setq vc-git-show-stash 3)
+
+
+(defun fg/pick-rev ()
+  (interactive)
+  (let ((vc-root (vc-root-dir))
+		 (rev (string-trim (fg/vc-git-revision-prompt))))
+	(fg/checkout-rev rev)))
+
+(defun fg/pick-pr (prefix)
+  (interactive "P")
+  (let ((vc-root (vc-root-dir))
+		 (rev (string-trim (fg/github-pull-request-prompt prefix))))
+	(fg/checkout-rev rev)))
+
+(defun fg/checkout-rev (rev)
+  (when (yes-or-no-p (format "kill buffer's under %s?" vc-root))
+	(dolist (buf (buffer-list))
+	  (when (with-current-buffer buf
+			  (let ((dom-file (locate-dominating-file default-directory ".git")))
+				(and dom-file (file-equal-p dom-file vc-root))))
+		(kill-buffer buf))))
+  (find-file vc-root)
+  (when (lsp-workspaces) (lsp-shutdown-workspace))
+  (vc-retrieve-tag vc-root rev)
+  (fg/branch-overview vc-root))
+
+(defun fg/branch-overview (&optional dir)
+  (interactive)
+  (let ((default-directory (or dir (vc-root-dir))))
+	(find-file default-directory)
+	(vc-diff-mergebase dir "origin/main" "HEAD")
+	(delete-other-windows)
+	(outline-cycle-buffer)
+	(font-lock-mode 1)
+	(3w-split-2-1)
+	(other-window 1)
+	(vc-log-mergebase dir "origin/main" "HEAD")
+	(other-window 1)))
+
+(defun fg/vc-git-revision-prompt (&optional dir)
+  (interactive)
+  (let ((default-directory (or dir (vc-root-dir))))
+    (completing-read
+     "Select revision: "
+     (process-lines vc-git-program "branch" "--all" "--format" "%(refname:short)")
+     nil
+	 t)))
+
+(defun fg/github-pull-request-prompt (prefix &optional dir)
+  (interactive "P")
+  (let* ((default-directory (or dir (vc-root-dir)))
+		 (selected (completing-read
+					"Select pull request: "
+					(if prefix
+						(process-lines "gh" "pr" "list" "--json" "author,headRefName,title" "--template" "{{range .}}{{tablerow .headRefName .author.login .title}}{{end}}")
+					(process-lines "gh" "pr" "list" "-S" "review-requested:fgeller" "--json" "author,headRefName,title" "--template" "{{range .}}{{tablerow .headRefName .author.login .title}}{{end}}"))
+					nil 
+					t)))
+   (string-match "^\\([^ ]+\\) .+" selected)
+   (format "origin/%s" (match-string 1 selected))))
+
+
+(defun fg/github-open-pull-request-prompt (prefix &optional dir)
+  (interactive "P")
+  (let* ((default-directory (or dir (vc-root-dir)))
+		 (selected (completing-read
+					"Select pull request: "
+					(if prefix
+						(process-lines "gh" "pr" "list" "--json" "author,title,url" "--template" "{{range .}}{{.title}} - {{.author.login}} | {{.url}}{{end}}")
+					  (process-lines "gh" "pr" "list" "-S" "review-requested:fgeller" "--json" "author,title,url" "--template" "{{range .}}{{.title}} - {{.author.login}} | {{.url}}\n{{end}}"))
+					nil 
+					t)))
+	(string-match "^.+\\(https://github.com.+\\)" selected)
+	(message "url %s" (match-string 1 selected))))
+
+
+;; gh pr list -S "review-requested:fgeller" --json 'author,headRefName,title' --template '{{range .}}{{tablerow .headRefName .author.login .title}}{{end}}'
+;; gh pr list -S "review-requested:fgeller"
+
+
+(defun fg/new-branch ()
+  (interactive)
+  (let ((vc-root (vc-root-dir)))
+	(fg/checkout-rev "main")
+	(fg/git-fetch)
+	(fg/git-merge-main)
+	(vc-create-branch vc-root (read-string "branch name: "))))
