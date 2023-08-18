@@ -138,9 +138,10 @@
     (goto-char (point-min))
     (replace-regexp "func IgnoreTest\\([^(]+\\)(" "func Test\\1(" nil (point-min) (point-max))))
 
-(defun fg/go-play ()
-  (interactive)
-  (let* ((temporary-file-directory (expand-file-name "tmp/" (getenv "GOPATH")))
+(defun fg/go-play (name)
+  (interactive
+   (list (read-string "Name: " (format-time-string "%Y-%m-%dT%H:%M") t)))
+  (let* ((temporary-file-directory (expand-file-name (format "~/tmp/go-play/%s" name)))
          (temp-file (progn
                       (make-directory temporary-file-directory t)
                       (make-temp-file "go-play" nil ".go"))))
