@@ -4,11 +4,11 @@
       time-measured-blocks 0.0)
 
 (defmacro time (msg &rest body)
- `(let ((start-time (current-time)) elapsed)
-    ,@body
-    (setq elapsed (time-subtract (current-time) start-time))
-    (setq time-measured-blocks (+ time-measured-blocks (float-time elapsed)))
-    (message "%sms to %s" (format-time-string "%3N" elapsed) ,msg)))
+  `(let ((start-time (current-time)) elapsed)
+     ,@body
+     (setq elapsed (time-subtract (current-time) start-time))
+     (setq time-measured-blocks (+ time-measured-blocks (float-time elapsed)))
+     (message "%sms to %s" (format-time-string "%3N" elapsed) ,msg)))
 (put 'time 'lisp-indent-function 1)
 
 (setq
@@ -37,8 +37,8 @@
 (add-to-load-path custom-site-lisp)
 
 (mapcar (lambda (file)
-	        (when (file-directory-p file) (add-to-list 'custom-theme-load-path file)))
-	      (directory-files (file-name (file-name "themes" custom-site-lisp)) t))
+	      (when (file-directory-p file) (add-to-list 'custom-theme-load-path file)))
+	    (directory-files (file-name (file-name "themes" custom-site-lisp)) t))
 
 (require 'cl-lib)
 (require 'uniquify)
@@ -50,8 +50,11 @@
 
 (require 'package)
 (setq package-quickstart t)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-			 ("gnu" . "https://elpa.gnu.org/packages/")))
+(setq package-archives 
+	  '(("melpa" . "https://melpa.org/packages/")
+		("elpa" . "https://elpa.gnu.org/packages/")
+        ("elpa-devel" . "https://elpa.gnu.org/devel/")
+		("gnu" . "https://elpa.gnu.org/packages/")))
 
 (defun install (package &optional req)
   (unless (or (package-installed-p package)
