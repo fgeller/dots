@@ -1,5 +1,7 @@
+;; -*- lexical-binding: t -*-
+
 (add-hook 'vc-annotate-mode-hook
-	  (lambda () (setq show-trailing-whitespace nil)))
+		  (lambda () (setq show-trailing-whitespace nil)))
 
 ;; (setq vc-annotate-background-mode nil)
 
@@ -38,6 +40,8 @@
 
 (install 'agitate)
 (add-hook 'diff-mode-hook #'agitate-diff-enable-outline-minor-mode)
+
+(setq agitate-log-limit 2000)
 
 (defun fg/customize-diff ()
   (define-key diff-mode-shared-map (kbd "TAB") 'outline-cycle)
@@ -83,13 +87,13 @@
 (defun fg/pick-rev ()
   (interactive)
   (let ((vc-root (vc-root-dir))
-		 (rev (string-trim (fg/vc-git-revision-prompt))))
+		(rev (string-trim (fg/vc-git-revision-prompt))))
 	(fg/checkout-rev rev)))
 
 (defun fg/pick-pr (prefix)
   (interactive "P")
   (let ((vc-root (vc-root-dir))
-		 (rev (string-trim (fg/github-pull-request-prompt prefix))))
+		(rev (string-trim (fg/github-pull-request-prompt prefix))))
 	(fg/checkout-rev rev)))
 
 (defun fg/checkout-rev (rev)
@@ -109,9 +113,9 @@
   (let ((default-directory (or dir (vc-root-dir))))
 	(find-file default-directory)
 	(vc-diff-mergebase dir "origin/main" "HEAD")
-	(delete-other-windows)
 	(outline-cycle-buffer)
 	(font-lock-mode 1)
+	(delete-other-windows)
 	(3w-split-2-1)
 	(other-window 1)
 	(vc-log-mergebase dir "origin/main" "HEAD")
@@ -133,30 +137,44 @@
 					"Select pull request: "
 					(if prefix
 						(process-lines "gh" "pr" "list" "--json" "author,headRefName,title" "--template" "{{range .}}{{tablerow .headRefName .author.login .title}}{{end}}")
-					(process-lines "gh" "pr" "list" "-S" "review-requested:fgeller" "--json" "author,headRefName,title" "--template" "{{range .}}{{tablerow .headRefName .author.login .title}}{{end}}"))
+					  (process-lines "gh" "pr" "list" "-S" "review-requested:fgeller" "--json" "author,headRefName,title" "--template" "{{range .}}{{tablerow .headRefName .author.login .title}}{{end}}"))
 					nil 
 					t)))
-   (string-match "^\\([^ ]+\\) .+" selected)
-   (format "origin/%s" (match-string 1 selected))))
+	(string-match "^\\([^ ]+\\) .+" selected)
+	(format "origin/%s" (match-string 1 selected))))
 
+;; http://www.google.com
 
-(defun fg/github-open-pull-request-prompt (prefix &optional dir)
-  (interactive "P")
+(defun fg/github-open-pull-request-review-requested-prompt (&optional dir)
+  (interactive)
   (let* ((default-directory (or dir (vc-root-dir)))
 		 (selected (completing-read
 					"Select pull request: "
-					(if prefix
-						(process-lines "gh" "pr" "list" "--json" "author,title,url" "--template" "{{range .}}{{.title}} - {{.author.login}} | {{.url}}{{end}}")
-					  (process-lines "gh" "pr" "list" "-S" "review-requested:fgeller" "--json" "author,title,url" "--template" "{{range .}}{{.title}} - {{.author.login}} | {{.url}}\n{{end}}"))
+					(process-lines "gh" "pr" "list" "-S" "review-requested:fgeller" "--json" "author,title,url" "--template" "{{range .}}{{.title}} - {{.author.login}} | {{.url}}\n{{end}}")
 					nil 
 					t)))
 	(string-match "^.+\\(https://github.com.+\\)" selected)
-	(message "url %s" (match-string 1 selected))))
+	(browse-url (match-string 1 selected))))
 
 
-;; gh pr list -S "review-requested:fgeller" --json 'author,headRefName,title' --template '{{range .}}{{tablerow .headRefName .author.login .title}}{{end}}'
-;; gh pr list -S "review-requested:fgeller"
-
+(defun fg/github-open-pull-request-all-prompt (&optional dir)
+  (interactive)
+  (let* ((default-directory (or dir (vc-root-dir)))
+		 (keyword (read-string "keyword: "))
+		 (url-prop-name 'gh-pr-url)
+		 (collection (process-lines "gh" "pr" "list"
+									"-S" keyword 
+									"--state" "all"
+									"--limit" "200"
+									"--json" "author,title,url"
+									"--template" "{{range .}}{{.author.login}} | {{.title}} | {{.url}}\n{{end}}"))
+		 (candidate-to-url (mapcar (lambda (c) 
+									 (string-match "^\\(.+\\) | \\(.+\\) | \\(https://github.com.+\\)" c)
+									 `(,(format "%s \t %s" (match-string 2 c) (propertize (match-string 1 c) )) . ,(match-string 3 c)))
+								   collection))
+		 (selected (completing-read "Select pull request: " (mapcar 'car candidate-to-url) nil t))
+		 (selected-url (cdr (assoc selected candidate-to-url))))
+	(browse-url selected-url)))
 
 (defun fg/new-branch ()
   (interactive)
