@@ -142,6 +142,9 @@
 	(define-key vc-prefix-map (kbd "n") 'fg/new-branch)
 	(define-key vc-prefix-map (kbd "a") 'vc-annotate)
 	(define-key vc-prefix-map (kbd "o") 'fg/branch-overview)
+	(define-key vc-prefix-map (kbd "g") nil)
+	(define-key vc-prefix-map (kbd "gp") 'fg/github-open-pull-request-review-requested-prompt)
+	(define-key vc-prefix-map (kbd "gP") 'fg/github-open-pull-request-all-prompt)
 
     (define-key map (kbd "q") 'fill-paragraph)
 
