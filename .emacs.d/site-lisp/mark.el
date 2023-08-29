@@ -132,7 +132,7 @@ key    region
 (defun mark-inside-pair-strings (start end)
   (move-point-to-pair-starting-string start end)
   (forward-char 1)
-  (push-mark (point))
+  (set-mark (point))
   (backward-char 1)
   (move-point-to-pair-ending-string start end))
 
@@ -142,12 +142,12 @@ key    region
 (defun mark-whitespace ()
   (interactive)
   (skip-chars-backward " \t")
-  (push-mark (point))
+  (set-mark (point))
   (skip-chars-forward " \t"))
 
 (defun mark-with-pair-strings (start end)
   (move-point-to-pair-starting-string start end)
-  (push-mark (point))
+  (set-mark (point))
   (move-point-to-pair-ending-string start end)
   (forward-char 1))
 
