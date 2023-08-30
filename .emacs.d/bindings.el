@@ -139,6 +139,8 @@
 	(define-key vc-prefix-map (kbd "s") 'fg/vc-dir-project)
 	(define-key vc-prefix-map (kbd "k") 'vc-revert)
 	(define-key vc-prefix-map (kbd "K") 'vc-delete-file)
+	(define-key vc-prefix-map (kbd "m") 'fg/git-ff-main)
+	(define-key vc-prefix-map (kbd "M") 'fg/git-merge-main)
 	(define-key vc-prefix-map (kbd "n") 'fg/new-branch)
 	(define-key vc-prefix-map (kbd "a") 'vc-annotate)
 	(define-key vc-prefix-map (kbd "o") 'fg/branch-overview)

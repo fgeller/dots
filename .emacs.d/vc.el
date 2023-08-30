@@ -58,9 +58,13 @@
   (interactive)
   (process-lines vc-git-program "fetch"))
 
-(defun fg/git-merge-main ()
+(defun fg/git-ff-main ()
   (interactive)
   (process-lines vc-git-program "merge" "--ff-only" "origin/main"))
+
+(defun fg/git-merge-main ()
+  (interactive)
+  (process-lines vc-git-program "merge" "origin/main"))
 
 (defun fg/visit-project ()
   (interactive)
@@ -184,5 +188,5 @@
   (let ((vc-root (vc-root-dir)))
 	(fg/checkout-rev "main")
 	(fg/git-fetch)
-	(fg/git-merge-main)
+	(fg/git-ff-main)
 	(vc-create-branch vc-root (read-string "branch name: "))))
