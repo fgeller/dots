@@ -85,7 +85,7 @@
 (defun fg/pick-rev ()
   (interactive)
   (let ((vc-root (vc-root-dir))
-		(rev (string-trim (fg/vc-git-revision-prompt))))
+		(rev (string-trim (fg/vc-git-local-branch-prompt))))
 	(fg/checkout-rev rev)))
 
 (defun fg/checkout-rev (rev &optional is-pr)
@@ -116,7 +116,7 @@
 	(vc-log-mergebase dir "origin/main" "HEAD")
 	(other-window 1)))
 
-(defun fg/vc-git-revision-prompt (&optional dir)
+(defun fg/vc-git-local-branch-prompt (&optional dir)
   (interactive)
   (let ((default-directory (or dir (vc-root-dir))))
     (completing-read
