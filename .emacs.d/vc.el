@@ -84,7 +84,7 @@
 
 (defun fg/pick-rev ()
   (interactive)
-  (let ((vc-root (vc-root-dir))
+  (let ((default-directory (vc-root-dir))
 		(rev (string-trim (fg/vc-git-local-branch-prompt))))
 	(fg/checkout-rev rev)))
 
