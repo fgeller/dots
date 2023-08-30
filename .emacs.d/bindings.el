@@ -131,10 +131,10 @@
 
     (define-key map (kbd "v") 'vc-prefix-map)
 	(define-key vc-prefix-map (kbd "c") 'fg/pick-rev)
-	(define-key vc-prefix-map (kbd "p") 'fg/pick-pr)
 	(define-key vc-prefix-map (kbd "e") 'fg/vc-ediff-wrapper)
 	(define-key vc-prefix-map (kbd "f") 'fg/git-fetch)
 	(define-key vc-prefix-map (kbd "F") 'vc-update)
+	(define-key vc-prefix-map (kbd "p") 'fg/github-open-pull-request)
 	(define-key vc-prefix-map (kbd "P") 'vc-push)
 	(define-key vc-prefix-map (kbd "s") 'fg/vc-dir-project)
 	(define-key vc-prefix-map (kbd "k") 'vc-revert)
@@ -143,8 +143,7 @@
 	(define-key vc-prefix-map (kbd "a") 'vc-annotate)
 	(define-key vc-prefix-map (kbd "o") 'fg/branch-overview)
 	(define-key vc-prefix-map (kbd "g") nil)
-	(define-key vc-prefix-map (kbd "gp") 'fg/github-open-pull-request-review-requested-prompt)
-	(define-key vc-prefix-map (kbd "gP") 'fg/github-open-pull-request-all-prompt)
+	(define-key vc-prefix-map (kbd "gp") 'fg/github-open-pull-request)
 
     (define-key map (kbd "q") 'fill-paragraph)
 

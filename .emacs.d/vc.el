@@ -125,7 +125,7 @@
      nil
 	 t)))
 
-(defun fg/github-open-pull-request-prompt (&optional dir)
+(defun fg/github-open-pull-request (&optional dir)
   (interactive)
   (let* ((review-requested (yes-or-no-p "only review requested? "))
 		 (open-state (yes-or-no-p "only open state? "))
