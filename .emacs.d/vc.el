@@ -9,6 +9,7 @@
   (define-key vc-annotate-mode-map (kbd "(") 'vc-annotate-toggle-annotation-visibility))
 
 (setq vc-follow-symlinks t)
+(setq vc-git-show-stash 3)
 
 (defun vc-git-annotate-command (file buf &optional rev)
   (let ((name (file-relative-name file)))
@@ -81,32 +82,26 @@
 	  (vc-dir selected-proj))
 	(delete-other-windows)))
 
-(setq vc-git-show-stash 3)
-
-
 (defun fg/pick-rev ()
   (interactive)
   (let ((vc-root (vc-root-dir))
 		(rev (string-trim (fg/vc-git-revision-prompt))))
 	(fg/checkout-rev rev)))
 
-(defun fg/pick-pr (prefix)
-  (interactive "P")
-  (let ((vc-root (vc-root-dir))
-		(rev (string-trim (fg/github-pull-request-prompt prefix))))
-	(fg/checkout-rev rev)))
-
-(defun fg/checkout-rev (rev)
-  (when (yes-or-no-p (format "kill buffer's under %s?" vc-root))
-	(dolist (buf (buffer-list))
-	  (when (with-current-buffer buf
-			  (let ((dom-file (locate-dominating-file default-directory ".git")))
-				(and dom-file (file-equal-p dom-file vc-root))))
-		(kill-buffer buf))))
-  (find-file vc-root)
-  (when (lsp-workspaces) (lsp-shutdown-workspace))
-  (vc-retrieve-tag vc-root rev)
-  (fg/branch-overview vc-root))
+(defun fg/checkout-rev (rev &optional is-pr)
+  (let ((vc-root (vc-root-dir)))
+	(when (yes-or-no-p (format "kill buffer's under %s?" vc-root))
+	  (dolist (buf (buffer-list))
+		(when (with-current-buffer buf
+				(let ((dom-file (locate-dominating-file default-directory ".git")))
+				  (and dom-file (file-equal-p dom-file vc-root))))
+		  (kill-buffer buf))))
+	(find-file vc-root)
+	(when (lsp-workspaces) (lsp-shutdown-workspace))
+	(if is-pr
+		(shell-command (format "gh pr checkout %s" rev))
+	  (vc-retrieve-tag vc-root rev))
+	(fg/branch-overview vc-root)))
 
 (defun fg/branch-overview (&optional dir)
   (interactive)
@@ -130,35 +125,21 @@
      nil
 	 t)))
 
-(defun fg/github-pull-request-prompt (prefix &optional dir)
-  (interactive "P")
-  (let* ((default-directory (or dir (vc-root-dir)))
-		 (selected (completing-read
-					"Select pull request: "
-					(if prefix
-						(process-lines "gh" "pr" "list" "--json" "author,headRefName,title" "--template" "{{range .}}{{tablerow .headRefName .author.login .title}}{{end}}")
-					  (process-lines "gh" "pr" "list" "-S" "review-requested:fgeller" "--json" "author,headRefName,title" "--template" "{{range .}}{{tablerow .headRefName .author.login .title}}{{end}}"))
-					nil 
-					t)))
-	(string-match "^\\([^ ]+\\) .+" selected)
-	(format "origin/%s" (match-string 1 selected))))
-
-;; http://www.google.com
-
 (defun fg/github-open-pull-request-prompt (&optional dir)
   (interactive)
-  (let* ((default-directory (or dir (vc-root-dir)))
-		 (keyword (read-string "keyword: "))
-		 (review-requested (yes-or-no-p "review requested? "))
-		 (open (yes-or-no-p "open? "))
-		 (url-prop-name 'gh-pr-url)
+  (let* ((review-requested (yes-or-no-p "only review requested? "))
+		 (open-state (yes-or-no-p "only open state? "))
+		 (open-browser (yes-or-no-p "open in browser? "))
+		 (keyword (read-string "search keyword: "))
+		 (default-directory (or dir (vc-root-dir)))
+		 (_ (let ((inhibit-message t)) (fg/git-fetch)))
 		 (stdout-lines (process-lines "gh" "pr" "list"
 									  "-S" (if review-requested 
 											   (format "review-requested:fgeller %s" keyword)
-											 keyword )
-									  "--state" (if open "open" "all")
+											 keyword)
+									  "--state" (if open-state "open" "all")
 									  "--limit" "50"
-									  "--json" "author,title,url,createdAt,number"
+									  "--json" "author,title,url,createdAt,headRefName,number"
 									  "--jq" ".[]"))
 		 (prs (let* ((result (make-hash-table)))
 				(mapc (lambda (jo) (puthash (gethash "number" jo) jo result))
@@ -169,11 +150,12 @@
 								  (setq result
 										(let* ((author-name (gethash "name" (gethash "author" jo)))
 											   (author-login (gethash "login" (gethash "author" jo)))
-											   (author (if (string-equal "" author-name)
+											   (author (if (or (not author-name)
+															   (string-equal "" (string-trim author-name)))
 														   author-login
 														 (downcase (car (string-split author-name " ")))))
 											   (title (gethash "title" jo))
-											   (cand (format "%s: %s - %s" num title author)))
+											   (cand (format "%s: %s\t%s" num title author)))
 										  (add-face-text-property (- (length cand) (length author))
 																  (length cand)
 																  '(:foreground "gray") 
@@ -183,10 +165,11 @@
 								prs)
 					   result))
 		 (selected (completing-read "Select pull request: " candidates nil t))
-		 (pr-number (fg/number-prefix selected))
-		 (pr (gethash pr-number prs))
+		 (pr (gethash (fg/number-prefix selected) prs))
 		 )
-	(browse-url (gethash "url" pr))
+	(if open-browser
+		(browse-url (gethash "url" pr))
+	  (fg/checkout-rev (gethash "number" pr) 'is-pr))
 	))
 
 (defun fg/number-prefix (s)
