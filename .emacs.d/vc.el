@@ -145,26 +145,18 @@
 
 ;; http://www.google.com
 
-(defun fg/github-open-pull-request-review-requested-prompt (&optional dir)
-  (interactive)
-  (let* ((default-directory (or dir (vc-root-dir)))
-		 (selected (completing-read
-					"Select pull request: "
-					(process-lines "gh" "pr" "list" "-S" "review-requested:fgeller" "--json" "author,title,url" "--template" "{{range .}}{{.title}} - {{.author.login}} | {{.url}}\n{{end}}")
-					nil 
-					t)))
-	(string-match "^.+\\(https://github.com.+\\)" selected)
-	(browse-url (match-string 1 selected))))
-
-
-(defun fg/github-open-pull-request-all-prompt (&optional dir)
+(defun fg/github-open-pull-request-prompt (&optional dir)
   (interactive)
   (let* ((default-directory (or dir (vc-root-dir)))
 		 (keyword (read-string "keyword: "))
+		 (review-requested (yes-or-no-p "review requested? "))
+		 (open (yes-or-no-p "open? "))
 		 (url-prop-name 'gh-pr-url)
 		 (stdout-lines (process-lines "gh" "pr" "list"
-									  "-S" keyword 
-									  "--state" "all"
+									  "-S" (if review-requested 
+											   (format "review-requested:fgeller %s" keyword)
+											 keyword )
+									  "--state" (if open "open" "all")
 									  "--limit" "50"
 									  "--json" "author,title,url,createdAt,number"
 									  "--jq" ".[]"))
@@ -174,7 +166,6 @@
 				result))
 		 (candidates (let* ((result))
 					   (maphash (lambda (num jo)
-								  (message "JO: %S" jo)
 								  (setq result
 										(let* ((author-name (gethash "name" (gethash "author" jo)))
 											   (author-login (gethash "login" (gethash "author" jo)))
