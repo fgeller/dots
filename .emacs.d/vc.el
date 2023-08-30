@@ -99,7 +99,7 @@
 	(find-file vc-root)
 	(when (lsp-workspaces) (lsp-shutdown-workspace))
 	(if is-pr
-		(shell-command (format "gh pr checkout %s" rev))
+		(process-lines "gh" "pr" "checkout" rev)
 	  (vc-retrieve-tag vc-root rev))
 	(fg/branch-overview vc-root)))
 
@@ -169,7 +169,7 @@
 		 )
 	(if open-browser
 		(browse-url (gethash "url" pr))
-	  (fg/checkout-rev (gethash "number" pr) 'is-pr))
+	  (fg/checkout-rev (number-to-string (gethash "number" pr)) 'is-pr))
 	))
 
 (defun fg/number-prefix (s)
