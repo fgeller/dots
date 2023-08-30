@@ -89,7 +89,8 @@
 	(fg/checkout-rev rev)))
 
 (defun fg/checkout-rev (rev &optional is-pr)
-  (let ((vc-root (vc-root-dir)))
+  (let ((vc-root (vc-root-dir))
+		(default-directory vc-root))
 	(when (yes-or-no-p (format "kill buffer's under %s?" vc-root))
 	  (dolist (buf (buffer-list))
 		(when (with-current-buffer buf
