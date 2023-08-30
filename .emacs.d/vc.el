@@ -56,11 +56,11 @@
 
 (defun fg/git-fetch ()
   (interactive)
-  (shell-command "git fetch"))
+  (process-lines vc-git-program "fetch"))
 
 (defun fg/git-merge-main ()
   (interactive)
-  (shell-command "git merge --ff-only origin/main"))
+  (process-lines vc-git-program "merge" "--ff-only" "origin/main"))
 
 (defun fg/visit-project ()
   (interactive)
