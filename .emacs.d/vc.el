@@ -162,19 +162,46 @@
   (let* ((default-directory (or dir (vc-root-dir)))
 		 (keyword (read-string "keyword: "))
 		 (url-prop-name 'gh-pr-url)
-		 (collection (process-lines "gh" "pr" "list"
-									"-S" keyword 
-									"--state" "all"
-									"--limit" "200"
-									"--json" "author,title,url"
-									"--template" "{{range .}}{{.author.login}} | {{.title}} | {{.url}}\n{{end}}"))
-		 (candidate-to-url (mapcar (lambda (c) 
-									 (string-match "^\\(.+\\) | \\(.+\\) | \\(https://github.com.+\\)" c)
-									 `(,(format "%s \t %s" (match-string 2 c) (propertize (match-string 1 c) )) . ,(match-string 3 c)))
-								   collection))
-		 (selected (completing-read "Select pull request: " (mapcar 'car candidate-to-url) nil t))
-		 (selected-url (cdr (assoc selected candidate-to-url))))
-	(browse-url selected-url)))
+		 (stdout-lines (process-lines "gh" "pr" "list"
+									  "-S" keyword 
+									  "--state" "all"
+									  "--limit" "50"
+									  "--json" "author,title,url,createdAt,number"
+									  "--jq" ".[]"))
+		 (prs (let* ((result (make-hash-table)))
+				(mapc (lambda (jo) (puthash (gethash "number" jo) jo result))
+					  (mapcar 'json-parse-string stdout-lines))
+				result))
+		 (candidates (let* ((result))
+					   (maphash (lambda (num jo)
+								  (message "JO: %S" jo)
+								  (setq result
+										(let* ((author-name (gethash "name" (gethash "author" jo)))
+											   (author-login (gethash "login" (gethash "author" jo)))
+											   (author (if (string-equal "" author-name)
+														   author-login
+														 (downcase (car (string-split author-name " ")))))
+											   (title (gethash "title" jo))
+											   (cand (format "%s: %s - %s" num title author)))
+										  (add-face-text-property (- (length cand) (length author))
+																  (length cand)
+																  '(:foreground "gray") 
+																  nil 
+																  cand)
+										  (cons cand result))))
+								prs)
+					   result))
+		 (selected (completing-read "Select pull request: " candidates nil t))
+		 (pr-number (fg/number-prefix selected))
+		 (pr (gethash pr-number prs))
+		 )
+	(browse-url (gethash "url" pr))
+	))
+
+(defun fg/number-prefix (s)
+  (if (string-match "^\\([0123456789]+\\)" s)
+	  (string-to-number (match-string 1 s))
+	(message "failed to string-match number prefix in %S" s)))
 
 (defun fg/new-branch ()
   (interactive)
