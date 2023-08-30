@@ -114,7 +114,8 @@
 	(delete-other-windows)
 	(3w-split-2-1)
 	(other-window 1)
-	(vc-log-mergebase vc-root "origin/main" "HEAD")
+	(let ((default-directory vc-root))
+	  (vc-log-mergebase vc-root "origin/main" "HEAD"))
 	(other-window 1)))
 
 (defun fg/vc-git-local-branch-prompt (&optional dir)
