@@ -2,6 +2,44 @@
 
 (when (executable-find "gofumpt") (setq lsp-go-use-gofumpt t))
 
+(defun fg/convert-go-stack-trace-file-names (orig-fun &rest args)
+  (let* ((marker (car args))
+		 (fn (cadr args))
+		 (fn-path)
+		 (dir (caddr args))
+		 (fmts (cadddr args))
+		 (git-fs)
+		 (dd))
+	;; pkg.fn_sth.go:111
+	;; fn_sth.go:222
+	(if (not (string-match "[ \t]*\\([^.]+\\)?\\.?\\(.+\\.go\\)" fn))
+		(progn 
+		  (message "couldn't match fn=%s" fn)
+		  (apply orig-fun args))
+	  (let* ((pkg (match-string 1 fn))
+			 (go-fn (match-string 2 fn)))
+		(setq fn-path (if pkg 
+						  (format "/%s/%s" pkg go-fn)
+						go-fn)))
+	  (setq dd (with-current-buffer (marker-buffer marker) (locate-dominating-file "." ".git")))
+	  (setq git-fs
+			(let ((default-directory dd))
+			  (cl-remove-if-not (lambda (git-fn) (string-suffix-p fn-path git-fn))
+								(process-lines "git" "ls-files" "--full-name"))))
+	  (message "fn-path=%s\ndd=%s\ngit-fs=%s" fn-path dd git-fs)
+	  (if (not git-fs)
+		  (progn 
+			(message "couldn't find fn=%s in git ls-files" fn)
+			(apply orig-fun args))
+		(setq fn (format "%s%s" dd (car git-fs)))
+		(apply orig-fun (list marker fn dir fmts))))))
+
+;; monkey patch compilation helper to jump to error file.
+;; stack trace doesn't always contain the absolute path, but pkg/fn.go
+;; don't see another way to customize the file matching 🥷
+(advice-add 'compilation-find-file-1 :around #'fg/convert-go-stack-trace-file-names)
+
+
 (defun fg/golang-customizations ()
   (defalias 'go-play-buffer nil)
   (defalias 'go-play-region nil)
