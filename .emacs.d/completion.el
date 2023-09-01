@@ -112,3 +112,14 @@
   (add-to-list 'consult-buffer-sources fg/consult--source-git-ls-files t)
   (add-to-list 'consult-buffer-sources fg/consult--source-projects t))
 (setq consult-preview-key "C-t")
+
+;; https://emacs.stackexchange.com/a/30558
+(defun fg/minibuffer-yank-word ()
+  "Yank word at point in the buffer when entering text into minibuffer."
+  (interactive)
+  (with-selected-window (minibuffer-selected-window)
+    (when-let ((word (current-word)))
+      (with-selected-window (active-minibuffer-window)
+        (insert word)))))
+
+(define-key minibuffer-local-map "\C-w" #'fg/minibuffer-yank-word)

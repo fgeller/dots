@@ -39,7 +39,7 @@
   (let ((root (fg/guess-project-directory)))
 	(vc-dir root)))
 
-(install 'agitate)
+(install 'agitate 'require)
 (add-hook 'diff-mode-hook #'agitate-diff-enable-outline-minor-mode)
 
 (setq agitate-log-limit 2000)
@@ -144,7 +144,7 @@
 											   (format "review-requested:fgeller %s" keyword)
 											 keyword)
 									  "--state" (if open-state "open" "all")
-									  "--limit" "50"
+									  "--limit" "100"
 									  "--json" "author,title,url,createdAt,headRefName,number"
 									  "--jq" ".[]"))
 		 (prs (let* ((result (make-hash-table)))
@@ -190,3 +190,14 @@
 	(fg/git-fetch)
 	(fg/git-ff-main)
 	(vc-create-branch vc-root (read-string "branch name: "))))
+
+(defun fg/vc-git-show ()
+  (interactive)
+  (let* ((cw (current-word))
+		 (rev (read-string "rev: " (when (string-match-p "[0-9a-z]+" cw) cw)))
+		 (buf (get-buffer-create (format "*fg/vc-git-show %s" rev))))
+	(shell-command (format "%s show %s" vc-git-program rev) buf)
+	(with-current-buffer buf
+	  (read-only-mode 1)
+	  (diff-mode)
+	  (font-lock-mode 1))))
