@@ -12,13 +12,14 @@
 		 (dd))
 	;; pkg.fn_sth.go:111
 	;; fn_sth.go:222
-	(if (not (string-match "[ \t]*\\([^.]+\\.\\)?\\(.+\\.go\\)" fn))
+	(if (not (string-match "[ \t]*\\([^/.]+\\.\\)?\\(.+\\.go\\)" fn))
 		(progn 
 		  (message "couldn't match fn=%s" fn)
 		  (apply orig-fun args))
 	  (let* ((pkg (match-string 1 fn))
 			 (go-fn (match-string 2 fn)))
-		(setq fn-path (if pkg 
+		(message ">> pkg=%s go-fn=%s" pkg go-fn)
+		(setq fn-path (if (and pkg (> (length pkg) 0))
 						  (format "/%s/%s" (substring pkg 0 (-1 (length pkg))) pkg go-fn)
 						(format "/%s" go-fn))))
 	  (setq dd (with-current-buffer (marker-buffer marker) (locate-dominating-file "." ".git")))
