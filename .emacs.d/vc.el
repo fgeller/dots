@@ -40,7 +40,12 @@
 	(vc-dir root)))
 
 (install 'agitate 'require)
-(add-hook 'diff-mode-hook #'agitate-diff-enable-outline-minor-mode)
+
+(defun fg/diff-mode-customizations () 
+  (font-lock-mode 1)
+  (agitate-diff-enable-outline-minor-mode))
+
+(add-hook 'diff-mode-hook #'fg/diff-mode-customizations)
 
 (setq agitate-log-limit 2000)
 
@@ -171,12 +176,10 @@
 								prs)
 					   result))
 		 (selected (completing-read "Select pull request: " candidates nil t))
-		 (pr (gethash (fg/number-prefix selected) prs))
-		 )
+		 (pr (gethash (fg/number-prefix selected) prs)))
 	(if open-browser
 		(browse-url (gethash "url" pr))
-	  (fg/checkout-rev (number-to-string (gethash "number" pr)) 'is-pr))
-	))
+	  (fg/checkout-rev (number-to-string (gethash "number" pr)) 'is-pr))))
 
 (defun fg/number-prefix (s)
   (if (string-match "^\\([0123456789]+\\)" s)
