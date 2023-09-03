@@ -16,20 +16,13 @@
 
 (defconst 3w-side-window-rx
   "^*"
-  ;; (rx (or
-  ;; 	   "*Backtrace*"
-  ;; 	   "*Compilation*"
-  ;; 	   "*Faces*"
-  ;; 	   "*Help*"
-  ;; 	   "*Messages*"
-  ;; 	   "*Occur*"
-  ;; 	   "*Warnings*"
-  ;; 	   "*ag search"
-  ;; 	   "*rg"
-  ;; 	   "*vc-"
-  ;; 	   "*go-"
-  ;; 	   ))
   "Regex that matches buffer names that should be displayed in a side window")
+
+(defconst 3w-side-window-exceptions-rx
+  (rx (or
+	   "*Annotate "
+	   ))
+  "Regex that matches buffer names that should not be displayed in a side window")
 
 (defun 3w-get-side-window-buffer ()
   "Returns buffer displayed in side window if it matches `3w-side-window-rx'"
@@ -185,13 +178,14 @@
 
 (defun 3w-display-as-side-window (buf &optional alist)
   "Display buffer in right or bottom window, split single window if necessary"
-  ;; (message "3w-display-as-side-window buf=%s" buf)
-  (when (= 1 (count-windows))
-    (3w-split-2-1))
-  (let* ((is-cs (3w-is-column-split-p))
-		 (sw (car (window-at-side-list nil (if is-cs 'right 'bottom)))))
-    ;; (message "3w-display-as-side-window: is-cs=%s sw=%s buf=%s" is-cs sw buf)
-    (set-window-buffer sw buf)))
+  (if (string-match-p 3w-side-window-exceptions-rx (buffer-name buf))
+	  (set-window-buffer (selected-window) buf)
+	(when (= 1 (count-windows))
+	  (3w-split-2-1))
+	(let* ((is-cs (3w-is-column-split-p))
+		   (sw (car (window-at-side-list nil (if is-cs 'right 'bottom)))))
+	  ;; (message "3w-display-as-side-window: is-cs=%s sw=%s buf=%s" is-cs sw buf)
+	  (set-window-buffer sw buf))))
 
 (defun 3w-toggle-side-window ()
   (interactive)
@@ -237,7 +231,6 @@
 	(if found-win found-win
 	  (unless (< 1 (count-windows)) (3w-split-window 1))
 	  (let ((w (next-window (selected-window) 'no-minibuf nil)))
-		(message "3w-display-buffer-in-other-window buf=%s alist=%s w=%s" buf alist w)
 		(window--display-buffer buf w 'reuse alist)
 		w))))
 
