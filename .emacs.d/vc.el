@@ -114,7 +114,9 @@
 
 (defun fg/branch-overview (&optional dir)
   (interactive)
-  (let* ((vc-root (or dir (vc-root-dir)))
+  (let* ((vc-root (or dir 
+					  (vc-root-dir) 
+					  (fg/guess-project-directory)))
 		 (default-directory vc-root))
 	(find-file vc-root)
 	(vc-diff-mergebase vc-root "origin/main" "HEAD")
