@@ -63,8 +63,8 @@ alias j='just'
 alias e='emacsclient -nw'
 
 alias gpr="git push && gh pr create"
-alias gmm="git remote update && git merge origin/main"
-alias gff="git remote update && git merge --ff-only origin/main"
+alias gmm="git fetch origin && git merge origin/main"
+alias gff="git fetch origin && git merge --ff-only origin/main"
 alias gp="git push"
 alias ga="git add"
 alias gds="git diff --name-only"
