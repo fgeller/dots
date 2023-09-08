@@ -19,9 +19,7 @@
   "Regex that matches buffer names that should be displayed in a side window")
 
 (defconst 3w-side-window-exceptions-rx
-  (rx (or
-	   "*Annotate "
-	   ))
+  nil
   "Regex that matches buffer names that should not be displayed in a side window")
 
 (defun 3w-get-side-window-buffer ()
@@ -178,7 +176,8 @@
 
 (defun 3w-display-as-side-window (buf &optional alist)
   "Display buffer in right or bottom window, split single window if necessary"
-  (if (string-match-p 3w-side-window-exceptions-rx (buffer-name buf))
+  (if (and 3w-side-window-exceptions-rx
+		   (string-match-p 3w-side-window-exceptions-rx (buffer-name buf)))
 	  (set-window-buffer (selected-window) buf)
 	(when (= 1 (count-windows))
 	  (3w-split-2-1))

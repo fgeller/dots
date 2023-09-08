@@ -6,6 +6,12 @@
 
 (setq display-buffer-base-action '(3w-display-buffer-in-other-window))
 
+(setq 3w-side-window-exceptions-rx
+	  (rx (or
+		   "*Annotate "
+		   "*vc-dir*"
+		   )))
+
 (setq display-buffer-alist
       `(
 		(,3w-side-window-rx (3w-display-as-side-window))

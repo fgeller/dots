@@ -21,6 +21,7 @@
 (setq diff-font-lock-syntax nil)
 
 (install 'git-link)
+(setq git-link-default-branch "main")
 
 (install 'diff-hl)
 
