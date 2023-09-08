@@ -63,6 +63,10 @@
   (interactive)
   (process-lines vc-git-program "fetch"))
 
+(defun fg/git-checkout-main ()
+  (interactive)
+  (process-lines vc-git-program "checkout" "main"))
+
 (defun fg/git-ff-main ()
   (interactive)
   (process-lines vc-git-program "merge" "--ff-only" "origin/main"))
@@ -91,26 +95,40 @@
 	  (vc-dir selected-proj))
 	(delete-other-windows)))
 
-(defun fg/pick-rev ()
+(defun fg/checkout-branch ()
   (interactive)
   (let ((default-directory (vc-root-dir))
 		(rev (string-trim (fg/vc-git-local-branch-prompt))))
 	(fg/checkout-rev rev)))
 
+(defun fg/clear-project-buffers (&optional root)
+  (interactive)
+  (let ((root (or root 
+				  (fg/guess-project-directory))))
+	(when (yes-or-no-p (format "kill buffer's under %s?" root))
+	  (mapc (lambda (buf)
+			  (with-current-buffer buf
+				(when (and default-directory
+						   (let ((buf-dom-file (locate-dominating-file default-directory ".git")))
+							 (and buf-dom-file
+								  (file-equal-p buf-dom-file root))))
+				  (kill-buffer))))
+			(buffer-list)))
+	(when (and (lsp-workspaces)
+			   (yes-or-no-p (format "shutdown lsp?" root)))
+	  (lsp-shutdown-workspace))
+	(find-file root)
+	))
+
 (defun fg/checkout-rev (rev &optional is-pr)
   (let ((vc-root (vc-root-dir)))
-	(when (yes-or-no-p (format "kill buffer's under %s?" vc-root))
-	  (dolist (buf (buffer-list))
-		(when (with-current-buffer buf
-				(let ((dom-file (locate-dominating-file default-directory ".git")))
-				  (and dom-file (file-equal-p dom-file vc-root))))
-		  (kill-buffer buf))))
-	(find-file vc-root)
-	(when (lsp-workspaces) (lsp-shutdown-workspace))
+	(fg/clear-project-buffers vc-root)
 	(if is-pr
 		(process-lines "gh" "pr" "checkout" rev)
 	  (vc-retrieve-tag vc-root rev))
-	(fg/branch-overview vc-root)))
+	(if (string-equal "main" rev)
+		(vc-dir vc-root)
+	  (fg/branch-overview vc-root))))
 
 (defun fg/branch-overview (&optional dir)
   (interactive)
@@ -193,13 +211,20 @@
 	  (string-to-number (match-string 1 s))
 	(message "failed to string-match number prefix in %S" s)))
 
+(defun fg/git (&rest args)
+  (let ((cmd (format "%s %s" vc-git-program args)))
+	(message cmd)
+	(apply 'process-lines (cons vc-git-program args))))
+
 (defun fg/new-branch ()
   (interactive)
   (let ((vc-root (vc-root-dir)))
-	(fg/checkout-rev "main")
-	(fg/git-fetch)
-	(fg/git-ff-main)
-	(vc-create-branch vc-root (read-string "branch name: "))))
+	(fg/git "checkout" "main")
+	(fg/git "fetch" "origin")
+	(fg/git  "merge" "--ff-only" "origin/main")
+	(vc-create-branch vc-root (read-string "branch name: "))
+	(vc-dir vc-root)
+))
 
 (defun fg/vc-git-show ()
   (interactive)
