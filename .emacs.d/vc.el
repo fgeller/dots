@@ -105,6 +105,7 @@
 (defun fg/clear-project-buffers (&optional root)
   (interactive)
   (let ((root (or root 
+				  (locate-dominating-file default-directory ".git")
 				  (fg/guess-project-directory))))
 	(when (yes-or-no-p (format "kill buffer's under %s?" root))
 	  (mapc (lambda (buf)
@@ -237,3 +238,14 @@
 	  (read-only-mode 1)
 	  (diff-mode)
 	  (font-lock-mode 1))))
+
+
+(defun fg/gh-pr-view ()
+  (interactive)
+  (let* ((cw (current-word))
+		 (pr-num (or (when (string-match-p "[0-9]+" cw) cw)
+					 (read-string "pr: "))))
+	(shell-command (format "%s pr view --web %s" 
+						   (locate-file "gh" exec-path exec-suffixes) 
+						   pr-num))))
+
