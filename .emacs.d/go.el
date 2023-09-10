@@ -105,25 +105,28 @@
 
 (defun fg/go-run-this-test ()
   (interactive)
-  (fg/go-run (format "go test -v -vet=all -tags test_dbt,local_development -run %s"
+  (fg/go-run (format "test -v -vet=all -tags test_dbt,local_development -run %s"
                         (save-excursion
                           (re-search-backward "func \\(Test.+\\)(" (point-min))
                           (match-string 1)))))
 
 (defun fg/go-build-this ()
   (interactive)
-  (fg/go-run (format "go build .")))
+  (fg/go-run "build ."))
 
 (defun fg/go-run-this ()
   (interactive)
-  (fg/go-run "go run *.go"))
+  (fg/go-run "run *.go"))
 
 (defun fg/go-run-all-tests ()
   (interactive)
-  (fg/go-run "go test -v -vet=all"))
+  (fg/go-run "test -v -vet=all"))
 
 (defun fg/go-run (cmd)
-  (let* ((current-dir default-directory)
+  (let* ((cmd (format "%s %s"
+					  (locate-file "go" exec-path exec-suffixes)
+					  cmd))
+		 (current-dir default-directory)
 		 (dir (file-name-nondirectory (directory-file-name default-directory)))
          (buf (fg/go-compilation-buffer-name)))
 	(when (and (get-buffer buf)
