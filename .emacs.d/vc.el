@@ -239,7 +239,6 @@
 	  (diff-mode)
 	  (font-lock-mode 1))))
 
-
 (defun fg/gh-pr-view ()
   (interactive)
   (let* ((cw (current-word))
@@ -248,4 +247,9 @@
 	(shell-command (format "%s pr view --web %s" 
 						   (locate-file "gh" exec-path exec-suffixes) 
 						   pr-num))))
+
+(defun fg/gh-repo-view ()
+  (interactive)
+  (shell-command (format "%s repo view --web" 
+						   (locate-file "gh" exec-path exec-suffixes))))
 

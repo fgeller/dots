@@ -141,6 +141,7 @@
 	(define-key vc-prefix-map (kbd "g") nil)
 	(define-key vc-prefix-map (kbd "gp") 'fg/github-open-pull-request)
 	(define-key vc-prefix-map (kbd "gl") 'git-link)
+	(define-key vc-prefix-map (kbd "gr") 'fg/gh-repo-view)
 	(define-key vc-prefix-map (kbd "gv") 'fg/gh-pr-view)
 	(define-key vc-prefix-map (kbd "k") 'vc-revert)
 	(define-key vc-prefix-map (kbd "K") 'vc-delete-file)
