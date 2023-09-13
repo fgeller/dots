@@ -228,16 +228,22 @@
 	(vc-dir vc-root)
 ))
 
+(defun fg/create-branch ()
+  (interactive)
+  (fg/git "checkout" "-b" (read-string "branch name: " "fg/"))
+  (vc-dir (vc-root-dir)))
+
 (defun fg/vc-git-show ()
   (interactive)
   (let* ((cw (current-word))
 		 (rev (read-string "rev: " (when (string-match-p "[0-9a-z]+" cw) cw)))
-		 (buf (get-buffer-create (format "*fg/vc-git-show %s" rev))))
+		 (buf (get-buffer-create (format "*fg/vc-git-show %s" rev)))
+		 (inhibit-message t))
 	(shell-command (format "%s show %s" vc-git-program rev) buf)
-	(with-current-buffer buf
-	  (read-only-mode 1)
-	  (diff-mode)
-	  (font-lock-mode 1))))
+	(switch-to-buffer buf)
+	(read-only-mode 1)
+	(diff-mode)
+	(font-lock-mode 1)))
 
 (defun fg/gh-pr-view ()
   (interactive)

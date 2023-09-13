@@ -133,6 +133,7 @@
     (define-key map (kbd "v") 'vc-prefix-map)
 	(define-key vc-prefix-map (kbd "a") 'vc-annotate)
 	(define-key vc-prefix-map (kbd "bb") 'fg/checkout-branch)
+	(define-key vc-prefix-map (kbd "bc") 'fg/create-branch)
 	(define-key vc-prefix-map (kbd "bn") 'fg/new-branch)
 	(define-key vc-prefix-map (kbd "d") 'fg/vc-dir-project)
 	(define-key vc-prefix-map (kbd "e") 'fg/vc-ediff-wrapper)
