@@ -34,7 +34,7 @@ export PATH="~/.node_modules/bin:$PATH"
 export DFT_SYNTAX_HIGHLIGHT=off
 export DFT_BACKGROUND=light
 export DFT_TAB_WIDTH=4
-#GIT_EXTERNAL_DIFF=difft
+export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 
 cdpath=(~)
 for pth in ~/src/github.com/* ; do cdpath+=($pth) ; done
