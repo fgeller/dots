@@ -182,8 +182,8 @@
 
 (defun fg/go-play (name)
   (interactive
-   (list (read-string "Name: " (format-time-string "%Y-%m-%dT%H:%M") t)))
-  (let* ((temporary-file-directory (expand-file-name (format "~/tmp/go-play/%s" name)))
+   (list (read-string "Name: " (format-time-string "%Y-%m-%dT%H-%M") t)))
+  (let* ((temporary-file-directory (expand-file-name (format "~/src/github.com/fgeller/go-playground/%s" name)))
          (temp-file (progn
                       (make-directory temporary-file-directory t)
                       (make-temp-file "go-play" nil ".go"))))
