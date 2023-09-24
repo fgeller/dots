@@ -123,14 +123,19 @@
 	))
 
 (defun fg/checkout-rev (rev &optional is-pr)
-  (let ((vc-root (vc-root-dir)))
-	(fg/clear-project-buffers vc-root)
-	(if is-pr
-		(process-lines "gh" "pr" "checkout" rev)
-	  (vc-retrieve-tag vc-root rev))
-	(if (string-equal "main" rev)
-		(vc-dir vc-root)
-	  (fg/branch-overview vc-root))))
+  (let* ((vc-root (vc-root-dir))
+		 (dirty-p (> (length (process-lines "git" "status" "--porcelain")) 0)))
+	(if dirty-p 
+		(progn 
+		  (vc-root-diff nil)
+		  (message "can't checkout rev %s as working directory is dirty" rev))
+	  (fg/clear-project-buffers vc-root)
+	  (if is-pr
+		  (process-lines "gh" "pr" "checkout" rev)
+		(vc-retrieve-tag vc-root rev))
+	  (if (string-equal "main" rev)
+		  (vc-dir vc-root)
+		(fg/branch-overview vc-root)))))
 
 (defun fg/branch-overview (&optional dir)
   (interactive)
