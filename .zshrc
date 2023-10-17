@@ -45,6 +45,10 @@ export RPROMPT='' # ensure empty right side
 
 EDITOR='emacsclient -nw'
 
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 bindkey '^H' backward-kill-word
