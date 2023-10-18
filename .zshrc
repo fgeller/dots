@@ -66,16 +66,17 @@ alias k='kubectl'
 alias j='just'
 alias e='emacsclient -nw'
 
-alias gpr="git push && gh pr create"
-alias gmm="git fetch origin && git merge origin/main"
-alias gff="git fetch origin && git merge --ff-only origin/main"
-alias gp="git push"
 alias ga="git add"
-alias gds="git diff --name-only"
-alias gu="git fetch origin"
-alias gsa="git stash apply stash@{0}"
+alias gb="git checkout -b"
 alias gbs="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative))' --sort=-committerdate"
 alias gdm="git diff origin/main...HEAD"
+alias gds="git diff --name-only"
+alias gff="git fetch origin && git merge --ff-only origin/main"
+alias gmm="git fetch origin && git merge origin/main"
+alias gp="git push"
+alias gpr="git push && gh pr create"
+alias gsa="git stash apply stash@{0}"
+alias gu="git fetch origin"
 
 function gch() {
 	git checkout "$(git branch --all | fzf --query=$@ | tr -d '[:space:]')"
