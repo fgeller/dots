@@ -45,6 +45,8 @@
   (defalias 'go-play-buffer nil)
   (defalias 'go-play-region nil)
 
+
+  (eldoc-mode 1)
   (require 'lsp-mode)
 
   (lsp-register-custom-settings
