@@ -14,11 +14,9 @@
 	;; fn_sth.go:222
 	(if (not (string-match "[ \t]*\\([^/.]+\\.\\)?\\(.+\\.go\\)" fn))
 		(progn 
-		  (message "couldn't match fn=%s" fn)
 		  (apply orig-fun args))
 	  (let* ((pkg (match-string 1 fn))
 			 (go-fn (match-string 2 fn)))
-		(message ">> pkg=%s go-fn=%s" pkg go-fn)
 		(setq fn-path (if (and pkg (> (length pkg) 0))
 						  (format "/%s/%s" (substring pkg 0 (1- (length pkg))) go-fn)
 						(format "/%s" go-fn))))
@@ -27,10 +25,8 @@
 			(let ((default-directory dd))
 			  (cl-remove-if-not (lambda (git-fn) (string-suffix-p fn-path git-fn))
 								(process-lines "git" "ls-files" "--full-name"))))
-	  (message "fn-path=%s\ndd=%s\ngit-fs=%s" fn-path dd git-fs)
 	  (if (not git-fs)
 		  (progn 
-			(message "couldn't find fn=%s in git ls-files" fn)
 			(apply orig-fun args))
 		(setq fn (format "%s%s" dd (car git-fs)))
 		(apply orig-fun (list marker fn dir fmts))))))
@@ -136,7 +132,6 @@
 	  (kill-buffer buf))
     (if (get-buffer buf) 
 		(with-current-buffer buf
-		  (message "default-dir: %s" default-directory)
 		  (compile cmd))
       (compile cmd)
       (with-current-buffer "*compilation*" 
@@ -213,3 +208,46 @@ func main() {
   (save-buffer)
   (delete-file buffer-file-name)
   (kill-buffer))
+
+
+(defun fg/explode-func-args ()
+  (interactive)
+  (let* ((start-pos (save-excursion 
+					  (unless (looking-at-p "(") (search-backward "("))
+					  (point)))
+		 (end-pos (save-excursion 
+					(goto-char start-pos)
+					(fg/jump-to-matching-paren)
+					(point))))
+	(narrow-to-region start-pos end-pos)
+	(beginning-of-buffer)
+	(forward-char 1)
+	(insert "\n")
+	(while (search-forward "," nil t)
+	  (insert "\n"))
+	(end-of-buffer)
+	(forward-char -1)
+	(unless (looking-at-p ",") (insert ","))
+	(insert "\n")
+	(widen)))
+
+
+(defun fg/collapse-func-args ()
+  (interactive)
+  (let* ((start-pos (save-excursion 
+					  (search-backward "(")
+					  (point)))
+		 (end-pos (save-excursion 
+					(goto-char start-pos)
+					(fg/jump-to-matching-paren)
+					(point))))
+	(narrow-to-region start-pos end-pos)
+	(beginning-of-buffer)
+	(replace-regexp "\n" "" nil start-pos end-pos)
+	(end-of-buffer)
+	(search-backward ")")
+	(skip-chars-backward " \t(,")
+	(when (looking-at-p ",") (delete-char 1))
+	(goto-char start-pos)
+	(widen)
+))
