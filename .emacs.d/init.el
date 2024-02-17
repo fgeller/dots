@@ -125,6 +125,7 @@
 (load-custom "~/.emacs.d/typescript.el")
 (load-custom "~/.emacs.d/eshell.el")
 (load-custom "~/.emacs.d/nix.el")
+(load-custom "~/.emacs.d/macos.el")
 
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)

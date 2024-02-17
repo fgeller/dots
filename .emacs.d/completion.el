@@ -14,6 +14,10 @@
 ;;   (setq company-auto-complete-chars nil))
 
 (install 'corfu)
+(unless (display-graphic-p)
+  (require 'popon)
+  (require 'corfu-terminal)
+  (corfu-terminal-mode +1))
 
 (setq
  corfu-cycle t
@@ -61,6 +65,10 @@
 (setq completion-styles '(orderless basic)
       completion-category-defaults nil
       completion-category-overrides '((file (styles . (partial-completion)))))
+
+(setq-default vertico-group-format
+			  (concat #(" %s " 0 4 (face vertico-group-title))
+					  #(" ")))
 
 (defun fg/zap-back-till-/ ()
   (interactive)

@@ -13,7 +13,7 @@
  lsp-modeline-code-actions-enable nil
  lsp-diagnostics-provider :flycheck
  lsp-modeline-diagnostics-scope :file
- lsp-headerline-breadcrumb-enable t
+ lsp-headerline-breadcrumb-enable nil
  lsp-headerline-breadcrumb-icons-enable nil
  lsp-eldoc-render-all nil
  lsp-completion-provider :none

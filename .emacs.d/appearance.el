@@ -15,6 +15,11 @@
 
 (load-theme 'ruhe t)
 
+(unless (window-system) ;; ie -nw / terminal emacs
+  (add-hook 'window-configuration-change-hook
+			(lambda ()
+              (set-window-margins (car (get-buffer-window-list (current-buffer) nil t)) 2 2))))
+
 (global-font-lock-mode -1)
 
 ;; https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change
