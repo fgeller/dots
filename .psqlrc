@@ -3,15 +3,12 @@
 -- only whitespace for the prompt for multi-line commands, default '%/%R%x%# '
 \set PROMPT2 '%w'
 
--- https://github.com/okbob/pspg
-\setenv PAGER pspg
-
 -- horizontal by default
 \x off
 
 -- full table border
 \pset border 2 
 
-\pset linestyle unicode
+\pset linestyle ascii
 
 \pset null null
