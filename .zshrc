@@ -43,7 +43,7 @@ export cdpath
 export PS1='%F{244}%1~%f %(?.%F{green}%#%f.%F{red}%#%f) '
 export RPROMPT='' # ensure empty right side
 
-EDITOR='emacsclient -nw'
+export EDITOR='emacsclient -nw'
 
 autoload -z edit-command-line
 zle -N edit-command-line
@@ -68,7 +68,7 @@ alias e='emacsclient -nw'
 
 alias ga="git add"
 alias gb="git checkout -b"
-alias gbs="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative))' --sort=-committerdate"
+alias gbs="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative))' --sort=committerdate"
 alias gdm="git diff origin/main...HEAD"
 alias gds="git diff --name-only"
 alias gff="git fetch origin && git merge --ff-only origin/main"
