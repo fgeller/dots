@@ -78,8 +78,33 @@ alias gpr="git push && gh pr create"
 alias gsa="git stash apply stash@{0}"
 alias gu="git fetch origin"
 
+alias jjd="jj diff"
+
 function gch() {
 	git checkout "$(git branch --all | fzf --query=$@ | tr -d '[:space:]')"
+}
+
+function jjpr() {
+  local selected_branch
+  selected_branch=$(jj branch list | cut -d: -f1 | fzf --query="$@" | tr -d '[:space:]')
+
+  if [[ -n "$selected_branch" ]]; then
+    jj git push --branch "$selected_branch"
+    gh pr create -H "$selected_branch"
+  else
+    echo "No branch selected."
+  fi
+}
+
+function jjp() {
+  local selected_branch
+  selected_branch=$(jj branch list | cut -d: -f1 | fzf --query="$@" | tr -d '[:space:]')
+
+  if [[ -n "$selected_branch" ]]; then
+    jj git push --branch "$selected_branch"
+  else
+    echo "No branch selected."
+  fi
 }
 
 function gc() {

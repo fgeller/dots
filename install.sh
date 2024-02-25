@@ -10,7 +10,7 @@ function ensure_link {
 	echo proper link for $fn: $(readlink $HOME/$fn)
     fi
 }
-for f in emacs.d gitconfig gitmsg.txt globalgitignore inputrc tmux.conf zshrc zsh psqlrc
+for f in emacs.d gitconfig gitmsg.txt globalgitignore inputrc tmux.conf zshrc zsh psqlrc jjconfig.toml
 do
     ensure_link $f
 done

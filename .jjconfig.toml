@@ -1,0 +1,13 @@
+user.name = "Felix Geller"
+user.email = "fgeller@protonmail.com"
+user.signingkey = "71E54A69B0C4269F"
+ui.pager = "less -FRX"
+ui.diff-editor = "ediff"
+ui.default-command = ["log", "--limit", "10"]
+
+[merge-tools.ediff]
+program = 'sh'
+edit-args = ['-c', 'emacsclient -nw --eval "(ediff-directories \"$left\" \"$right\" nil)"']
+merge-args = ['-c',
+  'emacs -nw --eval "(ediff-merge-files-with-ancestor \"$0\" \"$1\" \"$2\" nil \"$3\")"',
+  '$left', '$right', '$base', '$output']
