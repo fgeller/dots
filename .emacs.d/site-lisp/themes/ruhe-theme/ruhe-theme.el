@@ -48,7 +48,7 @@
 
 (custom-theme-set-faces
  'ruhe
- `(default ((t (:foreground "#000000"))))
+ `(default ((t (:foreground "#000000" :background "#ffffff"))))
  `(fixed-pitch ((t (:inherit default))))
  `(underline ((t (:inherit default :underline unspecified))))
  `(border ((t (:background "#b4b7b4"))))
