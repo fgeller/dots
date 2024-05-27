@@ -1,0 +1,37 @@
+[[language]]
+name = "go"
+formatter = { command = "goimports", args = ["-local", "github.com/pipe-technologies/pipe"] }
+
+[language-server.gopls.config]
+buildFlags = ["-tags=local_development"]
+
+[language-server.gopls.config.formatting]
+gofumpt = true
+local = "github.com/pipe-technologies/pipe"
+
+[language-server.gopls.config.analyses]
+unusedvariable = true
+
+[language-server.gopls.config.hints]
+assignVariableTypes = true
+compositeLiteralFields = true
+constantValues = true
+functionTypeParameters = true
+parameterNames = true
+rangeVariableTypes = true
+
+[language-server.pyright]
+command = "pyright-langserver"
+args = ["--stdio"]
+config = {} # buggy behaviour, you need a pyproject.toml and pyrightconfig.json
+
+[[language]]
+name = "python"
+formatter = { command = "black", args = ["--quiet", "-"] }
+auto-format = true
+roots = ["pyproject.toml"]
+language-servers = [ "pyright" ]
+
+[[language]]
+name = "yaml"
+formatter = { command = "yamlfmt", args = ["-"] }

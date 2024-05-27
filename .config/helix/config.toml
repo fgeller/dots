@@ -1,0 +1,209 @@
+#  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
+# |             ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||  trim ws      ||               ||                          |
+# |     `       ||       1       ||       2      ||       3       ||       4       ||       5       ||       6       ||       7       ||       8       ||       9       ||       0       ||       -       ||       =       ||        backspace         |
+# |             ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||   format      ||                          |
+#  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
+#  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
+# |                    ||  macro record ||               ||  replace yank || next long word|| prev long word||  search next  ||  forward back ||   redo        ||  paste before ||  command      ||               ||               ||  shell pipe      |
+# |       tab          ||       q       ||       d       ||       r       ||       w       ||       b       ||       j       ||       f       ||       u       ||       p       ||       ;       ||       [       ||       ]       ||        \         |
+# |                    ||   macro reply ||   delete      ||  replace char ||  next word    ||   prev word   ||  search prev  ||   forward     ||   undo        ||  paste after  ||  collapse sel ||               ||               ||                  |
+#  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
+#  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
+# |                        ||  insert eol   ||  split sel    ||               ||  till back    ||               ||               || left word sta ||   page down   ||  page up      ||right word end ||  select regi  ||                               |
+# |         control        ||       a       ||       s       ||       h       ||       t       ||       g       ||       y       ||       n       ||       e       ||       o       ||       i       ||       '       ||              return           |
+# |                        ||  append       ||  select       ||    xxxxxxx    ||   till        ||   goto        ||   yank        ||   left char   ||   line down   ||  line up      || right char    ||               ||                               |
+#  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
+#  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
+# |                              ||               || extendl line  ||               || copy sel next ||               ||  open above   || insert at bol ||   indent      || repeat motion || reverse search||                                          |
+# |           shift              ||       z       ||       x       ||       m       ||       c       ||       v       ||       k       ||       l       ||       ,       ||       .       ||       /       ||                shift                     |
+# |                              ||  view         ||extend_line_bel||    match      || change sel    || select mode   ||  open below   ||  insert mode  || keep prim sel ||    repeat     ||  search       ||                                          |
+#  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
+
+
+#  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
+# |             ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||  trim ws      ||               ||                          |
+# |     `       ||       1       ||       2      ||       3       ||       4       ||       5       ||       6       ||       7       ||       8       ||       9       ||       0       ||       -       ||       =       ||        backspace         |
+# |             ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||   format      ||                          |
+#  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
+#  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
+# |                    ||  macro record ||               ||  replace yank || left big word ||               ||  search next  ||  rsearch      ||               ||               ||  command      ||               ||               ||  shell pipe      |
+# |       tab          ||       q       ||       d       ||       r       ||       w       ||       b       ||       j       ||       f       ||       u       ||       p       ||       ;       ||       [       ||       ]       ||        \         |
+# |                    ||   macro reply ||   delete      ||  replace char || right big word||               ||  search prev  ||  search       ||  till         || find next char||  collapse sel ||               ||               ||                  |
+#  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
+#  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
+# |                        ||  insert eol   ||  split sel    || paste before  ||  till back    ||               ||goto file start|| left word sta ||   page down   ||  page up      ||right word end ||  select regi  ||                               |
+# |         control        ||       a       ||       s       ||       h       ||       t       ||       g       ||       y       ||       n       ||       e       ||       o       ||       i       ||       '       ||              return           |
+# |                        ||  append       ||  select       || paste after   ||  yank         ||   goto        ||goto line start||   left char   ||   line down   ||  line up      || right char    ||goto line end  ||                               |
+#  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
+#  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
+# |                              ||               || extend  line  ||               || copy sel next ||               ||  open above   || insert at bol ||   indent      || repeat motion || redo          ||                                          |
+# |           shift              ||       z       ||       x       ||       m       ||       c       ||       v       ||       k       ||       l       ||       ,       ||       .       ||       /       ||                shift                     |
+# |                              ||  view         || x-map         ||    match      || change sel    || select mode   ||  open below   ||  insert mode  || keep prim sel ||    repeat     || undo          ||                                          |
+#  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
+
+# empty line without insert    
+
+
+# collapse
+theme = "ruhe" 
+
+[editor]
+color-modes = true
+true-color = true
+auto-pairs = false
+completion-trigger-len = 1
+cursorline = true
+popup-border = "all"
+file-picker.hidden = true
+shell = ["zsh", "-c"]
+
+[editor.statusline]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = false
+
+[editor.indent-guides]
+# character = "╎"
+# render = true
+
+[keys.normal.g]
+I = "goto_implementation"
+n = "file_picker"
+N = "file_picker_in_current_directory"
+g = "buffer_picker"
+"?" = "command_palette"
+"F"= ["select_textobject_around", "flip_selections"]
+
+[keys.normal.space]
+"!" = ":sh hemux-last"
+"f" = "global_search"
+
+[keys.normal.x]
+"x" = "command_mode"
+"s" = ":write"
+"r" = ":reload"
+"R" = ":reload-all"
+"c" = [":write", ":quit"]
+"t" = ":sh gt"
+
+[keys.normal.x.w]
+"i" = "jump_view_right"
+"n" = "jump_view_left"
+"|" = "vsplit"
+"o" = "wonly"
+
+[keys.normal.x.h]
+"r" = [":config-reload", ":reload-all"]
+"c" = ":config-open"
+"x" = "command_mode"
+[keys.normal.space.x]
+[keys.normal.space.w]
+n = "jump_view_left"
+e = "jump_view_down"
+o = "jump_view_up"
+i = "jump_view_right"
+
+[keys.normal.C-w]
+n = "jump_view_left"
+e = "jump_view_down"
+o = "jump_view_up"
+i = "jump_view_right"
+
+[keys.select]
+n = "extend_char_left"
+N = "extend_prev_word_start"
+e = "extend_visual_line_down"
+E = "extend_visual_line_down"
+o = "extend_visual_line_up"
+O = "extend_visual_line_up"
+i = "extend_char_right"
+I = "extend_next_word_end"
+
+l = "insert_mode"
+L = "insert_at_line_start"
+k = "open_below"
+K = "open_above"
+j = "extend_search_next"
+J = "extend_search_prev"
+
+"p" = "extend_next_char"
+"P" = "extend_prev_char"
+"u" = "extend_till_char"
+"U" = "extend_till_prev_char"
+"y" = "extend_to_line_start"
+"Y" = "extend_to_line_start"
+"'" = "extend_to_line_end"
+"\"" = "extend_to_line_end"
+"h" = "paste_after"
+"H" = "paste_before"
+"t" = "yank"
+"T" = "yank_to_clipboard"
+"/" = "undo"
+"?" = "redo"
+"f" = "search"
+"F" = "rsearch"
+"w"="extend_next_long_word_end"
+"W"="extend_prev_long_word_start"
+
+[keys.normal.z]
+e = "scroll_down"
+o = "scroll_up"
+
+[keys.normal.Z]
+e = "scroll_down"
+o = "scroll_up"
+
+[keys.normal."\\"]
+D = ["extend_to_line_bounds", "delete_selection"]
+d = ["select_mode", "goto_line_end", "delete_selection"]
+c = ["extend_to_line_bounds", "yank", "paste_after"]
+
+[keys.normal]
+n = "move_char_left"
+N = ["move_prev_word_start", "trim_selections"]
+e = "move_visual_line_down"
+E = "half_page_down"
+o = "move_visual_line_up"
+O = "half_page_up"
+i = "move_char_right"
+I = ["move_next_word_end", "trim_selections"]
+# h j k l
+
+"V" = "extend_line_below"
+"v" = "select_mode"
+"p" = ["extend_to_line_bounds", "delete_selection"]
+"P" = ["extend_to_line_bounds", "yank", "paste_after"]
+"u" = "find_till_char"
+"U" = "till_prev_char"
+"y" = "goto_line_start"
+"Y" = "goto_file_start"
+"'" = "goto_line_end"
+"\"" = "goto_file_end"
+"h" = "paste_after"
+"H" = "paste_before"
+"t" = "yank"
+"T" = "yank_to_clipboard"
+"/" = "undo"
+"?" = "redo"
+"f" = "search"
+"F" = "rsearch"
+"w"="move_next_long_word_end"
+"W"="move_prev_long_word_start"
+
+"C-l" = "align_view_center"
+"^" = "join_selections" # for J
+
+# https://github.com/helix-editor/helix/discussions/9015#discussioncomment-7795981
+# "*" = ["move_char_right", "move_prev_word_start", "move_next_word_end", "search_selection",  "make_search_word_bounded", "search_next"]
+# "#" = ["move_char_right", "move_prev_word_start", "move_next_word_end", "search_selection", "make_search_word_bounded", "search_prev"]
+"#" = "select_register"
+l = "insert_mode"
+L = "insert_at_line_start"
+k = "open_below"
+K = "open_above"
+j = "search_next"
+J = "search_prev"
