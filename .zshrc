@@ -24,10 +24,19 @@ export GOPATH=$HOME
 export GO111MODULE=on
 export GOPROXY=https://proxy.golang.org
 
+if [ Darwin = `uname` ]; then
+	eval "$(/opt/homebrew/bin/brew shellenv)"
+	source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+fi
+
 export PATH=/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:$PATH
-export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/texbin:~/.local/bin:$PATH
 export PATH=$PATH:/usr/sbin
 export PATH="~/.node_modules/bin:$PATH"
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export PATH="~/bin:$PATH"
 
 export DFT_SYNTAX_HIGHLIGHT=off
 export DFT_BACKGROUND=light
@@ -117,14 +126,6 @@ function gss() {
 function maybeJSON() {
 	tee >(grep -v "^\{") | grep "^\{" | jq -c .
 }
-
-if [ Darwin = `uname` ]; then
-	eval "$(/opt/homebrew/bin/brew shellenv)"
-	source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-	export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-	export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
-	export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-fi
 
 export TERM=xterm-24bit
 # needed when using ssh
