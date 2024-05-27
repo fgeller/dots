@@ -43,6 +43,12 @@ export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 export TERM=xterm
 export GPG_TTY=$(tty) # needed when using ssh
 
+# https://github.com/zsh-users/zsh-autosuggestions/
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6d7f82"
+
+
 cdpath=(~)
 for pth in ~/src/github.com/* ; do cdpath+=($pth) ; done
 export cdpath
