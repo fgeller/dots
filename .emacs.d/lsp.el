@@ -1,6 +1,7 @@
 (install 'lsp-mode)
 (install 'lsp-ui)
 (install 'lsp-marksman)
+(install 'lsp-pyright 'require)
 
 (setq
  lsp-ui-sideline-show-hover nil
@@ -22,7 +23,7 @@
  lsp-idle-delay 1.0
  ;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
  lsp-enable-symbol-highlighting nil
- lsp-enable-file-watchers t 
+ lsp-enable-file-watchers nil 
  lsp-file-watch-threshold 5000
  lsp-log-io nil
  lsp-client-packages '(lsp-cmake lsp-dockerfile lsp-go lsp-javascript lsp-json lsp-markdown lsp-terraform lsp-xml lsp-yaml)

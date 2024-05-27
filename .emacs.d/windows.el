@@ -10,6 +10,7 @@
 	  (rx (or
 		   "*Annotate "
 		   "*vc-dir*"
+		   "*Org Src"
 		   )))
 
 (setq display-buffer-alist

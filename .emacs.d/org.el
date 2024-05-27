@@ -7,6 +7,9 @@
  org-special-ctrl-k t
  org-special-ctrl-a t)
 
+;; <s for quick templates
+(require 'org-tempo)
+
 (setq org-return-follows-link t)
 
 (setq calendar-week-start-day 1)

@@ -4,3 +4,4 @@
   (require 'wgrep-rg)
   (rg-enable-default-bindings))
 (setq isearch-lazy-count t)
+

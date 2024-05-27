@@ -323,10 +323,10 @@
 (define-key modal-mode-map (kbd "K") 'bol-modal-mode-deactivate)
 (define-key modal-mode-map (kbd "l") 'modal-mode-deactivate)
 (define-key modal-mode-map (kbd "L") 'eol-modal-mode-deactivate)
-(define-key modal-mode-map (kbd ",") 'xref-pop-marker-stack)
+(define-key modal-mode-map (kbd ",") 'xref-go-back)
 (define-key modal-mode-map (kbd "<") nil)
 (define-key modal-mode-map (kbd ".") 'xref-find-definitions)
-(define-key modal-mode-map (kbd ">") 'xref-pop-marker-stack)
+(define-key modal-mode-map (kbd ">") 'xref-go-back)
 (define-key modal-mode-map (kbd "/") 'undo)
 (define-key modal-mode-map (kbd "?") 'xref-find-references)
 
