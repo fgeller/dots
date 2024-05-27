@@ -15,4 +15,9 @@ do
     ensure_link $f
 done
 
+for d in alacritty helix zellij
+do
+	  echo refreshing link for $d: $(ln -vfs "$target/.config/$d" "$HOME/.config/$d")
+done
+
 /usr/bin/tic -x -o ~/.terminfo xterm-24bit.terminfo
