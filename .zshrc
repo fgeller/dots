@@ -38,10 +38,10 @@ export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 export PATH="~/bin:$PATH"
 
-export DFT_SYNTAX_HIGHLIGHT=off
-export DFT_BACKGROUND=light
-export DFT_TAB_WIDTH=4
 export PASSWORD_STORE_ENABLE_EXTENSIONS=true
+
+export TERM=xterm
+export GPG_TTY=$(tty) # needed when using ssh
 
 cdpath=(~)
 for pth in ~/src/github.com/* ; do cdpath+=($pth) ; done
@@ -126,7 +126,3 @@ function gss() {
 function maybeJSON() {
 	tee >(grep -v "^\{") | grep "^\{" | jq -c .
 }
-
-export TERM=xterm-24bit
-# needed when using ssh
-export GPG_TTY=$(tty)
