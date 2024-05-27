@@ -10,12 +10,10 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-export HISTFILE=~/.history/.histfile
 export HISTSIZE=10000000
 export SAVEHIST=$HISTSIZE
 setopt hist_ignore_all_dups
 setopt hist_ignore_space # ignore entries that start with at least one space
-setopt share_history
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
