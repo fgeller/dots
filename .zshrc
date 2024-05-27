@@ -55,7 +55,6 @@ export cdpath
 
 export PS1='%F{244}%1~%f %(?.%F{green}%#%f.%F{red}%#%f) '
 export RPROMPT='' # ensure empty right side
-
 export EDITOR='hx'
 export PRE_COMMIT_OPT_OUT=true
 
@@ -75,13 +74,12 @@ alias ll="ls -la"
 alias reload="source ~/.zshrc"
 alias g='git'
 alias gll='git ll'
-alias pc='pass show -c'
-alias k='kubectl'
-alias j='just'
-alias e='emacsclient -nw'
+
+alias gtm='gt modify --no-verify -c'
 
 alias ga="git add"
-alias gb="git checkout -b"
+alias gbb="git checkout -b"
+alias gbl="git blame"
 alias gbs="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative))' --sort=committerdate"
 alias gdm="git diff origin/main...HEAD"
 alias gds="git diff --name-only"
@@ -91,6 +89,11 @@ alias gp="git push"
 alias gpr="git push && gh pr create"
 alias gsa="git stash apply stash@{0}"
 alias gu="git fetch origin"
+alias lg="lazygit"
+
+function pc() {
+	pass show "$1" | head -1  | tr -d '\n' | pbcopy
+}
 
 alias jjd="jj diff"
 
@@ -122,14 +125,24 @@ function jjp() {
 }
 
 function gc() {
-	git commit -m "$*"
+	local message
+	message="$*"
+
+	if [[ -n "$message" ]]; then
+		git commit -n -m "$message"
+	else
+		git commit -n
+	fi
 }
 
-function gss() {
-	git add .
-	git commit -m chip
-}
+function loc_dirs() {
+  local lang=$1
+  if [[ -z $1 ]]; then
+    echo "defaulting to Go."
+	lang=Go
+  fi
 
-function maybeJSON() {
-	tee >(grep -v "^\{") | grep "^\{" | jq -c .
+  find . -mindepth 1 -maxdepth 1 -type d | while read -r d; do
+    tokei -t "$lang" "$d" | rg "$lang" | awk -v dir=" $d" '{print $4 dir}'
+  done | sort -n
 }
