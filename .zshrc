@@ -56,7 +56,8 @@ export cdpath
 export PS1='%F{244}%1~%f %(?.%F{green}%#%f.%F{red}%#%f) '
 export RPROMPT='' # ensure empty right side
 
-export EDITOR='emacsclient -nw'
+export EDITOR='hx'
+export PRE_COMMIT_OPT_OUT=true
 
 autoload -z edit-command-line
 zle -N edit-command-line
