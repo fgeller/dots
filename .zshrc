@@ -4,7 +4,7 @@ setopt interactive_comments
 bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/fgeller/.zshrc'
+zstyle :compinstall filename '/Users/fgeller/.zshrc'
 
 autoload -Uz compinit
 compinit
@@ -36,11 +36,12 @@ export PATH="~/.node_modules/bin:$PATH"
 export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-export PATH="~/bin:$PATH"
+export PATH="/opt/homebrew/opt/pnpm@8/bin:$PATH"
+export PATH="~/bin:/opt/homebrew/bin:$PATH"
 
 export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 
-export TERM=xterm
+export TERM=xterm-24bit
 export GPG_TTY=$(tty) # needed when using ssh
 
 # https://github.com/zsh-users/zsh-autosuggestions/
@@ -55,7 +56,8 @@ export cdpath
 
 export PS1='%F{244}%1~%f %(?.%F{green}%#%f.%F{red}%#%f) '
 export RPROMPT='' # ensure empty right side
-export EDITOR='hx'
+export EDITOR='emacs -nw'
+
 export PRE_COMMIT_OPT_OUT=true
 
 autoload -z edit-command-line
@@ -66,6 +68,9 @@ bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 bindkey '^H' backward-kill-word
 
+alias e="emacs -nw"
+alias eq="emacs --debug-init -q -nw"
+alias ec="emacsclient -nw"
 alias grt='if [ "`git rev-parse --show-cdup`" != "" ]; then cd `git rev-parse --show-cdup`; fi'
 alias gs="git status -s -b"
 alias gd="git diff"
@@ -86,42 +91,72 @@ alias gds="git diff --name-only"
 alias gff="git fetch origin && git merge --ff-only origin/main"
 alias gmm="git fetch origin && git merge origin/main"
 alias gp="git push"
+alias gpf="git push --force-with-lease"
 alias gpr="git push && gh pr create"
 alias gsa="git stash apply stash@{0}"
 alias gu="git fetch origin"
-alias lg="lazygit"
+alias gss="gsync"
+alias gm="git checkout -q main && gs"
+
+alias z="zellij"
 
 function pc() {
 	pass show "$1" | head -1  | tr -d '\n' | pbcopy
 }
 
-alias jjd="jj diff"
+function got() {
+  go test -test.v=true -run "$@" ./...
+}
 
 function gch() {
-	git checkout "$(git branch --all | fzf --query=$@ | tr -d '[:space:]')"
+	git checkout "$(git branch --all | rg -v remotes/origin | sk --query=$@ | tr -d '[:space:]')"
 }
 
-function jjpr() {
-  local selected_branch
-  selected_branch=$(jj branch list | cut -d: -f1 | fzf --query="$@" | tr -d '[:space:]')
-
-  if [[ -n "$selected_branch" ]]; then
-    jj git push --branch "$selected_branch"
-    gh pr create -H "$selected_branch"
-  else
-    echo "No branch selected."
-  fi
+function gchh() {
+	git checkout "$(git branch --all | sk --query=$@ | tr -d '[:space:]')"
 }
 
-function jjp() {
-  local selected_branch
-  selected_branch=$(jj branch list | cut -d: -f1 | fzf --query="$@" | tr -d '[:space:]')
+gsync() {
+  local current_branch
+  current_branch=$(git symbolic-ref --short HEAD)
 
-  if [[ -n "$selected_branch" ]]; then
-    jj git push --branch "$selected_branch"
-  else
-    echo "No branch selected."
+  if [[ $current_branch != "main" ]]; then
+    echo "> switch to main"
+    git checkout --quiet main
   fi
+
+  echo "> git fetch --prune"
+  git fetch --prune --quiet
+
+  echo "> fast-forward main"
+  git merge --ff-only --quiet origin/main
+
+  local all_branches
+  all_branches=$(git for-each-ref refs/heads/ "--format=%(refname:short)" | grep -vE "(main|master)")
+
+  for branch in "${(@f)all_branches}"; do
+    deleted_marker="<<DELETED>>"
+    remote_verified=$(git show-ref --verify --quiet "refs/remotes/origin/$branch" || echo "$deleted_marker")
+
+    if [[ $remote_verified == "$deleted_marker" ]]; then
+      read -q "REPLY?> delete branch '$branch' without remote? (y/n) "
+      echo
+      if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo "> deleting $branch"
+        git branch -D "$branch"
+      fi
+    else
+      echo "> rebasing $branch"
+      git checkout -q $branch
+      git rebase -q origin/main
+      if [ $? -ne 0 ]; then
+        echo "> rebase failed for branch $branch."
+      fi
+    fi
+  done
+
+  echo "> back to branch $current_branch"
+  git checkout -q $current_branch
 }
 
 function gc() {
