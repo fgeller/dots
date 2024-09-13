@@ -1,4 +1,6 @@
-(install 'direnv 'require)
-(direnv-mode)
-
-(setq direnv-always-show-summary nil)
+(use-package direnv 
+  :ensure t
+  :config
+;;  (setq direnv-always-show-summary nil)
+  (direnv-mode)
+  )

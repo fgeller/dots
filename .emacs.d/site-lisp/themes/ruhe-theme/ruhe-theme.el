@@ -65,7 +65,7 @@
  `(tooltip ((t (:foreground "#eceff1" :background "#78909c"))))
  
  ;;`(mode-line ((t (:background "#ffffff" :foreground "#ffffff"))))
- `(mode-line ((t (:background "#1565c0" :foreground "#ffffff"))))
+ `(mode-line ((t (:background "#f1f1f1" :foreground "#000000"))))
  `(mode-line-highlight ((t (:inherit mode-line))))
  `(mode-line-buffer-id ((t (:inherit mode-line-highlight))))
  `(mode-line-emphasis ((t (:inherit mode-line-highlight))))
@@ -89,7 +89,7 @@
  `(link ((t (:foreground "#3F51B5" :underline unspecified))))
  `(link-visited ((t (:foreground "#9C27B0" :underline unspecified))))
 
- `(error ((t (:background "#f44336" :foreground "#ffffff"))))
+ `(error ((t (:foreground "#f44336"))))
  `(warning ((t (:foreground "#ff5722" :weight bold))))
  `(success ((t (:foreground "#4caf50" :weight bold :underline unspecified))))
  `(shadow ((t (:foreground "#b4b7b4"))))

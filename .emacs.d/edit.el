@@ -1,8 +1,68 @@
 ;; -*- lexical-binding: t -*-
 
-(install 'mark)
-(install 'visual-regexp)
-(install 'multiple-cursors)
+(use-package mark)
+
+(defun fg/change ()
+  (interactive)
+  (when (region-active-p)
+	(kill-region (region-beginning) (region-end))
+	(modal-mode-deactivate)))
+
+(defun fg/surround-insert (first second) 
+  (when (region-active-p)
+	(let ((beg (region-beginning))
+		  (end (region-end)))
+	  (goto-char beg)
+	  (insert first)
+	  (goto-char (+ end 1))
+	  (insert second)
+	  ;; re-activate region
+	  (setq deactivate-mark nil)
+	  (forward-char -1)
+	  (set-mark (point))
+	  (goto-char (+ beg 1))
+	  (exchange-point-and-mark)
+)))
+
+(defun fg/surround () 
+  (interactive)
+  (unless (region-active-p) (mark-symbol))
+  (let* ((char (read-char "pair character: "))
+		 (pair (fg/pair-for-char char)))
+	(if pair (fg/surround-insert (car pair) (cdr pair))
+	  (message "unknown pair %c" char))))
+
+(defconst fg/pairs '(
+					 (?\( . ?\))
+					 (?\{ . ?\})
+					 (?\[ . ?\])
+					 (?\" . ?\")
+					 (?\' . ?\')
+					 (?\< . ?\>)
+					 (?\` . ?\`)
+))
+
+(defun fg/pair-for-char (ch) 
+  (let ((by-car (assoc ch fg/pairs)))
+	(if by-car by-car
+	  (rassoc ch fg/pairs))))
+
+(defun fg/surround-remove () 
+  (interactive)
+  (when (region-active-p)
+	(let ((beg (region-beginning))
+		  (end (region-end)))
+	  (goto-char end)
+	  (message "looking at %c" (char-after (point)))
+	  (delete-char 1)
+	  (goto-char (- beg 1))
+	  (delete-char 1)
+	  
+	  ;; re-activate region
+	  (setq deactivate-mark nil)
+	  (set-mark (point))
+	  (goto-char (- end 2))
+)))
 
 (defun increment-integer-at-point (&optional increment)
   (interactive "p*")
@@ -32,16 +92,40 @@
   (interactive)
   (insert (read-string "Insert: ")))
 
-(defun duplicate-line ()
+(defun fg/duplicate-line ()
   (interactive)
   (save-excursion
     (beginning-of-line)
     (push-mark (point))
     (end-of-line)
-    (kill-ring-save (point) (mark))
-    (open-line 1)
     (forward-char 1)
+    (kill-ring-save (point) (mark))
     (yank)))
+
+(defun fg/delete ()
+  (interactive)
+  (if (region-active-p)
+	  (kill-region (point) (mark))
+	(delete-forward-char 1)))
+
+(defun fg/join-line ()
+  (interactive)
+  (save-excursion
+	(end-of-line)
+	(delete-char 1)
+	(fixup-whitespace)))
+
+(defun fg/kill-line ()
+  (interactive)
+  (let ((col (current-column)))
+	(save-excursion
+      (beginning-of-line)
+      (push-mark (point))
+      (end-of-line)
+	  (forward-char 1)
+      (kill-region (point) (mark))
+	  (message "moving to column %s" col))
+	(move-to-column col)))
 
 (defun fg/end-of-line-insert ()
   (interactive)
@@ -89,7 +173,11 @@
   (let ((c (read-char "Insert: ")))
     (insert c)))
 
-(defun kill-select ()
+(defun fg/kill-select-save ()
+  (interactive)
+  (fg/kill-select 'save))
+
+(defun fg/kill-select (&optional save)
   (interactive)
   (let* (mrk-fun)
     (unless (region-active-p)
@@ -108,7 +196,9 @@
 		 ((= nk (region-specifier 'till)) (setq mrk-fun 'mark-till))
 		 ((= nk (region-specifier 'till-backwards)) (setq mrk-fun 'mark-till-backwards)))))
     (when mrk-fun (funcall mrk-fun))
-    (kill-region (point) (mark))
+	(if save
+		(kill-ring-save (point) (mark))
+      (kill-region (point) (mark)))
     (setq fg/last-edit-command (lambda () (fg/kill-select-do mrk-fun)))))
 
 (defun fg/kill-select-do (mrk-fun)

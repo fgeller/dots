@@ -1,2 +1,2 @@
-(install 'nix-mode)
-(add-to-list 'auto-mode-alist '("\\.nix\\'" . nix-mode))
+(use-package nix-mode
+  :mode ("\\.nix\\'" . nix-mode))

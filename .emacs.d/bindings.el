@@ -1,24 +1,3 @@
-;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
-;; |             ||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
-;; |     `       ||       1       ||       2      ||       3       ||       4       ||       5       ||       6       ||       7       ||       8       ||       9       ||       0       ||       -       ||       =       ||        backspace         |
-;; | emoji-search||               ||              ||               ||               ||               ||               ||               ||               ||               ||               ||               ||               ||                          |
-;;  -------------  ---------------  --------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  --------------------------
-;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
-;; |                    ||  rem-encl-pair|| zap-up-to-char|| duplicate-lin ||  bol-insert   || ola-insert    ||               ||backward-to-chr||               ||     occur     ||               || prev-word-occ || next-word-occ ||                  |
-;; |       tab          ||       q       ||       d       ||       r       ||       w       ||       b       ||       j       ||       f       ||       u       ||       p       ||       ;       ||       [       ||       ]       ||        \         |
-;; |                    ||  surround     ||     delete    || query-repl-rx ||  eol-insert   || olb-insert    ||   join-line   ||forward-to-char|| avy-goto-char ||    isearch    ||consult-git-grp||  prev-sym-occ || next-sym-occ  ||consult-goto-line |
-;;  --------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------
-;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
-;; |                        || replace-char  ||     insert    ||yank-kill-ring ||               ||               ||  beg-buffer   ||  back-symbl   ||   page-down   ||    page-up    ||   fwd-symbl   ||  end-buffer   ||                               |
-;; |         control        ||       a       ||       s       ||       h       ||       t       ||       g       ||       y       ||       n       ||       e       ||       o       ||       i       ||       '       ||              return           |
-;; |                        ||  replace-sel  ||   insert-char ||      yank     ||     kill      ||  consult-buf  || begining-line ||     left      ||     down      ||      up       ||     right     ||   end-line    ||                               |
-;;  ------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  -------------------------------
-;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
-;; |                              ||  ivy-resume   ||               ||               ||               || backward-sexp ||bol-modal-deact||eol-modal-deact||               || xref-jump-back||               ||                                          |
-;; |           shift              ||       z       ||       x       ||       m       ||       c       ||       v       ||       k       ||       l       ||       ,       ||       .       ||       /       ||                shift                     |
-;; |                              ||   repeat      ||     x-map     ||  macro-map    ||     c-map     || forward-sexp  ||aft-indent-deac||modal-deactivat||xref-jump-back || xref-jump-to  ||      undo     ||                                          |
-;;  ------------------------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ---------------  ------------------------------------------
-
 (defun exit-view-mode ()
   (message "entering view mode, about to disable")
   (view-mode-exit t nil t))
@@ -38,41 +17,43 @@
 (define-key Buffer-menu-mode-map (kbd "C-o") nil)
 ;; so we can rely on C-o to toggle modal mode
 
-
 ;; hacks to get esc to work as a keypress (not M- or ESC ESC ESC) in terminal
 ;; https://evil.readthedocs.io/en/latest/faq.html?highlight=terminal#problems-with-the-escape-key-in-the-terminal
-(install 'evil)
-(require 'evil-core)
-(evil-esc-mode +1)
+(defun fg/evil-init-esc (frame)
+  "Update `input-decode-map' in terminal."
+  (with-selected-frame frame
+    (let ((term (frame-terminal frame)))
+      (when (and (eq (terminal-live-p term) t) ; only patch tty
+				 (not (terminal-parameter term 'evil-esc-map)))
+        (let ((evil-esc-map (lookup-key input-decode-map [?\e])))
+          (set-terminal-parameter term 'evil-esc-map evil-esc-map)
+          (define-key input-decode-map [?\e]
+            `(menu-item "" ,evil-esc-map :filter ,#'fg/esc)))))))
+(mapc #'fg/evil-init-esc (frame-list))
 
 (defun fg/esc (map)
   "Drops some guards from evil's `evil-esc' so the ESC event is always translated"
   (if (and (let ((keys (this-single-command-keys)))
              (and (> (length keys) 0)
                   (= (aref keys (1- (length keys))) ?\e)))
-           (sit-for evil-esc-delay))
+           (sit-for 0.01))
       (prog1 [escape]
         (when defining-kbd-macro
           (end-kbd-macro)
           (setq last-kbd-macro (vconcat last-kbd-macro [escape]))
           (start-kbd-macro t t)))
     map))
-(advice-add 'evil-esc :override 'fg/esc)
 
-(install 'modal)
+(use-package modal)
 (global-modal-mode +1)
 
-(define-key global-map (kbd "C-o") 'modal-mode-deactivate)
+(define-key global-map (kbd "C-o") 'xref-go-back)
 ;; this would prevent access to M- in tty
 ;; (define-key global-map (kbd "ESC") 'modal-mode-activate)
 (define-key global-map (kbd "<escape>") 'modal-mode-activate)
 
 (define-key global-map (kbd "C-j") 'yas-expand)
 (after 'org (define-key org-mode-map (kbd "C-j") 'yas-expand))
-
-(install 'expand-region)
-
-(require '3w)
 
 (define-key global-map (kbd "M-.") 'embark-act)
 (define-key minibuffer-local-map (kbd "M-.") 'embark-act)
@@ -253,29 +234,46 @@
 
 (define-key modal-mode-map (kbd "@") @-bindings-map)
 
+(defconst fg/window-map (make-keymap) "Keymap to bind to a prefix to conveniently access 3w's and built-in functions")
+
+(define-key fg/window-map (kbd "1") '3w-split-1)
+(define-key fg/window-map (kbd "2") '3w-split-2)
+(define-key fg/window-map (kbd "3") '3w-split-3)
+(define-key fg/window-map (kbd "4") '3w-split-2-1)
+(define-key fg/window-map (kbd "0") 'delete-window)
+(define-key fg/window-map (kbd "d") 'delete-window)
+(define-key fg/window-map (kbd "b") 'balance-windows)
+(define-key fg/window-map (kbd "a") '3w-jump-1)
+(define-key fg/window-map (kbd "s") '3w-jump-2)
+(define-key fg/window-map (kbd "h") '3w-jump-3)
+(define-key fg/window-map (kbd "t") '3w-toggle-side-window)
+(define-key fg/window-map (kbd "T") '3w-set-buffer-in-side-window)
+(define-key fg/window-map (kbd "o") 'other-window)
+(define-key fg/window-map (kbd "w") 'other-window)
+(define-key fg/window-map (kbd "r") '3w-shift-right)
+(define-key fg/window-map (kbd "k") 'delete-window)
+(define-key fg/window-map (kbd "z") 'fg/store-window-layout)
+(define-key fg/window-map (kbd "Z") 'fg/restore-window-layout)
+
 (define-key modal-mode-map (kbd "q") 'enclose-in-pair)
 (define-key modal-mode-map (kbd "Q") 'remove-enclosing-pair)
 (define-key modal-mode-map (kbd "d") 'delete-forward-char)
 (define-key modal-mode-map (kbd "D") 'zap-up-to-char)
 (define-key modal-mode-map (kbd "r") 'vr/query-replace)
 (define-key modal-mode-map (kbd "R") 'duplicate-line)
-;; (define-key modal-mode-map (kbd "W") 'fg/backward-to-char)
-;; (define-key modal-mode-map (kbd "w") 'fg/forward-to-char)
-(define-key modal-mode-map (kbd "W") 'fg/beginning-of-line-insert)
-(define-key modal-mode-map (kbd "w") 'fg/end-of-line-insert)
+(define-key modal-mode-map (kbd "W") nil)
+(define-key modal-mode-map (kbd "w") fg/window-map)
 (define-key modal-mode-map (kbd "B") 'fg/open-line-above-insert)
 (define-key modal-mode-map (kbd "b") 'fg/open-line-below-insert)
 (define-key modal-mode-map (kbd "j") 'join-line)
 (define-key modal-mode-map (kbd "J") nil)
 
-(define-key modal-mode-map (kbd "f") 3w-map)
-(define-key 3w-map (kbd "z") 'fg/store-window-layout)
-(define-key 3w-map (kbd "Z") 'fg/restore-window-layout)
+(define-key modal-mode-map (kbd "f") 'fg/consult-line)
 (define-key modal-mode-map (kbd "F") nil)
 (define-key modal-mode-map (kbd "u") 'fg/jump-to-char)
 (define-key modal-mode-map (kbd "U") nil)
-(define-key modal-mode-map (kbd "p") 'fg/consult-line)
-(define-key modal-mode-map (kbd "P") 'occur)
+(define-key modal-mode-map (kbd "p") 'fg/kill-line)
+(define-key modal-mode-map (kbd "P") 'fg/duplicate-line)
 (define-key modal-mode-map (kbd ";") 'fg/grep)
 (define-key modal-mode-map (kbd ":") 'fg/rg)
 (define-key modal-mode-map (kbd "[") 'fg/move-to-previous-symbol-occurrence)
@@ -286,15 +284,19 @@
 (define-key modal-mode-map (kbd "1") 'fg/consult-goto-line)
 (define-key modal-mode-map (kbd "|") 'mc/edit-lines)
 
-(define-key modal-mode-map (kbd "a") 'fg/replace-select)
-(define-key modal-mode-map (kbd "A") 'fg/replace-char)
-(define-key modal-mode-map (kbd "s") 'fg/insert-char)
-(define-key modal-mode-map (kbd "S") 'fg/insert-literal)
+(define-key modal-mode-map (kbd "a") 'fg/change)
+(define-key modal-mode-map (kbd "A") 'eol-modal-mode-deactivate)
+(define-key modal-mode-map (kbd "s") 'fg/surround)
+(define-key modal-mode-map (kbd "S") 'fg/surround-remove)
 (define-key modal-mode-map (kbd "h") 'yank)
 (define-key modal-mode-map (kbd "H") 'consult-yank-from-kill-ring)
-(define-key modal-mode-map (kbd "t") 'kill-select)
-(define-key modal-mode-map (kbd "T") nil)
-(define-key modal-mode-map (kbd "g") 'fg/jump)
+(define-key modal-mode-map (kbd "t") 'fg/kill-select)
+(define-key modal-mode-map (kbd "T") 'fg/kill-select-save)
+(define-key modal-mode-map (kbd "gd") 'xref-find-definitions)
+(define-key modal-mode-map (kbd "gI") 'lsp-find-implementation)
+(define-key modal-mode-map (kbd "gr") 'xref-find-references)
+(define-key modal-mode-map (kbd "gg") 'fg/jump)
+
 (define-key modal-mode-map (kbd "G") nil)
 (define-key modal-mode-map (kbd "y") 'move-beginning-of-line)
 (define-key modal-mode-map (kbd "Y") 'fg/beginning-of-buffer)
@@ -313,14 +315,14 @@
 (define-key modal-mode-map (kbd "Z") 'ivy-resume)
 (define-key modal-mode-map (kbd "x") x-bindings-map)
 (define-key modal-mode-map (kbd "X") nil)
-(define-key modal-mode-map (kbd "m") macro-bindings-map)
-(define-key modal-mode-map (kbd "M") nil)
+(define-key modal-mode-map (kbd "m") 'er/expand-region)
+(define-key modal-mode-map (kbd "M") 'er/contract-region)
 (define-key modal-mode-map (kbd "c") c-bindings-map)
-(define-key modal-mode-map (kbd "C") nil)
-(define-key modal-mode-map (kbd "v") 'forward-sexp)
-(define-key modal-mode-map (kbd "V") 'backward-sexp)
-(define-key modal-mode-map (kbd "k") 'after-indent-modal-mode-deactivate)
-(define-key modal-mode-map (kbd "K") 'bol-modal-mode-deactivate)
+(define-key modal-mode-map (kbd "C") 'mc/mark-next-like-this)
+(define-key modal-mode-map (kbd "v") 'fg/mark-select)
+(define-key modal-mode-map (kbd "V") nil)
+(define-key modal-mode-map (kbd "k") 'fg/open-line-below)
+(define-key modal-mode-map (kbd "K") 'fg/open-line-above)
 (define-key modal-mode-map (kbd "l") 'modal-mode-deactivate)
 (define-key modal-mode-map (kbd "L") 'eol-modal-mode-deactivate)
 (define-key modal-mode-map (kbd ",") 'xref-go-back)
@@ -329,6 +331,7 @@
 (define-key modal-mode-map (kbd ">") 'xref-go-back)
 (define-key modal-mode-map (kbd "/") 'undo)
 (define-key modal-mode-map (kbd "?") 'xref-find-references)
+(define-key modal-mode-map (kbd "^") 'fg/join-line)
 
 (define-key modal-mode-map (kbd "S-<left>") 'shrink-window-horizontally)
 (define-key modal-mode-map (kbd "S-<right>") 'enlarge-window-horizontally)

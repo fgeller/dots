@@ -1,25 +1,40 @@
-(require '3w)
+(use-package 3w
+  :commands (
+			 3w-split-1
+			 3w-split-2
+			 3w-split-3
+			 3w-split-2-1
+			 3w-jump-1
+			 3w-jump-2
+			 3w-jump-3
+			 3w-toggle-side-window
+			 3w-set-buffer-in-side-window
+			 3w-shift-right
+			 3w-display-buffer-in-other-window
+			 3w-display-as-side-window
+			 )
+  :init
+  (setq display-buffer-base-action '(3w-display-buffer-in-other-window))
+  (setq display-buffer-alist
+		`(
+		  ("^*" (3w-display-as-side-window))
+		  (".*\\*Completions.*"
+		   (display-buffer-reuse-window display-buffer-in-side-window)
+		   (side . bottom)
+		   )))
+  :config
+  (setq 3w-side-window-exceptions-rx
+		(rx (or
+			 "*Annotate "
+			 "*vc-dir*"
+			 "*Org Src"
+			 "*Packages*"
+			 )))
+)
 
 ;; limit height of *Completions* buffer
 (temp-buffer-resize-mode +1)
 (setq temp-buffer-max-height 15)
-
-(setq display-buffer-base-action '(3w-display-buffer-in-other-window))
-
-(setq 3w-side-window-exceptions-rx
-	  (rx (or
-		   "*Annotate "
-		   "*vc-dir*"
-		   "*Org Src"
-		   )))
-
-(setq display-buffer-alist
-      `(
-		(,3w-side-window-rx (3w-display-as-side-window))
-		(".*\\*Completions.*"
-		 (display-buffer-reuse-window display-buffer-in-side-window)
-		 (side . bottom)
-		 )))
 
 (defun fg/store-window-layout () 
   (interactive)

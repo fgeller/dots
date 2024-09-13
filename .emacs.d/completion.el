@@ -1,74 +1,102 @@
-;; (install 'company)
-;; (setq company-minimum-prefix-length 1
-;;       company-idle-delay 0.1)
-
-;; (after 'company
-;;   (setq company-backends '((:separate company-yasnippet company-capf company-files))))
-;; (global-company-mode +1)
-
-;; (after 'company
-;;   (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
-;;   (define-key company-active-map (kbd "<return>") nil)
-;;   (define-key company-active-map (kbd "RET") nil)
-;;   (setq company-auto-commit nil)
-;;   (setq company-auto-complete-chars nil))
-
-(install 'corfu)
-(unless (display-graphic-p)
-  (require 'popon)
-  (require 'corfu-terminal)
-  (corfu-terminal-mode +1))
-
-(setq
- corfu-cycle t
- corfu-auto t
- corfu-auto-delay 0.3
- corfu-auto-prefix 1
- corfu-quit-no-match 'separator
- corfu-on-exact-match 'quit
- corfu-preview-current nil
- )
-
-(after 'corfu
+(use-package corfu
+  :ensure t
+  :hook
+  (prog-mode . corfu-mode)
+  :commands
+  (global-corfu-mode)
+  :config
+  (unless (display-graphic-p)
+	(require 'popon)
+	(require 'corfu-terminal)
+	(corfu-terminal-mode +1))
+  (setq
+   corfu-cycle t
+   corfu-auto t
+   corfu-auto-delay 0.2
+   corfu-auto-prefix 1
+   corfu-quit-no-match 'separator
+   corfu-on-exact-match 'quit
+   corfu-preview-current nil
+   )
   (define-key corfu-map (kbd "<tab>") 'corfu-insert) ;; -complete
   (define-key corfu-map (kbd "<return>") nil)
-  (define-key corfu-map (kbd "RET") nil))
-(global-corfu-mode)
+  (define-key corfu-map (kbd "RET") nil)
+)
 
-;; Don't forget that M-n binding
-(install 'consult)
-(install 'consult-flycheck)
-(install 'consult-lsp)
+(use-package consult
+  :ensure t
+  :commands (
+			 consult-lsp-symbols 
+			 consult-lsp-diagnostics 
+			 consult-flymake 
+			 consult-lsp-symbols 
+			 consult-lsp-file-symbols
+			 consult-grep
+			 consult-git-grep
+			 consult-ripgrep
+			 consult-yank-from-kill-ring
+			 consult-line
+			 consult-buffer
+			 )
+)
 
-(install 'embark)
-(install 'embark-consult)
-(autoload 'embark-consult-export-grep "embark-consult")
+(use-package marginalia
+  :ensure t
+  :defer 1
+  :config
+  (setq marginalia-annotator-registry
+		(assq-delete-all 'file marginalia-annotator-registry))
+  (marginalia-mode)
+)
+
+(use-package embark
+  :ensure t
+  :bind
+  (("C-." . embark-act)
+   ("C-;" . embark-dwim)
+   ("C-h B" . embark-bindings))
+  
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none))))
+)
+  
+(use-package embark-consult
+  :ensure t 
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode)
+  :config
+  (setq consult-project-function (lambda (ignore) (locate-dominating-file "." ".git")))
+  )
+
+;(autoload 'embark-consult-export-grep "embark-consult")
 
 (after 'embark
   (add-to-list 'embark-exporters-alist '(consult-grep . embark-consult-export-grep))
   (add-to-list 'embark-exporters-alist '(consult-git-grep . embark-consult-export-grep))
   (add-to-list 'embark-exporters-alist '(consult-ripgrep . embark-consult-export-grep)))
 
-(install 'marginalia)
-;;(marginalia-mode -1) ;; i really don't want file permission in the minibuffer and it seems slower?
-
 (recentf-mode)
-(setq consult-project-root-function (lambda () (locate-dominating-file "." ".git")))
 (setq xref-show-xrefs-function #'consult-xref
       xref-show-definitions-function #'consult-xref)
 (setq xref-prompt-for-identifier nil)
 
-(install 'vertico)
-(install 'orderless)
+(use-package vertico
+  :ensure t
+  :init
+  (setq-default vertico-group-format
+				(concat #(" %s " 0 4 (face vertico-group-title))
+						#(" ")))
+  (vertico-mode))
 
-(vertico-mode)
-(setq completion-styles '(orderless basic)
-      completion-category-defaults nil
-      completion-category-overrides '((file (styles . (partial-completion)))))
-
-(setq-default vertico-group-format
-			  (concat #(" %s " 0 4 (face vertico-group-title))
-					  #(" ")))
+(use-package orderless
+  :ensure t
+  :config
+  (setq completion-styles '(orderless basic))
+  (setq completion-category-defaults nil)
+  (setq completion-category-overrides '((file (styles partial-completion)))))
 
 (defun fg/zap-back-till-/ ()
   (interactive)
@@ -85,7 +113,7 @@
     :face     consult-file
     :history  file-name-history
     :state    ,#'consult--file-state
-    :enabled  ,(lambda () (and consult-project-root-function))
+    :enabled  ,(lambda () (and consult-project-function))
     :items
     ,(lambda ()
       (when-let (root (consult--project-root))
@@ -104,7 +132,7 @@
     :face     consult-file
     :history  file-name-history
     :state    ,#'consult--file-state
-    :enabled  ,(lambda () (and consult-project-root-function))
+    :enabled  ,(lambda () (and consult-project-function))
     :items
     ,(lambda ()
        (let* (ps)

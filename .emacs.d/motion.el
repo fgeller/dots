@@ -1,35 +1,83 @@
-(install 'avy)
-(setq avy-all-windows nil
-      avy-background t
-      avy-style 'de-bruijn
-      avy-keys '(?a ?s ?h ?t ?n ?e ?o ?i)
-      ;; avy-goto-word-0-regexp "\\(\\b\\sw\\|[(){}]\\)"
-      avy-goto-word-0-regexp "\\b\\sw"
-      avy-timeout-seconds 0.2)
+;; (install 'avy)
+;; (setq avy-all-windows nil
+;;       avy-background t
+;;       avy-style 'de-bruijn
+;;       avy-keys '(?a ?s ?h ?t ?n ?e ?o ?i)
+;;       ;; avy-goto-word-0-regexp "\\(\\b\\sw\\|[(){}]\\)"
+;;       avy-goto-word-0-regexp "\\b\\sw"
+;;       avy-timeout-seconds 0.2)
 
 (defun fg/back-node-or-word ()
   (interactive)
-  (if (featurep 'squirrel-mode)
-	  (call-interactively 'squirrel-goto-previous)
-	(call-interactively 'backward-word)))
+  (backward-word)
+  (forward-word)
+  (set-mark (point))
+  (backward-word))
 
 (defun fg/forward-node-or-word ()
   (interactive)
-  (if (featurep 'squirrel-mode)
-	  (call-interactively 'squirrel-goto-next)
-	(call-interactively 'forward-word)))
+  (forward-word)
+  (backward-word)
+  (set-mark (point))
+  (forward-word))
+
+(defun fg/move-end-of-line ()
+  (interactive)
+  (move-end-of-line 1))
+
+(defun fg/move-beginning-of-line ()
+  (interactive)
+  (move-beginning-of-line 1))
+
+(defun fg/next-line ()
+  (interactive)
+  (when (and (not fg/mark-active)
+			 (region-active-p))
+	(deactivate-mark))
+  (next-line))
+
+(defun fg/previous-line ()
+  (interactive)
+  (when (and (not fg/mark-active)
+			 (region-active-p))
+	(deactivate-mark))
+  (previous-line))
+
+(defun fg/left-char ()
+  (interactive)
+  (when (and (not fg/mark-active)
+			 (region-active-p))
+	(deactivate-mark))
+  (left-char))
+
+(defun fg/right-char ()
+  (interactive)
+  (when (and (not fg/mark-active)
+			 (region-active-p))
+	(deactivate-mark))
+  (right-char))
+
+(defun fg/backward-symbol ()
+  (interactive)
+  (forward-symbol -1)
+  (forward-symbol 1)
+  (unless fg/mark-active (set-mark (point)))
+  (forward-symbol -1))
+
+(defun fg/forward-symbol ()
+  (interactive)
+  (forward-symbol 1)
+  (forward-symbol -1)
+  (unless fg/mark-active (set-mark (point)))
+  (forward-symbol 1))
 
 (defun fg/down-node-or-scroll ()
   (interactive)
-  (if (featurep 'squirrel-mode)
-	  (call-interactively 'squirrel-goto-first-child)
-	(call-interactively 'fg/scroll-up-half-page)))
+  (fg/scroll-up-half-page))
 
 (defun fg/up-node-or-scroll ()
   (interactive)
-  (if (featurep 'squirrel-mode)
-	  (call-interactively 'squirrel-goto-parent)
-	(call-interactively 'fg/scroll-down-half-page)))
+  (fg/scroll-down-half-page))
 
 (defun fg/jump-to-char ()
   (interactive)

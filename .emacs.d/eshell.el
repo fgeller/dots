@@ -6,4 +6,4 @@
   (let* ((root (fg/guess-project-directory)))
 	(cd root)))
 
-(install 'vterm)
+(use-package vterm :commands (vterm))

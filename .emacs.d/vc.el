@@ -1,60 +1,67 @@
 ;; -*- lexical-binding: t -*-
 
-(add-hook 'vc-annotate-mode-hook
-		  (lambda () (setq show-trailing-whitespace nil)))
+(use-package vc
+  :commands (vc-dir vc-root-diff)
+  :defer 1
+  :config
+  (setq vc-follow-symlinks t)
+  (setq vc-git-show-stash 3))
 
-;; (setq vc-annotate-background-mode nil)
+(use-package vc-annotate 
+  :commands vc-annotate
+  :config 
+  (define-key vc-annotate-mode-map (kbd "(") 'vc-annotate-toggle-annotation-visibility)
+  
+  (defun vc-git-annotate-command (file buf &optional rev)
+	(let ((name (file-relative-name file)))
+      (vc-git-command buf 'async nil "blame" "--date=short" "-C" "-C" rev "--" name)))
+  
+  (defun fg/vc-annotate-mode-hook ()
+	(setq show-trailing-whitespace nil))
+  
+  (add-hook 'vc-annotate-mode-hook 'fg/vc-annotate-mode-hook))
 
-(after 'vc-annotate
-  (define-key vc-annotate-mode-map (kbd "(") 'vc-annotate-toggle-annotation-visibility))
+(use-package git-link
+  :ensure t
+  :commands (git-link)
+  :config
+  (setq git-link-default-branch "main"))
 
-(setq vc-follow-symlinks t)
-(setq vc-git-show-stash 3)
+(use-package diff-hl
+  :ensure t
+  :commands (diff-hl-next-hunk diff-hl-previous-hunk diff-hl-revert-hunk global-diff-hl-mode diff-hl-margin-mode)
+  :defer 5
+  :config
+  (setq diff-hl-margin-symbols-alist
+		'((insert . " ")
+		  (delete . " ")
+		  (change . " ")
+		  (unknown . " ")
+		  (ignored . " ")))
+  :init
+  (global-diff-hl-mode)
+  (diff-hl-margin-mode +1))
 
-(defun vc-git-annotate-command (file buf &optional rev)
-  (let ((name (file-relative-name file)))
-    (vc-git-command buf 'async nil "blame" "--date=short" "-C" "-C" rev "--" name)))
-
-(setq git-commit-summary-max-length 72)
-
-(setq diff-font-lock-prettify nil)
-(setq diff-font-lock-syntax nil)
-
-(install 'git-link)
-(setq git-link-default-branch "main")
-
-(install 'diff-hl)
-
-;; (global-diff-hl-mode)
-;; (diff-hl-margin-mode +1)
-
-(setq diff-hl-margin-symbols-alist
-	  '((insert . " ")
-		(delete . " ")
-		(change . " ")
-		(unknown . " ")
-		(ignored . " ")))
+(use-package agitate
+  :ensure t
+  :commands (agitate-diff-enable-outline-minor-mode)
+  :config
+  (setq agitate-log-limit 2000))
 
 (defun fg/vc-dir-project ()
   (interactive)
   (let ((root (fg/guess-project-directory)))
 	(vc-dir root)))
 
-(install 'agitate 'require)
-
-(defun fg/diff-mode-customizations () 
+(defun fg/diff-mode-hook () 
   (font-lock-mode 1)
-  (agitate-diff-enable-outline-minor-mode))
-
-(add-hook 'diff-mode-hook #'fg/diff-mode-customizations)
-
-(setq agitate-log-limit 2000)
-
-(defun fg/customize-diff ()
+  (setq diff-font-lock-prettify nil)
+  (setq diff-font-lock-syntax nil)
+  (agitate-diff-enable-outline-minor-mode)
   (define-key diff-mode-shared-map (kbd "TAB") 'outline-cycle)
   (define-key diff-mode-map (kbd "TAB") 'outline-cycle))
 
-(add-hook 'diff-mode-hook 'fg/customize-diff)
+(add-hook 'diff-mode-hook #'fg/diff-mode-hook)
 
 (defun fg/project-name-p (str) 
   (and (not (member str (list "." "..")))
@@ -116,9 +123,9 @@
 								  (file-equal-p buf-dom-file root))))
 				  (kill-buffer))))
 			(buffer-list)))
-	(when (and (lsp-workspaces)
+	(when (and lspce-mode
 			   (yes-or-no-p (format "shutdown lsp?" root)))
-	  (lsp-shutdown-workspace))
+	  (lspce-shutdown-server))
 	(find-file root)
 	))
 

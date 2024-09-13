@@ -1,10 +1,13 @@
-(install 'markdown-mode)
-(install 'markdown-preview-mode)
-(setq markdown-command "multimarkdown")
-
-(setq markdown-preview-stylesheets
-      (list "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css"
-            "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" "
+(use-package markdown-mode 
+  :ensure t
+  :ensure markdown-preview-mode
+  :mode
+  ("\\md\\'" . markdown-mode)
+  :config
+  (setq 
+   markdown-command "multimarkdown"
+   markdown-preview-stylesheets (list "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css"
+									  "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" "
   <style>
    .markdown-body {
      box-sizing: border-box;
@@ -20,10 +23,9 @@
      }
    }
   </style>
-"))
-
-(setq markdown-preview-javascript
-      (list "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" "
+")
+  
+   markdown-preview-javascript (list "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" "
   <script>
    $(document).on('mdContentChange', function() {
      $('pre code').each(function(i, block) {
@@ -33,10 +35,9 @@
   </script>
 "))
 
+  (defun fg/markdown-mode-hooks ()
+	(lspce-mode))
 
-(defun fg/markdown-customizations ()
-  (require 'lsp-mode)
-  ;; (lsp-deferred)
-  )
+  (add-hook 'markdown-mode-hook 'fg/markdown-mode-hook)
+)
 
-(add-hook 'markdown-mode-hook 'fg/markdown-customizations)

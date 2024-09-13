@@ -1,6 +1,22 @@
-(install 'go-mode)
+(use-package go-ts-mode
+  :mode ("\\.go\\'" . go-ts-mode)
+  :config 
 
-(when (executable-find "gofumpt") (setq lsp-go-use-gofumpt t))
+  (defun fg/go-mode-hook ()
+	(eldoc-mode 1)
+	(subword-mode 1)
+	(yas-minor-mode)
+	(setq tab-width 4)
+	(lsp-mode)
+	(setq apheleia-formatter 'gofumpt)
+	(apheleia-mode +1)
+	(add-hook 'before-save-hook #'lsp-organize-imports t t))
+  
+  (add-hook 'go-ts-mode-hook 'fg/go-mode-hook)
+  
+  (setq display-fill-column-indicator-character ?\u2502)
+  (display-fill-column-indicator-mode +1))
+
 
 (defun fg/convert-go-stack-trace-file-names (orig-fun &rest args)
   (let* ((marker (car args))
@@ -35,40 +51,6 @@
 ;; stack trace doesn't always contain the absolute path, but pkg/fn.go
 ;; don't see another way to customize the file matching 🥷
 (advice-add 'compilation-find-file-1 :around #'fg/convert-go-stack-trace-file-names)
-
-
-(defun fg/golang-customizations ()
-  (defalias 'go-play-buffer nil)
-  (defalias 'go-play-region nil)
-
-
-  (eldoc-mode 1)
-  (require 'lsp-mode)
-
-  (lsp-register-custom-settings
-   '(("gopls.staticcheck" nil t)
-     ("gopls.allowImplicitNetworkAccess" t t)
-     ))
-  (setq lsp-go-build-flags ["-tags=test_dbt,local_development"])
-  (let ((env (make-hash-table)))
-    (puthash "GOPROXY" "proxy.golang.org,direct" env)
-    (setq lsp-go-env env))
-  
-  (lsp-deferred)
-  (lsp-diagnostics-modeline-mode)
-
-  (subword-mode 1)
-  (yas-minor-mode)
-
-  (setq tab-width 4)
-
-  (setq display-fill-column-indicator-character ?\u2502)
-  (display-fill-column-indicator-mode +1)
-
-  (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
-
-(add-hook 'go-mode-hook 'fg/golang-customizations)
 
 (defun fg/go-compilation-buffer-name ()
   (let* ((proj-path (expand-file-name (fg/guess-project-directory)))

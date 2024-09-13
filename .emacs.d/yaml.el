@@ -1,1 +1,2 @@
-(install 'yaml-mode)
+(use-package yaml-mode
+  :mode ("\\.yaml\\'" . yaml-mode))

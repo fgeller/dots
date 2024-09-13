@@ -11,12 +11,6 @@
      (message "%sms to %s" (format-time-string "%3N" elapsed) ,msg)))
 (put 'time 'lisp-indent-function 1)
 
-(setq
- init-file-name-handler-alist file-name-handler-alist
- read-process-output-max (* 10 1024 1024)
- gc-cons-threshold (* 100 1024 1024)
- file-name-handler-alist nil)
-
 (defalias 'after 'with-eval-after-load)
 (defalias 'file-name 'expand-file-name)
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -25,7 +19,7 @@
 (setq linux-p (eq system-type 'gnu/linux))
 (when mac-p (setq system-name (car (split-string system-name "\\."))))
 
-(setenv "EDITOR" "emacs")
+(setenv "EDITOR" "emacs -nw")
 (setenv "PAGER" "cat")
 
 (defun add-to-load-path (d)
@@ -40,7 +34,6 @@
 	      (when (file-directory-p file) (add-to-list 'custom-theme-load-path file)))
 	    (directory-files (file-name (file-name "themes" custom-site-lisp)) t))
 
-(require 'cl-lib)
 (require 'uniquify)
 (require 'subword)
 
@@ -48,21 +41,60 @@
 
 (setq auth-sources '("~/.authinfo.gpg"))
 
-(require 'package)
-(setq package-quickstart t)
+;; (setq package-quickstart t)
 (setq package-archives 
 	  '(("melpa" . "https://melpa.org/packages/")
 		("elpa" . "https://elpa.gnu.org/packages/")
         ("elpa-devel" . "https://elpa.gnu.org/devel/")
-		("gnu" . "https://elpa.gnu.org/packages/")))
+		("gnu" . "https://elpa.gnu.org/packages/")
+		("melpa-stable" . "https://stable.melpa.org/packages/")))
 
-(defun install (package &optional req)
-  (unless (or (package-installed-p package)
-              (require package nil 'no-error))
-    (package-refresh-contents)
-    (package-install package))
-  (load (format "%s-autoloads.el" package) 'no-error 'no-message)
-  (when req (require package)))
+(defvar elpaca-installer-version 0.7)
+(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                              :ref nil :depth 1
+                              :files (:defaults "elpaca-test.el" (:exclude "extensions"))
+                              :build (:not elpaca--activate-package)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
+       (build (expand-file-name "elpaca/" elpaca-builds-directory))
+       (order (cdr elpaca-order))
+       (default-directory repo))
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (unless (file-exists-p repo)
+    (make-directory repo t)
+    (when (< emacs-major-version 28) (require 'subr-x))
+    (condition-case-unless-debug err
+        (if-let ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                 ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                 ,@(when-let ((depth (plist-get order :depth)))
+                                                     (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                 ,(plist-get order :repo) ,repo))))
+                 ((zerop (call-process "git" nil buffer t "checkout"
+                                       (or (plist-get order :ref) "--"))))
+                 (emacs (concat invocation-directory invocation-name))
+                 ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                       "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                 ((require 'elpaca))
+                 ((elpaca-generate-autoloads "elpaca" repo)))
+            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+          (error "%s" (with-current-buffer buffer (buffer-string))))
+      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+  (unless (require 'elpaca-autoloads nil t)
+    (require 'elpaca)
+    (elpaca-generate-autoloads "elpaca" repo)
+    (load "./elpaca-autoloads")))
+(add-hook 'after-init-hook #'elpaca-process-queues)
+(elpaca `(,@elpaca-order))
+
+(elpaca elpaca-use-package
+  ;; Enable use-package :ensure support for Elpaca.
+  (elpaca-use-package-mode))
+
+(use-package esup
+  :ensure t
+  :pin melpa-stable)
 
 (setq
  auto-save-default nil
@@ -101,22 +133,21 @@
   (time (format "load %s" n)
     (load n nil 'no-message)))
 
+(load-custom "~/.emacs.d/bindings.el")
 (load-custom "~/.emacs.d/appearance.el")
 (load-custom "~/.emacs.d/mode-line.el")
 (load-custom "~/.emacs.d/windows.el")
 (load-custom "~/.emacs.d/completion.el")
 (load-custom "~/.emacs.d/compilation.el")
 (load-custom "~/.emacs.d/search.el")
-(load-custom "~/.emacs.d/bindings.el")
 (load-custom "~/.emacs.d/vc.el")
-(load-custom "~/.emacs.d/flycheck.el")
 (load-custom "~/.emacs.d/snippets.el")
+(load-custom "~/.emacs.d/prog.el")
 (load-custom "~/.emacs.d/lsp.el")
-(load-custom "~/.emacs.d/dap.el")
 (load-custom "~/.emacs.d/go.el")
 (load-custom "~/.emacs.d/emacs-lisp.el")
 (load-custom "~/.emacs.d/org.el")
-(load-custom "~/.emacs.d/direnv.el")
+;(load-custom "~/.emacs.d/direnv.el")
 
 (load-custom "~/.emacs.d/markdown.el")
 (load-custom "~/.emacs.d/protobuf.el")
@@ -133,15 +164,24 @@
 (setq auto-revert-interval 0.5)
 (auto-revert-set-timer)
 
-(install 'exec-path-from-shell)
-(exec-path-from-shell-initialize)
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns))
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
 
 (setq file-name-handler-alist init-file-name-handler-alist)
 
 (require 'server)
 (unless (server-running-p) (server-start))
 
-(message "%sms to load init.el (%.00fms measured)" (format-time-string "%3N" (time-subtract (current-time) global-startup)) (* time-measured-blocks 1000.0))
+(setq
+ gc-cons-threshold (* 2 1024 1024)
+)
+
+(message "%sms to load init.el (%.00fms measured)" 
+		 (format-time-string "%3N" (time-subtract (current-time) global-startup))
+		 (* time-measured-blocks 1000.0))
 (message "emacs init time: %s" (emacs-init-time))
 (put 'downcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)

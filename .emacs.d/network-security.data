@@ -1,3 +1,0 @@
-(
- (:id "sha1:e62eff6927c8f3b139bf6c24bd69f1b1ff2a9ded" :fingerprints ("sha1:bf:27:83:c0:23:36:5b:2c:ea:7d:dd:30:33:02:ba:fe:38:06:8c:28") :host "127.0.0.1:1026" :conditions (:self-signed :unknown-ca :invalid :verify-cert))
-)

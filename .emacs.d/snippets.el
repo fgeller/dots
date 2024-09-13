@@ -1,10 +1,11 @@
-(install 'yasnippet)
-(setq yas-snippet-dir '("~/.emacs.d/snippets/"))
+(use-package yasnippet
+  :commands (yas-minor-mode yas-expand)
+  :defer t
+  :ensure
+  yasnippet-snippets
+  :config
+  (setq yas-snippet-dir '("~/.emacs.d/snippets/"))
+  (after 'yasnippet (yas-reload-all))
+)
 
-(install 'yasnippet-snippets)
-
-(yas-global-mode 1)
-
-(after 'yasnippet
-  (yas-reload-all))
 
