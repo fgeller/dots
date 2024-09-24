@@ -26,6 +26,11 @@
 
 (add-hook 'ns-system-appearance-change-functions #'fg/apply-theme)
 
+(defun fg/enable-line-numbers ()
+  (display-line-numbers-mode 1))
+
+(add-hook 'prog-mode-hook 'fg/enable-line-numbers)
+
 (show-paren-mode +1)
 (setq show-paren-delay 0.5)
 (setq show-paren-style 'parenthesis)
@@ -36,9 +41,6 @@
 (use-package leerzeichen 
   :ensure t
   :commands (leerzeichen-mode))
-(use-package nlinum 
-  :ensure t
-  :commands (nlinum-mode))
 
 (use-package highlight-thing
   :ensure t
