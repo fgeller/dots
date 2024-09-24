@@ -17,6 +17,3 @@
 	(setq indent-tabs-mode nil))
   
   (add-hook 'typescript-ts-mode-hook 'fg/typescript-mode-hook))
-
-
-(message "hele")
