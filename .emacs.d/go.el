@@ -5,18 +5,18 @@
   (defun fg/go-mode-hook ()
 	(eldoc-mode 1)
 	(subword-mode 1)
-	(yas-minor-mode)
 	(setq tab-width 4)
 	(lsp-mode)
 	(setq apheleia-formatter 'gofumpt)
 	(apheleia-mode +1)
+	(setq-local comment-start "// ")
+	(setq-local comment-end "")
 	(add-hook 'before-save-hook #'lsp-organize-imports t t))
   
   (add-hook 'go-ts-mode-hook 'fg/go-mode-hook)
   
   (setq display-fill-column-indicator-character ?\u2502)
   (display-fill-column-indicator-mode +1))
-
 
 (defun fg/convert-go-stack-trace-file-names (orig-fun &rest args)
   (let* ((marker (car args))
