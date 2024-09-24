@@ -147,10 +147,8 @@
 (load-custom "~/.emacs.d/go.el")
 (load-custom "~/.emacs.d/emacs-lisp.el")
 (load-custom "~/.emacs.d/org.el")
-;(load-custom "~/.emacs.d/direnv.el")
 
 (load-custom "~/.emacs.d/markdown.el")
-(load-custom "~/.emacs.d/protobuf.el")
 (load-custom "~/.emacs.d/html.el")
 (load-custom "~/.emacs.d/yaml.el")
 (load-custom "~/.emacs.d/typescript.el")
