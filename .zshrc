@@ -105,7 +105,7 @@ function pc() {
 }
 
 function got() {
-  go test -test.v=true -run "$@" ./...
+	go test -test.v=true -run "$@" ./...
 }
 
 function gch() {
@@ -117,46 +117,51 @@ function gchh() {
 }
 
 gsync() {
-  local current_branch
-  current_branch=$(git symbolic-ref --short HEAD)
+	local current_branch
+	current_branch=$(git symbolic-ref --short HEAD)
 
-  if [[ $current_branch != "main" ]]; then
-    echo "> switch to main"
-    git checkout --quiet main
-  fi
+	if [[ $current_branch != "main" ]]; then
+		echo "> switch to main"
+		git checkout --quiet main
+	fi
 
-  echo "> git fetch --prune"
-  git fetch --prune --quiet
+	echo "> git fetch --prune"
+	git fetch --prune --quiet
 
-  echo "> fast-forward main"
-  git merge --ff-only --quiet origin/main
+	echo "> fast-forward main"
+	git merge --ff-only --quiet origin/main
 
-  local all_branches
-  all_branches=$(git for-each-ref refs/heads/ "--format=%(refname:short)" | grep -vE "(main|master)")
+	local gone_branches
+	gone_branches=$(git for-each-ref --format '%(refname) %(upstream:track)' refs/heads | rg '\[gone\]' | sed -E 's:refs/heads/::g' | cut -d' ' -f1)
+	gone_branches=(${gone_branches:#}) # filter empty strings
+	if [[ -n $gone_branches ]] ; then
+		for branch in "${(@f)gone_branches}"; do
+			read -q "REPLY?> delete branch '$branch' (remote gone)? (y/n) "
+			echo
+			if [[ $REPLY =~ ^[Yy]$ ]]; then
+				echo "> deleting $branch"
+				git branch -D "$branch"
+			fi
+		done
+	fi
+	
+	local all_branches
+	all_branches=$(git for-each-ref refs/heads/ "--format=%(refname:short)" | grep -vE "(main|master)")
 
-  for branch in "${(@f)all_branches}"; do
-    deleted_marker="<<DELETED>>"
-    remote_verified=$(git show-ref --verify --quiet "refs/remotes/origin/$branch" || echo "$deleted_marker")
+	for branch in "${(@f)all_branches}"; do
+		echo -n "> rebasing $branch "
+		git checkout -q $branch
+		git rebase origin/main &>/dev/null
+		if [ $? -ne 0 ]; then
+			echo "❌"
+			git rebase --abort
+		else
+			echo "✅"
+		fi
+	done
 
-    if [[ $remote_verified == "$deleted_marker" ]]; then
-      read -q "REPLY?> delete branch '$branch' without remote? (y/n) "
-      echo
-      if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo "> deleting $branch"
-        git branch -D "$branch"
-      fi
-    else
-      echo "> rebasing $branch"
-      git checkout -q $branch
-      git rebase -q origin/main
-      if [ $? -ne 0 ]; then
-        echo "> rebase failed for branch $branch."
-      fi
-    fi
-  done
-
-  echo "> back to branch $current_branch"
-  git checkout -q $current_branch
+	echo "> back to branch $current_branch"
+	git checkout -q $current_branch
 }
 
 function gc() {
@@ -171,13 +176,13 @@ function gc() {
 }
 
 function loc_dirs() {
-  local lang=$1
-  if [[ -z $1 ]]; then
-    echo "defaulting to Go."
-	lang=Go
-  fi
+	local lang=$1
+	if [[ -z $1 ]]; then
+		echo "defaulting to Go."
+		lang=Go
+	fi
 
-  find . -mindepth 1 -maxdepth 1 -type d | while read -r d; do
-    tokei -t "$lang" "$d" | rg "$lang" | awk -v dir=" $d" '{print $4 dir}'
-  done | sort -n
+	find . -mindepth 1 -maxdepth 1 -type d | while read -r d; do
+		tokei -t "$lang" "$d" | rg "$lang" | awk -v dir=" $d" '{print $4 dir}'
+	done | sort -n
 }
