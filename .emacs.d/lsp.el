@@ -58,7 +58,7 @@
    lsp-idle-delay 0.3
    ;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
    lsp-enable-symbol-highlighting nil
-   lsp-enable-file-watchers nil 
+   lsp-enable-file-watchers t 
    lsp-file-watch-threshold 5000
    lsp-log-io nil
    lsp-client-packages '(lsp-cmake lsp-dockerfile lsp-go lsp-javascript lsp-json lsp-markdown lsp-terraform lsp-xml lsp-yaml)
