@@ -10,9 +10,10 @@
 
 (add-hook 'compilation-mode-hook 'fg/compilation)
 
-(setq compilation-scroll-output 'first-error)
+(setq compilation-scroll-output nil)
 (setq compilation-always-kill t)
 (setq compilation-ask-about-save nil)
+(setq compilation-max-output-line-length nil)
 
 (defun fg/guess-project-directory ()
   (let* ((dd default-directory)
