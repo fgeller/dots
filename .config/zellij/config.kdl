@@ -156,8 +156,8 @@ keybinds {
         unbind "Ctrl g" // was Locked
         unbind "Ctrl q" // was Quit
         
-        bind "Alt g" { SwitchToMode "Locked"; }
-        bind "Alt q" { Quit; }
+        // bind "Alt g" { SwitchToMode "Locked"; }
+        // bind "Alt q" { Quit; }
         bind "Alt d" { Detach; }
 
         bind "Alt n" { MoveFocus "Left"; }
