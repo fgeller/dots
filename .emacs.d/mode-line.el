@@ -18,6 +18,9 @@
 				" "
 				mode-line-modes
 				mode-line-misc-info
+				,(propertize " " 'display '(raise +0.25))
+				" "
+				,(propertize " " 'display '(raise -0.25))
 				mode-line-end-spaces))
 
 (use-package diminish
