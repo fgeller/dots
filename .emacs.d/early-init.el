@@ -39,11 +39,11 @@
 (set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?┃))
 (setq default-frame-alist
       (append (list
-			   '(left-fringe . 16)
-			   '(right-fringe . 16)
+			   '(left-fringe . 2)
+			   '(right-fringe . 2)
 			   '(vertical-scroll-bars . nil)
 			   '(tool-bar-lines . 0)
-			   '(internal-border-width . 0))))
+			   '(internal-border-width . 8))))
 (menu-bar-mode -1)  ;; shows full-screen button for mac port
 (global-font-lock-mode -1)
 
