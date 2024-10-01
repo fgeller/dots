@@ -4,9 +4,9 @@
 
 (defun fg/change ()
   (interactive)
-  (when (region-active-p)
-	(kill-region (region-beginning) (region-end))
-	(modal-mode-deactivate)))
+  (unless (region-active-p) (mark-symbol))
+  (kill-region (region-beginning) (region-end))
+  (modal-mode-deactivate))
 
 (defun fg/surround-insert (first second) 
   (when (region-active-p)
@@ -142,7 +142,8 @@
   (end-of-line)
   (open-line 1)
   (forward-line 1)
-  (indent-for-tab-command))
+  (indent-for-tab-command)
+  (global-modal-mode -1))
 
 (defun fg/open-line-below-insert ()
   (interactive)
@@ -154,7 +155,8 @@
   (end-of-line 0) ;; ie -1 🤷‍
   (open-line 1)
   (forward-line 1)
-  (indent-for-tab-command))
+  (indent-for-tab-command)
+  (global-modal-mode -1))
 
 (defun fg/open-line-above-insert ()
   (interactive)
