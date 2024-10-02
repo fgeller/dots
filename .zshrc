@@ -26,7 +26,6 @@ export GOPROXY=https://proxy.golang.org
 
 if [ Darwin = `uname` ]; then
 	eval "$(/opt/homebrew/bin/brew shellenv)"
-	source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 fi
 
 export PATH=/usr/local/go/bin:$GOPATH/bin:$GOROOT/bin:$PATH
@@ -42,6 +41,7 @@ export PATH="~/bin:/opt/homebrew/bin:$PATH"
 export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 
 export TERM=xterm-24bit
+export TERMINFO=~/.terminfo
 export GPG_TTY=$(tty) # needed when using ssh
 
 # https://github.com/zsh-users/zsh-autosuggestions/
@@ -56,7 +56,7 @@ export cdpath
 
 export PS1='%F{244}%1~%f %(?.%F{green}%#%f.%F{red}%#%f) '
 export RPROMPT='' # ensure empty right side
-export EDITOR='emacs -nw'
+export EDITOR='emacsclient'
 
 export PRE_COMMIT_OPT_OUT=true
 
@@ -68,9 +68,8 @@ bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 bindkey '^H' backward-kill-word
 
-alias e="emacs -nw"
+alias e="emacsclient "
 alias eq="emacs --debug-init -q -nw"
-alias ec="emacsclient -nw"
 alias grt='if [ "`git rev-parse --show-cdup`" != "" ]; then cd `git rev-parse --show-cdup`; fi'
 alias gs="git status -s -b"
 alias gd="git diff"
