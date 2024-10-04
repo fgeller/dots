@@ -327,7 +327,7 @@
 (define-key modal-mode-map (kbd "M") 'er/contract-region)
 (define-key modal-mode-map (kbd "c") c-bindings-map)
 (define-key modal-mode-map (kbd "C") 'mc/mark-next-like-this)
-(define-key modal-mode-map (kbd "v") 'fg/mark-select)
+(define-key modal-mode-map (kbd "v") 'fg/activate-mark)
 (define-key modal-mode-map (kbd "V") nil)
 (define-key modal-mode-map (kbd "k") 'fg/open-line-below)
 (define-key modal-mode-map (kbd "K") 'fg/open-line-above)

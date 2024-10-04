@@ -1,24 +1,24 @@
-;; (install 'avy)
-;; (setq avy-all-windows nil
-;;       avy-background t
-;;       avy-style 'de-bruijn
-;;       avy-keys '(?a ?s ?h ?t ?n ?e ?o ?i)
-;;       ;; avy-goto-word-0-regexp "\\(\\b\\sw\\|[(){}]\\)"
-;;       avy-goto-word-0-regexp "\\b\\sw"
-;;       avy-timeout-seconds 0.2)
+(defconst fg/mark-active-p nil)
+(defun fg/deactivate-mark-hook () (setq fg/mark-active-p nil))
+(add-hook 'deactivate-mark-hook 'fg/deactivate-mark-hook)
+
+(defun fg/activate-mark () 
+  (interactive)
+  (setq fg/mark-active-p 't)
+  (set-mark (point)))
 
 (defun fg/back-node-or-word ()
   (interactive)
   (backward-word)
   (forward-word)
-  (set-mark (point))
+  (unless fg/mark-active-p (set-mark (point)))
   (backward-word))
 
 (defun fg/forward-node-or-word ()
   (interactive)
   (forward-word)
   (backward-word)
-  (set-mark (point))
+  (unless fg/mark-active-p (set-mark (point)))
   (forward-word))
 
 (defun fg/move-end-of-line ()
@@ -31,28 +31,28 @@
 
 (defun fg/next-line ()
   (interactive)
-  (when (and (not fg/mark-active)
+  (when (and (not fg/mark-active-p)
 			 (region-active-p))
 	(deactivate-mark))
   (next-line))
 
 (defun fg/previous-line ()
   (interactive)
-  (when (and (not fg/mark-active)
+  (when (and (not fg/mark-active-p)
 			 (region-active-p))
 	(deactivate-mark))
   (previous-line))
 
 (defun fg/left-char ()
   (interactive)
-  (when (and (not fg/mark-active)
+  (when (and (not fg/mark-active-p)
 			 (region-active-p))
 	(deactivate-mark))
   (left-char))
 
 (defun fg/right-char ()
   (interactive)
-  (when (and (not fg/mark-active)
+  (when (and (not fg/mark-active-p)
 			 (region-active-p))
 	(deactivate-mark))
   (right-char))
@@ -61,14 +61,14 @@
   (interactive)
   (forward-symbol -1)
   (forward-symbol 1)
-  (unless fg/mark-active (set-mark (point)))
+  (unless fg/mark-active-p)(set-mark (point)))
   (forward-symbol -1))
 
 (defun fg/forward-symbol ()
   (interactive)
   (forward-symbol 1)
   (forward-symbol -1)
-  (unless fg/mark-active (set-mark (point)))
+  (unless fg/mark-active-p)(set-mark (point)))
   (forward-symbol 1))
 
 (defun fg/down-node-or-scroll ()
