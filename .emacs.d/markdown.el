@@ -1,6 +1,8 @@
+(use-package markdown-preview-mode
+  :ensure t)
+
 (use-package markdown-mode 
   :ensure t
-  :ensure markdown-preview-mode
   :mode
   ("\\md\\'" . markdown-mode)
   :config
