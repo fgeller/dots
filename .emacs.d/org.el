@@ -18,6 +18,9 @@
    org-agenda-tags-column -125
    org-agenda-window-setup 'current-window
    org-babel-load-languages '((emacs-lisp . t))
+   org-default-notes-file (concat org-directory "/Notes.org")
+   org-default-tasks-file (concat org-directory "/dump.org")
+   org-default-work-file (concat org-directory "/work.org")
    org-capture-templates`(("n" "note"entry (file ,org-default-notes-file)"* %?\n\n" :prepend t)
 						  ("t" "task"entry (file ,org-default-tasks-file)"* TODO %?\n\n" :prepend t)
 						  ("w" "work task"entry (file ,org-default-work-file)"* TODO %? \n\n")
@@ -28,9 +31,6 @@
    org-clock-out-remove-zero-time-clocks t
    org-clock-persist 'history
    org-clock-persist t
-   org-default-notes-file (concat org-directory "/Notes.org")
-   org-default-tasks-file (concat org-directory "/dump.org")
-   org-default-work-file (concat org-directory "/work.org")
    org-directory (expand-file-name "~/orgs")
    org-duration-format 'h:mm
    org-edit-timestamp-down-means-later t
@@ -54,7 +54,7 @@
    org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)") 
 					   (sequence "WAITING(w@/!)" "|" "SUPERSEDED(u!/!)" "CANCELLED(c@/!)"))
   )
- 
+  
   (defalias 'calendar-absolute-from-iso 'calendar-iso-to-absolute)
   ;; (defadvice org-agenda (around org-agenda-fullscreen activate)
   ;; 	(window-configuration-to-register :org-agenda-fullscreen)
