@@ -9,6 +9,7 @@
   :config
   (defun fg/typescript-mode-hook ()
 	(lsp-mode 1)
+	(yas-minor-mode 1)
 	(subword-mode 1)
 	(prettier-js-mode 1)
 	(setq-local tab-width 2
