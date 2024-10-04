@@ -155,12 +155,15 @@
 (load-custom "~/.emacs.d/eshell.el")
 (load-custom "~/.emacs.d/nix.el")
 (load-custom "~/.emacs.d/macos.el")
+(load-custom "~/.emacs.d/direnv.el")
+(load-custom "~/.emacs.d/dap.el")
 
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 (setq auto-revert-interval 0.5)
 (auto-revert-set-timer)
+(setq create-lockfiles nil)
 
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
@@ -172,6 +175,8 @@
 
 (require 'server)
 (unless (server-running-p) (server-start))
+
+(global-auto-revert-mode +1)
 
 (setq
  gc-cons-threshold (* 2 1024 1024)
