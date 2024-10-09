@@ -258,8 +258,8 @@
 
 (define-key modal-mode-map (kbd "q") 'enclose-in-pair)
 (define-key modal-mode-map (kbd "Q") 'remove-enclosing-pair)
-(define-key modal-mode-map (kbd "d") 'delete-forward-char)
-(define-key modal-mode-map (kbd "D") 'zap-up-to-char)
+(define-key modal-mode-map (kbd "d") 'fg/delete)
+(define-key modal-mode-map (kbd "D") 'fg/kill-till)
 (define-key modal-mode-map (kbd "r") 'vr/query-replace)
 (define-key modal-mode-map (kbd "R") 'duplicate-line)
 (define-key modal-mode-map (kbd "W") nil)
