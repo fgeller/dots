@@ -55,7 +55,9 @@
  `(cursor ((t (:foreground "#ffffff" :background "#F44336"))))
  `(fringe ((t (:foreground "#000000" :background "#ffffff"))))
  `(internal-border ((t (:background "#ffffff"))))
+ ;; `(highlight ((t (:background nil :underline t :distant-foreground "#000000"))))
  `(highlight ((t (:background "#ffeeb5" :distant-foreground "#000000"))))
+ `(hl-line ((t (:background "#ffffea" :distant-foreground "#000000"))))
  `(hi-yellow ((t (:inherit highlight))))
  `(match ((t (:inherit highlight))))
  `(pulse-highlight ((t (:background "#DCEDC8"))))
@@ -141,6 +143,8 @@
  `(font-lock-warning-face ((t (:inherit warning ))))
 
  `(linum ((t (:foreground "#aaaaaa" :background "#f5f5f5"))))
+ 
+ `(treesit-fold-replacement-face ((t (:foreground "#aaaaaa" :background "#f5f5f5"))))
 
  `(flycheck-error ((t (:foreground "#f44336" :background unspecified))))
  `(flycheck-error-list-id ((t (:foreground "#f44336" :background unspecified))))

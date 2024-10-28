@@ -10,6 +10,7 @@
 	(lsp-mode)
 	(setq apheleia-formatter 'gofumpt)
 	(apheleia-mode +1)
+	(treesit-fold-mode +1)
 	(setq-local comment-start "// ")
 	(setq-local comment-end "")
 	(add-hook 'before-save-hook #'lsp-organize-imports t t))

@@ -45,13 +45,14 @@
 (use-package highlight-thing
   :ensure t
   :commands (global-highlight-thing-mode)
+  :defer 3
   :config
   (global-highlight-thing-mode +1)
-  (setq highlight-thing-prefer-active-region t)
-  (setq highlight-thing-delay-seconds 0.3)
-  (setq highlight-thing-all-visible-buffers-p t)
-  )
-
+  (setq highlight-thing-what-thing 'region
+		highlight-thing-prefer-active-region t
+		highlight-thing-delay-seconds 0.3
+		highlight-thing-all-visible-buffers-p t))
+  
 (defun fg/add-todo-keyword ()
   (font-lock-add-keywords nil '(("\\(TODO\\|FIXME\\)" 1 font-lock-warning-face prepend))))
 (add-hook 'font-lock-mode-hook 'fg/add-todo-keyword)

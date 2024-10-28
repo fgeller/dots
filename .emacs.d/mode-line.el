@@ -36,6 +36,7 @@
   (after 'subword (diminish 'subword-mode))
   (after 'hi-lock (diminish 'hi-lock-mode))
   (after 'apheleia (diminish 'apheleia-mode))
+  (after 'treesit-fold (diminish 'treesit-fold-mode))
 )
 
 (defun modal-mode-visual-toggle ()
