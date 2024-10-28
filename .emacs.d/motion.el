@@ -61,14 +61,14 @@
   (interactive)
   (forward-symbol -1)
   (forward-symbol 1)
-  (unless fg/mark-active-p)(set-mark (point)))
+  (unless fg/mark-active-p (set-mark (point)))
   (forward-symbol -1))
 
 (defun fg/forward-symbol ()
   (interactive)
   (forward-symbol 1)
   (forward-symbol -1)
-  (unless fg/mark-active-p)(set-mark (point)))
+  (unless fg/mark-active-p (set-mark (point)))
   (forward-symbol 1))
 
 (defun fg/down-node-or-scroll ()

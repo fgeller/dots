@@ -103,10 +103,13 @@
     (yank)))
 
 (defun fg/delete ()
+  "kill active region or symbol"
   (interactive)
-  (if (region-active-p)
-	  (kill-region (point) (mark))
-	(delete-forward-char 1)))
+  (unless (region-active-p) (mark-symbol))
+  (kill-region (point) (mark)))
+(defun fg/kill-till ()
+  (interactive)
+  (kill-till))
 
 (defun fg/join-line ()
   (interactive)
