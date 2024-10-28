@@ -160,9 +160,6 @@
 	(let ((default-directory vc-root)
 		  (buf (get-buffer-create (format "*fg/diff --stat*"))))
 	  (let ((inhibit-message t)) (shell-command "git diff origin/main...HEAD --stat" buf))
-	  (vc-log-mergebase vc-root "origin/main" "HEAD")
-	  (split-window-below)
-	  (other-window 1)
 	  (switch-to-buffer buf)
 	  (3w-jump-1))))
 
