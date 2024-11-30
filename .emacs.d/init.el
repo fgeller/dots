@@ -157,6 +157,7 @@
 (load-custom "~/.emacs.d/macos.el")
 (load-custom "~/.emacs.d/direnv.el")
 (load-custom "~/.emacs.d/dap.el")
+(load-custom "~/.emacs.d/term.el")
 
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)

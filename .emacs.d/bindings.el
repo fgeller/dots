@@ -15,7 +15,6 @@
 (after 'xref (define-key xref--xref-buffer-mode-map (kbd "C-o") nil))
 (after 'vterm (define-key vterm-mode-map (kbd "C-o") nil))
 (define-key Buffer-menu-mode-map (kbd "C-o") nil)
-;; so we can rely on C-o to toggle modal mode
 
 ;; hacks to get esc to work as a keypress (not M- or ESC ESC ESC) in terminal
 ;; https://evil.readthedocs.io/en/latest/faq.html?highlight=terminal#problems-with-the-escape-key-in-the-terminal
@@ -47,7 +46,12 @@
 (use-package modal)
 (global-modal-mode +1)
 
-(define-key global-map (kbd "C-o") 'xref-go-back)
+(defun fg/go-back ()
+  (interactive)
+  (condition-case nil (xref-go-back)
+    (error (previous-buffer))))
+
+(define-key global-map (kbd "C-o") 'fg/go-back)
 ;; this would prevent access to M- in tty
 ;; (define-key global-map (kbd "ESC") 'modal-mode-activate)
 (define-key global-map (kbd "<escape>") 'modal-mode-activate)
