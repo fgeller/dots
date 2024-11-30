@@ -1,10 +1,5 @@
-import = [
-  "~/.config/alacritty/catppuccin-latte.toml"
-]
 
-live_config_reload = true
-
-[shell]
+[terminal.shell]
 program = "/bin/zsh"
 args = ["-l"]
 
@@ -24,3 +19,12 @@ family = "JetBrains Mono"
 
 [selection]
 save_to_clipboard = true
+
+[general]
+
+live_config_reload = true
+import = [
+  "~/.config/alacritty/catppuccin-latte.toml"
+]
+
+[terminal]
