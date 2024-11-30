@@ -44,7 +44,7 @@
     ll =  log -30 --reverse --ext-diff --format='%C(green)%h%Creset %C(yellow)%as%Creset %C(blue)%<(15,trunc)%an%Creset %s %C(red)%d%Creset'
     lg = log --format=' %<(15,trunc)%an %ad %C(blue)%h%Creset %<(60,trunc)%s %<(30,trunc) %C(blue)%d%Creset' --date=short
     s = status -s -b
-    sh = show --color-words
+    sh = show --color-words --ext-diff
     tags = log --tags --simplify-by-decoration --pretty='format:%ai %d'
     u = remote update
 
@@ -67,3 +67,15 @@
     defaultBranch = main
 [gitlab]
     user = fgeller
+
+[merge "mergiraf"]
+    name = mergiraf
+    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P
+
+# if you haven't got a global gitattributes file yet
+[core]
+    attributesfile = ~/.gitattributes
+	
+[diff]
+    external = difft
+
