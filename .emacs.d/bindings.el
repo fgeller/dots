@@ -90,6 +90,8 @@
 	(define-key map (kbd "ff") 'treesit-fold-toggle)
 	(define-key map (kbd "fF") 'treesit-fold-open-all)
 	(define-key map (kbd "fc") 'treesit-fold-close-all)
+	
+	(define-key map (kbd "F") 'fg/copy-current-buffer-file-path)
 
     (define-key map (kbd "lb") 'dap-breakpoint-add)
     (define-key map (kbd "lc") 'consult-compile-error)

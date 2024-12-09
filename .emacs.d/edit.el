@@ -1,5 +1,13 @@
 ;; -*- lexical-binding: t -*-
 
+(defun fg/copy-current-buffer-file-path ()
+  (interactive)
+  (if-let ((file-path (buffer-file-name)))
+      (progn
+        (kill-new file-path)
+        (message "Copied buffer file path to clipboard: %s" file-path))
+    (message "Current buffer is not visiting a file.")))
+
 (use-package mark)
 
 (defun fg/change ()
