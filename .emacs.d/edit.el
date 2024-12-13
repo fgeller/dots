@@ -115,6 +115,7 @@
   (interactive)
   (unless (region-active-p) (mark-symbol))
   (kill-region (point) (mark)))
+
 (defun fg/kill-till ()
   (interactive)
   (kill-till))

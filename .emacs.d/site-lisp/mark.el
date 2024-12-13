@@ -72,7 +72,8 @@ key    region
   (let* ((tc (read-char "Char: "))
 	 (cs (char-to-string tc)))
     (set-mark (point))
-    (search-forward cs)
+	(let ((case-fold-search nil))
+      (search-forward cs))
     (backward-char)))
 
 (defun mark-till-backwards ()
