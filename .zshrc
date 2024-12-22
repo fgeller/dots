@@ -23,6 +23,7 @@ export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 export GOPATH=$HOME
 export GO111MODULE=on
 export GOPROXY=https://proxy.golang.org
+export GOGC=2000
 
 if [ Darwin = `uname` ]; then
 	eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -59,6 +60,8 @@ export RPROMPT='' # ensure empty right side
 export EDITOR='emacsclient'
 
 export PRE_COMMIT_OPT_OUT=true
+
+export DFT_SYNTAX_HIGHLIGHT=off
 
 autoload -z edit-command-line
 zle -N edit-command-line
