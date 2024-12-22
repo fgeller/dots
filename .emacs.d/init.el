@@ -189,3 +189,4 @@
 (message "emacs init time: %s" (emacs-init-time))
 (put 'downcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+(put 'list-timers 'disabled nil)
