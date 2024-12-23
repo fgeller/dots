@@ -6,8 +6,7 @@
 	(eldoc-mode 1)
 	(yas-minor-mode)
 	(setq indent-tabs-mode nil)
+	(apheleia-mode +1)
 	(lsp-mode))
   
-  (add-hook 'yaml-ts-mode-hook 'fg/yaml-mode-hook)
-
-)
+  (add-hook 'yaml-ts-mode-hook 'fg/yaml-mode-hook))
