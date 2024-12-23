@@ -99,6 +99,7 @@ alias gsa="git stash apply stash@{0}"
 alias gu="git fetch origin"
 alias gss="gsync"
 alias gm="git checkout -q main && gs"
+alias gfu="git_fixup_last_n"
 
 alias z="zellij"
 
@@ -187,4 +188,12 @@ function loc_dirs() {
 	find . -mindepth 1 -maxdepth 1 -type d | while read -r d; do
 		tokei -t "$lang" "$d" | rg "$lang" | awk -v dir=" $d" '{print $4 dir}'
 	done | sort -n
+}
+
+function git_fixup_last_n() {
+  if [[ -z "$1" || ! "$1" =~ ^[0-9]+$ ]]; then
+    echo "required number of commits to silently squash"
+    return 1
+  fi
+  git reset --soft HEAD~$1 && git commit --amend --no-edit
 }
