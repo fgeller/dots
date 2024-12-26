@@ -2,7 +2,7 @@
 
 (defun fg/copy-current-buffer-file-path ()
   (interactive)
-  (if-let ((file-path (buffer-file-name)))
+  (if-let* ((file-path (buffer-file-name)))
       (progn
         (kill-new file-path)
         (message "Copied buffer file path to clipboard: %s" file-path))

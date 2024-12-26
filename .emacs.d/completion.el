@@ -116,7 +116,7 @@
     :enabled  ,(lambda () (and consult-project-function))
     :items
     ,(lambda ()
-      (when-let (root (consult--project-root))
+      (when-let* ((root (consult--project-root)))
 	(let* ((default-directory root)
 	       (cmd (format "git ls-files --full-name"))
 	       (files (split-string (shell-command-to-string cmd) "\n" t))
@@ -154,7 +154,7 @@
   "Yank word at point in the buffer when entering text into minibuffer."
   (interactive)
   (with-selected-window (minibuffer-selected-window)
-    (when-let ((word (current-word)))
+    (when-let* ((word (current-word)))
       (with-selected-window (active-minibuffer-window)
         (insert word)))))
 
