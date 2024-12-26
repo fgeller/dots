@@ -50,6 +50,7 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6d7f82"
 
+fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
 
 cdpath=(~)
 for pth in ~/src/github.com/* ; do cdpath+=($pth) ; done
