@@ -6,3 +6,4 @@ revset-aliases."immutable_heads()" = "trunk() | tags()"
 
 ui.default-command = ["log", "-r", "bookmarks()", "--limit", "10"]
 ui.diff.tool = ["difft", "--color=always", "$left", "$right"]
+ui.paginate = "auto"
