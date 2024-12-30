@@ -1,6 +1,9 @@
 user.name = "Felix Geller"
 user.email = "fgeller@protonmail.com"
-user.signingkey = "71E54A69B0C4269F"
+
+signing.key = "71E54A69B0C4269F"
+signing.sign-all = true
+signing.backend = "gpg"
 
 revset-aliases."immutable_heads()" = "trunk() | tags()"
 
