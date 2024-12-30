@@ -15,7 +15,7 @@ do
     ensure_link $f
 done
 
-for d in alacritty helix zellij
+for d in alacritty helix zellij ghostty
 do
 	  echo refreshing link for $d: $(ln -vfs "$target/.config/$d" "$HOME/.config/$d")
 done
