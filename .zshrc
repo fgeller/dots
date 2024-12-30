@@ -6,6 +6,9 @@ bindkey -e
 # The following lines were added by compinstall
 zstyle :compinstall filename '/Users/fgeller/.zshrc'
 
+# Manually added
+fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
@@ -50,7 +53,7 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6d7f82"
 
-fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+source <(jj util completion zsh)
 
 cdpath=(~)
 for pth in ~/src/github.com/* ; do cdpath+=($pth) ; done
@@ -58,11 +61,13 @@ export cdpath
 
 export PS1='%F{244}%1~%f %(?.%F{green}%#%f.%F{red}%#%f) '
 export RPROMPT='' # ensure empty right side
-export EDITOR='emacsclient'
+export EDITOR='emacsclient -nw'
+export PAGER='emacs-pager'
 
 export PRE_COMMIT_OPT_OUT=true
 
 export DFT_SYNTAX_HIGHLIGHT=off
+export DFT_BACKGROUND=light
 
 autoload -z edit-command-line
 zle -N edit-command-line
