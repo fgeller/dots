@@ -20,4 +20,9 @@ do
 	  echo refreshing link for $d: $(ln -vfs "$target/.config/$d" "$HOME/.config/$d")
 done
 
+for s in emacs-pager
+do
+	  echo refreshing link for $s: $(ln -vfs "$target/bin/$s" "$HOME/bin/$s")
+done
+
 /usr/bin/tic -x -o ~/.terminfo xterm-24bit.terminfo

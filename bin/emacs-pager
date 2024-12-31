@@ -1,0 +1,14 @@
+#!/bin/zsh
+
+tempfile=$(mktemp)
+cat > "$tempfile"
+
+lines=$(tput lines)
+
+if [[ $(wc -l < "$tempfile") -gt $lines ]]; then
+  emacsclient -nw --eval "(progn (find-file \"$tempfile\") (ansi-colorize-buffer) (save-buffer) (modal-mode-activate) (menu-bar-mode -1))"
+else
+  cat "$tempfile"
+fi
+
+rm "$tempfile"
