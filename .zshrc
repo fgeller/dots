@@ -107,6 +107,8 @@ alias gss="gsync"
 alias gm="git checkout -q main && gs"
 alias gfu="git_fixup_last_n"
 
+alias jjl="jj log -r ::@ --limit 10"
+
 alias z="zellij"
 
 function pc() {
@@ -203,3 +205,26 @@ function git_fixup_last_n() {
   fi
   git reset --soft HEAD~$1 && git commit --amend --no-edit
 }
+
+
+# jj push: set bookmark, git push, new
+function jjp() {
+  if [[ $# -ne 2 ]]; then
+    echo "Usage: jjp <git-branch> <jj-revision>"
+    return 1
+  fi
+
+  local git_branch=$1
+  local jj_revision=$2
+
+  jj bookmark set -r $jj_revision $git_branch
+  jj git push -b $git_branch
+  jj new
+}
+
+# Enable completion for the first argument (Git branches)
+_jjp_complete_git_branches() {
+  compadd -- $(git branch --format='%(refname:short)')
+}
+
+compdef _jjp_complete_git_branches jjp
