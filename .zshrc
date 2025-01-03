@@ -218,7 +218,7 @@ function jjp() {
   local jj_revision=$2
 
   jj bookmark set -r $jj_revision $git_branch
-  jj git push -b $git_branch
+  jj git push --allow-new -b $git_branch
   jj new
 }
 

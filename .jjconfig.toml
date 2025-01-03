@@ -5,9 +5,9 @@ signing.key = "71E54A69B0C4269F"
 signing.sign-all = true
 signing.backend = "gpg"
 
-revset-aliases."immutable_heads()" = "trunk() | tags()"
+revset-aliases."immutable_heads()" = "trunk() | bookmarks()"
 
-ui.default-command = ["log", "-r", "bookmarks() | trunk() | @", "--limit", "10"]
+ui.default-command = ["log", "-r", "ancestors(bookmarks(), 2) | bookmarks() | @ | ancestors(@, 2)", "--limit", "10"]
 ui.diff.tool = ["difft", "--color=always", "$left", "$right"]
 ui.paginate = "auto"
 ui.conflict-marker-style = "git"
