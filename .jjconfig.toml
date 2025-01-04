@@ -7,7 +7,7 @@ signing.backend = "gpg"
 
 revset-aliases."immutable_heads()" = "trunk()"
 
-ui.default-command = ["log", "-r", "ancestors(bookmarks(), 2) | bookmarks() | @ | ancestors(@, 2)", "--limit", "10"]
+ui.default-command = ["log", "-r", "ancestors(bookmarks(), 3) | bookmarks() | @ | ancestors(@, 3) | descendants(@) | descendants(bookmarks()) ~ remote_bookmarks()", "--limit", "20"]
 ui.diff.tool = ["difft", "--color=always", "$left", "$right"]
 ui.paginate = "auto"
 ui.conflict-marker-style = "git"
