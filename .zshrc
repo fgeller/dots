@@ -186,6 +186,13 @@ function gc() {
 	fi
 }
 
+function jjd() {
+	local message
+	message="$*"
+
+	jj describe -m "$message"
+}
+
 function loc_dirs() {
 	local lang=$1
 	if [[ -z $1 ]]; then

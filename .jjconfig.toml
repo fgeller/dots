@@ -5,7 +5,7 @@ signing.key = "71E54A69B0C4269F"
 signing.sign-all = true
 signing.backend = "gpg"
 
-revset-aliases."immutable_heads()" = "trunk() | bookmarks()"
+revset-aliases."immutable_heads()" = "trunk()"
 
 ui.default-command = ["log", "-r", "ancestors(bookmarks(), 2) | bookmarks() | @ | ancestors(@, 2)", "--limit", "10"]
 ui.diff.tool = ["difft", "--color=always", "$left", "$right"]
