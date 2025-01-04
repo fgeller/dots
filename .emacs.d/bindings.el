@@ -29,6 +29,7 @@
           (define-key input-decode-map [?\e]
             `(menu-item "" ,evil-esc-map :filter ,#'fg/esc)))))))
 (mapc #'fg/evil-init-esc (frame-list))
+(add-hook 'after-make-frame-functions 'fg/evil-init-esc)
 
 (defun fg/esc (map)
   "Drops some guards from evil's `evil-esc' so the ESC event is always translated"
