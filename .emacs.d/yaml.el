@@ -7,6 +7,6 @@
 	(yas-minor-mode)
 	(setq indent-tabs-mode nil)
 	(apheleia-mode +1)
-	(lsp-mode))
+	(eglot-ensure))
   
   (add-hook 'yaml-ts-mode-hook 'fg/yaml-mode-hook))

@@ -7,13 +7,16 @@
 	(subword-mode 1)
 	(yas-minor-mode)
 	(setq tab-width 4)
-	(lsp-mode)
+	(eglot-ensure)
+	;; (lsp-mode)
 	(setq apheleia-formatter 'gofumpt)
 	(apheleia-mode +1)
 	(treesit-fold-mode +1)
 	(setq-local comment-start "// ")
 	(setq-local comment-end "")
-	(add-hook 'before-save-hook #'lsp-organize-imports t t))
+	;; (add-hook 'before-save-hook #'lsp-organize-imports t t)
+	(add-hook 'before-save-hook  (lambda () (call-interactively 'eglot-code-action-organize-imports)) nil t)
+	)
   
   (add-hook 'go-ts-mode-hook 'fg/go-mode-hook)
   

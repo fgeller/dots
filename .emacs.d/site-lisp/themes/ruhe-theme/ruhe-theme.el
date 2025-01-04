@@ -174,6 +174,11 @@
  `(ansi-color-bright-magenta ((t (:background "#ea76cb" :foreground "#ea76cb"))))
  `(ansi-color-bright-cyan ((t (:background "#179299" :foreground "#179299"))))
  `(ansi-color-bright-white ((t (:background "#bcc0cc" :foreground "#bcc0cc"))))
+ 
+ `(eglot-highlight-symbol-face ((t (:background "#DCEDC8" :foreground unspecified :underline unspecified))))
+ `(eglot-mode-line ((t (:background unspecified :foreground unspecified :underline unspecified))))
+ 
+ `(flymake-error ((t (:background unspecified :foreground "#f44336" :underline unspecified))))
  )
 
 (enable-theme 'ruhe)
