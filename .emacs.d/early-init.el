@@ -35,7 +35,7 @@
 ;; 	(when (member fn font-list)
 ;; 	  (set-fontset-font t 'symbol fn))))
 
-(set-face-attribute 'default nil :font "Noto Sans Mono-12:weight=book")
+(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font:weight=book")
 (set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?┃))
 (setq default-frame-alist
       (append (list
