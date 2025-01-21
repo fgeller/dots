@@ -3,3 +3,4 @@ font-family = JetBrains Mono
 macos-option-as-alt = true
 copy-on-select = true
 adjust-cell-height = -10%
+link-url = true
