@@ -37,9 +37,5 @@
   </script>
 "))
 
-  (defun fg/markdown-mode-hooks ()
-	(lspce-mode))
-
-  (add-hook 'markdown-mode-hook 'fg/markdown-mode-hook)
 )
 
