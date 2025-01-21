@@ -15,7 +15,7 @@ option_as_alt = "Both"
 size = 11.25
 
 [font.normal]
-family = "JetBrains Mono"
+family = "JetBrainsMono Nerd Font"
 
 [selection]
 save_to_clipboard = true
