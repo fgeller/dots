@@ -13,11 +13,11 @@
 				mode-line-buffer-identification
 				,(list (propertize " " 'face 'mode-line-buffer-id))
 				
+				mode-line-misc-info
 				"   "
 				mode-line-position
 				" "
 				mode-line-modes
-				mode-line-misc-info
 				,(propertize " " 'display '(raise +0.25))
 				" "
 				,(propertize " " 'display '(raise -0.25))

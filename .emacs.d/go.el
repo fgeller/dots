@@ -16,6 +16,8 @@
 	(setq-local comment-end "")
 	;; (add-hook 'before-save-hook #'lsp-organize-imports t t)
 	(add-hook 'before-save-hook  (lambda () (call-interactively 'eglot-code-action-organize-imports)) nil t)
+	(setq which-func-format '(:propertize (" " which-func-current " ") face completions-common-part))
+	(which-function-mode)
 	)
   
   (add-hook 'go-ts-mode-hook 'fg/go-mode-hook)
