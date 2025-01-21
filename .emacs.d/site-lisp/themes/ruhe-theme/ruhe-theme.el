@@ -91,8 +91,8 @@
  `(link ((t (:foreground "#3F51B5" :underline unspecified))))
  `(link-visited ((t (:foreground "#9C27B0" :underline unspecified))))
 
- `(error ((t (:foreground "#f44336"))))
- `(warning ((t (:foreground "#ff5722" :weight bold))))
+ `(error ((t (:foreground "#f44336" :weight bold))))
+ `(warning ((t (:foreground "#ff5722"))))
  `(success ((t (:foreground "#4caf50" :weight bold :underline unspecified))))
  `(shadow ((t (:foreground "#b4b7b4"))))
 
@@ -179,6 +179,7 @@
  `(eglot-mode-line ((t (:background unspecified :foreground unspecified :underline unspecified))))
  
  `(flymake-error ((t (:background unspecified :foreground "#f44336" :underline unspecified))))
+ `(flymake-warning ((t (:inherit warning))))
  )
 
 (enable-theme 'ruhe)
