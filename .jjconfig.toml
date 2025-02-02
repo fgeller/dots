@@ -11,3 +11,5 @@ ui.default-command = ["log", "-r", "ancestors(bookmarks(), 3) | bookmarks() | @ 
 ui.diff.tool = ["difft", "--color=always", "$left", "$right"]
 ui.paginate = "auto"
 ui.conflict-marker-style = "git"
+
+git.private-commits = "description(glob:'wip:*') | description(glob:'private:*')"
