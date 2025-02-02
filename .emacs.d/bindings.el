@@ -114,8 +114,8 @@
     (define-key map (kbd "ot") 'org-todo)
     (define-key map (kbd "os") 'org-insert-structure-template)
 
-    (define-key map (kbd "en") 'flycheck-next-error)
-    (define-key map (kbd "ep") 'flycheck-previous-error)
+    (define-key map (kbd "en") 'flymake-goto-next-error)
+    (define-key map (kbd "ep") 'flymake-goto-prev-error)
 
     (define-key map (kbd "pp") 'fg/visit-project)
     (define-key map (kbd "pc") 'fg/clear-project-buffers)
@@ -139,8 +139,9 @@
 	(define-key vc-prefix-map (kbd "k") 'vc-revert)
 	(define-key vc-prefix-map (kbd "K") 'vc-delete-file)
 	(define-key vc-prefix-map (kbd "m") 'smerge-ediff)
+	(define-key vc-prefix-map (kbd "n") 'diff-hl-next-hunk)
 	(define-key vc-prefix-map (kbd "o") 'fg/branch-overview)
-	(define-key vc-prefix-map (kbd "p") 'vc-push)
+	(define-key vc-prefix-map (kbd "p") 'diff-hl-previous-hunk)
 	(define-key vc-prefix-map (kbd "s") 'fg/vc-git-show)
 
     (define-key map (kbd "q") 'fill-paragraph)
