@@ -108,6 +108,7 @@ alias gm="git checkout -q main && gs"
 alias gfu="git_fixup_last_n"
 
 alias jjl="jj log -r ::@ --limit 10"
+alias jjn="jj new -r main"
 
 alias z="zellij"
 
