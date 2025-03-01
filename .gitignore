@@ -21,3 +21,4 @@
 /.emacs.d/tree-sitter
 .emacs.d/elpaca
 .emacs.d/history
+key-stats.json
