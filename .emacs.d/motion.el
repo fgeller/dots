@@ -248,3 +248,25 @@
     (compilation-next-error 1)
     (compile-goto-error)))
 
+(defconst fg/last-fg-command nil)
+(defconst fg/last-search-char nil)
+
+(defun fg/forward-char ()
+  (interactive)
+  (setq fg/last-fg-command 'fg/forward-char)
+  (let ((ch (if fg/last-search-char fg/last-search-char
+              (setq fg/last-search-char (string (read-char "char: "))))))
+    (unless (region-active-p) (set-mark (point)))
+    (when (looking-at ch) (forward-char 1))
+    (search-forward ch nil 't)
+    (forward-char -1)))
+
+(defun fg/clear-last-search-char () 
+  (setq fg/last-search-char nil))
+
+(add-hook 'deactivate-mark-hook 'fg/clear-last-search-char)
+
+(defun fg/repeat-fg-commands ()
+  (interactive)
+  (if fg/last-fg-command
+	  (call-interactively fg/last-fg-command)))

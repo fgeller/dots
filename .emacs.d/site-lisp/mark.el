@@ -69,6 +69,7 @@ key    region
   (forward-symbol 1))
 
 (defun mark-till ()
+  (interactive)
   (let* ((tc (read-char "Char: "))
 	 (cs (char-to-string tc)))
     (set-mark (point))
