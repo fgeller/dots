@@ -48,7 +48,7 @@
   :defer 3
   :config
   (global-highlight-thing-mode +1)
-  (setq highlight-thing-what-thing 'region
+  (setq highlight-thing-what-thing 'symbol
 		highlight-thing-prefer-active-region t
 		highlight-thing-delay-seconds 0.3
 		highlight-thing-all-visible-buffers-p t))
