@@ -59,6 +59,8 @@ cdpath=(~)
 for pth in ~/src/github.com/* ; do cdpath+=($pth) ; done
 export cdpath
 
+eval "$(direnv hook zsh)"
+
 export PS1='%F{244}%1~%f %(?.%F{green}%#%f.%F{red}%#%f) '
 export RPROMPT='' # ensure empty right side
 export EDITOR='emacsclient -nw'
