@@ -68,9 +68,9 @@
 [gitlab]
     user = fgeller
 
-[merge "mergiraf"]
-    name = mergiraf
-    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P
+# [merge "mergiraf"]
+#     name = mergiraf
+#     driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P
 
 # if you haven't got a global gitattributes file yet
 [core]
