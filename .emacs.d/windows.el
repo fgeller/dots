@@ -29,6 +29,7 @@
 			 "*vc-dir*"
 			 "*Org Src"
 			 "*Packages*"
+			 "*eat*"
 			 )))
 )
 

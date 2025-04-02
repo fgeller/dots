@@ -113,6 +113,10 @@ alias jjn="jj new -r main"
 
 alias z="zellij"
 
+function ssh() {
+    TERM=xterm command ssh "$@"
+}
+
 function pc() {
 	pass show "$1" | head -1  | tr -d '\n' | pbcopy
 }
