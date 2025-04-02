@@ -1,14 +1,5 @@
-\set QUIET 1
-
+-- \set QUIET 1
 -- only whitespace for the prompt for multi-line commands, default '%/%R%x%# '
 \set PROMPT2 '%w'
-
--- horizontal by default
 \x off
-
--- full table border
-\pset border 2 
-
-\pset linestyle ascii
-
 \pset null null
