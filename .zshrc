@@ -215,6 +215,10 @@ function jjc() {
   fi
 }
 
+function jjf() {
+	jj git fetch --quiet
+}
+
 function loc_dirs() {
 	local lang=$1
 	if [[ -z $1 ]]; then
