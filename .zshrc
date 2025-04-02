@@ -94,7 +94,6 @@ alias gtm='gt modify --no-verify -c'
 
 alias ga="git add"
 alias gbb="git checkout -b"
-alias gbl="git blame"
 alias gbs="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative))' --sort=committerdate"
 alias gdm="git diff origin/main...HEAD"
 alias gds="git diff --name-only"
@@ -194,6 +193,26 @@ function jjd() {
 	message="$*"
 
 	jj describe -m "$message"
+}
+
+function jjn() {
+  if [[ $# -eq 0 ]]; then
+    jj new -r main
+  elif [[ $# -eq 1 ]]; then
+    jj new -r "$1"
+  else
+    echo "Usage: jjnew [branch]"
+  fi
+}
+
+function jjc() {
+  if [[ $# -eq 1 ]]; then
+    jj bookmark create "$1" -r @
+  elif [[ $# -eq 2 ]]; then
+    jj bookmark create "$1" -r "$2"
+  else
+    echo "Usage: jjc <bookmark-name> [target-revision]"
+  fi
 }
 
 function loc_dirs() {
