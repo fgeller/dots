@@ -256,7 +256,6 @@ function jjp() {
 
   jj bookmark set -r $jj_revision $git_branch
   jj git push --allow-new -b $git_branch
-  jj new
 }
 
 # Enable completion for the first argument (Git branches)
