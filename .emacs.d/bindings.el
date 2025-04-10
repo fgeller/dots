@@ -47,6 +47,14 @@
 (use-package modal)
 (global-modal-mode +1)
 
+(use-package goto-last-change
+  :ensure t
+  :commands goto-last-change)
+
+(defun fg/goto-last-change-reverse ()
+  (interactive)
+  (goto-last-change t))
+
 (defun fg/go-back ()
   (interactive)
   (condition-case nil (xref-go-back)
@@ -341,9 +349,9 @@
 (define-key modal-mode-map (kbd "K") 'fg/open-line-above)
 (define-key modal-mode-map (kbd "l") 'modal-mode-deactivate)
 (define-key modal-mode-map (kbd "L") 'eol-modal-mode-deactivate)
-(define-key modal-mode-map (kbd ",") 'highlight-thing-mode)
+(define-key modal-mode-map (kbd ",") 'fg/goto-last-change-reverse)
 (define-key modal-mode-map (kbd "<") nil)
-(define-key modal-mode-map (kbd ".") 'fg/repeat-fg-commands)
+(define-key modal-mode-map (kbd ".") 'goto-last-change)
 (define-key modal-mode-map (kbd ">") nil)
 (define-key modal-mode-map (kbd "/") 'undo)
 (define-key modal-mode-map (kbd "?") 'xref-find-references)
