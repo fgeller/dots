@@ -1,5 +1,8 @@
 ;; -*- lexical-binding: t -*-
 
+(use-package vc-jj
+  :ensure (:repo "https://codeberg.org/emacs-jj-vc/vc-jj.el.git" :branch "master"))
+
 (use-package vc
   :commands (vc-dir vc-root-diff)
   :defer 1
