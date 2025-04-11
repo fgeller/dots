@@ -161,6 +161,7 @@
 (load-custom "~/.emacs.d/dap.el")
 (load-custom "~/.emacs.d/term.el")
 (load-custom "~/.emacs.d/gpt.el")
+(load-custom "~/.emacs.d/scratch.el")
 
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
