@@ -54,7 +54,7 @@
  `(border ((t (:background "#b4b7b4"))))
  `(cursor ((t (:foreground "#ffffff" :background "#F44336"))))
  `(fringe ((t (:inherit default))))
- `(internal-border ((t (:background "#ffffff"))))
+ `(internal-border ((t (:inherit default))))
  `(highlight ((t (:background "#8e5ff4" :distant-foreground "#FFEB3B"))))
  `(hi-yellow ((t (:inherit highlight))))
  `(match ((t (:inherit highlight))))
@@ -71,7 +71,7 @@
  `(mode-line-emphasis ((t (:inherit mode-line-highlight))))
  `(header-line ((t (:background "#757575" :foreground "#f5f5f5" :inherit unspecified))))
  `(mode-line-inactive ((t (:inherit mode-line))))
- `(vertical-border ((t (:background "#ffffff" :foreground "#cfd8dc" :underline unspecified))))
+ `(vertical-border ((t (:background "#ff0000" :foreground "#cfd8dc" :underline unspecified))))
 
  `(region ((t (:background "#3F51B5"))))
  `(secondary-selection ((t (:background "#cfd8dc" :distant-foreground "#373b41"))))
