@@ -49,8 +49,8 @@
   :config
   (global-highlight-thing-mode +1)
   (setq highlight-thing-what-thing 'symbol
-		highlight-thing-prefer-active-region t
-		highlight-thing-delay-seconds 0.3
+		highlight-thing-prefer-active-region nil
+		highlight-thing-delay-seconds 0.7
 		highlight-thing-all-visible-buffers-p t))
   
 (defun fg/add-todo-keyword ()

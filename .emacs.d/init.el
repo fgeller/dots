@@ -143,7 +143,6 @@
 (load-custom "~/.emacs.d/vc.el")
 (load-custom "~/.emacs.d/snippets.el")
 (load-custom "~/.emacs.d/prog.el")
-(load-custom "~/.emacs.d/lsp.el")
 (load-custom "~/.emacs.d/eglot.el")
 (load-custom "~/.emacs.d/go.el")
 (load-custom "~/.emacs.d/rust.el")

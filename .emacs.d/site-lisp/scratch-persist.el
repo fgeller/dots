@@ -35,7 +35,7 @@ The function should take no arguments and return a string."
   :type 'function
   :group 'scratch-persist)
 
-(defcustom scratch-persist-interval 60
+(defcustom scratch-persist-interval 600
   "Interval in seconds to persist the scratch buffer."
   :type 'integer
   :group 'scratch-persist)
