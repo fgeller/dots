@@ -73,8 +73,7 @@ The filename includes the current date in the format 'scratch-YYYY-MM-DD.el'."
           (let ((filepath (scratch-persist--make-filepath)))
             (write-region content nil filepath)
             (when (called-interactively-p 'any)
-              (set-buffer-modified-p nil))
-            (message "Scratch buffer persisted to %s" filepath)))))))
+              (set-buffer-modified-p nil))))))))
 
 (defun scratch-persist-load ()
   "Load the persisted scratch buffer."
@@ -99,7 +98,6 @@ The filename includes the current date in the format 'scratch-YYYY-MM-DD.el'."
   "Load the latest persisted scratch buffer."
   (interactive)
   (let ((latest-file (scratch-persist-find-latest)))
-	(message "found latest file %s" latest-file)
     (if latest-file
         (with-current-buffer "*scratch*"
           (erase-buffer)
