@@ -16,8 +16,6 @@
 	(treesit-fold-mode +1)
 	(setq-local comment-start "// ")
 	(setq-local comment-end "")
-	;; (add-hook 'before-save-hook #'lsp-organize-imports t t)
-	(add-hook 'before-save-hook  (lambda () (call-interactively 'eglot-code-action-organize-imports)) nil t)
 	(which-function-mode)
 	)
   
