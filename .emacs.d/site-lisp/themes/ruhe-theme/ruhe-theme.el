@@ -180,7 +180,7 @@
  `(eglot-highlight-symbol-face ((t (:background "#DCEDC8" :foreground unspecified :underline unspecified))))
  `(eglot-mode-line ((t (:background unspecified :foreground unspecified :underline unspecified))))
  
- `(flymake-error ((t (:background unspecified :foreground "#f44336" :underline unspecified))))
+ `(flymake-error ((t (:inherit error))))
  `(flymake-warning ((t (:inherit warning))))
  )
 

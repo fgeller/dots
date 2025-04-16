@@ -17,12 +17,18 @@
 	(setq-local comment-start "// ")
 	(setq-local comment-end "")
 	(which-function-mode)
-	)
+	(add-hook 'before-save-hook
+		  'fg/organize-go-imports
+		  nil t))
   
   (add-hook 'go-ts-mode-hook 'fg/go-mode-hook)
   
   (setq display-fill-column-indicator-character ?\u2502)
   (display-fill-column-indicator-mode +1))
+
+(defun fg/organize-go-imports ()
+  (ignore-errors
+    (call-interactively 'eglot-code-action-organize-imports)))
 
 (defun fg/convert-go-stack-trace-file-names (orig-fun &rest args)
   (let* ((marker (car args))
