@@ -44,6 +44,7 @@
 
 (use-package highlight-thing
   :ensure t
+  :defer 3
   :commands (global-highlight-thing-mode)
   :config
   (global-highlight-thing-mode +1)
@@ -52,21 +53,21 @@
 	highlight-thing-delay-seconds 0.1
 	highlight-thing-all-visible-buffers-p t))
 
-(after 'highlight-thing
-  (defun highlight-thing-buffer-do (buf regex)
-    (with-current-buffer buf
-      (save-excursion
-	(save-restriction
-          (widen)
-          (cond ((highlight-thing-should-narrow-to-defun-p)
-		 (narrow-to-defun))
-		((highlight-thing-should-narrow-to-region-p)
-		 (let ((bounds (highlight-thing-narrow-bounds)))
-                   (narrow-to-region (car bounds) (cdr bounds)))))
-          (highlight-thing-call-highlight-regexp regex)
-          (when (or highlight-thing-exclude-thing-under-point
-		    (region-active-p))
-	    (highlight-thing-remove-overlays-at-point regex)))))))
+;; (after 'highlight-thing
+;;   (defun highlight-thing-buffer-do (buf regex)
+;;     (with-current-buffer buf
+;;       (save-excursion
+;; 	(save-restriction
+;;           (widen)
+;;           (cond ((highlight-thing-should-narrow-to-defun-p)
+;; 		 (narrow-to-defun))
+;; 		((highlight-thing-should-narrow-to-region-p)
+;; 		 (let ((bounds (highlight-thing-narrow-bounds)))
+;;                    (narrow-to-region (car bounds) (cdr bounds)))))
+;;           (highlight-thing-call-highlight-regexp regex)
+;;           (when (or highlight-thing-exclude-thing-under-point
+;; 		    (region-active-p))
+;; 	    (highlight-thing-remove-overlays-at-point regex)))))))
 
 (defun fg/add-todo-keyword ()
   (font-lock-add-keywords nil '(("\\(TODO\\|FIXME\\)" 1 font-lock-warning-face prepend))))
