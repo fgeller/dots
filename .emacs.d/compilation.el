@@ -4,15 +4,15 @@
     (ansi-color-apply-on-region (point-min) (point-max))))
 (add-hook 'compilation-filter-hook 'ansi-colorize-buffer)
 
-(defface fg/leading-dash-face
-  '((t (:foreground "red")))
-  "Red face for lines that start with space–dash–space.")
-(defface fg/leading-plus-face
-  '((t (:foreground "#4CAF50")))
-  "Green face for lines that start with space–dash–space.")
+(defface fg/test-want-face '((t (:inherit diff-added))) "")
+(defface fg/test-got-face '((t (:inherit diff-removed))) "")
 
 (defun fg/compilation ()
+  (font-lock-add-keywords nil '(("^[ \t]+-[ \t].*" . 'fg/test-want-face)) t)
+  (font-lock-add-keywords nil '(("^[ \t]+\\+[ \t].*" . 'fg/test-got-face)) t)
   (font-lock-mode 1)
+  ;; (font-lock-flush)
+
   (setq show-trailing-whitespace nil)
 
  
@@ -24,11 +24,26 @@
                 table))
   (face-remap-add-relative 'nobreak-space 'default)
 
-  (font-lock-mode 1)
-  ;; Buffer‑local font‑lock rule
-  (font-lock-add-keywords nil '(("^[ \t]+-[ \t].*" . 'fg/leading-dash-face)) t)
-  (font-lock-add-keywords nil '(("^[ \t]+\\+[ \t].*" . 'fg/leading-plus-face)) t)
-  (font-lock-flush))
+
+  (setq-local compilation-error-regexp-alist-alist
+              (cons '(fg/go-trace
+                      "^[ \t]*Error Trace:[ \t]*\\([^:\n]+\\):\\([0-9]+\\)"
+                      1 2)
+                    compilation-error-regexp-alist-alist))
+  (setq-local compilation-error-regexp-alist-alist
+              (cons '(fg/go-diff
+                      "^[ \t]+\\(.*?\\.go\\):\\([0-9]+\\):[ \t]+diff -want(left)"
+                      1 2)
+                    compilation-error-regexp-alist-alist))
+  (setq-local compilation-error-regexp-alist
+              (cons 'fg/go-trace compilation-error-regexp-alist))
+  (setq-local compilation-error-regexp-alist
+              (cons 'fg/go-diff compilation-error-regexp-alist))
+
+  ;; re-parse buffer so RET immediately works
+  ;; (when (fboundp 'compilation--flush-parse)
+  ;;   (compilation--flush-parse (point-min) (point-max)))
+)
 
  
 (add-hook 'compilation-mode-hook 'fg/compilation)

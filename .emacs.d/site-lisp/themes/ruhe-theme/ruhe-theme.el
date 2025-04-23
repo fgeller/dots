@@ -102,7 +102,7 @@
  `(completions-common-part ((t (:background "#2196f3" :foreground "#ffffff"))))
  `(completions-first-difference ((t (:background unspecified :foreground unspecified))))
 
- `(compilation-error ((t (:foreground "#f44336" :background unspecified))))
+ `(compilation-error ((t (:foreground "#f44336" :underline t :background unspecified))))
  `(compilation-info ((t (:foreground "#ff5722" :background unspecified))))
  `(compilation-mode-line-exit ((t (:foreground "#000000" :background unspecified))))
  `(compilation-mode-line-fail ((t (:foreground "#f44336" :background unspecified))))

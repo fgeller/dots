@@ -5,21 +5,22 @@
   :config 
 
   (defun fg/go-mode-hook ()
-	(eldoc-mode 1)
-	(subword-mode 1)
-	(yas-minor-mode)
-	(setq tab-width 4)
-	(eglot-ensure)
-	;; (lsp-mode)
-	(setq apheleia-formatter 'gofumpt)
-	(apheleia-mode +1)
-	(treesit-fold-mode +1)
-	(setq-local comment-start "// ")
-	(setq-local comment-end "")
-	(which-function-mode)
-	(add-hook 'before-save-hook
-		  'fg/organize-go-imports
-		  nil t))
+    (font-lock-mode 1)
+    (eldoc-mode 1)
+    (subword-mode 1)
+    (yas-minor-mode)
+    (setq tab-width 4)
+    (eglot-ensure)
+    ;; (lsp-mode)
+    (setq apheleia-formatter 'gofumpt)
+    (apheleia-mode +1)
+    (treesit-fold-mode +1)
+    (setq-local comment-start "// ")
+    (setq-local comment-end "")
+    (which-function-mode)
+    (add-hook 'before-save-hook
+	      'fg/organize-go-imports
+	      nil t))
   
   (add-hook 'go-ts-mode-hook 'fg/go-mode-hook)
   
