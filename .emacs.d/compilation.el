@@ -35,10 +35,17 @@
                       "^[ \t]+\\(.*?\\.go\\):\\([0-9]+\\):[ \t]+diff -want(left)"
                       1 2)
                     compilation-error-regexp-alist-alist))
+  (setq-local compilation-error-regexp-alist-alist
+              (cons '(fg/tsx-file
+                      "^[ \t]+\\(.*?\\.tsx\\):\\([0-9]+\\):\\([0-9]+\\)?"
+                      1 2)
+                    compilation-error-regexp-alist-alist))
   (setq-local compilation-error-regexp-alist
               (cons 'fg/go-trace compilation-error-regexp-alist))
   (setq-local compilation-error-regexp-alist
               (cons 'fg/go-diff compilation-error-regexp-alist))
+  (setq-local compilation-error-regexp-alist
+              (cons 'fg/tsx-file compilation-error-regexp-alist))
 
   ;; re-parse buffer so RET immediately works
   ;; (when (fboundp 'compilation--flush-parse)
