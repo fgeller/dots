@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: fmt.Printf
-# key: fmtp
+# key: fp
 # --
 fmt.Printf(">> $2${1:%#v}\n", $0)

@@ -18,6 +18,8 @@
     (setq-local comment-start "// ")
     (setq-local comment-end "")
     (which-function-mode)
+    (remove-hook 'find-file-hook 'which-func-ff-hook)
+    (add-hook 'find-file-hook 'fg/delayed-which-func-setup)
     (add-hook 'before-save-hook
 	      'fg/organize-go-imports
 	      nil t))
@@ -27,38 +29,74 @@
   (setq display-fill-column-indicator-character ?\u2502)
   (display-fill-column-indicator-mode +1))
 
+(defvar fg/which-func-delay-timer nil)
+(defun fg/delayed-which-func-setup ()
+  (when fg/which-func-delay-timer (cancel-timer fg/which-func-delay-timer))
+  (setq fg/which-func-delay-timer
+        (run-with-idle-timer 1.0 nil
+                             (lambda ()
+                               (when (and (buffer-live-p (current-buffer))
+                                         (eq major-mode 'go-ts-mode))
+                                 (which-function-mode 1))))))
+
+
+
 (defun fg/organize-go-imports ()
   (ignore-errors
     (call-interactively 'eglot-code-action-organize-imports)))
 
+
 (defun fg/convert-go-stack-trace-file-names (orig-fun &rest args)
   (let* ((marker (car args))
-		 (fn (cadr args))
-		 (fn-path)
-		 (dir (caddr args))
-		 (fmts (cadddr args))
-		 (git-fs)
-		 (dd))
-	;; pkg.fn_sth.go:111
-	;; fn_sth.go:222
-	(if (not (string-match "[ \t]*\\([^/.]+\\.\\)?\\(.+\\.go\\)" fn))
-		(progn 
-		  (apply orig-fun args))
-	  (let* ((pkg (match-string 1 fn))
-			 (go-fn (match-string 2 fn)))
-		(setq fn-path (if (and pkg (> (length pkg) 0))
-						  (format "/%s/%s" (substring pkg 0 (1- (length pkg))) go-fn)
-						(format "/%s" go-fn))))
-	  (setq dd (with-current-buffer (marker-buffer marker) (locate-dominating-file "." ".git")))
-	  (setq git-fs
-			(let ((default-directory dd))
-			  (cl-remove-if-not (lambda (git-fn) (string-suffix-p fn-path git-fn))
-								(process-lines "git" "ls-files" "--full-name"))))
-	  (if (not git-fs)
-		  (progn 
-			(apply orig-fun args))
-		(setq fn (format "%s%s" dd (car git-fs)))
-		(apply orig-fun (list marker fn dir fmts))))))
+         (fn (cadr args))
+         (fn-path)
+         (dir (caddr args))
+         (fmts (cadddr args))
+         (git-fs)
+         (dd))
+    (cond
+     ;; Handle absolute paths: /full/path/to/file.go:line
+     ((string-match "[ \t]*\\(/.*\\.go\\):" fn)
+      (let ((abs-path (match-string 1 fn)))
+        (if (file-exists-p abs-path)
+            ;; File exists at absolute path, use it directly
+            (apply orig-fun (list marker abs-path dir fmts))
+          ;; File doesn't exist at absolute path, try to find it in git repo
+          (setq dd (with-current-buffer (marker-buffer marker) 
+                     (locate-dominating-file "." ".git")))
+          (when dd
+            (let* ((filename (file-name-nondirectory abs-path))
+                   (default-directory dd))
+              (setq git-fs
+                    (cl-remove-if-not 
+                     (lambda (git-fn) (string-suffix-p filename git-fn))
+                     (process-lines "git" "ls-files" "--full-name")))
+              (if git-fs
+                  (apply orig-fun (list marker (format "%s%s" dd (car git-fs)) dir fmts))
+                (apply orig-fun args)))))))
+     
+     ;; Handle relative paths: pkg.fn_sth.go:111 or fn_sth.go:222
+     ((string-match "[ \t]*\\([^/.]+\\.\\)?\\(.+\\.go\\)" fn)
+      (let* ((pkg (match-string 1 fn))
+             (go-fn (match-string 2 fn)))
+        (setq fn-path (if (and pkg (> (length pkg) 0))
+                          (format "/%s/%s" (substring pkg 0 (1- (length pkg))) go-fn)
+                        (format "/%s" go-fn)))
+        (setq dd (with-current-buffer (marker-buffer marker) 
+                   (locate-dominating-file "." ".git")))
+        (when dd
+          (setq git-fs
+                (let ((default-directory dd))
+                  (cl-remove-if-not 
+                   (lambda (git-fn) (string-suffix-p fn-path git-fn))
+                   (process-lines "git" "ls-files" "--full-name"))))
+          (if git-fs
+              (apply orig-fun (list marker (format "%s%s" dd (car git-fs)) dir fmts))
+            (apply orig-fun args)))))
+     
+     ;; Default case: no match, use original function
+     (t (apply orig-fun args)))))
+
 
 ;; monkey patch compilation helper to jump to error file.
 ;; stack trace doesn't always contain the absolute path, but pkg/fn.go
