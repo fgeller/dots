@@ -109,7 +109,6 @@ alias gm="git checkout -q main && gs"
 alias gfu="git_fixup_last_n"
 
 alias jjl="jj log -r ::@ --limit 10"
-alias jjn="jj new -r main"
 
 alias z="zellij"
 
@@ -201,11 +200,11 @@ function jjd() {
 
 function jjn() {
   if [[ $# -eq 0 ]]; then
-    jj new -r main
+    jj new
   elif [[ $# -eq 1 ]]; then
     jj new -r "$1"
   else
-    echo "Usage: jjnew [branch]"
+    echo "Usage: jjn [branch]"
   fi
 }
 
