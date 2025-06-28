@@ -1,7 +1,6 @@
-
 (use-package typescript-ts-mode
   :mode (("\\.tsx?\\'" . tsx-ts-mode)
-		 ("\\.jsx?\\'" . tsx-ts-mode))
+	 ("\\.jsx?\\'" . tsx-ts-mode))
   
   :config
   (defun fg/typescript-mode-hook ()

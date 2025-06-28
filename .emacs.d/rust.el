@@ -9,7 +9,6 @@
 	(setq tab-width 4)
 	(eglot-ensure)
 	(apheleia-mode +1)
-	(treesit-fold-mode +1)
 	(add-hook 'before-save-hook  (lambda () (call-interactively 'eglot-code-action-organize-imports)) nil t)
 	)
   

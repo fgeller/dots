@@ -1,7 +1,7 @@
 ;; -*- lexical-binding: t -*-
 
-;; (use-package vc-jj
-;;   :ensure (:repo "https://codeberg.org/emacs-jj-vc/vc-jj.el.git" :branch "master"))
+(use-package vc-jj
+  :ensure (:repo "https://codeberg.org/emacs-jj-vc/vc-jj.el.git" :branch "master"))
 
 (use-package vc
   :commands (vc-dir vc-root-diff)
@@ -46,7 +46,7 @@
   (diff-hl-margin-mode +1))
 
 (use-package agitate
-  :ensure t
+  :ensure (:repo "https://github.com/protesilaos/agitate.git" :branch "main")
   :commands (agitate-diff-enable-outline-minor-mode)
   :config
   (setq agitate-log-limit 2000))

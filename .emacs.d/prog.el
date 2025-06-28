@@ -37,5 +37,4 @@
 
   (add-hook 'prog-mode-hook 'fg/add-prog-mode-expansions))
 
-(use-package treesit-fold 
-  :ensure t )
+(add-hook 'prog-mode-hook 'hs-minor-mode)

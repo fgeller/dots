@@ -14,7 +14,6 @@
     ;; (lsp-mode)
     (setq apheleia-formatter 'gofumpt)
     (apheleia-mode +1)
-    (treesit-fold-mode +1)
     (setq-local comment-start "// ")
     (setq-local comment-end "")
     (which-function-mode)

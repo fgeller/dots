@@ -36,7 +36,6 @@
 (setq show-paren-style 'parenthesis)
 
 (use-package rainbow-mode 
-  :ensure t
   :commands (rainbow-mode))
 (use-package leerzeichen 
   :ensure t

@@ -99,11 +99,11 @@
     (define-key map (kbd "dn") 'fg/go-goto-next-error)
     (define-key map (kbd "dp") 'fg/go-goto-previous-error)
 	
-	(define-key map (kbd "ff") 'treesit-fold-toggle)
-	(define-key map (kbd "fF") 'treesit-fold-open-all)
-	(define-key map (kbd "fc") 'treesit-fold-close-all)
-	
-	(define-key map (kbd "F") 'fg/copy-current-buffer-file-path)
+    (define-key map (kbd "ff") 'hs-toggle-hiding)
+    (define-key map (kbd "fF") 'hs-show-all)
+    (define-key map (kbd "fc") 'hs-hide-all)
+    
+    (define-key map (kbd "F") 'fg/copy-current-buffer-file-path)
 
     (define-key map (kbd "lb") 'dap-breakpoint-add)
     (define-key map (kbd "lc") 'consult-compile-error)
