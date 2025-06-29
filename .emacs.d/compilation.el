@@ -40,7 +40,6 @@
                       "^[ \t]+\\(.*?\\.go\\):\\([0-9]+\\):[ \t]+diff -want(left)"
                       1 2)
                     compilation-error-regexp-alist-alist))
-  ;; Add pattern for absolute path stack traces
   (setq-local compilation-error-regexp-alist-alist
               (cons '(fg/go-stack-abs
                       "^[ \t]+\\(/[^:\n]+\\.go\\):\\([0-9]+\\) \\+0x[0-9a-f]+"
@@ -58,6 +57,13 @@
                       1 2)
                     compilation-error-regexp-alist-alist))
   
+  (setq-local compilation-error-regexp-alist-alist
+              (cons '(fg/tsx-error
+                      "^\\(.*?\\.tsx?\\):\\([0-9]+\\):\\([0-9]+\\) - error"
+                      1 2)
+                    compilation-error-regexp-alist-alist))
+
+
   (setq-local compilation-error-regexp-alist
               (cons 'fg/go-trace compilation-error-regexp-alist))
   (setq-local compilation-error-regexp-alist
@@ -70,6 +76,8 @@
               (cons 'fg/go-stack-abs compilation-error-regexp-alist))
   (setq-local compilation-error-regexp-alist
               (cons 'fg/go-stack-func compilation-error-regexp-alist))
+  (setq-local compilation-error-regexp-alist
+              (cons 'fg/tsx-error compilation-error-regexp-alist))
 
   ;; re-parse buffer so RET immediately works
   ;; (when (fboundp 'compilation--flush-parse)

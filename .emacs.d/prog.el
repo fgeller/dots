@@ -37,4 +37,4 @@
 
   (add-hook 'prog-mode-hook 'fg/add-prog-mode-expansions))
 
-(add-hook 'prog-mode-hook 'hs-minor-mode)
+
