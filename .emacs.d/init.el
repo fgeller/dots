@@ -158,6 +158,7 @@
 (load-custom "~/.emacs.d/macos.el")
 (load-custom "~/.emacs.d/direnv.el")
 (load-custom "~/.emacs.d/term.el")
+(load-custom "~/.emacs.d/ai.el")
 (load-custom "~/.emacs.d/gpt.el")
 (load-custom "~/.emacs.d/scratch.el")
 

@@ -36,7 +36,11 @@
 ;; 	  (set-fontset-font t 'symbol fn))))
 
 (set-face-attribute 'default nil :font "JetBrainsMono Nerd Font:weight=book")
+
+(setq standard-display-table (or standard-display-table (make-display-table)))
 (set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?┃))
+(aset standard-display-table ?\u00A0 (vector (make-glyph-code ?\s)))
+
 (setq default-frame-alist
       (append (list
 			   '(left-fringe . 2)
