@@ -263,3 +263,25 @@ _jjp_complete_git_branches() {
 }
 
 compdef _jjp_complete_git_branches jjp
+
+pipe_json() {
+  awk '{
+    if (/^{/) {
+      print
+	  fflush()
+    } else {
+      print > "/dev/stderr"
+      fflush("/dev/stderr")
+    }
+  }'
+}
+
+
+pwgen() {
+  if [[ $# -ne 1 ]]; then
+    echo "Usage: pwgen <character-count>"
+    return 1
+  fi
+
+  < /dev/urandom tr -dc 'A-Za-z0-9_' | head -c $1
+}
