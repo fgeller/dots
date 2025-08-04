@@ -139,6 +139,16 @@
 	  (message "moving to column %s" col))
 	(move-to-column col)))
 
+(defun fg/scratch-line-content ()
+  (interactive)
+  (back-to-indentation)
+  (let ((col (current-column)))
+    (save-excursion
+      (push-mark (point))
+      (end-of-line)
+      (kill-region (point) (mark)))
+    (move-to-column col)))
+
 (defun fg/end-of-line-insert ()
   (interactive)
   (end-of-line)

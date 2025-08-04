@@ -200,7 +200,7 @@ function jjd() {
 
 function jjn() {
   if [[ $# -eq 0 ]]; then
-    jj new
+    jj new -r main
   elif [[ $# -eq 1 ]]; then
     jj new -r "$1"
   else
