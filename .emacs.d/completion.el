@@ -26,17 +26,20 @@
 (use-package consult
   :ensure t
   :commands (
-			 consult-lsp-symbols 
-			 consult-lsp-diagnostics 
 			 consult-flymake 
-			 consult-lsp-symbols 
-			 consult-lsp-file-symbols
 			 consult-grep
 			 consult-git-grep
 			 consult-ripgrep
 			 consult-yank-from-kill-ring
 			 consult-line
 			 consult-buffer
+			 )
+)
+
+(use-package consult-eglot
+  :ensure t
+  :commands (
+			 consult-eglot-symbols
 			 )
 )
 

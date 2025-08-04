@@ -71,9 +71,6 @@
 (define-key global-map (kbd "M-.") 'embark-act)
 (define-key minibuffer-local-map (kbd "M-.") 'embark-act)
 
-(require 'key-stats)
-(key-stats-mode)
-
 (load-custom "~/.emacs.d/motion.el")
 (load-custom "~/.emacs.d/edit.el")
 
@@ -156,6 +153,9 @@
 	(define-key vc-prefix-map (kbd "s") 'fg/vc-git-show)
 
     (define-key map (kbd "q") 'fill-paragraph)
+
+    (define-key map (kbd "=") 'fg/increase-font-size)
+    (define-key map (kbd "-") 'fg/decrease-font-size)
 
     ;; TODO cw -> toggle wdired and wrep
     map))

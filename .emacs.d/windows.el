@@ -30,6 +30,7 @@
 			 "*Org Src"
 			 "*Packages*"
 			 "*eat*"
+			 "*claude-code"
 			 )))
 )
 

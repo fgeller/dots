@@ -9,11 +9,6 @@
 (defvar modal-mode-excluded-major-modes '()
   "List of major-modes for which modal-mode should not be activated.")
 
-(defvar modal-mode-emulation-alist nil
-  "Keymap alist for modal-mode with emulation-mode precedence.")
-
-(defvar modal-mode-high-precedence-modes '(eat-mode)
-  "Major modes that require modal-mode keymap to have higher precedence.")
 
 (defun modal-mode-maybe-activate ()
   (unless (or (minibufferp)
@@ -23,6 +18,17 @@
 (defun modal-mode-deactivate ()
   (interactive)
   (global-modal-mode -1))
+
+(defun modal-mode-eat-buffer-setup ()
+  "Switch eat buffers to appropriate input mode based on modal-mode state."
+  (when (eq major-mode 'eat-mode)
+    (if modal-mode
+        (progn
+          (eat-emacs-mode)
+          (setq cursor-type 'box))
+      (progn
+        (eat-semi-char-mode)
+        (setq cursor-type nil)))))
 
 (defun modal-mode-activate ()
   (interactive)
@@ -37,15 +43,7 @@ Available bindings:
 \\{modal-mode-map}
 "
   :lighter " modal" :keymap modal-mode-map :group 'modal
-  (if modal-mode
-      (when (member major-mode modal-mode-high-precedence-modes)
-        ;; Use emulation-mode-map-alists for higher precedence
-        (setq modal-mode-emulation-alist `((modal-mode . ,modal-mode-map)))
-        (add-to-list 'emulation-mode-map-alists 'modal-mode-emulation-alist))
-    ;; Clean up when deactivating
-    (when (member major-mode modal-mode-high-precedence-modes)
-      (setq emulation-mode-map-alists 
-            (delq 'modal-mode-emulation-alist emulation-mode-map-alists)))))
+  (modal-mode-eat-buffer-setup))
 
 ;;;###autoload
 (define-globalized-minor-mode global-modal-mode

@@ -79,6 +79,9 @@ bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 bindkey '^H' backward-kill-word
 
+[ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
+  source "$EAT_SHELL_INTEGRATION_DIR/zsh"
+
 alias e="emacsclient "
 alias eq="emacs --debug-init -q -nw"
 alias grt='if [ "`git rev-parse --show-cdup`" != "" ]; then cd `git rev-parse --show-cdup`; fi'
@@ -285,3 +288,6 @@ pwgen() {
 
   < /dev/urandom tr -dc 'A-Za-z0-9_' | head -c $1
 }
+
+
+alias claude="/Users/fgeller/.claude/local/claude"

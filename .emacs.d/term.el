@@ -11,6 +11,7 @@
           (:exclude ".dir-locals.el" "*-tests.el"))) 
   :commands (eat)
   :config
-  (define-key eat-mode-map (kbd "<escape>") 'modal-mode-activate))
+  (define-key eat-mode-map (kbd "<escape>") 'modal-mode-activate)
+  (setq eat-enable-mouse t))
 
 

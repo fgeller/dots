@@ -35,7 +35,20 @@
 ;; 	(when (member fn font-list)
 ;; 	  (set-fontset-font t 'symbol fn))))
 
-(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font:weight=book:size=12")
+(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font:weight=book:size=10")
+
+(defvar fg/font-size 10)
+
+(defun fg/increase-font-size ()
+  (interactive)
+  (setq fg/font-size (1+ fg/font-size))
+  (set-face-attribute 'default nil :font (format "JetBrainsMono Nerd Font:weight=book:size=%d" fg/font-size)))
+
+(defun fg/decrease-font-size ()
+  (interactive)
+  (when (> fg/font-size 6)
+    (setq fg/font-size (1- fg/font-size))
+    (set-face-attribute 'default nil :font (format "JetBrainsMono Nerd Font:weight=book:size=%d" fg/font-size))))
 
 (setq standard-display-table (or standard-display-table (make-display-table)))
 (set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?┃))
