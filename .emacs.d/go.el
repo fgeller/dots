@@ -17,6 +17,7 @@
     (setq-local comment-start "// ")
     (setq-local comment-end "")
     (which-function-mode)
+    (hs-minor-mode 1)
     (remove-hook 'find-file-hook 'which-func-ff-hook)
     (add-hook 'find-file-hook 'fg/delayed-which-func-setup)
     (add-hook 'before-save-hook

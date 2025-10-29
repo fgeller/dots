@@ -1,3 +1,5 @@
+(use-package cond-let :ensure (:host github :repo "tarsius/cond-let"))
+
 (use-package claude-code-ide
   :ensure (:host github :repo "manzaltu/claude-code-ide.el")
   :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding

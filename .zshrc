@@ -290,4 +290,3 @@ pwgen() {
 }
 
 
-alias claude="/Users/fgeller/.claude/local/claude"
