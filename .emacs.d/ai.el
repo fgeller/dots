@@ -8,5 +8,7 @@
   (setq claude-code-ide-cli-path (expand-file-name "~/bin/wrapper-claude"))
   (setq claude-code-ide-terminal-backend 'eat)
   (setq claude-code-ide-use-side-window nil)
+  (setq claude-code-ide-use-ide-diff nil)
+  (setq claude-code-ide-show-claude-window-in-ediff nil)
   (claude-code-ide-emacs-tools-setup))
 
