@@ -48,6 +48,9 @@ export TERM=xterm-24bit
 export TERMINFO=~/.terminfo
 export GPG_TTY=$(tty) # needed when using ssh
 
+unset SSH_AGENT_PID
+export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+
 # https://github.com/zsh-users/zsh-autosuggestions/
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
