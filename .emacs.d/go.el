@@ -40,6 +40,9 @@
                                  (which-function-mode 1))))))
 
 
+(after 'project
+  (add-to-list 'project-vc-extra-root-markers "go.work"))
+
 
 (defun fg/organize-go-imports ()
   (ignore-errors

@@ -23,21 +23,17 @@
 				,(propertize " " 'display '(raise -0.25))
 				mode-line-end-spaces))
 
-(use-package diminish
-  :ensure t
-  :commands diminish
-  :init
-  (after 'company (diminish 'company-mode))
-  (after 'modal (diminish 'modal-mode))
-  (after 'highlight-thing (diminish 'highlight-thing-mode))
-  (after 'yasnippet (diminish 'yas-minor-mode))
-  (after 'eldoc (diminish 'eldoc-mode))
-  (after 'tree-sitter (diminish 'tree-sitter-mode))
-  (after 'subword (diminish 'subword-mode))
-  (after 'hi-lock (diminish 'hi-lock-mode))
-  (after 'apheleia (diminish 'apheleia-mode))
-  (after 'treesit-fold (diminish 'treesit-fold-mode))
-)
+(setq mode-line-collapse-minor-modes 
+      '(company-mode 
+	modal-mode 
+	highlight-thing-mode 
+	yas-minor-mode 
+	eldoc-mode 
+	tree-sitter-mode 
+	subword-mode 
+	hi-lock-mode 
+	apheleia-mode 
+	treesit-fold-mode))
 
 (defun modal-mode-visual-toggle ()
   (interactive)

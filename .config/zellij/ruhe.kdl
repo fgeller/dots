@@ -1,7 +1,8 @@
 layout {
-   pane
-   pane size=1 borderless=false {
-        // plugin location="zellij:compact-bar"
-        plugin location="file:/Users/fgeller/.config/zellij/zj_status_bar.wasm"
-   }
+    default_tab_template {
+        children
+        pane size=1 borderless=false {
+            plugin location="zellij:compact-bar"
+        }
+    }
 }

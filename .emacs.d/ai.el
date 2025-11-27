@@ -12,3 +12,10 @@
   (setq claude-code-ide-show-claude-window-in-ediff nil)
   (claude-code-ide-emacs-tools-setup))
 
+
+(use-package agent-shell
+    :ensure t
+    :ensure-system-package
+    ;; Add agent installation configs here
+    ((claude . "/opt/homebrew/bin/claude")
+     (claude-code-acp . "/opt/homebrew/bin/claude-code-acp")))

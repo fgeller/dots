@@ -104,14 +104,14 @@ alias gbs="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:r
 alias gdm="git diff origin/main...HEAD"
 alias gds="git diff --name-only"
 alias gff="git fetch origin && git merge --ff-only origin/main"
-alias gmm="git fetch origin && git merge origin/main"
 alias gp="git push"
 alias gpf="git push --force-with-lease"
 alias gpr="git push && gh pr create"
 alias gsa="git stash apply stash@{0}"
 alias gu="git fetch origin"
 alias gss="gsync"
-alias gm="git checkout -q main && gs"
+# alias gm="git checkout -q main && gs"
+# alias gmm="git fetch origin && git merge origin/main"
 alias gfu="git_fixup_last_n"
 
 alias jjl="jj log -r ::@ --limit 10"
@@ -260,7 +260,7 @@ function jjp() {
   local jj_revision=$2
 
   jj bookmark set -r $jj_revision $git_branch
-  jj git push --allow-new -b $git_branch
+  jj git push -b $git_branch
 }
 
 # Enable completion for the first argument (Git branches)
