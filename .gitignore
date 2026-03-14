@@ -23,3 +23,9 @@
 .emacs.d/history
 key-stats.json
 .emacs.d/scratch-persist
+
+# Claude Code: ignore everything, then whitelist config files
+/.claude/*
+!/.claude/CLAUDE.md
+!/.claude/settings.json
+!/.claude/statusline-command.sh

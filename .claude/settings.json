@@ -1,0 +1,10 @@
+{
+  "effortLevel": "high",
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "sh /Users/fgeller/.claude/statusline-command.sh"
+  }
+}
